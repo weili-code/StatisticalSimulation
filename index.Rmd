@@ -34,9 +34,7 @@ header-includes:
 - \captionsetup[figure]{labelformat=empty}
 - \newcommand{\weic}[1]{\textcolor{red}{\text{(Wei:#1)}}}  
 ---
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE,eval=T)
-```
+
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
   TeX: { equationNumbers: { autoNumber: "AMS" } }po
@@ -116,6 +114,7 @@ plt.show()
 
 ```{r include=FALSE}
 rmarkdown::render("./Lecture/1_basics.Rmd", quiet = TRUE)
+rmarkdown::render("./Lecture/2_Solving_Linear_Systems.Rmd", quiet = TRUE)
 ```
 
 <!-- ```{r child = "2.Rmd"} -->

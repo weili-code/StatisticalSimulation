@@ -30,9 +30,7 @@ header-includes:
 - \captionsetup[figure]{labelformat=empty}
 - \newcommand{\wei}[1]{\textcolor{orange}{(Wei:#1)}}
 ---
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE,eval=T)
-```
+
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
   TeX: { equationNumbers: { autoNumber: "AMS" } }
