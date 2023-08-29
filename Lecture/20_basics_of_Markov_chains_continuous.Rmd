@@ -1,0 +1,109 @@
+---
+title: "Basics of Markov Chains (continuous state space)"
+author:
+  - Instructor$:$ Dr. Wei Li
+  - Scribe$:$ Liming Zhao   
+date: Nov 11th, 2021
+geometry: left=2cm, right=2cm, top=2cm, bottom=2cm
+linestretch: 1.3
+output:
+  pdf_document: 
+      latex_engine: xelatex
+      include:
+        in_header: preamble_rmd.tex
+  html_notebook: default
+  html_document:
+    df_print: paged
+fontsize: 14pt
+header-includes:
+- \usepackage{amsmath}
+- \usepackage[linewidth=1pt]{mdframed}
+- \newcommand\inner[2]{\left\langle#1,#2\right\rangle}
+- \newcommand\floor[1]{\lfloor#1\rfloor}
+- \newcommand\ceil[1]{\lceil#1\rceil}
+- \newcommand\mb[1]{\mathbf{#1}}
+- \newcommand\bs[1]{\boldsymbol{#1}}
+- \newcommand\mr[1]{\mathrm{#1}}
+- \newcommand\wh[1]{\widehat{#1}}
+- \newcommand\op[1]{\operatorname{#1}}
+- \newcommand\mbb[1]{\mathbb{#1}}
+- \usepackage{caption}
+- \captionsetup[figure]{labelformat=empty}
+- \newcommand{\wei}[1]{\textcolor{orange}{(Wei:#1)}}
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,eval=T)
+```
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+# Markov Chain with continuous state space 
+We consider Markov chains in the continuous state space, that is, S = uncountable set.
+
+Transition probability from each possible state $x$ to each possible set of states $A$:
+\begin{align*}
+&P(x_0,A):=P(X^{(n+1)} \in A | X^{(n)}=x_0)\\
+\text{CDF}:\ &F(v|x_0):=P(X^{(n+1)} \leq v | X^{(n)}=x_0)\\
+\text{Transition density function}:\ &p(v|x_0): = \frac{\partial F(v|x_0)}{\partial v}= P(X^{(n+1)}=v|X^{(n)}=x_0)\\
+\end{align*}
+
+## Transition density 
+
+Define one-step transition density:
+
+$f^{[1]}(x_n,x_{n+1}):=p(x_{n+1}|x_n)=P(X^{(n+1)}=x_{n+1}|X^{(n)}=x_n)$
+
+Two-step transition density:
+
+$f^{[2]}(x_n,x_{n+2}):=P(X^{(n+2)}=x_{n+2}|X^{(n)}=x_n)$
+\begin{align*}
+f^{[2]}(x_n,x_{n+2}) &= \int P(X^{(n+2)}=x_{n+2}|X^{(n+1)}=x_{n+1},X^{(n)}=x_n) \cdot P(X^{(n+1)}=x_{n+1}|X^n=x_n)d x_{n+1}\\
+&=\int P(X^{(n+2)}=x_{n+2}|X^{(n+1)}=x_{n+1}) \cdot P(X^{(n+1)}=x_{n+1}|X^{(n)}=x_n)d x_{n+1}\\
+&=f^{[1]}(x_{n+1},x_{n+2}) \cdot f^{[1]}(x_n,x_{n+1})d x_{n+1}
+\end{align*}
+
+Three-step transition density:
+
+$f^{[3]}(x_n,x_{n+3}):=P(X^{(n+3)}=x_{n+3}|X^{(n)}=x_n)$
+\begin{align*}
+f^{[3]}(x_n,x_{n+3}) &= \int P(X^{(n+3)}=x_{n+3}|X^{(n+2)}=x_{n+2}) \cdot P(X^{(n+2)}=x_{n+2}|X^{(n)}=x_n)d x_{n+2}\\
+&=\int f^{[1]}(x_{n+2},x_{n+3}) \cdot f^{[2]}(x_n,x_{n+2})d x_{n+2}\\
+&=\int \int f^{[1]}(x_{n+2},x_{n+3}) \cdot f^{[1]}(x_{n+1},x_{n+2}) \cdot f^{[1]}(x_n,x_{n+1})d x_{n+1} d x_{n+2}\\
+\end{align*}
+
+Arguing as above, we can obtain the  m-step transition density:
+
+$f^{[m]}(x_n,x_{n+m})= \int \cdots \int \prod_{k=n+1}^{n+m}f^{[1]}(x_{k-1},x_k)dx_{n+1} \cdots dx_{n+m-1}$
+
+The corrresponding m-step transition probability can be written as 
+$P(X^{(n+m)} \in A| X^{(n)}=x_n)= \int_A f^{[m]}(x_n,x_{n+m})dx_{n+m}$
+
+## Some important properties
+
+If the M.C. possesses a limiting transition density independent of the initial state, that is 
+$$\lim_{n \to \infty}f^{[n]}(x,v)=g(v)$$
+then $g(v)$ is called "steady-state density" (long-term probability density) of M.C. and it is a solution to steady-state equation:
+
+$$g(v)=\int_{-\infty}^{+\infty}g(w)f(w,v)dw \qquad (*)$$
+$$(\text{discrete space}: \pi_j=\sum_{i=1}^{k} \pi_i p_{i,j} \qquad \forall j=1,2,\cdots ,k)$$
+where $g(w)$ is the start distribution and $f(w,v)$ is the transition density function.
+Note that an equivalent expression to $(*)$ is
+$$\int_A g(v) dv=\int_{-\infty}^{+\infty}g(w)P(w,A)dw \text{, for all set } A$$
+
+
+Let $g(x)$ be the steady-state density and $f(x,v)$ be the density function of one-step transition, "**detailed balance condition**" is given by
+$$g(x)f(x,v)=g(v)f(x,v) \qquad \forall x,v \qquad (**)$$
+As in the discrete case, it can be shown that any Markov chain satisfying the "detailed balance condition" $(**)$ will have $g$ as the steady state density, i.e. $(*)$ holds.
+
+\begin{mdframed}
+Proof:
+\end{mdframed}
+
+## Ergodic Theorem
+
+If $(X^{(1)},X^{(2)},\cdots)$ is an ergodic M.C. whose steady-state density is given by $g$, then for $n \to \infty$, 
+$$P(X^{(n)} \in A) \to P(X^{(\infty)} \in A) = \int_A g(x)dx.$$
+In addition, 
+$$\frac{1}{T}\sum_{n=1}^{T}h(X^{(n)}) \to E[h(X^{(\infty)})]=\int h(x)g(x)dx, \text{ for } T\to \infty.$$

@@ -1,0 +1,178 @@
+---
+title: "MAT 653: Statistical Simulation"
+author:
+  - Instructor$:$ Dr. Wei Li
+  - Scribe$:$ Jiangyu Yu  
+date: Sep 14th, 2021
+geometry: left=2cm, right=2cm, top=2cm, bottom=2cm
+linestretch: 1.3
+output:
+  pdf_document: 
+      include:
+        in_header: preamble_rmd.tex
+  html_document:
+    df_print: paged
+  html_notebook: default
+fontsize: 14pt
+header-includes:
+- \usepackage{amsmath}
+- \usepackage[linewidth=1pt]{mdframed}
+- \newcommand\inner[2]{\left\langle#1,#2\right\rangle}
+- \newcommand\floor[1]{\lfloor#1\rfloor}
+- \newcommand\ceil[1]{\lceil#1\rceil}
+- \newcommand\mb[1]{\mathbf{#1}}
+- \newcommand\bs[1]{\boldsymbol{#1}}
+- \newcommand\mr[1]{\mathrm{#1}}
+- \newcommand\wh[1]{\widehat{#1}}
+- \newcommand\op[1]{\operatorname{#1}}
+- \newcommand\mbb[1]{\mathbb{#1}}
+- \usepackage{caption}
+- \captionsetup[figure]{labelformat=empty}
+- \newcommand{\wei}[1]{\textcolor{orange}{(Wei:#1)}}
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,eval=T)
+```
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+
+
+**Singular value decomposition**
+===========
+
+
+${A}$, a $m \times n$ matrix, $A^{T}A$ is a symmetric matrix. Let $\{ v_{1},\ldots,v_{n} \}$ consists of all orthonormal eigenvectors of $A^{T}A$. Let  $\lambda_{1},...,\lambda_{n}$ the associated eigenvalues, $\lambda_{1} \ge \lambda_{2} \ge \lambda_{n} \ge 0$.  
+We have $\lVert Av_{i}\lVert^{2} = \lambda_{i}$. Since 
+$$
+A^{T}Av_{i} = \lambda_{i}v_{i} \Rightarrow
+v_{i}^{T}A^{T}Av_{i} = \lambda_{i}v_{i}^{T}v_{i}\lambda_{i}
+$$
+Denote $\sigma_{i} = \sqrt{\lambda_{i}}$, $\lambda_{i}$ is the ith eigenvalue of $A^{T}A$.  
+
+**Fact**: rank of A is equal to the number of positve singular value of A.  
+
+**SVD**: Let A be a rank r matrix. There exists a matrix $\Sigma_{m \times n}$ with diagonal entries in D are the first r singular value. That is  
+$$ \Sigma_{m \times n} = 
+\begin{bmatrix}
+  D & 0 \\
+  0 & 0
+\end{bmatrix}
+$$
+$$
+ D = \begin{bmatrix}
+      \sigma_{1} \\ & \ddots & \\ & & \sigma_{n}
+     \end{bmatrix}
+$$
+The decomposition of A is:
+$$
+  A = U_{m \times n}\Sigma_{m \times n}V^{T}_{n \times n}
+$$
+Where U and V are bothy orthogonal matrices. V consists of all the eigenvectors of $A^{T}A$. U consists the column $u_{i}$ as 
+$$u_{i} = \frac{Av_{i}}{\lVert Av_{i}\rVert} = \frac{Av_{i}}{\sigma_{i}}, \\
+  1 \le i \le r
+$$
+Those $\{ u_{i}\}^{r}_{1}$ can extend to $\{ u_{i}\}^{m}_{1}$ as the orthonormal basis.   
+Matrix U and V have the property:  
+$$
+  Col(U) = Col(A), \\
+  Col(V) = Row(A)
+$$
+
+Reduced SVD 
+-----------------------
+
+For those $A_{m \times n}$, $U_{m \times m}$, $V_{n \times n}$, $\Sigma_{m \times n}$ above, we have the partition:  
+$$
+  U = [U_{r},U_{m-r}],  \\
+  V = [V_{r},V_{n-r}],  \\
+  \Sigma = \begin{bmatrix}
+  D & 0 \\
+  0 & 0
+\end{bmatrix}
+$$
+Consequently, the SVD of A can be represented as:  
+$$
+  A =
+  \begin{bmatrix}
+    U_{r} & U_{m-r}
+  \end{bmatrix}
+  \begin{bmatrix}
+    D & 0 \\
+    0 & 0
+  \end{bmatrix}
+  \begin{bmatrix}
+    V_{r}^{T} \\
+    V_{n-r}^{T}
+  \end{bmatrix}
+  = U_{r}DV_{r}^{T}
+$$
+
+Application
+---------------------------
+
+1. Linear Least Squares  
+---------------------------
+
+We can use SVD to solve the Least Squares Problems as following:  
+
+\begin{align*}
+ Ax &= b, \\
+ A^{T}Ax &= A^{T}b, \\
+ (UDV^{T})^{T}(UDV^{T})x &= (UDV^{T})^{T}b, \\
+ \Rightarrow VD^{2}Dx &= VDU^{T}b, \\
+ \Rightarrow D^{2}V^{T}x &= DU^{T}b, \\
+ \Rightarrow DV^{T}x &= U^{T}b.
+\end{align*}
+
+Denote $w = V^{T}x$,$y = U^{T}b$, we have the following algorithm:  
+
+**Algorithmn**  
+
+1. Find the SVD of $A = UDV^{T}$;  
+2. Compute $y = U^{T}b$;  
+3. Solve $w^{*} = D^{-1}y$;  
+4. $V^{T}x = w^{*} \Rightarrow x = Vw^{*}$;  
+
+The solution of the equation is $x = V_{r}D^{-1}U_{r}^{T}b$, and we can notice that this SVD method allows A,b to be arbitrary. Notice that $V_{r}D^{-1}U_{r}^{T}$ is the inverse of A. Here we have the concept of generalized inverse.  
+
+**Moore-Penrose inverse**: $A^{+} = V_{r}D^{-1}U_{r}^{T}$
+
+2.LS-Problem 
+-----------------------
+
+In LS Problem 
+$$\min_{x} \lVert Ax -b \rVert$$,  
+where A and b are not restricted at all, we have:  
+$$
+  A^{T}Ax = A^{T}b.
+$$
+Let $\mathfrak{L}$ is the set of all the minimizers to the LS problem. We have following facts.  
+
+**Fact 1** $x^{*} = A^{+}b \in \mathfrak{L}$ .  
+
+**Fact 2** $A\tilde{x_{1}} = A\tilde{x_{2}}$, for any $\tilde{x_{1}},\tilde{x_{2}} \in \mathfrak{L}$.  
+
+**Fact 3** For the optimization problem $\min_{x \in \mathfrak{L}} \lVert x\rVert$, there is a unique solution $x^{*} = A^{+}b$.  
+
+**Fact 4** We already have the result that if we choose some $\lambda$, LS problem will has a unique solution to the "modified" normal equation:
+$$
+ (A^{T}A+\lambda I)x=A^{T}b
+$$
+that is,
+$$
+  \hat{x} = (A^{T}A+\lambda I)^{-1}A^{T}b \\
+$$
+In fact, let $\lambda \rightarrow 0$, we have  
+$$
+  (A^{T}A+\lambda I)^{-1}A^{T} \rightarrow A^{+}
+$$
+
+**Fact 5** The projection of b on Col(A) is given by $A(A^{T}A)^{-1}A^{T}b$ (assuming $A^{T}A$ is invertible), here is a more general result  
+$$
+  \hat{b} = AA^{+}b = \lim_{\lambda \rightarrow 0}[A(A^{T}A+\lambda I)^{-1}A^{T}]b 
+$$
+
+

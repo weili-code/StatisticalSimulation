@@ -1,0 +1,157 @@
+---
+title: "MAT 653: Statistical Simulation"
+author:
+  - Instructor$:$ Dr. Wei Li
+  - Scribe$:$ Jiangyu Yu  
+date: Oct 25th, 2021
+geometry: left=2cm, right=2cm, top=2cm, bottom=2cm
+linestretch: 1.3
+output:
+  pdf_document: 
+      include:
+        in_header: preamble_rmd.tex
+  html_document:
+    df_print: paged
+  html_notebook: default
+fontsize: 14pt
+header-includes:
+- \usepackage{amsmath}
+- \usepackage[linewidth=1pt]{mdframed}
+- \newcommand\inner[2]{\left\langle#1,#2\right\rangle}
+- \newcommand\floor[1]{\lfloor#1\rfloor}
+- \newcommand\ceil[1]{\lceil#1\rceil}
+- \newcommand\mb[1]{\mathbf{#1}}
+- \newcommand\bs[1]{\boldsymbol{#1}}
+- \newcommand\mr[1]{\mathrm{#1}}
+- \newcommand\wh[1]{\widehat{#1}}
+- \newcommand\op[1]{\operatorname{#1}}
+- \newcommand\mbb[1]{\mathbb{#1}}
+- \usepackage{caption}
+- \captionsetup[figure]{labelformat=empty}
+- \newcommand{\wei}[1]{\textcolor{orange}{(Wei:#1)}}
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,eval=T)
+```
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+
+
+**EM Algorithm (Deterministic Optimization)** 
+====== 
+
+Suppose we have n observables $x_{1},x_{2},...,x_{n} \stackrel{i.i.d}{\sim} g(x|\theta)$. Let $\bs{x}=\{x_i\}_{i=1}^n$.
+Our goal is to compute:
+\begin{align*}
+  \hat{\theta} = \arg\max L(\theta | \bs{x}) = \prod^{n}_{i=1} g(x_{i} | \theta),
+\end{align*}
+Where $L(\theta | \bs{x}) = f(\bs{x}|\theta)$ is the likelihood function. 
+
+Denote $L^{c}(\theta | \bs{x},\bs{z}) = f(\bs{x},\bs{z}|\theta)$, called the complete data likelihood function. 
+
+Augment the data with $\bs{z}$ which are unobservable, so
+\begin{align*}
+  (\bs{x},\bs{z}) \sim f(\bs{x},\bs{z}|\theta).  
+\end{align*}
+
+The conditional distribution of $\bs{z}$ given the observables $\bs{x}$ is 
+\begin{align*}
+  f(\bs{z}|\bs{x},\theta) = \frac{f(\bs{x},\bs{z}|\theta)}{f(\bs{x}|\theta)}. 
+\end{align*}
+
+Use this result on the likelihood function: 
+\begin{align*}
+  logL(\theta | \bs{x}) & = log f(\bs{x}|\theta) \\
+                         & = log \frac{f(\bs{x},\bs{z}|\theta)}{f(\bs{z}|\bs{x},\theta)} \\
+                         & = log(f(\bs{x},\bs{z}|\theta)) - log(f(\bs{z}| \bs{x},\theta)). 
+\end{align*}
+
+We use the notations:
+
+\begin{align*}
+  & E_{g}(f(\bs{x})) = \int f(\bs{x})g(\bs{x}) d\bs{x} \\
+  & E_{\bs{z}|\bs{x}}(h(\bs{z},\bs{x})) = \int h(\bs{z},\bs{x})f(\bs{z}|\bs{x}) d\bs{z}. 
+\end{align*}
+
+Let $\theta^{(0)}$ as our initial guess of the parameter, and take conditional expectation of $\bs{z}$ given $\bs{x}$, that is, the integral is taken with respect to $f(\bs{z}| \bs{x},\theta^{(0)})$, on both sides: 
+
+\begin{align*}
+  E_{\theta^{(0)}}(log(L(\theta|\bs{x})))  = log(L(\theta|\bs{x})) & = E_{\theta^{(0)}}[logf(\bs{x},\bs{z}|\theta)|\bs{x}] - E_{\theta^{(0)}}[logf(\bs{z}|\bs{x},\theta)|\bs{x}] \\ 
+  & = Q(\theta | \theta^{(0)},\bs{x}) - K(\theta | \theta^{(0)},\bs{x}), 
+\end{align*}
+
+where we take $Q(\theta | \theta^{(0)},\bs{x}) = E_{\theta^{(0)}}[logf(\bs{x},\bs{z}|\theta)|\bs{x}]$. It turns out for any candidate $\theta^{'}$ for next iterate, 
+\begin{align*}
+  K(\theta^{'}|\theta^{0},\bs{x}) \le K(\theta^{(0)} | \theta^{(0)},\bs{x}). 
+\end{align*}
+
+To see this,that is, for any $\theta^{'}$: 
+\begin{align*}
+  E_{\theta^{(m)}}(\log f(\bs{z}|\bs{x},{\theta}^{'})|\bs{x}) & \le E_{\theta^{((m))}}(\log f(\bs{z}|\bs{x},\theta^{(m)})|\bs{x}) \\
+  & = \int \log f(\bs{z}| \bs{x},\theta^{(m)})f(\bs{z}|x,\theta^{(m)}) d\bs{z}. 
+\end{align*}
+
+Call $g(\bs{z}) = f(\bs{z}|\bs{x},\theta^{'})$, $h(\bs{z}) = f(\bs{z}|\bs{x},\theta^{(m)})$. It  suffies to show 
+\begin{align*}
+  E_{h}\Big[\log\frac{h(z)}{g(z)}\Big] \ge 0. 
+\end{align*}
+
+In the above inequality, we use Jesen's inequality:  
+\begin{align*}
+  LHS & = \int log(\frac{h(z)}{g(z)}h(z)) dz \\
+      & = -\int log(\frac{g(z)}{h(z)}h(z)) dz \\
+      & \ge - log \int \frac{g(z)}{h(z)}h(z) dz = 0. 
+\end{align*}
+
+So to maximize $log(L(\theta|\bs{x})$ over $\theta$, it suffices to just maximize $Q(\theta | \theta^{(0)},\bs{x})$ over $\theta$. By maximizing $Q(\theta | \theta^{(0)},\bs{x})$ over $\theta$, one obtain the maximizer $\theta^{(1)}$ as the next iterate; we then by maximizing $Q(\theta | \theta^{(1)},\bs{x})$ over $\theta$, obtaining the next iterate $\theta^{(2)}$-- the process can keep go on. 
+
+**EM algorithm**
+
+Based on the result, we have two main steps for EM algorithm: at step $m$, 
+
+(1) E Step: compute $Q(\theta |\theta^{(m)},\bs{x})$ as a function of $\theta$ and $\theta^{(m)}$.  
+(2) M Step: $\theta^{(m+1)} = \arg\max\limits_{\theta} Q(\theta |\theta^{(m)},\bs{x})$.  
+
+**Remark**  
+
+(1) EM algorithm only generates the limit point of $\theta^{(m)}$ that is a stationary point of the objective function $log(L(\theta|\bs{x})$. In practice, you'll try different starting values of $\theta^{(0)}$.  
+(2) Notice that, for $h(x)=E[H(x,Z)]$ where the expectation is taken wrt to the random variable $Z$.
+\begin{align*}
+  \max\limits_{x} h(x) &= \max \limits_{x} E[H(x,Z)] \\
+                       &= \max \limits_{x} E[H(X,Z)|X = x] \\ 
+                       &= \max \limits_{x} \int H(x,z)f(z|x)dz, 
+\end{align*}
+we can use Monte Carlo to approximate the objective function: 
+\begin{align*}
+  \frac{1}{m}\sum^{m}_{i=1}H(x,Z_{i}) \to \int H(x,z)f(z|x)dz,
+\end{align*}
+where $Z_{i} \stackrel{i.i.d}{\sim} f(z|x)$.  
+If we approximate $Q$ function by this idea, this then gives the so-called Monte-Carlo EM:
+\begin{align*}
+  \hat{Q}(\theta|\theta^{(m)},\bs{x}) = \frac{1}{T}\sum^{T}_{j=1}log[L^{c}(\theta|\bs{x},\bs{z}_j)]. 
+\end{align*}  
+where $\bs{z}_1, \ldots, \bs{z}_T$ is an i.i.d. random sample generated from $f(\bs{z}|\theta^{(m)}, \bs{x})$. 
+(3) We may not need to find the exact maximizer in the process . Instead, sometimes we just find $\theta^{(m+1)}$ that can improve upon the value of $Q$ at the current $\theta^{(m)}$, that is, 
+\begin{align*}
+  Q(\theta^{(m+1)}|\theta^{(m)},\bs{x}) \ge Q(\theta^{(m)}|\theta^{(m)},\bs{z}),  
+\end{align*}
+we called that ``generalized EM Algorithm".  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

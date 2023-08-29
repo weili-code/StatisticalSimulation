@@ -1,0 +1,121 @@
+---
+title: "MAT 653: Statistical Simulation"
+author:
+  - Instructor$:$ Dr. Wei Li
+  - Scribe$:$ Liming ZHAO  
+date: Oct 5st, 2021
+geometry: left=2cm, right=2cm, top=2cm, bottom=2cm
+linestretch: 1.3
+output:
+  pdf_document: 
+      include:
+        in_header: preamble_rmd.tex
+  html_document:
+    df_print: paged
+  html_notebook: default
+fontsize: 14pt
+header-includes:
+- \usepackage{amsmath}
+- \usepackage[linewidth=1pt]{mdframed}
+- \newcommand\inner[2]{\left\langle#1,#2\right\rangle}
+- \newcommand\floor[1]{\lfloor#1\rfloor}
+- \newcommand\ceil[1]{\lceil#1\rceil}
+- \newcommand\mb[1]{\mathbf{#1}}
+- \newcommand\bs[1]{\boldsymbol{#1}}
+- \newcommand\mr[1]{\mathrm{#1}}
+- \newcommand\wh[1]{\widehat{#1}}
+- \newcommand\op[1]{\operatorname{#1}}
+- \newcommand\mbb[1]{\mathbb{#1}}
+- \usepackage{caption}
+- \captionsetup[figure]{labelformat=empty}
+- \newcommand{\wei}[1]{\textcolor{orange}{(Wei:#1)}}
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,eval=T)
+```
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+
+
+# Random Variable Generation
+## Reading Parts:
+1.Chapter 2 from Introducing Monte Carlo Methods with R, by Christian. P. Robert and George Casella.
+
+2.Section 1.4.1, 1.4.2, 1.4.3, 1.4.4 from An Introduction to Statistical Computing: A Simulation-based Approach, by Jochen Voss.
+
+## Definition
+A random variable U has a uniform distribution $U \sim U(0,1)$ if $P(U\in (a,b))=b-a$ for $0<a<b<1$.
+
+## Definition
+A random variable has PDF (probability density function) $f(x)$ if $P(X \in A)=\int_A f(x)dx$.
+
+- **PDF** $f(x)$:
+
+1. $f(x) \ge 0$
+
+2. $\int_{\mathbb{R}}f(x)dx=1$
+
+The support of X is $\left\{ x: f(x) > 0\right\}$ denoted by $\mathcal{X}$.
+
+- **CDF**: the CDF of X (on $\mathbb{R}$) is given by $F(a)=P(X \leq a)$, for all $a \in \mathbb{R}$.
+
+1. $\displaystyle \lim_{x \to -\infty}F(a)=0$
+
+2. $\displaystyle \lim_{x \to \infty}F(a)=1$
+
+3. $F(a)$ is nondecreasing function.
+
+4. $\displaystyle \lim_{h_{n} \to 0^+}F(a+h_{n})=F(a)$. i.e., F(a) is right continuous.
+
+**Fact**: Any non-negative function $\tilde{f}$ that is integrable on its support can be used to construct a PDF by normalization.
+
+**Examples**:
+
+1.$\tilde{f}(x)=e^{-\frac{x^2}{2}}$, $\mathcal{X}=(-\infty,\infty)$
+
+
+   $f(x)=\frac{\tilde{f}(x)} {\int_{-\infty}^{\infty} \tilde{f}(x)dx}$ (normalization)
+   $= \frac {1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}$ where $e^{-\frac{x^2}{2}}$ is the kernel of $N(0,1)$.
+  
+   $f(x) \propto e^{-\frac{x^2}{2}}$.
+  
+2.$\tilde{f}(x)=x^{\alpha-1} e^{-\beta x}$,  $x>0, \alpha,\beta>0$
+
+   $f(x)=\frac{\tilde{f(x)}} {\int_{0}^{\infty} x^{\alpha-1} e^{-\beta x}dx} =\frac{\beta^{\alpha}}{\Gamma(\alpha)}x^{\alpha-1} e^{-\beta x}$   $(x>0)$ $\sim Gamma(\alpha,\beta)$
+  
+   $f(x) \propto x^{\alpha-1} e^{-\beta x}$
+  
+# Probability integral transform
+(works only for $\mathbb{R}$)
+
+Suppose X has a CDF $F$, i.e. $F(x)=P(X \leq x)$. If $F$ is invertible and $Y=F^{-1}(U)$. $U\sim U(0,1)$. 
+
+Then $Y \sim F$.
+
+
+\begin{mdframed}
+Proof:
+\end{mdframed}
+
+More generally, define the inverse of $F$ as $F^{-1}(u)=inf \left\{ x \in \mathbb{R}:F(x) \geq u \right\}$.
+
+**Fact1**: For every $0<p<1$, $F \circ F^{-1}(p) \geq p$. The equality holds iff (if and only if) $p$ in the range of $F$.
+
+**Fact2**: For every $0<p<1$ and $x_{0} \in \mathbb{R}$, $p \leq F(x_{0})$ iff $F^{-1}(p) \leq x_{0}$.
+
+\begin{mdframed}
+Proof:
+\end{mdframed}
+
+**Example 2.1 from R.C.**:
+
+$X \sim exp(1)$, the CDF of $exp(1)$ is $F(x)=1- e^{-x}$.
+
+Then $F^{-1}(u)= -log(1-u)$.
+
+1.Generate $u \sim U(0,1)$.
+
+2.Evaluate $F^{-1}(u)$, gives one sample.
