@@ -237,15 +237,15 @@ Consider $\hat b =A\hat x$. Obtain $\hat b$ by dropping a perpendicular line fro
 &\iff A^TA \hat x=A^Tb
 \end{align*}
 
-Now $\hat x=(A^TA)^{-1}A^Tb$ if $A^TA$ is invertible, and then $\hat b = A(A^TA)^{-1}A^Tb$ (even if it exists).
+Now $\hat x=(A^TA)^{-1}A^Tb$ if $A^TA$ is invertible, and then $\hat b = A(A^TA)^{-1}A^Tb$.
 
 Note: $A^TA \hat x=A^Tb$ is called Normal Equation.
 
 **Fact 1:** Normal equation always has at least one solution.
 
-**Fact 2:** $A^TA$ is invertible if and only if $A$ has full-column rank.
+**Fact 2:** $A^TA$ is invertible if and only if $A$ has full-column rank. In particular, when $m<n$, $A^TA$ is not invertible.
 
-**Fact 3:** The solution to the normal equation is not necessary a solution to the original problem $Ax=b$.
+**Fact 3:** The solution to the normal equation is not necessary a solution to the original problem $Ax=b$. For $b\in Col(A)$, then $A^TA=A^Tb$ and $Ax=b$ have the same unique solution if and only if $A$ has full column rank.
 
 
 \begin{mdframed}

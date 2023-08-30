@@ -55,22 +55,23 @@ MathJax.Hub.Config({
 
 # Eigenvalue decomposition
 
-Square matrix $M$. $Mx=\lambda x$ for some nonzero vector $x$ and some $\lambda$(scalar).
+Given a square matrix $M$ so that $Mx=\lambda x$ for some nonzero vector $x$ and some $\lambda$(scalar). We call $\lambda$ an eigenvalue of $M$ whose associated eigenvector is $x$.
 
-We call $\lambda$ a eigenvalue of $M$ whose associated eigenvector is $x$.
+Note: $A$ is a square matrix, $\det(A)=\prod_{i=1}^n \lambda_i$. A square matrix is invertible if and only if its eigenvalues are non-zero.
 
-Note: $A$ is a square matrix. $\det(A)=\prod_{i=1}^n \lambda_i$.
+**Eigen-decomposition:** $A$ is a square and symmetric matrix, then we can write $A=P \Lambda P^T$ where 
+\begin{align*}
+&P=[u_1, u_2,\cdots, u_n], \quad u\mbox{'s are the orthonormal eigenvector of }A \\
+&\Lambda = diag\{\text{eigenvalues of }A\}.
+\end{align*}
 
-**Eigen-decomposition:** $A$ is a square and symmetric matrix. then $A=P \Lambda P^T$ where 
-$$P=[u_1, u_2,\cdots, u_n], u\mbox{'s are the orthonormal eigenvector of }A$$
-$$\Lambda = \{\mbox{diagonal entries are the eigenvalues of }A\}$$
-Note: If this symmetric matrix $A$ is invertible, then $A^{-1}=P\Lambda^{-1}P^T$ where 
+Note: If this symmetric matrix $A$ is invertible, then we have $A^{-1}=P\Lambda^{-1}P^T$ where 
 \begin{equation*}
 \Lambda^{-1} = 
 \begin{pmatrix}
 \ddots & 0 & 0 \\
 0 & \frac{1}{\lambda_i} & 0 \\
-0 & 0 & \ddots
+0 & 0 & \ddots.
 \end{pmatrix}
 \end{equation*}
 
@@ -138,45 +139,42 @@ Now $A=P\Lambda P^T=
 **Singular value decomposition**
 ===========
 
-
-${A}$, a $m \times n$ matrix, $A^{T}A$ is a symmetric matrix. Let $\{ v_{1},\ldots,v_{n} \}$ consists of all orthonormal eigenvectors of $A^{T}A$. Let  $\lambda_{1},...,\lambda_{n}$ the associated eigenvalues, $\lambda_{1} \ge \lambda_{2} \ge \lambda_{n} \ge 0$.  
-We have $\lVert Av_{i}\lVert^{2} = \lambda_{i}$. Since 
+For a $m \times n$ matrix ${A}$, $A^{T}A$ is a symmetric matrix. Let $\{ v_{1},\ldots,v_{n} \}$ be the collection of all the orthonormal eigenvectors of $A^{T}A$ (eigen-decomposition); let  $\lambda_{1},...,\lambda_{n}$ be the associated eigenvalues, $\lambda_{1} \ge \lambda_{2} \ge \cdots \geq \lambda_{n} \ge 0$. We have $\lVert Av_{i}\lVert^{2} = \lambda_{i}$, since 
 $$
 A^{T}Av_{i} = \lambda_{i}v_{i} \Rightarrow
-v_{i}^{T}A^{T}Av_{i} = \lambda_{i}v_{i}^{T}v_{i}\lambda_{i}
+v_{i}^{T}A^{T}Av_{i} = \lambda_{i}v_{i}^{T}v_{i}\lambda_{i}.
 $$
-Denote $\sigma_{i} = \sqrt{\lambda_{i}}$, $\lambda_{i}$ is the ith eigenvalue of $A^{T}A$.  
+The singular values of $A$ are squared roots of the eigenvalues of $A^{T}A$, denoted by $\sigma_{i} = \sqrt{\lambda_{i}}$; $\sigma_{1} \ge \sigma_{2} \ge \cdots \geq \sigma_{n} \ge 0$
 
-**Fact**: rank of A is equal to the number of positve singular value of A.  
+**Fact**: The rank of a matrix $A$ is equal to the number of positive singular value of $A$.  
 
-**SVD**: Let A be a rank r matrix. There exists a matrix $\Sigma_{m \times n}$ with diagonal entries in D are the first r singular value. That is  
+**SVD**: Let $A$ ($m \times n$) be a matrix of rank $r$. There exists a matrix $\Sigma_{m \times n}$ of the following form, with $D$ being a diagonal matrix whose entries are the first $r$ (non-zero) singular value. That is  
 $$ \Sigma_{m \times n} = 
 \begin{bmatrix}
   D & 0 \\
   0 & 0
-\end{bmatrix}
+\end{bmatrix},
 $$
 $$
  D = \begin{bmatrix}
       \sigma_{1} \\ & \ddots & \\ & & \sigma_{n}
-     \end{bmatrix}
+     \end{bmatrix}.
 $$
-The decomposition of A is:
+The Singular Value Decomposition of A is:
 $$
-  A = U_{m \times n}\Sigma_{m \times n}V^{T}_{n \times n}
+  A = U_{m \times m}\Sigma_{m \times n}V^{T}_{n \times n}
 $$
-Where U and V are bothy orthogonal matrices. V consists of all the eigenvectors of $A^{T}A$. U consists the column $u_{i}$ as 
-$$u_{i} = \frac{Av_{i}}{\lVert Av_{i}\rVert} = \frac{Av_{i}}{\sigma_{i}}, \\
-  1 \le i \le r
+Where $U$ and $V$ are both orthogonal matrices: 
+$V=[v_1, \cdots, v_n]$ consists of all orthonormal eigenvectors of $A^{T}A$; 
+$U=[u_1, \cdots, u_m]$ consists the column $u_{i}$ as follows
+$$\text{for }   1 \le i \le r, \quad u_{i} = \frac{Av_{i}}{\lVert Av_{i}\rVert} = \frac{Av_{i}}{\sigma_{i}},
 $$
-Those $\{ u_{i}\}^{r}_{1}$ can extend to $\{ u_{i}\}^{m}_{1}$ as the orthonormal basis.   
-Matrix U and V have the property:  
-$$
-  Col(U) = Col(A), \\
-  Col(V) = Row(A)
-$$
+and these columns $\{ u_{1}, \ldots, u_{r}\}$ can be extended to $\{ u_{1}, \ldots, u_{m}\}$ as the orthonormal basis. 
 
-Reduced SVD 
+Matrix $U$ and $V$ are not uniquely determined in general, but have the property: $Col(U)$ spans $Col(A)$ and $Col(V)$ spans $Row(A)$.
+
+
+Reduced (thin) SVD 
 -----------------------
 
 For those $A_{m \times n}$, $U_{m \times m}$, $V_{n \times n}$, $\Sigma_{m \times n}$ above, we have the partition:  
@@ -188,7 +186,7 @@ $$
   0 & 0
 \end{bmatrix}
 $$
-Consequently, the SVD of A can be represented as:  
+Consequently, the SVD of $A$ can be represented as:  
 $$
   A =
   \begin{bmatrix}
@@ -211,64 +209,61 @@ Application
 1. Linear Least Squares  
 ---------------------------
 
-We can use SVD to solve the Least Squares Problems as following:  
+We can use thin SVD to solve the Least Squares Problems as following:  
 
 \begin{align*}
  Ax &= b, \\
  A^{T}Ax &= A^{T}b, \\
- (UDV^{T})^{T}(UDV^{T})x &= (UDV^{T})^{T}b, \\
- \Rightarrow VD^{2}Dx &= VDU^{T}b, \\
- \Rightarrow D^{2}V^{T}x &= DU^{T}b, \\
- \Rightarrow DV^{T}x &= U^{T}b.
+ (U_rDV_r^{T})^{T}(U_rDV_r^{T})x &= (U_rDV_r^{T})^{T}b, \\
+  V_rDIDV_r^Tx &= V_rDU_r^{T}b, \\
+  DV_r^{T}x &= U_r^{T}b.
 \end{align*}
 
-Denote $w = V^{T}x$,$y = U^{T}b$, we have the following algorithm:  
+Denote $w = V_r^{T}x$, $y = U_r^{T}b$, we have the following algorithm:  
 
-**Algorithmn**  
+**Algorithm**  
 
-1. Find the SVD of $A = UDV^{T}$;  
-2. Compute $y = U^{T}b$;  
-3. Solve $w^{*} = D^{-1}y$;  
-4. $V^{T}x = w^{*} \Rightarrow x = Vw^{*}$;  
+1. Find the SVD of $A = U_rDV_r^{T}$;  
+2. Compute $y = U_r^{T}b$;  
+3. Solve the diagonal system $Dw=y$, giving $w^{*} = D^{-1}y$;  
+4. Solve $V_r^{T}x = w^{*} \Rightarrow x^* = V_rw^{*}$;  
 
-The solution of the equation is $x = V_{r}D^{-1}U_{r}^{T}b$, and we can notice that this SVD method allows A,b to be arbitrary. Notice that $V_{r}D^{-1}U_{r}^{T}$ is the inverse of A. Here we have the concept of generalized inverse.  
+The solution of the equation is $x^* = V_rD^{-1}U_r^{T}b= V\Sigma^{-1}U^{T}b$. 
+We notice that this SVD method allows $A$, $b$ to be arbitrary. Notice that $V_{r}D^{-1}U_{r}^{T}$ is like the "inverse" of A. Here we have the concept of generalized inverse.  
 
-**Moore-Penrose inverse**: $A^{+} = V_{r}D^{-1}U_{r}^{T}$
+**Moore-Penrose inverse of A**: $A^{\dagger} = V_{r}D^{-1}U_{r}^{T}$
 
 2.LS-Problem 
 -----------------------
 
 In LS Problem 
-$$\min_{x} \lVert Ax -b \rVert$$,  
-where A and b are not restricted at all, we have:  
+$$\min_{x} \lVert Ax -b \rVert,$$ 
+where $A$ and $b$ are not restricted at all, we have:  
 $$
   A^{T}Ax = A^{T}b.
 $$
 Let $\mathfrak{L}$ is the set of all the minimizers to the LS problem. We have following facts.  
 
-**Fact 1** $x^{*} = A^{+}b \in \mathfrak{L}$ .  
+**Fact 1** $x^{*} = A^{\dagger}b \in \mathfrak{L}$; from the normal equation, $A^{T}AA^{\dagger} = A^{T}.$  
 
 **Fact 2** $A\tilde{x_{1}} = A\tilde{x_{2}}$, for any $\tilde{x_{1}},\tilde{x_{2}} \in \mathfrak{L}$.  
 
-**Fact 3** For the optimization problem $\min_{x \in \mathfrak{L}} \lVert x\rVert$, there is a unique solution $x^{*} = A^{+}b$.  
+**Fact 3** For the optimization problem $\min_{x \in \mathfrak{L}} \lVert x\rVert$, there is a unique solution $x^{*} = A^{\dagger}b$.  
 
-**Fact 4** We already have the result that if we choose some $\lambda$, LS problem will has a unique solution to the "modified" normal equation:
+**Fact 4** We already have the result that if we choose some $\lambda>0$, LS problem will has a unique solution to the "modified" normal equation:
 $$
- (A^{T}A+\lambda I)x=A^{T}b
+ (A^{T}A+\lambda I)x=A^{T}b,
 $$
-that is,
+that is, $\hat{x} = (A^{T}A+\lambda I)^{-1}A^{T}b.$ In fact, let $\lambda \rightarrow 0$, we have $(A^{T}A+\lambda I)^{-1}A^{T} \rightarrow A^{\dagger}.$ So 
 $$
-  \hat{x} = (A^{T}A+\lambda I)^{-1}A^{T}b \\
-$$
-In fact, let $\lambda \rightarrow 0$, we have  
-$$
-  (A^{T}A+\lambda I)^{-1}A^{T} \rightarrow A^{+}
+ x^*= \lim_{\lambda \to 0} [(A^{T}A+\lambda I)^{-1}A^{T}]b= \lim_{\lambda \to 0} [A^T(AA^T+\lambda I)^{-1}]b = A^{\dagger} b.
 $$
 
-**Fact 5** The projection of b on Col(A) is given by $A(A^{T}A)^{-1}A^{T}b$ (assuming $A^{T}A$ is invertible), here is a more general result  
+**Fact 5** The projection of $b$ on $Col(A)$ is given by $A(A^{T}A)^{-1}A^{T}b$ (assuming $A^{T}A$ is invertible), here is a more general result  
 $$
-  \hat{b} = AA^{+}b = \lim_{\lambda \rightarrow 0}[A(A^{T}A+\lambda I)^{-1}A^{T}]b 
+  \hat{b} = AA^{\dagger}b = \lim_{\lambda \rightarrow 0}[A(A^{T}A+\lambda I)^{-1}A^{T}]b,
 $$
+so $P_A:=AA^{\dagger}$ is orthogonal projection onto $Col(A)$, $I-P_A$ is orthogonal projection onto $\op{Ker}(A^T).$
 
 
 

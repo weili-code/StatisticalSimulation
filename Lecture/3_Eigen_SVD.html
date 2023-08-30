@@ -1646,71 +1646,74 @@ Statistical Simulation, Wei Li </span> </span></p>
 <!------------->
 <div id="eigenvalue-decomposition" class="section level1">
 <h1>Eigenvalue decomposition</h1>
-<p>Square matrix <span class="math inline">\(M\)</span>. <span class="math inline">\(Mx=\lambda x\)</span> for some nonzero vector
-<span class="math inline">\(x\)</span> and some <span class="math inline">\(\lambda\)</span>(scalar).</p>
-<p>We call <span class="math inline">\(\lambda\)</span> a eigenvalue of
-<span class="math inline">\(M\)</span> whose associated eigenvector is
-<span class="math inline">\(x\)</span>.</p>
-<p>Note: <span class="math inline">\(A\)</span> is a square matrix.
-<span class="math inline">\(\det(A)=\prod_{i=1}^n
-\lambda_i\)</span>.</p>
-<p><strong>Eigen-decomposition:</strong> <span class="math inline">\(A\)</span> is a square and symmetric matrix. then
-<span class="math inline">\(A=P \Lambda P^T\)</span> where <span class="math display">\[P=[u_1, u_2,\cdots, u_n], u\mbox{&#39;s are the
-orthonormal eigenvector of }A\]</span> <span class="math display">\[\Lambda = \{\mbox{diagonal entries are the
-eigenvalues of }A\}\]</span> Note: If this symmetric matrix <span class="math inline">\(A\)</span> is invertible, then <span class="math inline">\(A^{-1}=P\Lambda^{-1}P^T\)</span> where <span class="math display">\[\begin{equation*}
+<p>Given a square matrix <span class="math inline">\(M\)</span> so that
+<span class="math inline">\(Mx=\lambda x\)</span> for some nonzero
+vector <span class="math inline">\(x\)</span> and some <span class="math inline">\(\lambda\)</span>(scalar). We call <span class="math inline">\(\lambda\)</span> an eigenvalue of <span class="math inline">\(M\)</span> whose associated eigenvector is <span class="math inline">\(x\)</span>.</p>
+<p>Note: <span class="math inline">\(A\)</span> is a square matrix,
+<span class="math inline">\(\det(A)=\prod_{i=1}^n \lambda_i\)</span>. A
+square matrix is invertible if and only if its eigenvalues are
+non-zero.</p>
+<p><strong>Eigen-decomposition:</strong> <span class="math inline">\(A\)</span> is a square and symmetric matrix, then
+we can write <span class="math inline">\(A=P \Lambda P^T\)</span> where
+<span class="math display">\[\begin{align*}
+&amp;P=[u_1, u_2,\cdots, u_n], \quad u\mbox{&#39;s are the orthonormal
+eigenvector of }A \\
+&amp;\Lambda = diag\{\text{eigenvalues of }A\}.
+\end{align*}\]</span></p>
+<p>Note: If this symmetric matrix <span class="math inline">\(A\)</span>
+is invertible, then we have <span class="math inline">\(A^{-1}=P\Lambda^{-1}P^T\)</span> where <span class="math display">\[\begin{equation*}
 \Lambda^{-1} =
 \begin{pmatrix}
 \ddots &amp; 0 &amp; 0 \\
 0 &amp; \frac{1}{\lambda_i} &amp; 0 \\
-0 &amp; 0 &amp; \ddots
+0 &amp; 0 &amp; \ddots.
 \end{pmatrix}
 \end{equation*}\]</span></p>
 </div>
 <div id="singular-value-decomposition" class="section level1">
 <h1><strong>Singular value decomposition</strong></h1>
-<p><span class="math inline">\({A}\)</span>, a <span class="math inline">\(m \times n\)</span> matrix, <span class="math inline">\(A^{T}A\)</span> is a symmetric matrix. Let <span class="math inline">\(\{ v_{1},\ldots,v_{n} \}\)</span> consists of all
-orthonormal eigenvectors of <span class="math inline">\(A^{T}A\)</span>.
-Let <span class="math inline">\(\lambda_{1},...,\lambda_{n}\)</span> the
+<p>For a <span class="math inline">\(m \times n\)</span> matrix <span class="math inline">\({A}\)</span>, <span class="math inline">\(A^{T}A\)</span> is a symmetric matrix. Let <span class="math inline">\(\{ v_{1},\ldots,v_{n} \}\)</span> be the
+collection of all the orthonormal eigenvectors of <span class="math inline">\(A^{T}A\)</span> (eigen-decomposition); let <span class="math inline">\(\lambda_{1},...,\lambda_{n}\)</span> be the
 associated eigenvalues, <span class="math inline">\(\lambda_{1} \ge
-\lambda_{2} \ge \lambda_{n} \ge 0\)</span>.<br />
-We have <span class="math inline">\(\lVert Av_{i}\lVert^{2} =
-\lambda_{i}\)</span>. Since <span class="math display">\[
+\lambda_{2} \ge \cdots \geq \lambda_{n} \ge 0\)</span>. We have <span class="math inline">\(\lVert Av_{i}\lVert^{2} = \lambda_{i}\)</span>,
+since <span class="math display">\[
 A^{T}Av_{i} = \lambda_{i}v_{i} \Rightarrow
-v_{i}^{T}A^{T}Av_{i} = \lambda_{i}v_{i}^{T}v_{i}\lambda_{i}
-\]</span> Denote <span class="math inline">\(\sigma_{i} =
-\sqrt{\lambda_{i}}\)</span>, <span class="math inline">\(\lambda_{i}\)</span> is the ith eigenvalue of
-<span class="math inline">\(A^{T}A\)</span>.</p>
-<p><strong>Fact</strong>: rank of A is equal to the number of positve
-singular value of A.</p>
-<p><strong>SVD</strong>: Let A be a rank r matrix. There exists a matrix
-<span class="math inline">\(\Sigma_{m \times n}\)</span> with diagonal
-entries in D are the first r singular value. That is<br />
+v_{i}^{T}A^{T}Av_{i} = \lambda_{i}v_{i}^{T}v_{i}\lambda_{i}.
+\]</span> The singular values of <span class="math inline">\(A\)</span>
+are squared roots of the eigenvalues of <span class="math inline">\(A^{T}A\)</span>, denoted by <span class="math inline">\(\sigma_{i} = \sqrt{\lambda_{i}}\)</span>; <span class="math inline">\(\sigma_{1} \ge \sigma_{2} \ge \cdots \geq
+\sigma_{n} \ge 0\)</span></p>
+<p><strong>Fact</strong>: The rank of a matrix <span class="math inline">\(A\)</span> is equal to the number of positive
+singular value of <span class="math inline">\(A\)</span>.</p>
+<p><strong>SVD</strong>: Let <span class="math inline">\(A\)</span>
+(<span class="math inline">\(m \times n\)</span>) be a matrix of rank
+<span class="math inline">\(r\)</span>. There exists a matrix <span class="math inline">\(\Sigma_{m \times n}\)</span> of the following
+form, with <span class="math inline">\(D\)</span> being a diagonal
+matrix whose entries are the first <span class="math inline">\(r\)</span> (non-zero) singular value. That
+is<br />
 <span class="math display">\[ \Sigma_{m \times n} =
 \begin{bmatrix}
   D &amp; 0 \\
   0 &amp; 0
-\end{bmatrix}
+\end{bmatrix},
 \]</span> <span class="math display">\[
 D = \begin{bmatrix}
       \sigma_{1} \\ &amp; \ddots &amp; \\ &amp; &amp; \sigma_{n}
-     \end{bmatrix}
-\]</span> The decomposition of A is: <span class="math display">\[
-  A = U_{m \times n}\Sigma_{m \times n}V^{T}_{n \times n}
-\]</span> Where U and V are bothy orthogonal matrices. V consists of all
-the eigenvectors of <span class="math inline">\(A^{T}A\)</span>. U
-consists the column <span class="math inline">\(u_{i}\)</span> as <span class="math display">\[u_{i} = \frac{Av_{i}}{\lVert Av_{i}\rVert} =
-\frac{Av_{i}}{\sigma_{i}}, \\
-  1 \le i \le r
-\]</span> Those <span class="math inline">\(\{ u_{i}\}^{r}_{1}\)</span>
-can extend to <span class="math inline">\(\{ u_{i}\}^{m}_{1}\)</span> as
-the orthonormal basis.<br />
-Matrix U and V have the property:<br />
-<span class="math display">\[
-  Col(U) = Col(A), \\
-  Col(V) = Row(A)
-\]</span></p>
-<div id="reduced-svd" class="section level2">
-<h2>Reduced SVD</h2>
+     \end{bmatrix}.
+\]</span> The Singular Value Decomposition of A is: <span class="math display">\[
+  A = U_{m \times m}\Sigma_{m \times n}V^{T}_{n \times n}
+\]</span> Where <span class="math inline">\(U\)</span> and <span class="math inline">\(V\)</span> are both orthogonal matrices: <span class="math inline">\(V=[v_1, \cdots, v_n]\)</span> consists of all
+orthonormal eigenvectors of <span class="math inline">\(A^{T}A\)</span>;
+<span class="math inline">\(U=[u_1, \cdots, u_m]\)</span> consists the
+column <span class="math inline">\(u_{i}\)</span> as follows <span class="math display">\[\text{for }   1 \le i \le r, \quad u_{i} =
+\frac{Av_{i}}{\lVert Av_{i}\rVert} = \frac{Av_{i}}{\sigma_{i}},
+\]</span> and these columns <span class="math inline">\(\{ u_{1},
+\ldots, u_{r}\}\)</span> can be extended to <span class="math inline">\(\{ u_{1}, \ldots, u_{m}\}\)</span> as the
+orthonormal basis.</p>
+<p>Matrix <span class="math inline">\(U\)</span> and <span class="math inline">\(V\)</span> are not uniquely determined in general,
+but have the property: <span class="math inline">\(Col(U)\)</span> spans
+<span class="math inline">\(Col(A)\)</span> and <span class="math inline">\(Col(V)\)</span> spans <span class="math inline">\(Row(A)\)</span>.</p>
+<div id="reduced-thin-svd" class="section level2">
+<h2>Reduced (thin) SVD</h2>
 <p>For those <span class="math inline">\(A_{m \times n}\)</span>, <span class="math inline">\(U_{m \times m}\)</span>, <span class="math inline">\(V_{n \times n}\)</span>, <span class="math inline">\(\Sigma_{m \times n}\)</span> above, we have the
 partition:<br />
 <span class="math display">\[
@@ -1720,7 +1723,7 @@ partition:<br />
   D &amp; 0 \\
   0 &amp; 0
 \end{bmatrix}
-\]</span> Consequently, the SVD of A can be represented as:<br />
+\]</span> Consequently, the SVD of <span class="math inline">\(A\)</span> can be represented as:<br />
 <span class="math display">\[
   A =
   \begin{bmatrix}
@@ -1742,72 +1745,74 @@ partition:<br />
 </div>
 <div id="linear-least-squares" class="section level2">
 <h2>1. Linear Least Squares</h2>
-<p>We can use SVD to solve the Least Squares Problems as following:</p>
+<p>We can use thin SVD to solve the Least Squares Problems as
+following:</p>
 <p><span class="math display">\[\begin{align*}
 Ax &amp;= b, \\
 A^{T}Ax &amp;= A^{T}b, \\
-(UDV^{T})^{T}(UDV^{T})x &amp;= (UDV^{T})^{T}b, \\
-\Rightarrow VD^{2}Dx &amp;= VDU^{T}b, \\
-\Rightarrow D^{2}V^{T}x &amp;= DU^{T}b, \\
-\Rightarrow DV^{T}x &amp;= U^{T}b.
+(U_rDV_r^{T})^{T}(U_rDV_r^{T})x &amp;= (U_rDV_r^{T})^{T}b, \\
+  V_rDIDV_r^Tx &amp;= V_rDU_r^{T}b, \\
+  DV_r^{T}x &amp;= U_r^{T}b.
 \end{align*}\]</span></p>
-<p>Denote <span class="math inline">\(w = V^{T}x\)</span>,<span class="math inline">\(y = U^{T}b\)</span>, we have the following
+<p>Denote <span class="math inline">\(w = V_r^{T}x\)</span>, <span class="math inline">\(y = U_r^{T}b\)</span>, we have the following
 algorithm:</p>
-<p><strong>Algorithmn</strong></p>
+<p><strong>Algorithm</strong></p>
 <ol style="list-style-type: decimal">
 <li>Find the SVD of <span class="math inline">\(A =
-UDV^{T}\)</span>;<br />
+U_rDV_r^{T}\)</span>;<br />
 </li>
-<li>Compute <span class="math inline">\(y = U^{T}b\)</span>;<br />
+<li>Compute <span class="math inline">\(y = U_r^{T}b\)</span>;<br />
 </li>
-<li>Solve <span class="math inline">\(w^{*} = D^{-1}y\)</span>;<br />
+<li>Solve the diagonal system <span class="math inline">\(Dw=y\)</span>,
+giving <span class="math inline">\(w^{*} = D^{-1}y\)</span>;<br />
 </li>
-<li><span class="math inline">\(V^{T}x = w^{*} \Rightarrow x =
-Vw^{*}\)</span>;</li>
+<li>Solve <span class="math inline">\(V_r^{T}x = w^{*} \Rightarrow x^* =
+V_rw^{*}\)</span>;</li>
 </ol>
-<p>The solution of the equation is <span class="math inline">\(x =
-V_{r}D^{-1}U_{r}^{T}b\)</span>, and we can notice that this SVD method
-allows A,b to be arbitrary. Notice that <span class="math inline">\(V_{r}D^{-1}U_{r}^{T}\)</span> is the inverse of A.
-Here we have the concept of generalized inverse.</p>
-<p><strong>Moore-Penrose inverse</strong>: <span class="math inline">\(A^{+} = V_{r}D^{-1}U_{r}^{T}\)</span></p>
+<p>The solution of the equation is <span class="math inline">\(x^* =
+V_rD^{-1}U_r^{T}b= V\Sigma^{-1}U^{T}b\)</span>. We notice that this SVD
+method allows <span class="math inline">\(A\)</span>, <span class="math inline">\(b\)</span> to be arbitrary. Notice that <span class="math inline">\(V_{r}D^{-1}U_{r}^{T}\)</span> is like the
+“inverse” of A. Here we have the concept of generalized inverse.</p>
+<p><strong>Moore-Penrose inverse of A</strong>: <span class="math inline">\(A^{\dagger} = V_{r}D^{-1}U_{r}^{T}\)</span></p>
 </div>
 <div id="ls-problem" class="section level2">
 <h2>2.LS-Problem</h2>
 <p>In LS Problem <span class="math display">\[\min_{x} \lVert Ax -b
-\rVert\]</span>,<br />
-where A and b are not restricted at all, we have:<br />
+\rVert,\]</span> where <span class="math inline">\(A\)</span> and <span class="math inline">\(b\)</span> are not restricted at all, we
+have:<br />
 <span class="math display">\[
   A^{T}Ax = A^{T}b.
 \]</span> Let <span class="math inline">\(\mathfrak{L}\)</span> is the
 set of all the minimizers to the LS problem. We have following
 facts.</p>
-<p><strong>Fact 1</strong> <span class="math inline">\(x^{*} = A^{+}b
-\in \mathfrak{L}\)</span> .</p>
+<p><strong>Fact 1</strong> <span class="math inline">\(x^{*} =
+A^{\dagger}b \in \mathfrak{L}\)</span>; from the normal equation, <span class="math inline">\(A^{T}AA^{\dagger} = A^{T}.\)</span></p>
 <p><strong>Fact 2</strong> <span class="math inline">\(A\tilde{x_{1}} =
 A\tilde{x_{2}}\)</span>, for any <span class="math inline">\(\tilde{x_{1}},\tilde{x_{2}} \in
 \mathfrak{L}\)</span>.</p>
 <p><strong>Fact 3</strong> For the optimization problem <span class="math inline">\(\min_{x \in \mathfrak{L}} \lVert x\rVert\)</span>,
 there is a unique solution <span class="math inline">\(x^{*} =
-A^{+}b\)</span>.</p>
+A^{\dagger}b\)</span>.</p>
 <p><strong>Fact 4</strong> We already have the result that if we choose
-some <span class="math inline">\(\lambda\)</span>, LS problem will has a
-unique solution to the “modified” normal equation: <span class="math display">\[
-(A^{T}A+\lambda I)x=A^{T}b
-\]</span> that is, <span class="math display">\[
-  \hat{x} = (A^{T}A+\lambda I)^{-1}A^{T}b \\
-\]</span> In fact, let <span class="math inline">\(\lambda \rightarrow
-0\)</span>, we have<br />
-<span class="math display">\[
-  (A^{T}A+\lambda I)^{-1}A^{T} \rightarrow A^{+}
+some <span class="math inline">\(\lambda&gt;0\)</span>, LS problem will
+has a unique solution to the “modified” normal equation: <span class="math display">\[
+(A^{T}A+\lambda I)x=A^{T}b,
+\]</span> that is, <span class="math inline">\(\hat{x} = (A^{T}A+\lambda
+I)^{-1}A^{T}b.\)</span> In fact, let <span class="math inline">\(\lambda
+\rightarrow 0\)</span>, we have <span class="math inline">\((A^{T}A+\lambda I)^{-1}A^{T} \rightarrow
+A^{\dagger}.\)</span> So <span class="math display">\[
+x^*= \lim_{\lambda \to 0} [(A^{T}A+\lambda I)^{-1}A^{T}]b= \lim_{\lambda
+\to 0} [A^T(AA^T+\lambda I)^{-1}]b = A^{\dagger} b.
 \]</span></p>
-<p><strong>Fact 5</strong> The projection of b on Col(A) is given by
-<span class="math inline">\(A(A^{T}A)^{-1}A^{T}b\)</span> (assuming
-<span class="math inline">\(A^{T}A\)</span> is invertible), here is a
-more general result<br />
+<p><strong>Fact 5</strong> The projection of <span class="math inline">\(b\)</span> on <span class="math inline">\(Col(A)\)</span> is given by <span class="math inline">\(A(A^{T}A)^{-1}A^{T}b\)</span> (assuming <span class="math inline">\(A^{T}A\)</span> is invertible), here is a more
+general result<br />
 <span class="math display">\[
-  \hat{b} = AA^{+}b = \lim_{\lambda \rightarrow 0}[A(A^{T}A+\lambda
-I)^{-1}A^{T}]b
-\]</span></p>
+  \hat{b} = AA^{\dagger}b = \lim_{\lambda \rightarrow
+0}[A(A^{T}A+\lambda I)^{-1}A^{T}]b,
+\]</span> so <span class="math inline">\(P_A:=AA^{\dagger}\)</span> is
+orthogonal projection onto <span class="math inline">\(Col(A)\)</span>,
+<span class="math inline">\(I-P_A\)</span> is orthogonal projection onto
+<span class="math inline">\(\operatorname{Ker}(A^T).\)</span></p>
 <!------------->
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
 <strong>Updated:</strong> 2023-08-29 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">

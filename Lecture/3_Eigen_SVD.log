@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.4.7)  29 AUG 2023 13:48
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.4.7)  29 AUG 2023 21:05
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -639,46 +639,41 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 [1
 
 {/usr/local/texlive/2020/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-Underfull \hbox (badness 10000) in paragraph at lines 214--217
+Underfull \hbox (badness 10000) in paragraph at lines 217--221
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 232--235
+Underfull \hbox (badness 10000) in paragraph at lines 247--249
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 243--245
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 252--253
+Underfull \hbox (badness 10000) in paragraph at lines 256--257
 
  []
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 294--296
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 296--298
-
- []
-
-
 Underfull \hbox (badness 10000) in paragraph at lines 298--300
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 313--315
+Underfull \hbox (badness 10000) in paragraph at lines 300--302
 
  []
 
-LaTeX Font Info:    Trying to load font information for U+euf on input line 317
+
+Underfull \hbox (badness 10000) in paragraph at lines 302--304
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 319--321
+
+ []
+
+LaTeX Font Info:    Trying to load font information for U+euf on input line 323
 .
 (/usr/local/texlive/2020/texmf-dist/tex/latex/amsfonts/ueuf.fd
 File: ueuf.fd 2013/01/14 v3.01 Euler Fraktur
@@ -686,12 +681,12 @@ File: ueuf.fd 2013/01/14 v3.01 Euler Fraktur
 File: mt-euf.cfg 2006/07/03 v1.1 microtype config. file: AMS Euler Fraktur (RS)
 
 ) [3]
-Underfull \hbox (badness 10000) in paragraph at lines 335--336
+Underfull \hbox (badness 10000) in paragraph at lines 341--342
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 340--343
+Underfull \hbox (badness 10000) in paragraph at lines 348--351
 
  []
 
@@ -699,19 +694,19 @@ Underfull \hbox (badness 10000) in paragraph at lines 340--343
 Package caption Warning: Unused \captionsetup[figure] on input line 88.
 See the caption package documentation for explanation.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 350.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 358.
 [4]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 350.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 358.
 (./3_Eigen_SVD.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 350.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 350.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 358.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 358.
  ) 
 Here is how much of TeX's memory you used:
- 15322 strings out of 480608
- 237761 string characters out of 5903631
- 549898 words of memory out of 5000000
- 30917 multiletter control sequences out of 15000+600000
- 580110 words of font info for 78 fonts, out of 8000000 for 9000
+ 15340 strings out of 480608
+ 237981 string characters out of 5903631
+ 550905 words of memory out of 5000000
+ 30921 multiletter control sequences out of 15000+600000
+ 586581 words of font info for 86 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  44i,12n,45p,810b,449s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/lo
@@ -731,7 +726,7 @@ fonts/type1/public/lm/lmr10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1
 lmr17.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/lm/lmr7.pfb></
 usr/local/texlive/2020/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/
 texlive/2020/texmf-dist/fonts/type1/public/lm/lmsy7.pfb>
-Output written on 3_Eigen_SVD.pdf (4 pages, 197419 bytes).
+Output written on 3_Eigen_SVD.pdf (4 pages, 200757 bytes).
 PDF statistics:
  132 PDF objects out of 1000 (max. 8388607)
  110 compressed objects within 2 object streams

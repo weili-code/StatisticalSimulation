@@ -1774,71 +1774,74 @@ Statistical Simulation, Wei Li </span> </span></p>
 <!------------->
 <div id="eigenvalue-decomposition" class="section level1">
 <h1>Eigenvalue decomposition</h1>
-<p>Square matrix <span class="math inline">\(M\)</span>. <span class="math inline">\(Mx=\lambda x\)</span> for some nonzero vector
-<span class="math inline">\(x\)</span> and some <span class="math inline">\(\lambda\)</span>(scalar).</p>
-<p>We call <span class="math inline">\(\lambda\)</span> a eigenvalue of
-<span class="math inline">\(M\)</span> whose associated eigenvector is
-<span class="math inline">\(x\)</span>.</p>
-<p>Note: <span class="math inline">\(A\)</span> is a square matrix.
-<span class="math inline">\(\det(A)=\prod_{i=1}^n
-\lambda_i\)</span>.</p>
-<p><strong>Eigen-decomposition:</strong> <span class="math inline">\(A\)</span> is a square and symmetric matrix. then
-<span class="math inline">\(A=P \Lambda P^T\)</span> where <span class="math display">\[P=[u_1, u_2,\cdots, u_n], u\mbox{&#39;s are the
-orthonormal eigenvector of }A\]</span> <span class="math display">\[\Lambda = \{\mbox{diagonal entries are the
-eigenvalues of }A\}\]</span> Note: If this symmetric matrix <span class="math inline">\(A\)</span> is invertible, then <span class="math inline">\(A^{-1}=P\Lambda^{-1}P^T\)</span> where <span class="math display">\[\begin{equation*}
+<p>Given a square matrix <span class="math inline">\(M\)</span> so that
+<span class="math inline">\(Mx=\lambda x\)</span> for some nonzero
+vector <span class="math inline">\(x\)</span> and some <span class="math inline">\(\lambda\)</span>(scalar). We call <span class="math inline">\(\lambda\)</span> an eigenvalue of <span class="math inline">\(M\)</span> whose associated eigenvector is <span class="math inline">\(x\)</span>.</p>
+<p>Note: <span class="math inline">\(A\)</span> is a square matrix,
+<span class="math inline">\(\det(A)=\prod_{i=1}^n \lambda_i\)</span>. A
+square matrix is invertible if and only if its eigenvalues are
+non-zero.</p>
+<p><strong>Eigen-decomposition:</strong> <span class="math inline">\(A\)</span> is a square and symmetric matrix, then
+we can write <span class="math inline">\(A=P \Lambda P^T\)</span> where
+<span class="math display">\[\begin{align*}
+&amp;P=[u_1, u_2,\cdots, u_n], \quad u\mbox{&#39;s are the orthonormal
+eigenvector of }A \\
+&amp;\Lambda = diag\{\text{eigenvalues of }A\}.
+\end{align*}\]</span></p>
+<p>Note: If this symmetric matrix <span class="math inline">\(A\)</span>
+is invertible, then we have <span class="math inline">\(A^{-1}=P\Lambda^{-1}P^T\)</span> where <span class="math display">\[\begin{equation*}
 \Lambda^{-1} =
 \begin{pmatrix}
 \ddots &amp; 0 &amp; 0 \\
 0 &amp; \frac{1}{\lambda_i} &amp; 0 \\
-0 &amp; 0 &amp; \ddots
+0 &amp; 0 &amp; \ddots.
 \end{pmatrix}
 \end{equation*}\]</span></p>
 </div>
 <div id="singular-value-decomposition" class="section level1">
 <h1><strong>Singular value decomposition</strong></h1>
-<p><span class="math inline">\({A}\)</span>, a <span class="math inline">\(m \times n\)</span> matrix, <span class="math inline">\(A^{T}A\)</span> is a symmetric matrix. Let <span class="math inline">\(\{ v_{1},\ldots,v_{n} \}\)</span> consists of all
-orthonormal eigenvectors of <span class="math inline">\(A^{T}A\)</span>.
-Let <span class="math inline">\(\lambda_{1},...,\lambda_{n}\)</span> the
+<p>For a <span class="math inline">\(m \times n\)</span> matrix <span class="math inline">\({A}\)</span>, <span class="math inline">\(A^{T}A\)</span> is a symmetric matrix. Let <span class="math inline">\(\{ v_{1},\ldots,v_{n} \}\)</span> be the
+collection of all the orthonormal eigenvectors of <span class="math inline">\(A^{T}A\)</span> (eigen-decomposition); let <span class="math inline">\(\lambda_{1},...,\lambda_{n}\)</span> be the
 associated eigenvalues, <span class="math inline">\(\lambda_{1} \ge
-\lambda_{2} \ge \lambda_{n} \ge 0\)</span>.<br />
-We have <span class="math inline">\(\lVert Av_{i}\lVert^{2} =
-\lambda_{i}\)</span>. Since <span class="math display">\[
+\lambda_{2} \ge \cdots \geq \lambda_{n} \ge 0\)</span>. We have <span class="math inline">\(\lVert Av_{i}\lVert^{2} = \lambda_{i}\)</span>,
+since <span class="math display">\[
 A^{T}Av_{i} = \lambda_{i}v_{i} \Rightarrow
-v_{i}^{T}A^{T}Av_{i} = \lambda_{i}v_{i}^{T}v_{i}\lambda_{i}
-\]</span> Denote <span class="math inline">\(\sigma_{i} =
-\sqrt{\lambda_{i}}\)</span>, <span class="math inline">\(\lambda_{i}\)</span> is the ith eigenvalue of
-<span class="math inline">\(A^{T}A\)</span>.</p>
-<p><strong>Fact</strong>: rank of A is equal to the number of positve
-singular value of A.</p>
-<p><strong>SVD</strong>: Let A be a rank r matrix. There exists a matrix
-<span class="math inline">\(\Sigma_{m \times n}\)</span> with diagonal
-entries in D are the first r singular value. That is<br />
+v_{i}^{T}A^{T}Av_{i} = \lambda_{i}v_{i}^{T}v_{i}\lambda_{i}.
+\]</span> The singular values of <span class="math inline">\(A\)</span>
+are squared roots of the eigenvalues of <span class="math inline">\(A^{T}A\)</span>, denoted by <span class="math inline">\(\sigma_{i} = \sqrt{\lambda_{i}}\)</span>; <span class="math inline">\(\sigma_{1} \ge \sigma_{2} \ge \cdots \geq
+\sigma_{n} \ge 0\)</span></p>
+<p><strong>Fact</strong>: The rank of a matrix <span class="math inline">\(A\)</span> is equal to the number of positive
+singular value of <span class="math inline">\(A\)</span>.</p>
+<p><strong>SVD</strong>: Let <span class="math inline">\(A\)</span>
+(<span class="math inline">\(m \times n\)</span>) be a matrix of rank
+<span class="math inline">\(r\)</span>. There exists a matrix <span class="math inline">\(\Sigma_{m \times n}\)</span> of the following
+form, with <span class="math inline">\(D\)</span> being a diagonal
+matrix whose entries are the first <span class="math inline">\(r\)</span> (non-zero) singular value. That
+is<br />
 <span class="math display">\[ \Sigma_{m \times n} =
 \begin{bmatrix}
   D &amp; 0 \\
   0 &amp; 0
-\end{bmatrix}
+\end{bmatrix},
 \]</span> <span class="math display">\[
 D = \begin{bmatrix}
       \sigma_{1} \\ &amp; \ddots &amp; \\ &amp; &amp; \sigma_{n}
-     \end{bmatrix}
-\]</span> The decomposition of A is: <span class="math display">\[
-  A = U_{m \times n}\Sigma_{m \times n}V^{T}_{n \times n}
-\]</span> Where U and V are bothy orthogonal matrices. V consists of all
-the eigenvectors of <span class="math inline">\(A^{T}A\)</span>. U
-consists the column <span class="math inline">\(u_{i}\)</span> as <span class="math display">\[u_{i} = \frac{Av_{i}}{\lVert Av_{i}\rVert} =
-\frac{Av_{i}}{\sigma_{i}}, \\
-  1 \le i \le r
-\]</span> Those <span class="math inline">\(\{ u_{i}\}^{r}_{1}\)</span>
-can extend to <span class="math inline">\(\{ u_{i}\}^{m}_{1}\)</span> as
-the orthonormal basis.<br />
-Matrix U and V have the property:<br />
-<span class="math display">\[
-  Col(U) = Col(A), \\
-  Col(V) = Row(A)
-\]</span></p>
-<div id="reduced-svd" class="section level2">
-<h2>Reduced SVD</h2>
+     \end{bmatrix}.
+\]</span> The Singular Value Decomposition of A is: <span class="math display">\[
+  A = U_{m \times m}\Sigma_{m \times n}V^{T}_{n \times n}
+\]</span> Where <span class="math inline">\(U\)</span> and <span class="math inline">\(V\)</span> are both orthogonal matrices: <span class="math inline">\(V=[v_1, \cdots, v_n]\)</span> consists of all
+orthonormal eigenvectors of <span class="math inline">\(A^{T}A\)</span>;
+<span class="math inline">\(U=[u_1, \cdots, u_m]\)</span> consists the
+column <span class="math inline">\(u_{i}\)</span> as follows <span class="math display">\[\text{for }   1 \le i \le r, \quad u_{i} =
+\frac{Av_{i}}{\lVert Av_{i}\rVert} = \frac{Av_{i}}{\sigma_{i}},
+\]</span> and these columns <span class="math inline">\(\{ u_{1},
+\ldots, u_{r}\}\)</span> can be extended to <span class="math inline">\(\{ u_{1}, \ldots, u_{m}\}\)</span> as the
+orthonormal basis.</p>
+<p>Matrix <span class="math inline">\(U\)</span> and <span class="math inline">\(V\)</span> are not uniquely determined in general,
+but have the property: <span class="math inline">\(Col(U)\)</span> spans
+<span class="math inline">\(Col(A)\)</span> and <span class="math inline">\(Col(V)\)</span> spans <span class="math inline">\(Row(A)\)</span>.</p>
+<div id="reduced-thin-svd" class="section level2">
+<h2>Reduced (thin) SVD</h2>
 <p>For those <span class="math inline">\(A_{m \times n}\)</span>, <span class="math inline">\(U_{m \times m}\)</span>, <span class="math inline">\(V_{n \times n}\)</span>, <span class="math inline">\(\Sigma_{m \times n}\)</span> above, we have the
 partition:<br />
 <span class="math display">\[
@@ -1848,7 +1851,7 @@ partition:<br />
   D &amp; 0 \\
   0 &amp; 0
 \end{bmatrix}
-\]</span> Consequently, the SVD of A can be represented as:<br />
+\]</span> Consequently, the SVD of <span class="math inline">\(A\)</span> can be represented as:<br />
 <span class="math display">\[
   A =
   \begin{bmatrix}
@@ -1870,72 +1873,74 @@ partition:<br />
 </div>
 <div id="linear-least-squares" class="section level2">
 <h2>1. Linear Least Squares</h2>
-<p>We can use SVD to solve the Least Squares Problems as following:</p>
+<p>We can use thin SVD to solve the Least Squares Problems as
+following:</p>
 <p><span class="math display">\[\begin{align*}
 Ax &amp;= b, \\
 A^{T}Ax &amp;= A^{T}b, \\
-(UDV^{T})^{T}(UDV^{T})x &amp;= (UDV^{T})^{T}b, \\
-\Rightarrow VD^{2}Dx &amp;= VDU^{T}b, \\
-\Rightarrow D^{2}V^{T}x &amp;= DU^{T}b, \\
-\Rightarrow DV^{T}x &amp;= U^{T}b.
+(U_rDV_r^{T})^{T}(U_rDV_r^{T})x &amp;= (U_rDV_r^{T})^{T}b, \\
+  V_rDIDV_r^Tx &amp;= V_rDU_r^{T}b, \\
+  DV_r^{T}x &amp;= U_r^{T}b.
 \end{align*}\]</span></p>
-<p>Denote <span class="math inline">\(w = V^{T}x\)</span>,<span class="math inline">\(y = U^{T}b\)</span>, we have the following
+<p>Denote <span class="math inline">\(w = V_r^{T}x\)</span>, <span class="math inline">\(y = U_r^{T}b\)</span>, we have the following
 algorithm:</p>
-<p><strong>Algorithmn</strong></p>
+<p><strong>Algorithm</strong></p>
 <ol style="list-style-type: decimal">
 <li>Find the SVD of <span class="math inline">\(A =
-UDV^{T}\)</span>;<br />
+U_rDV_r^{T}\)</span>;<br />
 </li>
-<li>Compute <span class="math inline">\(y = U^{T}b\)</span>;<br />
+<li>Compute <span class="math inline">\(y = U_r^{T}b\)</span>;<br />
 </li>
-<li>Solve <span class="math inline">\(w^{*} = D^{-1}y\)</span>;<br />
+<li>Solve the diagonal system <span class="math inline">\(Dw=y\)</span>,
+giving <span class="math inline">\(w^{*} = D^{-1}y\)</span>;<br />
 </li>
-<li><span class="math inline">\(V^{T}x = w^{*} \Rightarrow x =
-Vw^{*}\)</span>;</li>
+<li>Solve <span class="math inline">\(V_r^{T}x = w^{*} \Rightarrow x^* =
+V_rw^{*}\)</span>;</li>
 </ol>
-<p>The solution of the equation is <span class="math inline">\(x =
-V_{r}D^{-1}U_{r}^{T}b\)</span>, and we can notice that this SVD method
-allows A,b to be arbitrary. Notice that <span class="math inline">\(V_{r}D^{-1}U_{r}^{T}\)</span> is the inverse of A.
-Here we have the concept of generalized inverse.</p>
-<p><strong>Moore-Penrose inverse</strong>: <span class="math inline">\(A^{+} = V_{r}D^{-1}U_{r}^{T}\)</span></p>
+<p>The solution of the equation is <span class="math inline">\(x^* =
+V_rD^{-1}U_r^{T}b= V\Sigma^{-1}U^{T}b\)</span>. We notice that this SVD
+method allows <span class="math inline">\(A\)</span>, <span class="math inline">\(b\)</span> to be arbitrary. Notice that <span class="math inline">\(V_{r}D^{-1}U_{r}^{T}\)</span> is like the
+“inverse” of A. Here we have the concept of generalized inverse.</p>
+<p><strong>Moore-Penrose inverse of A</strong>: <span class="math inline">\(A^{\dagger} = V_{r}D^{-1}U_{r}^{T}\)</span></p>
 </div>
 <div id="ls-problem" class="section level2">
 <h2>2.LS-Problem</h2>
 <p>In LS Problem <span class="math display">\[\min_{x} \lVert Ax -b
-\rVert\]</span>,<br />
-where A and b are not restricted at all, we have:<br />
+\rVert,\]</span> where <span class="math inline">\(A\)</span> and <span class="math inline">\(b\)</span> are not restricted at all, we
+have:<br />
 <span class="math display">\[
   A^{T}Ax = A^{T}b.
 \]</span> Let <span class="math inline">\(\mathfrak{L}\)</span> is the
 set of all the minimizers to the LS problem. We have following
 facts.</p>
-<p><strong>Fact 1</strong> <span class="math inline">\(x^{*} = A^{+}b
-\in \mathfrak{L}\)</span> .</p>
+<p><strong>Fact 1</strong> <span class="math inline">\(x^{*} =
+A^{\dagger}b \in \mathfrak{L}\)</span>; from the normal equation, <span class="math inline">\(A^{T}AA^{\dagger} = A^{T}.\)</span></p>
 <p><strong>Fact 2</strong> <span class="math inline">\(A\tilde{x_{1}} =
 A\tilde{x_{2}}\)</span>, for any <span class="math inline">\(\tilde{x_{1}},\tilde{x_{2}} \in
 \mathfrak{L}\)</span>.</p>
 <p><strong>Fact 3</strong> For the optimization problem <span class="math inline">\(\min_{x \in \mathfrak{L}} \lVert x\rVert\)</span>,
 there is a unique solution <span class="math inline">\(x^{*} =
-A^{+}b\)</span>.</p>
+A^{\dagger}b\)</span>.</p>
 <p><strong>Fact 4</strong> We already have the result that if we choose
-some <span class="math inline">\(\lambda\)</span>, LS problem will has a
-unique solution to the “modified” normal equation: <span class="math display">\[
-(A^{T}A+\lambda I)x=A^{T}b
-\]</span> that is, <span class="math display">\[
-  \hat{x} = (A^{T}A+\lambda I)^{-1}A^{T}b \\
-\]</span> In fact, let <span class="math inline">\(\lambda \rightarrow
-0\)</span>, we have<br />
-<span class="math display">\[
-  (A^{T}A+\lambda I)^{-1}A^{T} \rightarrow A^{+}
+some <span class="math inline">\(\lambda&gt;0\)</span>, LS problem will
+has a unique solution to the “modified” normal equation: <span class="math display">\[
+(A^{T}A+\lambda I)x=A^{T}b,
+\]</span> that is, <span class="math inline">\(\hat{x} = (A^{T}A+\lambda
+I)^{-1}A^{T}b.\)</span> In fact, let <span class="math inline">\(\lambda
+\rightarrow 0\)</span>, we have <span class="math inline">\((A^{T}A+\lambda I)^{-1}A^{T} \rightarrow
+A^{\dagger}.\)</span> So <span class="math display">\[
+x^*= \lim_{\lambda \to 0} [(A^{T}A+\lambda I)^{-1}A^{T}]b= \lim_{\lambda
+\to 0} [A^T(AA^T+\lambda I)^{-1}]b = A^{\dagger} b.
 \]</span></p>
-<p><strong>Fact 5</strong> The projection of b on Col(A) is given by
-<span class="math inline">\(A(A^{T}A)^{-1}A^{T}b\)</span> (assuming
-<span class="math inline">\(A^{T}A\)</span> is invertible), here is a
-more general result<br />
+<p><strong>Fact 5</strong> The projection of <span class="math inline">\(b\)</span> on <span class="math inline">\(Col(A)\)</span> is given by <span class="math inline">\(A(A^{T}A)^{-1}A^{T}b\)</span> (assuming <span class="math inline">\(A^{T}A\)</span> is invertible), here is a more
+general result<br />
 <span class="math display">\[
-  \hat{b} = AA^{+}b = \lim_{\lambda \rightarrow 0}[A(A^{T}A+\lambda
-I)^{-1}A^{T}]b
-\]</span></p>
+  \hat{b} = AA^{\dagger}b = \lim_{\lambda \rightarrow
+0}[A(A^{T}A+\lambda I)^{-1}A^{T}]b,
+\]</span> so <span class="math inline">\(P_A:=AA^{\dagger}\)</span> is
+orthogonal projection onto <span class="math inline">\(Col(A)\)</span>,
+<span class="math inline">\(I-P_A\)</span> is orthogonal projection onto
+<span class="math inline">\(\operatorname{Ker}(A^T).\)</span></p>
 <!------------->
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
 <strong>Updated:</strong> 2023-08-29 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
@@ -1944,7 +1949,7 @@ Statistical Simulation, Wei Li </span> </span></p>
 </div>
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiTUFUIDY1MzogU3RhdGlzdGljYWwgU2ltdWxhdGlvbiIKYXV0aG9yOiBJbnN0cnVjdG9yJDokIERyLiBXZWkgTGkKZGF0ZTogImByIFN5cy5EYXRlKClgIgpnZW9tZXRyeTogbGVmdD0yY20sIHJpZ2h0PTJjbSwgdG9wPTJjbSwgYm90dG9tPTJjbQpsaW5lc3RyZXRjaDogMS4zCm91dHB1dDoKICBodG1sX2RvY3VtZW50OgogICAgZGZfcHJpbnQ6IHBhZ2VkCiAgICBtYXRoamF4X2NvbmZpZzoKICAgICAgLSBUZVgtQU1TLU1NTF9IVE1Mb3JNTUwgICAKICBwZGZfZG9jdW1lbnQ6IAogICAgICBpbmNsdWRlOgogICAgICAgIGluX2hlYWRlcjogcHJlYW1ibGVfcm1kLnRleAogIGh0bWxfbm90ZWJvb2s6IGRlZmF1bHQKZm9udHNpemU6IDE0cHQKaGVhZGVyLWluY2x1ZGVzOgotIFx1c2VwYWNrYWdle2Ftc21hdGh9Ci0gXHVzZXBhY2thZ2VbbGluZXdpZHRoPTFwdF17bWRmcmFtZWR9Ci0gXG5ld2NvbW1hbmRcaW5uZXJbMl17XGxlZnRcbGFuZ2xlIzEsIzJccmlnaHRccmFuZ2xlfQotIFxuZXdjb21tYW5kXGZsb29yWzFde1xsZmxvb3IjMVxyZmxvb3J9Ci0gXG5ld2NvbW1hbmRcY2VpbFsxXXtcbGNlaWwjMVxyY2VpbH0KLSBcbmV3Y29tbWFuZFxtYlsxXXtcbWF0aGJmeyMxfX0KLSBcbmV3Y29tbWFuZFxic1sxXXtcYm9sZHN5bWJvbHsjMX19Ci0gXG5ld2NvbW1hbmRcbXJbMV17XG1hdGhybXsjMX19Ci0gXG5ld2NvbW1hbmRcd2hbMV17XHdpZGVoYXR7IzF9fQotIFxuZXdjb21tYW5kXG9wWzFde1xvcGVyYXRvcm5hbWV7IzF9fQotIFxuZXdjb21tYW5kXG1iYlsxXXtcbWF0aGJieyMxfX0KLSBcdXNlcGFja2FnZXtjYXB0aW9ufQotIFxjYXB0aW9uc2V0dXBbZmlndXJlXXtsYWJlbGZvcm1hdD1lbXB0eX0KLSBcbmV3Y29tbWFuZHtcd2VpfVsxXXtcdGV4dGNvbG9ye29yYW5nZX17KFdlaTojMSl9fQotLS0KCjxzY3JpcHQgdHlwZT0idGV4dC94LW1hdGhqYXgtY29uZmlnIj4KTWF0aEpheC5IdWIuQ29uZmlnKHsKICBUZVg6IHsgZXF1YXRpb25OdW1iZXJzOiB7IGF1dG9OdW1iZXI6ICJBTVMiIH0gfQp9KTsKPC9zY3JpcHQ+CgoKPHNwYW4gc3R5bGU9ImJhY2tncm91bmQtY29sb3I6ICNmNWY1ZjU7IHBhZGRpbmc6IDVweDsgZGlzcGxheTogYmxvY2s7Ij4KICAgIDxzcGFuIHN0eWxlPSJ3aWR0aDogMjUlOyBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7IHRleHQtYWxpZ246IGxlZnQ7Ij4KICAgICAgICBbQmFja10oamF2YXNjcmlwdDp3aW5kb3cuaGlzdG9yeS5iYWNrKCkpCiAgICA8L3NwYW4+CiAgICA8c3BhbiBzdHlsZT0id2lkdGg6IDMwJTsgZGlzcGxheTogaW5saW5lLWJsb2NrOyB0ZXh0LWFsaWduOiBjZW50ZXI7IGNvbG9yOiBncmV5OyI+CiAgICAgICAgKipVcGRhdGVkOioqIGByIFN5cy5EYXRlKClgCiAgICA8L3NwYW4+CiAgICA8c3BhbiBzdHlsZT0id2lkdGg6IDM1JTsgZGlzcGxheTogaW5saW5lLWJsb2NrOyB0ZXh0LWFsaWduOiByaWdodDsgY29sb3I6IGdyZXk7Ij4KICAgICAgICBTdGF0aXN0aWNhbCBTaW11bGF0aW9uLCBXZWkgTGkKICAgIDwvc3Bhbj4KPC9zcGFuPgoKPCEtLS0tLS0tLS0tLS0tPgoKCiMgRWlnZW52YWx1ZSBkZWNvbXBvc2l0aW9uCgpTcXVhcmUgbWF0cml4ICRNJC4gJE14PVxsYW1iZGEgeCQgZm9yIHNvbWUgbm9uemVybyB2ZWN0b3IgJHgkIGFuZCBzb21lICRcbGFtYmRhJChzY2FsYXIpLgoKV2UgY2FsbCAkXGxhbWJkYSQgYSBlaWdlbnZhbHVlIG9mICRNJCB3aG9zZSBhc3NvY2lhdGVkIGVpZ2VudmVjdG9yIGlzICR4JC4KCk5vdGU6ICRBJCBpcyBhIHNxdWFyZSBtYXRyaXguICRcZGV0KEEpPVxwcm9kX3tpPTF9Xm4gXGxhbWJkYV9pJC4KCioqRWlnZW4tZGVjb21wb3NpdGlvbjoqKiAkQSQgaXMgYSBzcXVhcmUgYW5kIHN5bW1ldHJpYyBtYXRyaXguIHRoZW4gJEE9UCBcTGFtYmRhIFBeVCQgd2hlcmUgCiQkUD1bdV8xLCB1XzIsXGNkb3RzLCB1X25dLCB1XG1ib3h7J3MgYXJlIHRoZSBvcnRob25vcm1hbCBlaWdlbnZlY3RvciBvZiB9QSQkCiQkXExhbWJkYSA9IFx7XG1ib3h7ZGlhZ29uYWwgZW50cmllcyBhcmUgdGhlIGVpZ2VudmFsdWVzIG9mIH1BXH0kJApOb3RlOiBJZiB0aGlzIHN5bW1ldHJpYyBtYXRyaXggJEEkIGlzIGludmVydGlibGUsIHRoZW4gJEFeey0xfT1QXExhbWJkYV57LTF9UF5UJCB3aGVyZSAKXGJlZ2lue2VxdWF0aW9uKn0KXExhbWJkYV57LTF9ID0gClxiZWdpbntwbWF0cml4fQpcZGRvdHMgJiAwICYgMCBcXAowICYgXGZyYWN7MX17XGxhbWJkYV9pfSAmIDAgXFwKMCAmIDAgJiBcZGRvdHMKXGVuZHtwbWF0cml4fQpcZW5ke2VxdWF0aW9uKn0KClxiZWdpbnttZGZyYW1lZH0KRXhhbXBsZTogJEE9XGJlZ2lue3BtYXRyaXh9CiA5ICYgMCBcXAowICYgNCAKXGVuZHtwbWF0cml4fSQsICRBdiA9IFxsYW1iZGEgdlxpbXBsaWVzIChBLVxsYW1iZGEgSSl2PTAkLiBIZXJlIHdlIG5lZWQgYSBub24temVybyBzb2x1dGlvbiwgc28KJCQKXGRldChBLVxsYW1iZGEgSSk9XGxlZnR8ClxiZWdpbnttYXRyaXh9IAogICA5LVxsYW1iZGEgJiAwICAgXFwKICAgMCAmIDQtXGxhbWJkYQpcZW5ke21hdHJpeH0KICAgXHJpZ2h0fCA9MCBcaW1wbGllcyBcbGFtYmRhXzE9OSxcbGFtYmRhXzI9NAokJAoKRm9yICRcbGFtYmRhXzE9OSQsIHNpbmNlIHdlIGtub3cgICRBdl8xPTl2XzFcaW1wbGllcyAoQS05SSl2XzE9MCQsIHRoZW4gd2UgaGF2ZQokJApcYmVnaW57cG1hdHJpeH0gCiAgIDAgJiAwICAgXFwKICAgMCAmIC01ClxlbmR7cG1hdHJpeH0gdl8xID0KXGJlZ2lue3BtYXRyaXh9IAogICAwICAgIFxcCiAgIDAgClxlbmR7cG1hdHJpeH0KXGltcGxpZXMgdl8xPVxiZWdpbntwbWF0cml4fSAKICAgMSAgIFxcCiAgIDAKXGVuZHtwbWF0cml4fQokJApGb3IgJFxsYW1iZGFfMj00JCwgc2luY2Ugd2Uga25vdyAgJEF2XzI9NHZfMlxpbXBsaWVzIChBLTRJKXZfMj0wJCwgdGhlbiB3ZSBoYXZlCiQkClxiZWdpbntwbWF0cml4fSAKICAgNSAmIDAgICBcXAogICAwICYgMApcZW5ke3BtYXRyaXh9IHZfMiA9ClxiZWdpbntwbWF0cml4fSAKICAgMCAgICBcXAogICAwIApcZW5ke3BtYXRyaXh9ClxpbXBsaWVzIHZfMj1cYmVnaW57cG1hdHJpeH0gCiAgIDAgICBcXAogICAxIApcZW5ke3BtYXRyaXh9CiQkCk5vdyAkQT1QXExhbWJkYSBQXlQ9ClxiZWdpbntwbWF0cml4fSAKICAgMSAmIDAgICBcXAogICAwICYgMQpcZW5ke3BtYXRyaXh9ClxiZWdpbntwbWF0cml4fSAKICAgOSAmIDAgICBcXAogICAwICYgNApcZW5ke3BtYXRyaXh9ClxiZWdpbntwbWF0cml4fSAKICAgMSAmIDAgICBcXAogICAwICYgMQpcZW5ke3BtYXRyaXh9JCB3aGVyZSAkUD1bdl8xLHZfMl0kLgpcZW5ke21kZnJhbWVkfQoKCgoqKlNpbmd1bGFyIHZhbHVlIGRlY29tcG9zaXRpb24qKgo9PT09PT09PT09PQoKCiR7QX0kLCBhICRtIFx0aW1lcyBuJCBtYXRyaXgsICRBXntUfUEkIGlzIGEgc3ltbWV0cmljIG1hdHJpeC4gTGV0ICRceyB2X3sxfSxcbGRvdHMsdl97bn0gXH0kIGNvbnNpc3RzIG9mIGFsbCBvcnRob25vcm1hbCBlaWdlbnZlY3RvcnMgb2YgJEFee1R9QSQuIExldCAgJFxsYW1iZGFfezF9LC4uLixcbGFtYmRhX3tufSQgdGhlIGFzc29jaWF0ZWQgZWlnZW52YWx1ZXMsICRcbGFtYmRhX3sxfSBcZ2UgXGxhbWJkYV97Mn0gXGdlIFxsYW1iZGFfe259IFxnZSAwJC4gIApXZSBoYXZlICRcbFZlcnQgQXZfe2l9XGxWZXJ0XnsyfSA9IFxsYW1iZGFfe2l9JC4gU2luY2UgCiQkCkFee1R9QXZfe2l9ID0gXGxhbWJkYV97aX12X3tpfSBcUmlnaHRhcnJvdwp2X3tpfV57VH1BXntUfUF2X3tpfSA9IFxsYW1iZGFfe2l9dl97aX1ee1R9dl97aX1cbGFtYmRhX3tpfQokJApEZW5vdGUgJFxzaWdtYV97aX0gPSBcc3FydHtcbGFtYmRhX3tpfX0kLCAkXGxhbWJkYV97aX0kIGlzIHRoZSBpdGggZWlnZW52YWx1ZSBvZiAkQV57VH1BJC4gIAoKKipGYWN0Kio6IHJhbmsgb2YgQSBpcyBlcXVhbCB0byB0aGUgbnVtYmVyIG9mIHBvc2l0dmUgc2luZ3VsYXIgdmFsdWUgb2YgQS4gIAoKKipTVkQqKjogTGV0IEEgYmUgYSByYW5rIHIgbWF0cml4LiBUaGVyZSBleGlzdHMgYSBtYXRyaXggJFxTaWdtYV97bSBcdGltZXMgbn0kIHdpdGggZGlhZ29uYWwgZW50cmllcyBpbiBEIGFyZSB0aGUgZmlyc3QgciBzaW5ndWxhciB2YWx1ZS4gVGhhdCBpcyAgCiQkIFxTaWdtYV97bSBcdGltZXMgbn0gPSAKXGJlZ2lue2JtYXRyaXh9CiAgRCAmIDAgXFwKICAwICYgMApcZW5ke2JtYXRyaXh9CiQkCiQkCiBEID0gXGJlZ2lue2JtYXRyaXh9CiAgICAgIFxzaWdtYV97MX0gXFwgJiBcZGRvdHMgJiBcXCAmICYgXHNpZ21hX3tufQogICAgIFxlbmR7Ym1hdHJpeH0KJCQKVGhlIGRlY29tcG9zaXRpb24gb2YgQSBpczoKJCQKICBBID0gVV97bSBcdGltZXMgbn1cU2lnbWFfe20gXHRpbWVzIG59Vl57VH1fe24gXHRpbWVzIG59CiQkCldoZXJlIFUgYW5kIFYgYXJlIGJvdGh5IG9ydGhvZ29uYWwgbWF0cmljZXMuIFYgY29uc2lzdHMgb2YgYWxsIHRoZSBlaWdlbnZlY3RvcnMgb2YgJEFee1R9QSQuIFUgY29uc2lzdHMgdGhlIGNvbHVtbiAkdV97aX0kIGFzIAokJHVfe2l9ID0gXGZyYWN7QXZfe2l9fXtcbFZlcnQgQXZfe2l9XHJWZXJ0fSA9IFxmcmFje0F2X3tpfX17XHNpZ21hX3tpfX0sIFxcCiAgMSBcbGUgaSBcbGUgcgokJApUaG9zZSAkXHsgdV97aX1cfV57cn1fezF9JCBjYW4gZXh0ZW5kIHRvICRceyB1X3tpfVx9XnttfV97MX0kIGFzIHRoZSBvcnRob25vcm1hbCBiYXNpcy4gICAKTWF0cml4IFUgYW5kIFYgaGF2ZSB0aGUgcHJvcGVydHk6ICAKJCQKICBDb2woVSkgPSBDb2woQSksIFxcCiAgQ29sKFYpID0gUm93KEEpCiQkCgpSZWR1Y2VkIFNWRCAKLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KCkZvciB0aG9zZSAkQV97bSBcdGltZXMgbn0kLCAkVV97bSBcdGltZXMgbX0kLCAkVl97biBcdGltZXMgbn0kLCAkXFNpZ21hX3ttIFx0aW1lcyBufSQgYWJvdmUsIHdlIGhhdmUgdGhlIHBhcnRpdGlvbjogIAokJAogIFUgPSBbVV97cn0sVV97bS1yfV0sICBcXAogIFYgPSBbVl97cn0sVl97bi1yfV0sICBcXAogIFxTaWdtYSA9IFxiZWdpbntibWF0cml4fQogIEQgJiAwIFxcCiAgMCAmIDAKXGVuZHtibWF0cml4fQokJApDb25zZXF1ZW50bHksIHRoZSBTVkQgb2YgQSBjYW4gYmUgcmVwcmVzZW50ZWQgYXM6ICAKJCQKICBBID0KICBcYmVnaW57Ym1hdHJpeH0KICAgIFVfe3J9ICYgVV97bS1yfQogIFxlbmR7Ym1hdHJpeH0KICBcYmVnaW57Ym1hdHJpeH0KICAgIEQgJiAwIFxcCiAgICAwICYgMAogIFxlbmR7Ym1hdHJpeH0KICBcYmVnaW57Ym1hdHJpeH0KICAgIFZfe3J9XntUfSBcXAogICAgVl97bi1yfV57VH0KICBcZW5ke2JtYXRyaXh9CiAgPSBVX3tyfURWX3tyfV57VH0KJCQKCkFwcGxpY2F0aW9uCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQoKMS4gTGluZWFyIExlYXN0IFNxdWFyZXMgIAotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KCldlIGNhbiB1c2UgU1ZEIHRvIHNvbHZlIHRoZSBMZWFzdCBTcXVhcmVzIFByb2JsZW1zIGFzIGZvbGxvd2luZzogIAoKXGJlZ2lue2FsaWduKn0KIEF4ICY9IGIsIFxcCiBBXntUfUF4ICY9IEFee1R9YiwgXFwKIChVRFZee1R9KV57VH0oVURWXntUfSl4ICY9IChVRFZee1R9KV57VH1iLCBcXAogXFJpZ2h0YXJyb3cgVkReezJ9RHggJj0gVkRVXntUfWIsIFxcCiBcUmlnaHRhcnJvdyBEXnsyfVZee1R9eCAmPSBEVV57VH1iLCBcXAogXFJpZ2h0YXJyb3cgRFZee1R9eCAmPSBVXntUfWIuClxlbmR7YWxpZ24qfQoKRGVub3RlICR3ID0gVl57VH14JCwkeSA9IFVee1R9YiQsIHdlIGhhdmUgdGhlIGZvbGxvd2luZyBhbGdvcml0aG06ICAKCioqQWxnb3JpdGhtbioqICAKCjEuIEZpbmQgdGhlIFNWRCBvZiAkQSA9IFVEVl57VH0kOyAgCjIuIENvbXB1dGUgJHkgPSBVXntUfWIkOyAgCjMuIFNvbHZlICR3XnsqfSA9IEReey0xfXkkOyAgCjQuICRWXntUfXggPSB3XnsqfSBcUmlnaHRhcnJvdyB4ID0gVndeeyp9JDsgIAoKVGhlIHNvbHV0aW9uIG9mIHRoZSBlcXVhdGlvbiBpcyAkeCA9IFZfe3J9RF57LTF9VV97cn1ee1R9YiQsIGFuZCB3ZSBjYW4gbm90aWNlIHRoYXQgdGhpcyBTVkQgbWV0aG9kIGFsbG93cyBBLGIgdG8gYmUgYXJiaXRyYXJ5LiBOb3RpY2UgdGhhdCAkVl97cn1EXnstMX1VX3tyfV57VH0kIGlzIHRoZSBpbnZlcnNlIG9mIEEuIEhlcmUgd2UgaGF2ZSB0aGUgY29uY2VwdCBvZiBnZW5lcmFsaXplZCBpbnZlcnNlLiAgCgoqKk1vb3JlLVBlbnJvc2UgaW52ZXJzZSoqOiAkQV57K30gPSBWX3tyfUReey0xfVVfe3J9XntUfSQKCjIuTFMtUHJvYmxlbSAKLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KCkluIExTIFByb2JsZW0gCiQkXG1pbl97eH0gXGxWZXJ0IEF4IC1iIFxyVmVydCQkLCAgCndoZXJlIEEgYW5kIGIgYXJlIG5vdCByZXN0cmljdGVkIGF0IGFsbCwgd2UgaGF2ZTogIAokJAogIEFee1R9QXggPSBBXntUfWIuCiQkCkxldCAkXG1hdGhmcmFre0x9JCBpcyB0aGUgc2V0IG9mIGFsbCB0aGUgbWluaW1pemVycyB0byB0aGUgTFMgcHJvYmxlbS4gV2UgaGF2ZSBmb2xsb3dpbmcgZmFjdHMuICAKCioqRmFjdCAxKiogJHheeyp9ID0gQV57K31iIFxpbiBcbWF0aGZyYWt7TH0kIC4gIAoKKipGYWN0IDIqKiAkQVx0aWxkZXt4X3sxfX0gPSBBXHRpbGRle3hfezJ9fSQsIGZvciBhbnkgJFx0aWxkZXt4X3sxfX0sXHRpbGRle3hfezJ9fSBcaW4gXG1hdGhmcmFre0x9JC4gIAoKKipGYWN0IDMqKiBGb3IgdGhlIG9wdGltaXphdGlvbiBwcm9ibGVtICRcbWluX3t4IFxpbiBcbWF0aGZyYWt7TH19IFxsVmVydCB4XHJWZXJ0JCwgdGhlcmUgaXMgYSB1bmlxdWUgc29sdXRpb24gJHheeyp9ID0gQV57K31iJC4gIAoKKipGYWN0IDQqKiBXZSBhbHJlYWR5IGhhdmUgdGhlIHJlc3VsdCB0aGF0IGlmIHdlIGNob29zZSBzb21lICRcbGFtYmRhJCwgTFMgcHJvYmxlbSB3aWxsIGhhcyBhIHVuaXF1ZSBzb2x1dGlvbiB0byB0aGUgIm1vZGlmaWVkIiBub3JtYWwgZXF1YXRpb246CiQkCiAoQV57VH1BK1xsYW1iZGEgSSl4PUFee1R9YgokJAp0aGF0IGlzLAokJAogIFxoYXR7eH0gPSAoQV57VH1BK1xsYW1iZGEgSSleey0xfUFee1R9YiBcXAokJApJbiBmYWN0LCBsZXQgJFxsYW1iZGEgXHJpZ2h0YXJyb3cgMCQsIHdlIGhhdmUgIAokJAogIChBXntUfUErXGxhbWJkYSBJKV57LTF9QV57VH0gXHJpZ2h0YXJyb3cgQV57K30KJCQKCioqRmFjdCA1KiogVGhlIHByb2plY3Rpb24gb2YgYiBvbiBDb2woQSkgaXMgZ2l2ZW4gYnkgJEEoQV57VH1BKV57LTF9QV57VH1iJCAoYXNzdW1pbmcgJEFee1R9QSQgaXMgaW52ZXJ0aWJsZSksIGhlcmUgaXMgYSBtb3JlIGdlbmVyYWwgcmVzdWx0ICAKJCQKICBcaGF0e2J9ID0gQUFeeyt9YiA9IFxsaW1fe1xsYW1iZGEgXHJpZ2h0YXJyb3cgMH1bQShBXntUfUErXGxhbWJkYSBJKV57LTF9QV57VH1dYiAKJCQKCgoKCjwhLS0tLS0tLS0tLS0tLT4KPHNwYW4gc3R5bGU9ImJhY2tncm91bmQtY29sb3I6ICNmNWY1ZjU7IHBhZGRpbmc6IDVweDsgZGlzcGxheTogYmxvY2s7Ij4KICAgIDxzcGFuIHN0eWxlPSJ3aWR0aDogMjUlOyBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7IHRleHQtYWxpZ246IGxlZnQ7Ij4KICAgICAgICBbQmFja10oamF2YXNjcmlwdDp3aW5kb3cuaGlzdG9yeS5iYWNrKCkpCiAgICA8L3NwYW4+CiAgICA8c3BhbiBzdHlsZT0id2lkdGg6IDMwJTsgZGlzcGxheTogaW5saW5lLWJsb2NrOyB0ZXh0LWFsaWduOiBjZW50ZXI7IGNvbG9yOiBncmV5OyI+CiAgICAgICAgKipVcGRhdGVkOioqIGByIFN5cy5EYXRlKClgCiAgICA8L3NwYW4+CiAgICA8c3BhbiBzdHlsZT0id2lkdGg6IDM1JTsgZGlzcGxheTogaW5saW5lLWJsb2NrOyB0ZXh0LWFsaWduOiByaWdodDsgY29sb3I6IGdyZXk7Ij4KICAgICAgICBTdGF0aXN0aWNhbCBTaW11bGF0aW9uLCBXZWkgTGkKICAgIDwvc3Bhbj4KPC9zcGFuPgoKCg==</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiTUFUIDY1MzogU3RhdGlzdGljYWwgU2ltdWxhdGlvbiIKYXV0aG9yOiBJbnN0cnVjdG9yJDokIERyLiBXZWkgTGkKZGF0ZTogImByIFN5cy5EYXRlKClgIgpnZW9tZXRyeTogbGVmdD0yY20sIHJpZ2h0PTJjbSwgdG9wPTJjbSwgYm90dG9tPTJjbQpsaW5lc3RyZXRjaDogMS4zCm91dHB1dDoKICBodG1sX2RvY3VtZW50OgogICAgZGZfcHJpbnQ6IHBhZ2VkCiAgICBtYXRoamF4X2NvbmZpZzoKICAgICAgLSBUZVgtQU1TLU1NTF9IVE1Mb3JNTUwgICAKICBwZGZfZG9jdW1lbnQ6IAogICAgICBpbmNsdWRlOgogICAgICAgIGluX2hlYWRlcjogcHJlYW1ibGVfcm1kLnRleAogIGh0bWxfbm90ZWJvb2s6IGRlZmF1bHQKZm9udHNpemU6IDE0cHQKaGVhZGVyLWluY2x1ZGVzOgotIFx1c2VwYWNrYWdle2Ftc21hdGh9Ci0gXHVzZXBhY2thZ2VbbGluZXdpZHRoPTFwdF17bWRmcmFtZWR9Ci0gXG5ld2NvbW1hbmRcaW5uZXJbMl17XGxlZnRcbGFuZ2xlIzEsIzJccmlnaHRccmFuZ2xlfQotIFxuZXdjb21tYW5kXGZsb29yWzFde1xsZmxvb3IjMVxyZmxvb3J9Ci0gXG5ld2NvbW1hbmRcY2VpbFsxXXtcbGNlaWwjMVxyY2VpbH0KLSBcbmV3Y29tbWFuZFxtYlsxXXtcbWF0aGJmeyMxfX0KLSBcbmV3Y29tbWFuZFxic1sxXXtcYm9sZHN5bWJvbHsjMX19Ci0gXG5ld2NvbW1hbmRcbXJbMV17XG1hdGhybXsjMX19Ci0gXG5ld2NvbW1hbmRcd2hbMV17XHdpZGVoYXR7IzF9fQotIFxuZXdjb21tYW5kXG9wWzFde1xvcGVyYXRvcm5hbWV7IzF9fQotIFxuZXdjb21tYW5kXG1iYlsxXXtcbWF0aGJieyMxfX0KLSBcdXNlcGFja2FnZXtjYXB0aW9ufQotIFxjYXB0aW9uc2V0dXBbZmlndXJlXXtsYWJlbGZvcm1hdD1lbXB0eX0KLSBcbmV3Y29tbWFuZHtcd2VpfVsxXXtcdGV4dGNvbG9ye29yYW5nZX17KFdlaTojMSl9fQotLS0KCjxzY3JpcHQgdHlwZT0idGV4dC94LW1hdGhqYXgtY29uZmlnIj4KTWF0aEpheC5IdWIuQ29uZmlnKHsKICBUZVg6IHsgZXF1YXRpb25OdW1iZXJzOiB7IGF1dG9OdW1iZXI6ICJBTVMiIH0gfQp9KTsKPC9zY3JpcHQ+CgoKPHNwYW4gc3R5bGU9ImJhY2tncm91bmQtY29sb3I6ICNmNWY1ZjU7IHBhZGRpbmc6IDVweDsgZGlzcGxheTogYmxvY2s7Ij4KICAgIDxzcGFuIHN0eWxlPSJ3aWR0aDogMjUlOyBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7IHRleHQtYWxpZ246IGxlZnQ7Ij4KICAgICAgICBbQmFja10oamF2YXNjcmlwdDp3aW5kb3cuaGlzdG9yeS5iYWNrKCkpCiAgICA8L3NwYW4+CiAgICA8c3BhbiBzdHlsZT0id2lkdGg6IDMwJTsgZGlzcGxheTogaW5saW5lLWJsb2NrOyB0ZXh0LWFsaWduOiBjZW50ZXI7IGNvbG9yOiBncmV5OyI+CiAgICAgICAgKipVcGRhdGVkOioqIGByIFN5cy5EYXRlKClgCiAgICA8L3NwYW4+CiAgICA8c3BhbiBzdHlsZT0id2lkdGg6IDM1JTsgZGlzcGxheTogaW5saW5lLWJsb2NrOyB0ZXh0LWFsaWduOiByaWdodDsgY29sb3I6IGdyZXk7Ij4KICAgICAgICBTdGF0aXN0aWNhbCBTaW11bGF0aW9uLCBXZWkgTGkKICAgIDwvc3Bhbj4KPC9zcGFuPgoKPCEtLS0tLS0tLS0tLS0tPgoKCiMgRWlnZW52YWx1ZSBkZWNvbXBvc2l0aW9uCgpHaXZlbiBhIHNxdWFyZSBtYXRyaXggJE0kIHNvIHRoYXQgJE14PVxsYW1iZGEgeCQgZm9yIHNvbWUgbm9uemVybyB2ZWN0b3IgJHgkIGFuZCBzb21lICRcbGFtYmRhJChzY2FsYXIpLiBXZSBjYWxsICRcbGFtYmRhJCBhbiBlaWdlbnZhbHVlIG9mICRNJCB3aG9zZSBhc3NvY2lhdGVkIGVpZ2VudmVjdG9yIGlzICR4JC4KCk5vdGU6ICRBJCBpcyBhIHNxdWFyZSBtYXRyaXgsICRcZGV0KEEpPVxwcm9kX3tpPTF9Xm4gXGxhbWJkYV9pJC4gQSBzcXVhcmUgbWF0cml4IGlzIGludmVydGlibGUgaWYgYW5kIG9ubHkgaWYgaXRzIGVpZ2VudmFsdWVzIGFyZSBub24temVyby4KCioqRWlnZW4tZGVjb21wb3NpdGlvbjoqKiAkQSQgaXMgYSBzcXVhcmUgYW5kIHN5bW1ldHJpYyBtYXRyaXgsIHRoZW4gd2UgY2FuIHdyaXRlICRBPVAgXExhbWJkYSBQXlQkIHdoZXJlIApcYmVnaW57YWxpZ24qfQomUD1bdV8xLCB1XzIsXGNkb3RzLCB1X25dLCBccXVhZCB1XG1ib3h7J3MgYXJlIHRoZSBvcnRob25vcm1hbCBlaWdlbnZlY3RvciBvZiB9QSBcXAomXExhbWJkYSA9IGRpYWdce1x0ZXh0e2VpZ2VudmFsdWVzIG9mIH1BXH0uClxlbmR7YWxpZ24qfQoKTm90ZTogSWYgdGhpcyBzeW1tZXRyaWMgbWF0cml4ICRBJCBpcyBpbnZlcnRpYmxlLCB0aGVuIHdlIGhhdmUgJEFeey0xfT1QXExhbWJkYV57LTF9UF5UJCB3aGVyZSAKXGJlZ2lue2VxdWF0aW9uKn0KXExhbWJkYV57LTF9ID0gClxiZWdpbntwbWF0cml4fQpcZGRvdHMgJiAwICYgMCBcXAowICYgXGZyYWN7MX17XGxhbWJkYV9pfSAmIDAgXFwKMCAmIDAgJiBcZGRvdHMuClxlbmR7cG1hdHJpeH0KXGVuZHtlcXVhdGlvbip9CgpcYmVnaW57bWRmcmFtZWR9CkV4YW1wbGU6ICRBPVxiZWdpbntwbWF0cml4fQogOSAmIDAgXFwKMCAmIDQgClxlbmR7cG1hdHJpeH0kLCAkQXYgPSBcbGFtYmRhIHZcaW1wbGllcyAoQS1cbGFtYmRhIEkpdj0wJC4gSGVyZSB3ZSBuZWVkIGEgbm9uLXplcm8gc29sdXRpb24sIHNvCiQkClxkZXQoQS1cbGFtYmRhIEkpPVxsZWZ0fApcYmVnaW57bWF0cml4fSAKICAgOS1cbGFtYmRhICYgMCAgIFxcCiAgIDAgJiA0LVxsYW1iZGEKXGVuZHttYXRyaXh9CiAgIFxyaWdodHwgPTAgXGltcGxpZXMgXGxhbWJkYV8xPTksXGxhbWJkYV8yPTQKJCQKCkZvciAkXGxhbWJkYV8xPTkkLCBzaW5jZSB3ZSBrbm93ICAkQXZfMT05dl8xXGltcGxpZXMgKEEtOUkpdl8xPTAkLCB0aGVuIHdlIGhhdmUKJCQKXGJlZ2lue3BtYXRyaXh9IAogICAwICYgMCAgIFxcCiAgIDAgJiAtNQpcZW5ke3BtYXRyaXh9IHZfMSA9ClxiZWdpbntwbWF0cml4fSAKICAgMCAgICBcXAogICAwIApcZW5ke3BtYXRyaXh9ClxpbXBsaWVzIHZfMT1cYmVnaW57cG1hdHJpeH0gCiAgIDEgICBcXAogICAwClxlbmR7cG1hdHJpeH0KJCQKRm9yICRcbGFtYmRhXzI9NCQsIHNpbmNlIHdlIGtub3cgICRBdl8yPTR2XzJcaW1wbGllcyAoQS00SSl2XzI9MCQsIHRoZW4gd2UgaGF2ZQokJApcYmVnaW57cG1hdHJpeH0gCiAgIDUgJiAwICAgXFwKICAgMCAmIDAKXGVuZHtwbWF0cml4fSB2XzIgPQpcYmVnaW57cG1hdHJpeH0gCiAgIDAgICAgXFwKICAgMCAKXGVuZHtwbWF0cml4fQpcaW1wbGllcyB2XzI9XGJlZ2lue3BtYXRyaXh9IAogICAwICAgXFwKICAgMSAKXGVuZHtwbWF0cml4fQokJApOb3cgJEE9UFxMYW1iZGEgUF5UPQpcYmVnaW57cG1hdHJpeH0gCiAgIDEgJiAwICAgXFwKICAgMCAmIDEKXGVuZHtwbWF0cml4fQpcYmVnaW57cG1hdHJpeH0gCiAgIDkgJiAwICAgXFwKICAgMCAmIDQKXGVuZHtwbWF0cml4fQpcYmVnaW57cG1hdHJpeH0gCiAgIDEgJiAwICAgXFwKICAgMCAmIDEKXGVuZHtwbWF0cml4fSQgd2hlcmUgJFA9W3ZfMSx2XzJdJC4KXGVuZHttZGZyYW1lZH0KCgoKKipTaW5ndWxhciB2YWx1ZSBkZWNvbXBvc2l0aW9uKioKPT09PT09PT09PT0KCkZvciBhICRtIFx0aW1lcyBuJCBtYXRyaXggJHtBfSQsICRBXntUfUEkIGlzIGEgc3ltbWV0cmljIG1hdHJpeC4gTGV0ICRceyB2X3sxfSxcbGRvdHMsdl97bn0gXH0kIGJlIHRoZSBjb2xsZWN0aW9uIG9mIGFsbCB0aGUgb3J0aG9ub3JtYWwgZWlnZW52ZWN0b3JzIG9mICRBXntUfUEkIChlaWdlbi1kZWNvbXBvc2l0aW9uKTsgbGV0ICAkXGxhbWJkYV97MX0sLi4uLFxsYW1iZGFfe259JCBiZSB0aGUgYXNzb2NpYXRlZCBlaWdlbnZhbHVlcywgJFxsYW1iZGFfezF9IFxnZSBcbGFtYmRhX3syfSBcZ2UgXGNkb3RzIFxnZXEgXGxhbWJkYV97bn0gXGdlIDAkLiBXZSBoYXZlICRcbFZlcnQgQXZfe2l9XGxWZXJ0XnsyfSA9IFxsYW1iZGFfe2l9JCwgc2luY2UgCiQkCkFee1R9QXZfe2l9ID0gXGxhbWJkYV97aX12X3tpfSBcUmlnaHRhcnJvdwp2X3tpfV57VH1BXntUfUF2X3tpfSA9IFxsYW1iZGFfe2l9dl97aX1ee1R9dl97aX1cbGFtYmRhX3tpfS4KJCQKVGhlIHNpbmd1bGFyIHZhbHVlcyBvZiAkQSQgYXJlIHNxdWFyZWQgcm9vdHMgb2YgdGhlIGVpZ2VudmFsdWVzIG9mICRBXntUfUEkLCBkZW5vdGVkIGJ5ICRcc2lnbWFfe2l9ID0gXHNxcnR7XGxhbWJkYV97aX19JDsgJFxzaWdtYV97MX0gXGdlIFxzaWdtYV97Mn0gXGdlIFxjZG90cyBcZ2VxIFxzaWdtYV97bn0gXGdlIDAkCgoqKkZhY3QqKjogVGhlIHJhbmsgb2YgYSBtYXRyaXggJEEkIGlzIGVxdWFsIHRvIHRoZSBudW1iZXIgb2YgcG9zaXRpdmUgc2luZ3VsYXIgdmFsdWUgb2YgJEEkLiAgCgoqKlNWRCoqOiBMZXQgJEEkICgkbSBcdGltZXMgbiQpIGJlIGEgbWF0cml4IG9mIHJhbmsgJHIkLiBUaGVyZSBleGlzdHMgYSBtYXRyaXggJFxTaWdtYV97bSBcdGltZXMgbn0kIG9mIHRoZSBmb2xsb3dpbmcgZm9ybSwgd2l0aCAkRCQgYmVpbmcgYSBkaWFnb25hbCBtYXRyaXggd2hvc2UgZW50cmllcyBhcmUgdGhlIGZpcnN0ICRyJCAobm9uLXplcm8pIHNpbmd1bGFyIHZhbHVlLiBUaGF0IGlzICAKJCQgXFNpZ21hX3ttIFx0aW1lcyBufSA9IApcYmVnaW57Ym1hdHJpeH0KICBEICYgMCBcXAogIDAgJiAwClxlbmR7Ym1hdHJpeH0sCiQkCiQkCiBEID0gXGJlZ2lue2JtYXRyaXh9CiAgICAgIFxzaWdtYV97MX0gXFwgJiBcZGRvdHMgJiBcXCAmICYgXHNpZ21hX3tufQogICAgIFxlbmR7Ym1hdHJpeH0uCiQkClRoZSBTaW5ndWxhciBWYWx1ZSBEZWNvbXBvc2l0aW9uIG9mIEEgaXM6CiQkCiAgQSA9IFVfe20gXHRpbWVzIG19XFNpZ21hX3ttIFx0aW1lcyBufVZee1R9X3tuIFx0aW1lcyBufQokJApXaGVyZSAkVSQgYW5kICRWJCBhcmUgYm90aCBvcnRob2dvbmFsIG1hdHJpY2VzOiAKJFY9W3ZfMSwgXGNkb3RzLCB2X25dJCBjb25zaXN0cyBvZiBhbGwgb3J0aG9ub3JtYWwgZWlnZW52ZWN0b3JzIG9mICRBXntUfUEkOyAKJFU9W3VfMSwgXGNkb3RzLCB1X21dJCBjb25zaXN0cyB0aGUgY29sdW1uICR1X3tpfSQgYXMgZm9sbG93cwokJFx0ZXh0e2ZvciB9ICAgMSBcbGUgaSBcbGUgciwgXHF1YWQgdV97aX0gPSBcZnJhY3tBdl97aX19e1xsVmVydCBBdl97aX1cclZlcnR9ID0gXGZyYWN7QXZfe2l9fXtcc2lnbWFfe2l9fSwKJCQKYW5kIHRoZXNlIGNvbHVtbnMgJFx7IHVfezF9LCBcbGRvdHMsIHVfe3J9XH0kIGNhbiBiZSBleHRlbmRlZCB0byAkXHsgdV97MX0sIFxsZG90cywgdV97bX1cfSQgYXMgdGhlIG9ydGhvbm9ybWFsIGJhc2lzLiAKCk1hdHJpeCAkVSQgYW5kICRWJCBhcmUgbm90IHVuaXF1ZWx5IGRldGVybWluZWQgaW4gZ2VuZXJhbCwgYnV0IGhhdmUgdGhlIHByb3BlcnR5OiAkQ29sKFUpJCBzcGFucyAkQ29sKEEpJCBhbmQgJENvbChWKSQgc3BhbnMgJFJvdyhBKSQuCgoKUmVkdWNlZCAodGhpbikgU1ZEIAotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQoKRm9yIHRob3NlICRBX3ttIFx0aW1lcyBufSQsICRVX3ttIFx0aW1lcyBtfSQsICRWX3tuIFx0aW1lcyBufSQsICRcU2lnbWFfe20gXHRpbWVzIG59JCBhYm92ZSwgd2UgaGF2ZSB0aGUgcGFydGl0aW9uOiAgCiQkCiAgVSA9IFtVX3tyfSxVX3ttLXJ9XSwgIFxcCiAgViA9IFtWX3tyfSxWX3tuLXJ9XSwgIFxcCiAgXFNpZ21hID0gXGJlZ2lue2JtYXRyaXh9CiAgRCAmIDAgXFwKICAwICYgMApcZW5ke2JtYXRyaXh9CiQkCkNvbnNlcXVlbnRseSwgdGhlIFNWRCBvZiAkQSQgY2FuIGJlIHJlcHJlc2VudGVkIGFzOiAgCiQkCiAgQSA9CiAgXGJlZ2lue2JtYXRyaXh9CiAgICBVX3tyfSAmIFVfe20tcn0KICBcZW5ke2JtYXRyaXh9CiAgXGJlZ2lue2JtYXRyaXh9CiAgICBEICYgMCBcXAogICAgMCAmIDAKICBcZW5ke2JtYXRyaXh9CiAgXGJlZ2lue2JtYXRyaXh9CiAgICBWX3tyfV57VH0gXFwKICAgIFZfe24tcn1ee1R9CiAgXGVuZHtibWF0cml4fQogID0gVV97cn1EVl97cn1ee1R9CiQkCgpBcHBsaWNhdGlvbgotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KCjEuIExpbmVhciBMZWFzdCBTcXVhcmVzICAKLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCgpXZSBjYW4gdXNlIHRoaW4gU1ZEIHRvIHNvbHZlIHRoZSBMZWFzdCBTcXVhcmVzIFByb2JsZW1zIGFzIGZvbGxvd2luZzogIAoKXGJlZ2lue2FsaWduKn0KIEF4ICY9IGIsIFxcCiBBXntUfUF4ICY9IEFee1R9YiwgXFwKIChVX3JEVl9yXntUfSlee1R9KFVfckRWX3Jee1R9KXggJj0gKFVfckRWX3Jee1R9KV57VH1iLCBcXAogIFZfckRJRFZfcl5UeCAmPSBWX3JEVV9yXntUfWIsIFxcCiAgRFZfcl57VH14ICY9IFVfcl57VH1iLgpcZW5ke2FsaWduKn0KCkRlbm90ZSAkdyA9IFZfcl57VH14JCwgJHkgPSBVX3Jee1R9YiQsIHdlIGhhdmUgdGhlIGZvbGxvd2luZyBhbGdvcml0aG06ICAKCioqQWxnb3JpdGhtKiogIAoKMS4gRmluZCB0aGUgU1ZEIG9mICRBID0gVV9yRFZfcl57VH0kOyAgCjIuIENvbXB1dGUgJHkgPSBVX3Jee1R9YiQ7ICAKMy4gU29sdmUgdGhlIGRpYWdvbmFsIHN5c3RlbSAkRHc9eSQsIGdpdmluZyAkd157Kn0gPSBEXnstMX15JDsgIAo0LiBTb2x2ZSAkVl9yXntUfXggPSB3XnsqfSBcUmlnaHRhcnJvdyB4XiogPSBWX3J3XnsqfSQ7ICAKClRoZSBzb2x1dGlvbiBvZiB0aGUgZXF1YXRpb24gaXMgJHheKiA9IFZfckReey0xfVVfcl57VH1iPSBWXFNpZ21hXnstMX1VXntUfWIkLiAKV2Ugbm90aWNlIHRoYXQgdGhpcyBTVkQgbWV0aG9kIGFsbG93cyAkQSQsICRiJCB0byBiZSBhcmJpdHJhcnkuIE5vdGljZSB0aGF0ICRWX3tyfUReey0xfVVfe3J9XntUfSQgaXMgbGlrZSB0aGUgImludmVyc2UiIG9mIEEuIEhlcmUgd2UgaGF2ZSB0aGUgY29uY2VwdCBvZiBnZW5lcmFsaXplZCBpbnZlcnNlLiAgCgoqKk1vb3JlLVBlbnJvc2UgaW52ZXJzZSBvZiBBKio6ICRBXntcZGFnZ2VyfSA9IFZfe3J9RF57LTF9VV97cn1ee1R9JAoKMi5MUy1Qcm9ibGVtIAotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQoKSW4gTFMgUHJvYmxlbSAKJCRcbWluX3t4fSBcbFZlcnQgQXggLWIgXHJWZXJ0LCQkIAp3aGVyZSAkQSQgYW5kICRiJCBhcmUgbm90IHJlc3RyaWN0ZWQgYXQgYWxsLCB3ZSBoYXZlOiAgCiQkCiAgQV57VH1BeCA9IEFee1R9Yi4KJCQKTGV0ICRcbWF0aGZyYWt7TH0kIGlzIHRoZSBzZXQgb2YgYWxsIHRoZSBtaW5pbWl6ZXJzIHRvIHRoZSBMUyBwcm9ibGVtLiBXZSBoYXZlIGZvbGxvd2luZyBmYWN0cy4gIAoKKipGYWN0IDEqKiAkeF57Kn0gPSBBXntcZGFnZ2VyfWIgXGluIFxtYXRoZnJha3tMfSQ7IGZyb20gdGhlIG5vcm1hbCBlcXVhdGlvbiwgJEFee1R9QUFee1xkYWdnZXJ9ID0gQV57VH0uJCAgCgoqKkZhY3QgMioqICRBXHRpbGRle3hfezF9fSA9IEFcdGlsZGV7eF97Mn19JCwgZm9yIGFueSAkXHRpbGRle3hfezF9fSxcdGlsZGV7eF97Mn19IFxpbiBcbWF0aGZyYWt7TH0kLiAgCgoqKkZhY3QgMyoqIEZvciB0aGUgb3B0aW1pemF0aW9uIHByb2JsZW0gJFxtaW5fe3ggXGluIFxtYXRoZnJha3tMfX0gXGxWZXJ0IHhcclZlcnQkLCB0aGVyZSBpcyBhIHVuaXF1ZSBzb2x1dGlvbiAkeF57Kn0gPSBBXntcZGFnZ2VyfWIkLiAgCgoqKkZhY3QgNCoqIFdlIGFscmVhZHkgaGF2ZSB0aGUgcmVzdWx0IHRoYXQgaWYgd2UgY2hvb3NlIHNvbWUgJFxsYW1iZGE+MCQsIExTIHByb2JsZW0gd2lsbCBoYXMgYSB1bmlxdWUgc29sdXRpb24gdG8gdGhlICJtb2RpZmllZCIgbm9ybWFsIGVxdWF0aW9uOgokJAogKEFee1R9QStcbGFtYmRhIEkpeD1BXntUfWIsCiQkCnRoYXQgaXMsICRcaGF0e3h9ID0gKEFee1R9QStcbGFtYmRhIEkpXnstMX1BXntUfWIuJCBJbiBmYWN0LCBsZXQgJFxsYW1iZGEgXHJpZ2h0YXJyb3cgMCQsIHdlIGhhdmUgJChBXntUfUErXGxhbWJkYSBJKV57LTF9QV57VH0gXHJpZ2h0YXJyb3cgQV57XGRhZ2dlcn0uJCBTbyAKJCQKIHheKj0gXGxpbV97XGxhbWJkYSBcdG8gMH0gWyhBXntUfUErXGxhbWJkYSBJKV57LTF9QV57VH1dYj0gXGxpbV97XGxhbWJkYSBcdG8gMH0gW0FeVChBQV5UK1xsYW1iZGEgSSleey0xfV1iID0gQV57XGRhZ2dlcn0gYi4KJCQKCioqRmFjdCA1KiogVGhlIHByb2plY3Rpb24gb2YgJGIkIG9uICRDb2woQSkkIGlzIGdpdmVuIGJ5ICRBKEFee1R9QSleey0xfUFee1R9YiQgKGFzc3VtaW5nICRBXntUfUEkIGlzIGludmVydGlibGUpLCBoZXJlIGlzIGEgbW9yZSBnZW5lcmFsIHJlc3VsdCAgCiQkCiAgXGhhdHtifSA9IEFBXntcZGFnZ2VyfWIgPSBcbGltX3tcbGFtYmRhIFxyaWdodGFycm93IDB9W0EoQV57VH1BK1xsYW1iZGEgSSleey0xfUFee1R9XWIsCiQkCnNvICRQX0E6PUFBXntcZGFnZ2VyfSQgaXMgb3J0aG9nb25hbCBwcm9qZWN0aW9uIG9udG8gJENvbChBKSQsICRJLVBfQSQgaXMgb3J0aG9nb25hbCBwcm9qZWN0aW9uIG9udG8gJFxvcHtLZXJ9KEFeVCkuJAoKCgoKPCEtLS0tLS0tLS0tLS0tPgo8c3BhbiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjogI2Y1ZjVmNTsgcGFkZGluZzogNXB4OyBkaXNwbGF5OiBibG9jazsiPgogICAgPHNwYW4gc3R5bGU9IndpZHRoOiAyNSU7IGRpc3BsYXk6IGlubGluZS1ibG9jazsgdGV4dC1hbGlnbjogbGVmdDsiPgogICAgICAgIFtCYWNrXShqYXZhc2NyaXB0OndpbmRvdy5oaXN0b3J5LmJhY2soKSkKICAgIDwvc3Bhbj4KICAgIDxzcGFuIHN0eWxlPSJ3aWR0aDogMzAlOyBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7IHRleHQtYWxpZ246IGNlbnRlcjsgY29sb3I6IGdyZXk7Ij4KICAgICAgICAqKlVwZGF0ZWQ6KiogYHIgU3lzLkRhdGUoKWAKICAgIDwvc3Bhbj4KICAgIDxzcGFuIHN0eWxlPSJ3aWR0aDogMzUlOyBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7IHRleHQtYWxpZ246IHJpZ2h0OyBjb2xvcjogZ3JleTsiPgogICAgICAgIFN0YXRpc3RpY2FsIFNpbXVsYXRpb24sIFdlaSBMaQogICAgPC9zcGFuPgo8L3NwYW4+CgoK</div>
 
 
 

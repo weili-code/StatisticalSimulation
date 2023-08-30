@@ -1853,17 +1853,17 @@ particular, <span class="math display">\[\begin{align*}
 &amp;\iff A^TA \hat x=A^Tb
 \end{align*}\]</span></p>
 <p>Now <span class="math inline">\(\hat x=(A^TA)^{-1}A^Tb\)</span> if
-<span class="math inline">\(A^TA\)</span> is invertible, and then <span class="math inline">\(\hat b = A(A^TA)^{-1}A^Tb\)</span> (even if it
-exists).</p>
+<span class="math inline">\(A^TA\)</span> is invertible, and then <span class="math inline">\(\hat b = A(A^TA)^{-1}A^Tb\)</span>.</p>
 <p>Note: <span class="math inline">\(A^TA \hat x=A^Tb\)</span> is called
 Normal Equation.</p>
 <p><strong>Fact 1:</strong> Normal equation always has at least one
 solution.</p>
 <p><strong>Fact 2:</strong> <span class="math inline">\(A^TA\)</span> is
 invertible if and only if <span class="math inline">\(A\)</span> has
-full-column rank.</p>
+full-column rank. In particular, when <span class="math inline">\(m&lt;n\)</span>, <span class="math inline">\(A^TA\)</span> is not invertible.</p>
 <p><strong>Fact 3:</strong> The solution to the normal equation is not
-necessary a solution to the original problem <span class="math inline">\(Ax=b\)</span>.</p>
+necessary a solution to the original problem <span class="math inline">\(Ax=b\)</span>. For <span class="math inline">\(b\in Col(A)\)</span>, then <span class="math inline">\(A^TA=A^Tb\)</span> and <span class="math inline">\(Ax=b\)</span> have the same unique solution if and
+only if <span class="math inline">\(A\)</span> has full column rank.</p>
 <p><strong>Regularization (ridge regression):</strong> Solve <span class="math inline">\((A^TA+\lambda I)x=A^Tb\)</span> for <span class="math inline">\(\lambda&gt;0\)</span> is called. In this case,
 <span class="math inline">\(A^TA+\lambda I\)</span> is always
 invertible, and we have <span class="math display">\[\hat x =
