@@ -7,11 +7,11 @@ date: Sep 16th, 2021
 geometry: left=2cm, right=2cm, top=2cm, bottom=2cm
 linestretch: 1.3
 output:
+  html_document:
+    df_print: paged
   pdf_document: 
       include:
         in_header: preamble_rmd.tex
-  html_document:
-    df_print: paged
   html_notebook: default
 fontsize: 14pt
 header-includes:
@@ -42,44 +42,32 @@ MathJax.Hub.Config({
 
 **Principal Component**
 
-$X$: $n\times p$ matrix, $X$ is a data matrix, $n$ is the number of cases, and $p$ is the number of features.
-\begin{mdframed}
-Example: $n$=3 and $p$=2
-$$X = 
-\begin{bmatrix}
-* & *\\
-* & *\\
-* & *
-\end{bmatrix}$$
-\end{mdframed}
-
-
+$X$: $n\times p$ data matrix assumed full column rank, $n$ is the number of cases, and $p$ is the number of features.
+Apply reduced SVD:
 $$
 X=U\Sigma V^T
 $$
-$X$ is a ${n\times p}$ matrix, $\Sigma$ is a ${n\times p}$ matrix, and $V^T$ is a ${p\times p}$ matrix.\
+$U$ is a ${n\times p}$ matrix, $\Sigma$ is a ${p\times p}$ matrix, and $V^T$ is a ${p\times p}$ matrix.\
 
-Here $V_j=j^{th}$ column of $V$ is called $j^{th}$ principal component direction of X.
-$$
-\|XV_j\|=\sigma_j,\\
-$$
-where $\sigma_j$ are singular values of $X$.
+Let $V_j$ be the $j$-th column of $V$, it is called $j^{th}$ **principal component direction** of $X$. Each element in $V_j$ are called **principal component loadings**. From SVD, $V_j^T X^T X V_j=\sigma_j^2$, thus $\|XV_j\|=\sigma_j$, where $\sigma_j$ are **singular values** of $X$.
 
-Each element in $V_j$ are called principal component loadings.
+The $j$-th **principal component** of $X$ is defined to be
 $$
-XV_j=Z_j\\
+Z_j:=XV_j
 $$
-where $Z_j$ is called the $j^{th}$ principal component of X. Elements in $Z_j$ are called Principal Component scores.
-$$\begin{aligned}
-Z_j &=(Z_{1j}, Z_{2j},\dots,Z_{nj})\\
-\text{where } Z_{ij} &=X_{[i,.]}V_j\\ &=\frac{X_{[i,.]}V_j}{\langle{V_j},{V_j}\rangle}
-\end{aligned}
-$$
-$\frac{X_{[i,.]}V_j}{\langle{V_j},{V_j}\rangle}$ is the coefficient of projecting $X_{[i,.]}$ onto span of {$V_j$}.
+Specifically, $Z_j =(Z_{1j}, Z_{2j},\dots,Z_{nj})$. Elements in $Z_j$ are called **principal component scores**: 
+$$Z_{ij} =X_{[i,.]}V_j=\frac{X_{[i,.]}V_j}{\langle{V_j},{V_j}\rangle} \text{},$$
+which is the coefficient of projecting $X_{[i,.]}$ onto span of {$V_j$}.
 
-Sample variance of $Z_j=XV_j$, $\frac{\|XV_j\|^2}{n-1}=\frac{\sigma_j^2}{n-1}$\
+The $j$-th **normalized principal component** of $X$ is defined to be
+$$
+U_j:=\frac{XV_j}{\|XV_j\|}=\frac{Z_j}{\sigma_j}.
+$$
 
-Since $\sigma_1^2\geq\sigma_2^2\geq\cdots\geq\sigma_n^2$,$Z_1=XV_1$ has the largest sample variance among all normalized linear combinations of columns of $X$; $Z_j$, $j\ge2$, has maximum sample variance subject to being orthogonal to the earlier ones. $Z_2\perp Z_1, Z_3\perp(Z_2, Z_1),\dots$.
+Let's assume columns of $X$ are centered about $0$, then we can see the sample variance of $Z_j=XV_j$ is 
+$$\frac{\|XV_j\|^2}{n-1}=\frac{\sigma_j^2}{n-1}.$$
+
+Since $\sigma_1^2\geq\sigma_2^2\geq\cdots\geq\sigma_n^2$, $Z_1=XV_1$ has the largest sample variance among all normalized linear combinations of columns of $X$; $Z_j$, $j\ge2$, has maximum sample variance subject to being orthogonal to the earlier ones. $Z_2\perp Z_1, Z_3\perp(Z_2, Z_1),\dots$ etc.
 
 \begin{mdframed}
 Check:
@@ -92,7 +80,10 @@ Cov(Z_1,Z_2)&=\frac{Z_1^TZ_2}{n-1}\\
 \end{aligned}
 $$
 \end{mdframed}
-Since $XV_j=Z_j$, $X[ V_1, \ldots, V_p]=[Z_1,Z_2,\dots,Z_p]$.
+Since $XV_j=Z_j$, $X[ V_1, \ldots, V_p]=[Z_1,Z_2,\dots,Z_p]$, i.e, $XV=Z$.
+
+
+**Application**
 
 One application for the principal components is the principal component regression: 
 
