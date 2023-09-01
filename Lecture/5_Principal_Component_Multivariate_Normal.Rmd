@@ -42,8 +42,8 @@ MathJax.Hub.Config({
 
 **Principal Component**
 
-$X$: $n\times p$ data matrix assumed full column rank, $n$ is the number of cases, and $p$ is the number of features.
-Apply reduced SVD:
+$\mb{X}$: $n\times p$ data matrix, $n$ is the number of cases, and $p$ is the number of features.
+Apply thin SVD:
 $$
 X=U\Sigma V^T
 $$

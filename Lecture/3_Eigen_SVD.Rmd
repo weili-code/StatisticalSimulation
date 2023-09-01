@@ -148,7 +148,7 @@ The singular values of $A$ are squared roots of the eigenvalues of $A^{T}A$, den
 
 **Fact**: The rank of a matrix $A$ is equal to the number of positive singular value of $A$.  
 
-**SVD**: Let $A$ ($m \times n$) be a matrix of rank $r$. There exists a matrix $\Sigma_{m \times n}$ of the following form, with $D$ being a diagonal matrix whose entries are the first $r$ (non-zero) singular value. That is  
+**SVD**: Let $A$ ($m \times n$) be a matrix of rank $r$ ($r\leq \min(m, n)$). There exists a matrix $\Sigma_{m \times n}$ of the following form, with $D$ being a diagonal matrix whose entries are the first $r$ (non-zero) singular value. That is  
 $$ \Sigma_{m \times n} = 
 \begin{bmatrix}
   D & 0 \\
@@ -174,7 +174,7 @@ and these columns $\{ u_{1}, \ldots, u_{r}\}$ can be extended to $\{ u_{1}, \ldo
 Matrix $U$ and $V$ are not uniquely determined in general, but have the property: $Col(U)$ spans $Col(A)$ and $Col(V)$ spans $Row(A)$.
 
 
-Reduced (thin) SVD 
+Reduced SVD 
 -----------------------
 
 For those $A_{m \times n}$, $U_{m \times m}$, $V_{n \times n}$, $\Sigma_{m \times n}$ above, we have the partition:  
@@ -186,7 +186,7 @@ $$
   0 & 0
 \end{bmatrix}
 $$
-Consequently, the SVD of $A$ can be represented as:  
+Consequently, the SVD of $A$ can be reduced to  
 $$
   A =
   \begin{bmatrix}
@@ -200,8 +200,17 @@ $$
     V_{r}^{T} \\
     V_{n-r}^{T}
   \end{bmatrix}
-  = U_{r}DV_{r}^{T}
+  = U_{r}DV_{r}^{T}=\sum_{i=1}^r d_i{u}_iv_i^T
 $$
+If we instead consider $\tilde{A}=\sum_{i=1}^l d_i{u}_iv_i^T$ for some $l < r$, then this is the low-rank approximation to $A$, sometimes is called **truncated SVD**.
+
+**Note**: if $m \geq n$, sometimes **thin SVD** is written as 
+\begin{align*}
+A=\tilde{U}\tilde{D}\tilde{V}^T
+\end{align*}
+where $\tilde{U}: m \times n, \tilde{D}: n \times n; \tilde{V}: n \times n.$
+
+
 
 Application
 ---------------------------

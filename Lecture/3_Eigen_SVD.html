@@ -11,7 +11,7 @@
 
 <meta name="author" content="Instructor: Dr. Wei Li" />
 
-<meta name="date" content="2023-08-29" />
+<meta name="date" content="2023-08-31" />
 
 <title>MAT 653: Statistical Simulation</title>
 
@@ -1630,7 +1630,7 @@ display: none;
 <h1 class="title toc-ignore">MAT 653: Statistical Simulation</h1>
 <h4 class="author">Instructor<span class="math inline">\(:\)</span>
 Dr. Wei Li</h4>
-<h4 class="date">2023-08-29</h4>
+<h4 class="date">2023-08-31</h4>
 
 </div>
 
@@ -1641,7 +1641,7 @@ MathJax.Hub.Config({
 });
 </script>
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2023-08-29 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2023-08-31 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 <!------------->
 <div id="eigenvalue-decomposition" class="section level1">
@@ -1686,9 +1686,10 @@ are squared roots of the eigenvalues of <span class="math inline">\(A^{T}A\)</sp
 singular value of <span class="math inline">\(A\)</span>.</p>
 <p><strong>SVD</strong>: Let <span class="math inline">\(A\)</span>
 (<span class="math inline">\(m \times n\)</span>) be a matrix of rank
-<span class="math inline">\(r\)</span>. There exists a matrix <span class="math inline">\(\Sigma_{m \times n}\)</span> of the following
-form, with <span class="math inline">\(D\)</span> being a diagonal
-matrix whose entries are the first <span class="math inline">\(r\)</span> (non-zero) singular value. That
+<span class="math inline">\(r\)</span> (<span class="math inline">\(r\leq \min(m, n)\)</span>). There exists a matrix
+<span class="math inline">\(\Sigma_{m \times n}\)</span> of the
+following form, with <span class="math inline">\(D\)</span> being a
+diagonal matrix whose entries are the first <span class="math inline">\(r\)</span> (non-zero) singular value. That
 is<br />
 <span class="math display">\[ \Sigma_{m \times n} =
 \begin{bmatrix}
@@ -1712,8 +1713,8 @@ orthonormal basis.</p>
 <p>Matrix <span class="math inline">\(U\)</span> and <span class="math inline">\(V\)</span> are not uniquely determined in general,
 but have the property: <span class="math inline">\(Col(U)\)</span> spans
 <span class="math inline">\(Col(A)\)</span> and <span class="math inline">\(Col(V)\)</span> spans <span class="math inline">\(Row(A)\)</span>.</p>
-<div id="reduced-thin-svd" class="section level2">
-<h2>Reduced (thin) SVD</h2>
+<div id="reduced-svd" class="section level2">
+<h2>Reduced SVD</h2>
 <p>For those <span class="math inline">\(A_{m \times n}\)</span>, <span class="math inline">\(U_{m \times m}\)</span>, <span class="math inline">\(V_{n \times n}\)</span>, <span class="math inline">\(\Sigma_{m \times n}\)</span> above, we have the
 partition:<br />
 <span class="math display">\[
@@ -1723,7 +1724,7 @@ partition:<br />
   D &amp; 0 \\
   0 &amp; 0
 \end{bmatrix}
-\]</span> Consequently, the SVD of <span class="math inline">\(A\)</span> can be represented as:<br />
+\]</span> Consequently, the SVD of <span class="math inline">\(A\)</span> can be reduced to<br />
 <span class="math display">\[
   A =
   \begin{bmatrix}
@@ -1737,8 +1738,16 @@ partition:<br />
     V_{r}^{T} \\
     V_{n-r}^{T}
   \end{bmatrix}
-  = U_{r}DV_{r}^{T}
-\]</span></p>
+  = U_{r}DV_{r}^{T}=\sum_{i=1}^r d_i{u}_iv_i^T
+\]</span> If we instead consider <span class="math inline">\(\tilde{A}=\sum_{i=1}^l d_i{u}_iv_i^T\)</span> for
+some <span class="math inline">\(l &lt; r\)</span>, then this is the
+low-rank approximation to <span class="math inline">\(A\)</span>,
+sometimes is called <strong>truncated SVD</strong>.</p>
+<p><strong>Note</strong>: if <span class="math inline">\(m \geq
+n\)</span>, sometimes <strong>thin SVD</strong> is written as <span class="math display">\[\begin{align*}
+A=\tilde{U}\tilde{D}\tilde{V}^T
+\end{align*}\]</span> where <span class="math inline">\(\tilde{U}: m
+\times n, \tilde{D}: n \times n; \tilde{V}: n \times n.\)</span></p>
 </div>
 <div id="application" class="section level2">
 <h2>Application</h2>
@@ -1815,7 +1824,7 @@ orthogonal projection onto <span class="math inline">\(Col(A)\)</span>,
 <span class="math inline">\(\operatorname{Ker}(A^T).\)</span></p>
 <!------------->
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2023-08-29 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2023-08-31 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 </div>
 </div>
