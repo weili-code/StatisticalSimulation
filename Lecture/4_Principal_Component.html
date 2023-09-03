@@ -11,7 +11,7 @@
 
 <meta name="author" content="Instructor: Dr. Wei Li" />
 
-<meta name="date" content="2023-09-02" />
+<meta name="date" content="2023-09-03" />
 
 <title>MAT 653: Statistical Simulation</title>
 
@@ -1630,7 +1630,7 @@ display: none;
 <h1 class="title toc-ignore">MAT 653: Statistical Simulation</h1>
 <h4 class="author">Instructor<span class="math inline">\(:\)</span>
 Dr. Wei Li</h4>
-<h4 class="date">2023-09-02</h4>
+<h4 class="date">2023-09-03</h4>
 
 </div>
 
@@ -1641,7 +1641,7 @@ MathJax.Hub.Config({
 });
 </script>
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2023-09-02 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2023-09-03 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 <!------------->
 <div id="pca" class="section level1">
@@ -1716,7 +1716,7 @@ X\right)\)</span> subject to <span class="math inline">\(\left\|\mathbf{v}_{2}\r
 \text { subject to } &amp;\left\|\mathbf{v}_{j}\right\|=1 \\
 &amp; \operatorname{Cov}\left(\mathbf{v}_{l}^{T} X, \mathbf{v}_{j}^{T} X
 \right)=\mathbf{v}_{l}^{T} \Sigma \mathbf{v}_{j}=0 \\
-&amp; \text { for } 1=1, \ldots, j-1
+&amp; \text { for } l=1, \ldots, j-1
 \end{align*}\]</span> where <span class="math inline">\(j=2, \cdots,
 p\)</span>.</p></li>
 </ul>
@@ -1930,6 +1930,16 @@ in <span class="math inline">\(\mathbf{X}\)</span>, PLS takes into
 account the response <span class="math inline">\(\mathbf{y}\)</span>.
 The PLS components are linear combinations of the original predictors,
 but they are chosen in a way that also explains variance in <span class="math inline">\(\mathbf{y}\)</span>.</p>
+<p>The 1st-PLS component is <span class="math inline">\(Z_1=\mathbf{v}_1^T X\)</span> where <span class="math inline">\(\mathbf{v}=(\operatorname{corr}(X_1, Y), \cdots,
+\operatorname{corr}(X_p, Y))^T\)</span>; The <span class="math inline">\(j\)</span>-PLS (<span class="math inline">\(j&gt;2\)</span>) component <span class="math inline">\(Z_j=\mathbf{v}_j^T X\)</span> is obtained by
+finding the <span class="math inline">\(j\)</span>-PLS directions <span class="math inline">\(\mathbf{v}_j\)</span> based on <span class="math display">\[\begin{align*}
+\max &amp; \operatorname{Var}\left(\mathbf{v}_j^T X\right)
+\operatorname{Corr}^2(Y, \mathbf{v}_j^T X) \\
+\text { subject to } &amp; \left\|\mathbf{v}_j\right\|=1 \\
+&amp; \operatorname{Cov}\left(\mathbf{v}_l^T X, \mathbf{v}_j^T
+X\right)=\mathbf{v}_l^T \Sigma \mathbf{v}_j=0 \\
+&amp; \text { for } l=1, \ldots, j-1
+\end{align*}\]</span></p>
 </div>
 <div id="latent-factors" class="section level4">
 <h4>Latent factors</h4>
@@ -1967,7 +1977,7 @@ generation of <span class="math inline">\(\mathbf{x}_i\)</span>: given
 to some specified distribution.</p>
 <!------------->
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2023-09-02 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2023-09-03 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 </div>
 </div>

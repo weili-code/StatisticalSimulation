@@ -107,7 +107,7 @@ The procedure can be described as
 \max & \operatorname{Var}\left(\mathbf{v}_{j}^{T} X \right) \\
 \text { subject to } &\left\|\mathbf{v}_{j}\right\|=1 \\
 & \operatorname{Cov}\left(\mathbf{v}_{l}^{T} X, \mathbf{v}_{j}^{T} X \right)=\mathbf{v}_{l}^{T} \Sigma \mathbf{v}_{j}=0 \\
-& \text { for } 1=1, \ldots, j-1
+& \text { for } l=1, \ldots, j-1
 \end{align*}
 where $j=2, \cdots, p$.
 
@@ -253,8 +253,16 @@ $\underset{\theta}{\text{min}}\|\mb{Z}\theta-\mb{y}\|^2$
 
 PCA technique is particularly useful when there is high multi-colinearity exists between the features/variables. By construction, the first principal component will contain the most information about the data, the subsequent principal components contain less and less information about the data while being uncorrelated. The first few principal components $\mb{z}_1,\mb{z}_2,\dots,\mb{z}_k$ $(k<p)$ can be used as predictors in lieu of the original set of all predictors in $X$. 
 
-One particular drawback about $PCR$ is that the formation of the principal components for $X$ does not take into account any relationship between $X$ and $Y$. One remedy is the *Partial Least Squares* (PLS). Instead of focusing only on explaining the variance in \( \mathbf{X} \), PLS takes into account the response \( \mathbf{y} \). The PLS components are linear combinations of the original predictors, but they are chosen in a way that also explains variance in \( \mathbf{y} \). 
+One particular drawback about $PCR$ is that the formation of the principal components for $X$ does not take into account any relationship between $X$ and $Y$. One remedy is the *Partial Least Squares* (PLS). Instead of focusing only on explaining the variance in \( \mathbf{X} \), PLS takes into account the response \( \mathbf{y} \). The PLS components are linear combinations of the original predictors, but they are chosen in a way that also explains variance in \( \mathbf{y} \).
 
+The 1st-PLS component is $Z_1=\mb{v}_1^T X$ where $\mb{v}=(\op{corr}(X_1, Y), \cdots, \op{corr}(X_p, Y))^T$; 
+The $j$-PLS ($j>2$) component $Z_j=\mb{v}_j^T X$ is obtained by finding the $j$-PLS directions $\mb{v}_j$ based on
+\begin{align*}
+\max & \operatorname{Var}\left(\mathbf{v}_j^T X\right) \op{Corr}^2(Y, \mathbf{v}_j^T X) \\
+\text { subject to } & \left\|\mathbf{v}_j\right\|=1 \\
+& \operatorname{Cov}\left(\mathbf{v}_l^T X, \mathbf{v}_j^T X\right)=\mathbf{v}_l^T \Sigma \mathbf{v}_j=0 \\
+& \text { for } l=1, \ldots, j-1
+\end{align*}
 
 #### Latent factors
 
