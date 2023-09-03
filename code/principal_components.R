@@ -68,6 +68,9 @@ library(ggplot2)
 
 # Load the mtcars dataset
 data(mtcars)
+# Write mtcars to a .txt file
+# write.table(mtcars, file = "mtcars.txt", sep = "\t", row.names = TRUE, col.names = TRUE, quote = FALSE)
+
 mtcars <- mtcars[, -1] # remove column "mpg"
 summary(mtcars)
 
@@ -140,6 +143,25 @@ abline(h=0.95, col="blue", lty=2) # line at 95% variance explained
 # For the variance explained graph, the goal is typically to identify the number 
 # of principal components required to account for a specific percentage of the variance, 
 # like 95%. A horizontal line drawn at 0.95 will assist in visually pinpointing this.
+# 
+#####################################
+#### individual case' contribution ##
+#####################################
+
+# Compute the scores
+scores <- pca_result$x
+
+# Compute the squared scores
+squared_scores <- scores^2
+
+# Compute the contribution of each observation to PC1 and PC2
+contribution_PC1 <- squared_scores[,1] / sum(squared_scores[,1])
+contribution_PC2 <- squared_scores[,2] / sum(squared_scores[,2])
+
+# Print the contributions
+print(data.frame(
+                 Contribution_to_PC1 = contribution_PC1, 
+                 Contribution_to_PC2 = contribution_PC2))
 
 #####################################
 ####. variables correlation plot ####

@@ -95,7 +95,7 @@ Principal component analysis is a statistical procedure that finds directions ($
 Principal components (PCs):
 
 - The **principal components** of $X$ are (linearly) uncorrelated, linear combinations $Z_{1}, \cdots, Z_{p}$ whose variances are as large as possible.
-- The collection $\{\mb{v}_1, \ldots, \mb{v}_p\}$ are called **principal directions** of $X$. Each entry in $\mb{v}_j$ is called a **PC loading** in the $j$-th direction. The magnitude of the $k$-entry of $\mb{v}_{j}$ measures the importance of the $k$ th variable to the $j$ th $\mathrm{PC}$, irrespective of the other variables. 
+- The collection $\{\mb{v}_1, \ldots, \mb{v}_p\}$ are called **principal directions** of $X$. Each entry in $\mb{v}_j$ is called a **PC loading** in the $j$-th direction. The magnitude of $v_{kj}$ measures the importance of the $k$ th variable to the $j$ th $\mathrm{PC}$, irrespective of the other variables. 
 
 The procedure can be described as 
 
@@ -190,7 +190,8 @@ We do this for the second, third, .. and the $p$-th PC direction:
 $$
 \textbf{the j-th principle component: } \qquad \mb{z}_j= \mb{X} \mb{v}_j \qquad (n \times 1) , \qquad j=1, \cdots, p
 $$
-where the $i$-th entry $z_{ij}=\mb{v}_{j}^T\bs{x}_i$ is called the **i-th score of the j-th PC of $\mb{X}$**
+where the $i$-th entry $z_{ij}=\mb{v}_{j}^T\bs{x}_i$ is called the **i-th score of the j-th PC of $\mb{X}$**. The scores indicate how each observation projects onto the principal components. The contribution of an individual $i$-th case to the $j$-th principal component can be assessed by $z_{ij}^2/\sum_{k=1}^nz_{kj}^2$.
+
 
 In a data matrix form, we have $\mb{Z}=\mb{X}V,$
 where

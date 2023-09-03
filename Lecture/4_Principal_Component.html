@@ -1696,8 +1696,9 @@ whose variances are as large as possible.</li>
 \mathbf{v}_p\}\)</span> are called <strong>principal directions</strong>
 of <span class="math inline">\(X\)</span>. Each entry in <span class="math inline">\(\mathbf{v}_j\)</span> is called a <strong>PC
 loading</strong> in the <span class="math inline">\(j\)</span>-th
-direction. The magnitude of the <span class="math inline">\(k\)</span>-entry of <span class="math inline">\(\mathbf{v}_{j}\)</span> measures the importance of
-the <span class="math inline">\(k\)</span> th variable to the <span class="math inline">\(j\)</span> th <span class="math inline">\(\mathrm{PC}\)</span>, irrespective of the other
+direction. The magnitude of <span class="math inline">\(v_{kj}\)</span>
+measures the importance of the <span class="math inline">\(k\)</span> th
+variable to the <span class="math inline">\(j\)</span> th <span class="math inline">\(\mathrm{PC}\)</span>, irrespective of the other
 variables.</li>
 </ul>
 <p>The procedure can be described as</p>
@@ -1835,7 +1836,11 @@ direction: <span class="math display">\[
 \mathbf{v}_j \qquad (n \times 1) , \qquad j=1, \cdots, p
 \]</span> where the <span class="math inline">\(i\)</span>-th entry
 <span class="math inline">\(z_{ij}=\mathbf{v}_{j}^T\boldsymbol{x}_i\)</span>
-is called the <strong>i-th score of the j-th PC of <span class="math inline">\(\mathbf{X}\)</span></strong></p>
+is called the <strong>i-th score of the j-th PC of <span class="math inline">\(\mathbf{X}\)</span></strong>. The scores indicate
+how each observation projects onto the principal components. The
+contribution of an individual <span class="math inline">\(i\)</span>-th
+case to the <span class="math inline">\(j\)</span>-th principal
+component can be assessed by <span class="math inline">\(z_{ij}^2/\sum_{k=1}^nz_{kj}^2\)</span>.</p>
 <p>In a data matrix form, we have <span class="math inline">\(\mathbf{Z}=\mathbf{X}V,\)</span> where <span class="math display">\[\begin{align*}
 \mathbf{Z}=
 \left[\begin{array}{c}
