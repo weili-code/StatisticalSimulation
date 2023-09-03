@@ -10,8 +10,8 @@
 
 
 <meta name="author" content="Instructor: Dr. Wei Li" />
-<meta name="author" content="Scribe: Waleed A. Raja" />
 
+<meta name="date" content="2023-09-02" />
 
 <title>MAT 653: Statistical Simulation</title>
 
@@ -1757,114 +1757,199 @@ display: none;
 <h1 class="title toc-ignore">MAT 653: Statistical Simulation</h1>
 <h4 class="author">Instructor<span class="math inline">\(:\)</span>
 Dr. Wei Li</h4>
-<h4 class="author">Scribe<span class="math inline">\(:\)</span> Waleed
-A. Raja</h4>
-<h4 class="date">Sep 16th, 2021</h4>
+<h4 class="date">2023-09-02</h4>
 
 </div>
 
 
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
 <!-- rnb-text-begin -->
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
   TeX: { equationNumbers: { autoNumber: "AMS" } }
 });
 </script>
-<p><strong>Principal Component</strong></p>
-<p><span class="math inline">\(\mathbf{X}\)</span>: <span class="math inline">\(n\times p\)</span> data matrix, <span class="math inline">\(n\)</span> is the number of cases, and <span class="math inline">\(p\)</span> is the number of features. Apply thin
-SVD: <span class="math display">\[
-X=U\Sigma V^T
-\]</span> <span class="math inline">\(U\)</span> is a <span class="math inline">\({n\times p}\)</span> matrix, <span class="math inline">\(\Sigma\)</span> is a <span class="math inline">\({p\times p}\)</span> matrix, and <span class="math inline">\(V^T\)</span> is a <span class="math inline">\({p\times p}\)</span> matrix.<br />
-</p>
-<p>Let <span class="math inline">\(V_j\)</span> be the <span class="math inline">\(j\)</span>-th column of <span class="math inline">\(V\)</span>, it is called <span class="math inline">\(j^{th}\)</span> <strong>principal component
-direction</strong> of <span class="math inline">\(X\)</span>. Each
-element in <span class="math inline">\(V_j\)</span> are called
-<strong>principal component loadings</strong>. From SVD, <span class="math inline">\(V_j^T X^T X V_j=\sigma_j^2\)</span>, thus <span class="math inline">\(\|XV_j\|=\sigma_j\)</span>, where <span class="math inline">\(\sigma_j\)</span> are <strong>singular
-values</strong> of <span class="math inline">\(X\)</span>.</p>
-<p>The <span class="math inline">\(j\)</span>-th <strong>principal
-component</strong> of <span class="math inline">\(X\)</span> is defined
-to be <span class="math display">\[
-Z_j:=XV_j
-\]</span> Specifically, <span class="math inline">\(Z_j =(Z_{1j},
-Z_{2j},\dots,Z_{nj})\)</span>. Elements in <span class="math inline">\(Z_j\)</span> are called <strong>principal
-component scores</strong>: <span class="math display">\[Z_{ij}
-=X_{[i,.]}V_j=\frac{X_{[i,.]}V_j}{\langle{V_j},{V_j}\rangle}
-\text{},\]</span> which is the coefficient of projecting <span class="math inline">\(X_{[i,.]}\)</span> onto span of {<span class="math inline">\(V_j\)</span>}.</p>
-<p>The <span class="math inline">\(j\)</span>-th <strong>normalized
-principal component</strong> of <span class="math inline">\(X\)</span>
-is defined to be <span class="math display">\[
-U_j:=\frac{XV_j}{\|XV_j\|}=\frac{Z_j}{\sigma_j}.
+<p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
+<strong>Updated:</strong> 2023-09-02 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+Statistical Simulation, Wei Li </span> </span></p>
+<!------------->
+<p>PLS algorithm For record purpose, I am deriving the PLS algorithm in
+this post.</p>
+<p>Consider a linear regression problem in a vector format as in
+Eq.[eq:1] given an observed data, which is denoted by a vector <span class="math inline">\(\boldsymbol{x}^{T}=(x_{1},x_{2},\cdots,x_{n})\)</span></p>
+<p><span class="math display">\[
+\begin{align}
+y &amp;=b_{1}x_{1}+\cdots+b_{n}x_{n}+e \\
+&amp;=\boldsymbol{x}^{T}\boldsymbol{b}+e \tag{1}
+\end{align}
 \]</span></p>
-<p>Let’s assume columns of <span class="math inline">\(X\)</span> are
-centered about <span class="math inline">\(0\)</span>, then we can see
-the sample variance of <span class="math inline">\(Z_j=XV_j\)</span> is
-<span class="math display">\[\frac{\|XV_j\|^2}{n-1}=\frac{\sigma_j^2}{n-1}.\]</span></p>
-<p>Since <span class="math inline">\(\sigma_1^2\geq\sigma_2^2\geq\cdots\geq\sigma_n^2\)</span>,
-<span class="math inline">\(Z_1=XV_1\)</span> has the largest sample
-variance among all normalized linear combinations of columns of <span class="math inline">\(X\)</span>; <span class="math inline">\(Z_j\)</span>, <span class="math inline">\(j\ge2\)</span>, has maximum sample variance
-subject to being orthogonal to the earlier ones. <span class="math inline">\(Z_2\perp Z_1, Z_3\perp(Z_2, Z_1),\dots\)</span>
-etc.</p>
-<p>Since <span class="math inline">\(XV_j=Z_j\)</span>, <span class="math inline">\(X[ V_1, \ldots, V_p]=[Z_1,Z_2,\dots,Z_p]\)</span>,
-i.e, <span class="math inline">\(XV=Z\)</span>.</p>
-<p><strong>Application</strong></p>
-<p>One application for the principal components is the principal
-component regression:</p>
-<p><em>Least Square Problem</em><br />
-<span class="math inline">\(\underset{\beta}{\text{min}}\|X\beta-y\|^2\)</span></p>
-<p><em>Principal Components Regression</em><br />
-<span class="math inline">\(\underset{\theta}{\text{min}}\|Z\theta-y\|^2\)</span></p>
-<p>By construction, the first principal component will contain the most
-information about the data, the subsequent principal components contain
-less and less information about the data. Therefore, the first few
-principal components <span class="math inline">\(Z_1,Z_2,\dots,Z_k\)</span> <span class="math inline">\((k&lt;p)\)</span> can be used as predictors in
-lieu of the original set of all predictors in <span class="math inline">\(X\)</span>.<br />
-</p>
-<p><strong>Multivariate Normal</strong><br />
-</p>
-<p>If <span class="math inline">\(Z_1,Z_2,\dots,Z_p\overset{iid}\sim
-\mathcal{N}(0,1)\)</span>, <span class="math display">\[Z=
-\begin{bmatrix}
-z_1\\
-z_2\\
-z_3
-\end{bmatrix}\]</span> Then, <span class="math inline">\(Z\sim
-\mathcal{N}(0,I)\)</span><br />
-</p>
-<p>Also, by the well known property of multivariate normal distribution,
-<span class="math inline">\(\mu+AZ\sim\mathcal{N}(\mu,AA^T)\)</span>
-<span class="math display">\[\mu=
-\begin{bmatrix}
-\mu_1\\
-\mu_2\\
-\mu_3
-\end{bmatrix}\]</span> <span class="math display">\[AA^T=
-\begin{bmatrix}
-\sigma_1^2 &amp; \sigma_{12}^2 &amp; \cdots &amp; \sigma_{1p}^2\\
-\sigma_{21}^2 &amp; \sigma_{2}^2 &amp; \cdots &amp; \sigma_{2p}^2\\
+<p>We are aiming to work out the unknown regression coefficients vector
+<span class="math inline">\(\boldsymbol{b}\)</span> for future
+prediction of <span class="math inline">\(y\)</span> once we have the
+observed data <span class="math inline">\(\boldsymbol{x}\)</span>. To
+keep the prediction as accurate as possible, we will want to make the
+residual error e as small as possible. This is simply the whole idea of
+the linear regression method. So one solution is to use training
+samples, that is given m observations <span class="math inline">\(\boldsymbol{y}^{T}=(y_{1},\cdots,y_{m}),X=[x_{ij}],i=1,\cdots,m,j=1,\cdots,n\)</span>
+to solve <span class="math inline">\(\boldsymbol{b}\)</span> out in
+terms of keeping the residual error sufficiently small</p>
+<p><span class="math display">\[
+\begin{pmatrix}
+y_{1}\\
+y_{2}\\
+\vdots\\
+y_{m}
+\end{pmatrix}=\begin{pmatrix}
+x_{11} &amp; x_{12} &amp; \cdots &amp; x_{1n}\\
+x_{21} &amp; x_{22} &amp; \cdots &amp; x_{2n}\\
 \vdots &amp; \vdots &amp; \ddots &amp; \vdots\\
-\sigma_{p1}^2 &amp; \sigma_{p2}^2 &amp; \cdots &amp; \sigma_{p}^2
-\end{bmatrix}\]</span> <span class="math inline">\(AA^T\)</span> is the
-variance/covariance matrix. It is a symmetric matrix.<br />
-</p>
-<p>Goal: To generate W (multivariate), such that, <span class="math inline">\(W\sim\mathcal{N}(\mu,\sum)\)</span></p>
-<p>Example: <span class="math inline">\(p=2\)</span> <span class="math display">\[W=
-\begin{bmatrix}
-w_1\\
-w_2
-\end{bmatrix}\]</span> <span class="math display">\[\mu=
-\begin{bmatrix}
-0.1\\
-0.3
-\end{bmatrix}\]</span> <span class="math display">\[\sum=
-\begin{bmatrix}
-0.5 &amp; 0.1\\
-0.1 &amp; 0.4
-\end{bmatrix}\]</span> Take Cholesky decomposition of <span class="math inline">\(\sum=U^TU\)</span>. In R, <span class="math inline">\(\mu+U^TZ \sim\mathcal{N}(\mu, U^TU)\)</span></p>
+x_{m1} &amp; x_{m2} &amp; \cdots &amp; x_{mn}
+\end{pmatrix}\begin{pmatrix}
+b_{1}\\
+b_{2}\\
+\vdots\\
+b_{n}
+\end{pmatrix}+\begin{pmatrix}
+e_{1}\\
+e_{2}\\
+\vdots\\
+e_{m}
+\end{pmatrix}\tag{2}
+\]</span></p>
+<p>For comparability among different data, all the observations are
+assumed to be centered and normalized in advance. Now the problem is
+translated to an optimization problem, that is to find a least square
+solution for the regression coefficients such that the sum of the square
+errors of the residuals is minimized. For simplicity, I would like to
+use the matrix form for Eq.[2]</p>
+<p><span class="math display">\[
+Y=X\boldsymbol{b}+\boldsymbol{e}. \tag{3}
+\]</span></p>
+<p>We want to find out <span class="math inline">\(\boldsymbol{b}\)</span> such that</p>
+<p><span class="math display">\[
+min\{\boldsymbol{e}^{T}\boldsymbol{e}\}.
+\]</span></p>
+<p>The least square solution for <span class="math inline">\(\boldsymbol{b}\)</span> is given by</p>
+<p><span class="math display">\[
+\boldsymbol{b}=(X^{T}X)^{-1}X^{T}Y. \tag{4}
+\]</span></p>
+<p>The derivation is simply as follows:</p>
+<p><span class="math display">\[
+F_{\boldsymbol{b}}=\frac{1}{2}(X\boldsymbol{b}-Y)^{T}(X\boldsymbol{b}-Y)
+\tag{5}
+\]</span></p>
+<p>So the derivative of F_{} yields</p>
+<p><span class="math display">\[
+\begin{align}
+\nabla_{\boldsymbol{b}}F_{\boldsymbol{b}}
+&amp;=\frac{1}{2}\nabla_{\boldsymbol{b}}(X\boldsymbol{b}-Y)^{T}(X\boldsymbol{b}-Y)\\
+&amp;=\frac{1}{2}\nabla_{\boldsymbol{b}}(\boldsymbol{b}^{T}X^{T}-Y^{T})(X\boldsymbol{b}-Y)\\
+&amp;=\frac{1}{2}\nabla_{\boldsymbol{b}}(\boldsymbol{b}^{T}X^{T}X\boldsymbol{b}-\boldsymbol{b}^{T}X^{T}Y-Y^{T}X\boldsymbol{b}+Y^{T}Y)\\
+&amp;=\frac{1}{2}\nabla_{\boldsymbol{b}}tr(\boldsymbol{b}^{T}X^{T}X\boldsymbol{b}-\boldsymbol{b}^{T}X^{T}Y-Y^{T}X\boldsymbol{b}+Y^{T}Y)\\
+&amp;=\frac{1}{2}\nabla_{\boldsymbol{b}}\left(tr(\boldsymbol{b}^{T}X^{T}X\boldsymbol{b})-2tr(Y^{T}X\boldsymbol{b})+tr(Y^{T}Y)\right)\\
+&amp;=X^{T}X\boldsymbol{b}-X^{T}Y.
+\end{align}
+\]</span></p>
+<p>By setting the derivative to be 0, solution Eq.[4] is obtained.
+However, this least square solution may have problem when the training
+sample is not enough, that is m&lt;n. In that case, the matrix <span class="math inline">\(X^{T}X\)</span> doesn’t have full rank which means
+it is nonsingular.</p>
+<p>To solve this problem, we can project each measurement <span class="math inline">\(\boldsymbol{x_{i}}=(x_{i1},\cdots,x_{in})\)</span>
+into a lower-dimensional subspace spanned by data <span class="math inline">\(T=XW\)</span>. We can think of this as forming a
+smaller set of features, each being the linear combination of the
+original set of features. These new features are also called “latent”
+variables. Therefore, the linear regression can be written as a linear
+regression system on the new latent variables</p>
+<p><span class="math display">\[
+\begin{align}
+Y &amp;=TQ^{T}+F \tag{6} \\
+X &amp;=TP^{T}+E \tag{7}
+\end{align}
+\]</span></p>
+<p>where <span class="math inline">\(P,Q\)</span> are the coefficient
+matrices and E,F are matrices of errors. As in partial least squares
+regression (PLSR), the weight matrix <span class="math inline">\(W\)</span> reflects the covariance structure
+between the predictor and response variables. Hence, maximizing the
+covariance of the latent variables and the response variables <span class="math inline">\(Cov(T,Y)\)</span> gives us the weight matrix <span class="math inline">\(W\)</span>. Once obtaining <span class="math inline">\(W\)</span> and then constructing <span class="math inline">\(T\)</span>, <span class="math inline">\(Q^{T}\)</span> is solved by the least squares
+solution Eq.[6]:</p>
+<p><span class="math display">\[
+Q^{T}=(T^{T}T)^{-1}T^{T}Y.
+\]</span></p>
+<p>Plug Eq.[eq:latent] into the regression equation Eq.[6], we obtain
+the solution of the matrix <span class="math inline">\(\boldsymbol{b}\)</span> of the coefficient in the
+model Eq.[3]</p>
+<p><span class="math display">\[
+\boldsymbol{b}=W(T^{T}T)^{-1}T^{T}Y.
+\]</span></p>
+<p>So this is the whole idea of PLS. A commonly used algorithm to
+compute PLSR is the nonlinear iterative partial least square (NIPALS)
+method. The steps are summarized as follows:</p>
+<p>NIPALS</p>
+<p>Normalize <span class="math inline">\(m\)</span> training samples by
+<span class="math display">\[
+\begin{align}
+x_{ij} &amp;=\left(x_{ij}-\bar{x} {\cdot\ j}\right)/ \sigma {x{\cdot\
+j}} \\
+y{i} &amp;=\left(y_{i}-\bar{y}\right)/ \sigma _{y}\ \text{for
+}i=1,\cdots,m,j=1,\cdots,n
+\end{align}
+\]</span></p>
+<p>Compute the scores</p>
+<p>Compute the dominant eigenvector of <span class="math inline">\(X_{0}^{T}Y_{0}Y_{0}^{T}X_{0}\)</span> and assign
+it to <span class="math inline">\(w_{1}\)</span> (the step of maximizing
+the covariance). Normalize <span class="math inline">\(w_{1}\)</span>.
+The scores <span class="math inline">\(t_{1}\)</span> of <span class="math inline">\(X_{0}\)</span> yields <span class="math display">\[
+t_{1}=X_{0}w_{1}.
+\]</span></p>
+<p>Do the same to <span class="math inline">\(Y_{0}\)</span> and obtain
+a normalized vector <span class="math inline">\(c_{1}\)</span>. The
+scores <span class="math inline">\(v_{1}\)</span> of <span class="math inline">\(Y_{0}\)</span> yields</p>
+<p><span class="math display">\[
+v_{1}=Y_{0}c_{1}.
+\]</span></p>
+<p>Compute the loadings</p>
+<p>Based on the regression equations <span class="math display">\[
+\begin{align}
+X &amp;=t_{1}p_{1}^{T}+E \\
+Y &amp;=t_{1}q_{1}^{T}+F,
+\end{align}
+\]</span></p>
+<p>the least square method gives us</p>
+<p><span class="math display">\[
+\begin{align}
+p_{1} &amp;=\frac{X^{T}t_{1}}{t_{1}t_{1}^{T}} \\
+q_{1} &amp;=\frac{Y^{T}t_{1}}{t_{1}t_{1}^{T}}.
+\end{align}
+\]</span></p>
+<p>Check if <span class="math inline">\(F\)</span> is sufficiently
+small. Otherwise, set <span class="math inline">\(E\)</span> as <span class="math inline">\(X_{1}\)</span>, <span class="math inline">\(F\)</span> as <span class="math inline">\(Y_{1}\)</span>. Repeat step 2-3.</p>
+<p>Finally, we obtain</p>
+<p><span class="math display">\[
+\begin{align}
+X &amp;=t_{1}p_{1}^{T}+t_{2}p_{2}^{T}+\cdots+t_{n}p_{n}^{T}+E \\
+Y &amp;=t_{1}q_{1}^{T}+t_{2}q_{2}^{T}+\cdots+t_{n}q_{n}^{T}+F
+\end{align}
+\]</span></p>
+<p>which in a matrix format is as follows:</p>
+<p><span class="math display">\[
+\begin{align}
+X &amp;=TP^{T}+E \\
+Y &amp;=TQ^{T}+F \\
+&amp;=XWQ^{T}+F \\
+&amp;:=XB+F.
+\end{align}
+\]</span></p>
+<p>So, when we have a new data <span class="math inline">\(x_{new}\)</span>, to define the PLS components in
+our ABC-MCMC algorithm, we only need to compute</p>
+<p><span class="math display">\[
+t_{1}=x_{new}^{T}p_{1},t_{2}=x_{new}^{T}p_{2},\cdots,t_{n}=x_{new}^{T}p_{n}
+\]</span></p>
+<!------------->
+<p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
+<strong>Updated:</strong> 2023-09-02 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+Statistical Simulation, Wei Li </span> </span></p>
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiTUFUIDY1MzogU3RhdGlzdGljYWwgU2ltdWxhdGlvbiIKYXV0aG9yOgogIC0gSW5zdHJ1Y3RvciQ6JCBEci4gV2VpIExpCiAgLSBTY3JpYmUkOiQgICBXYWxlZWQgQS4gUmFqYQpkYXRlOiBTZXAgMTZ0aCwgMjAyMQpnZW9tZXRyeTogbGVmdD0yY20sIHJpZ2h0PTJjbSwgdG9wPTJjbSwgYm90dG9tPTJjbQpsaW5lc3RyZXRjaDogMS4zCm91dHB1dDoKICBodG1sX2RvY3VtZW50OgogICAgZGZfcHJpbnQ6IHBhZ2VkCiAgcGRmX2RvY3VtZW50OiAKICAgICAgaW5jbHVkZToKICAgICAgICBpbl9oZWFkZXI6IHByZWFtYmxlX3JtZC50ZXgKICBodG1sX25vdGVib29rOiBkZWZhdWx0CmZvbnRzaXplOiAxNHB0CmhlYWRlci1pbmNsdWRlczoKLSBcdXNlcGFja2FnZXthbXNtYXRofQotIFx1c2VwYWNrYWdlW2xpbmV3aWR0aD0xcHRde21kZnJhbWVkfQotIFxuZXdjb21tYW5kXGlubmVyWzJde1xsZWZ0XGxhbmdsZSMxLCMyXHJpZ2h0XHJhbmdsZX0KLSBcbmV3Y29tbWFuZFxmbG9vclsxXXtcbGZsb29yIzFccmZsb29yfQotIFxuZXdjb21tYW5kXGNlaWxbMV17XGxjZWlsIzFccmNlaWx9Ci0gXG5ld2NvbW1hbmRcbWJbMV17XG1hdGhiZnsjMX19Ci0gXG5ld2NvbW1hbmRcYnNbMV17XGJvbGRzeW1ib2x7IzF9fQotIFxuZXdjb21tYW5kXG1yWzFde1xtYXRocm17IzF9fQotIFxuZXdjb21tYW5kXHdoWzFde1x3aWRlaGF0eyMxfX0KLSBcbmV3Y29tbWFuZFxvcFsxXXtcb3BlcmF0b3JuYW1leyMxfX0KLSBcbmV3Y29tbWFuZFxtYmJbMV17XG1hdGhiYnsjMX19Ci0gXHVzZXBhY2thZ2V7Y2FwdGlvbn0KLSBcY2FwdGlvbnNldHVwW2ZpZ3VyZV17bGFiZWxmb3JtYXQ9ZW1wdHl9Ci0gXG5ld2NvbW1hbmR7XHdlaX1bMV17XHRleHRjb2xvcntvcmFuZ2V9eyhXZWk6IzEpfX0KLS0tCmBgYHtyIHNldHVwLCBpbmNsdWRlPUZBTFNFfQprbml0cjo6b3B0c19jaHVuayRzZXQoZWNobyA9IFRSVUUsZXZhbD1UKQpgYGAKPHNjcmlwdCB0eXBlPSJ0ZXh0L3gtbWF0aGpheC1jb25maWciPgpNYXRoSmF4Lkh1Yi5Db25maWcoewogIFRlWDogeyBlcXVhdGlvbk51bWJlcnM6IHsgYXV0b051bWJlcjogIkFNUyIgfSB9Cn0pOwo8L3NjcmlwdD4KCgoqKlByaW5jaXBhbCBDb21wb25lbnQqKgoKJFxtYntYfSQ6ICRuXHRpbWVzIHAkIGRhdGEgbWF0cml4LCAkbiQgaXMgdGhlIG51bWJlciBvZiBjYXNlcywgYW5kICRwJCBpcyB0aGUgbnVtYmVyIG9mIGZlYXR1cmVzLgpBcHBseSB0aGluIFNWRDoKJCQKWD1VXFNpZ21hIFZeVAokJAokVSQgaXMgYSAke25cdGltZXMgcH0kIG1hdHJpeCwgJFxTaWdtYSQgaXMgYSAke3BcdGltZXMgcH0kIG1hdHJpeCwgYW5kICRWXlQkIGlzIGEgJHtwXHRpbWVzIHB9JCBtYXRyaXguXAoKTGV0ICRWX2okIGJlIHRoZSAkaiQtdGggY29sdW1uIG9mICRWJCwgaXQgaXMgY2FsbGVkICRqXnt0aH0kICoqcHJpbmNpcGFsIGNvbXBvbmVudCBkaXJlY3Rpb24qKiBvZiAkWCQuIEVhY2ggZWxlbWVudCBpbiAkVl9qJCBhcmUgY2FsbGVkICoqcHJpbmNpcGFsIGNvbXBvbmVudCBsb2FkaW5ncyoqLiBGcm9tIFNWRCwgJFZfal5UIFheVCBYIFZfaj1cc2lnbWFfal4yJCwgdGh1cyAkXHxYVl9qXHw9XHNpZ21hX2okLCB3aGVyZSAkXHNpZ21hX2okIGFyZSAqKnNpbmd1bGFyIHZhbHVlcyoqIG9mICRYJC4KClRoZSAkaiQtdGggKipwcmluY2lwYWwgY29tcG9uZW50Kiogb2YgJFgkIGlzIGRlZmluZWQgdG8gYmUKJCQKWl9qOj1YVl9qCiQkClNwZWNpZmljYWxseSwgJFpfaiA9KFpfezFqfSwgWl97Mmp9LFxkb3RzLFpfe25qfSkkLiBFbGVtZW50cyBpbiAkWl9qJCBhcmUgY2FsbGVkICoqcHJpbmNpcGFsIGNvbXBvbmVudCBzY29yZXMqKjogCiQkWl97aWp9ID1YX3tbaSwuXX1WX2o9XGZyYWN7WF97W2ksLl19Vl9qfXtcbGFuZ2xle1Zfan0se1Zfan1ccmFuZ2xlfSBcdGV4dHt9LCQkCndoaWNoIGlzIHRoZSBjb2VmZmljaWVudCBvZiBwcm9qZWN0aW5nICRYX3tbaSwuXX0kIG9udG8gc3BhbiBvZiB7JFZfaiR9LgoKVGhlICRqJC10aCAqKm5vcm1hbGl6ZWQgcHJpbmNpcGFsIGNvbXBvbmVudCoqIG9mICRYJCBpcyBkZWZpbmVkIHRvIGJlCiQkClVfajo9XGZyYWN7WFZfan17XHxYVl9qXHx9PVxmcmFje1pfan17XHNpZ21hX2p9LgokJAoKTGV0J3MgYXNzdW1lIGNvbHVtbnMgb2YgJFgkIGFyZSBjZW50ZXJlZCBhYm91dCAkMCQsIHRoZW4gd2UgY2FuIHNlZSB0aGUgc2FtcGxlIHZhcmlhbmNlIG9mICRaX2o9WFZfaiQgaXMgCiQkXGZyYWN7XHxYVl9qXHxeMn17bi0xfT1cZnJhY3tcc2lnbWFfal4yfXtuLTF9LiQkCgpTaW5jZSAkXHNpZ21hXzFeMlxnZXFcc2lnbWFfMl4yXGdlcVxjZG90c1xnZXFcc2lnbWFfbl4yJCwgJFpfMT1YVl8xJCBoYXMgdGhlIGxhcmdlc3Qgc2FtcGxlIHZhcmlhbmNlIGFtb25nIGFsbCBub3JtYWxpemVkIGxpbmVhciBjb21iaW5hdGlvbnMgb2YgY29sdW1ucyBvZiAkWCQ7ICRaX2okLCAkalxnZTIkLCBoYXMgbWF4aW11bSBzYW1wbGUgdmFyaWFuY2Ugc3ViamVjdCB0byBiZWluZyBvcnRob2dvbmFsIHRvIHRoZSBlYXJsaWVyIG9uZXMuICRaXzJccGVycCBaXzEsIFpfM1xwZXJwKFpfMiwgWl8xKSxcZG90cyQgZXRjLgoKXGJlZ2lue21kZnJhbWVkfQpDaGVjazoKJCRcYmVnaW57YWxpZ25lZH0KQ292KFpfMSxaXzIpJj1cZnJhY3taXzFeVFpfMn17bi0xfVxcCiY9XGZyYWN7KFhWXzEpXlRYVl8yfXtuLTF9XFwKJj1cZnJhY3tWXzFeVFheVFhWXzJ9e24tMX1cXAomPVxmcmFjeyhWXzFeVFYpXHN1bVxzdW0oVl5UVl8yKX17bi0xfVxcCiY9MApcZW5ke2FsaWduZWR9CiQkClxlbmR7bWRmcmFtZWR9ClNpbmNlICRYVl9qPVpfaiQsICRYWyBWXzEsIFxsZG90cywgVl9wXT1bWl8xLFpfMixcZG90cyxaX3BdJCwgaS5lLCAkWFY9WiQuCgoKKipBcHBsaWNhdGlvbioqCgpPbmUgYXBwbGljYXRpb24gZm9yIHRoZSBwcmluY2lwYWwgY29tcG9uZW50cyBpcyB0aGUgcHJpbmNpcGFsIGNvbXBvbmVudCByZWdyZXNzaW9uOiAKCipMZWFzdCBTcXVhcmUgUHJvYmxlbSpcCiRcdW5kZXJzZXR7XGJldGF9e1x0ZXh0e21pbn19XHxYXGJldGEteVx8XjIkCgoqUHJpbmNpcGFsIENvbXBvbmVudHMgUmVncmVzc2lvbipcCiRcdW5kZXJzZXR7XHRoZXRhfXtcdGV4dHttaW59fVx8Wlx0aGV0YS15XHxeMiQKCkJ5IGNvbnN0cnVjdGlvbiwgdGhlIGZpcnN0IHByaW5jaXBhbCBjb21wb25lbnQgd2lsbCBjb250YWluIHRoZSBtb3N0IGluZm9ybWF0aW9uIGFib3V0IHRoZSBkYXRhLCB0aGUgc3Vic2VxdWVudCBwcmluY2lwYWwgY29tcG9uZW50cyBjb250YWluIGxlc3MgYW5kIGxlc3MgaW5mb3JtYXRpb24gYWJvdXQgdGhlIGRhdGEuIFRoZXJlZm9yZSwgdGhlIGZpcnN0IGZldyBwcmluY2lwYWwgY29tcG9uZW50cyAkWl8xLFpfMixcZG90cyxaX2skICQoazxwKSQgY2FuIGJlIHVzZWQgYXMgcHJlZGljdG9ycyBpbiBsaWV1IG9mIHRoZSBvcmlnaW5hbCBzZXQgb2YgYWxsIHByZWRpY3RvcnMgaW4gJFgkLlwKCgoKKipNdWx0aXZhcmlhdGUgTm9ybWFsKipcCgpJZiAkWl8xLFpfMixcZG90cyxaX3Bcb3ZlcnNldHtpaWR9XHNpbSBcbWF0aGNhbHtOfSgwLDEpJCwgJCRaPQpcYmVnaW57Ym1hdHJpeH0Kel8xXFwKel8yXFwKel8zClxlbmR7Ym1hdHJpeH0kJApUaGVuLCAkWlxzaW0gXG1hdGhjYWx7Tn0oMCxJKSRcCgpBbHNvLCBieSB0aGUgd2VsbCBrbm93biBwcm9wZXJ0eSBvZiBtdWx0aXZhcmlhdGUgbm9ybWFsIGRpc3RyaWJ1dGlvbiwgJFxtdStBWlxzaW1cbWF0aGNhbHtOfShcbXUsQUFeVCkkCiQkXG11PQpcYmVnaW57Ym1hdHJpeH0KXG11XzFcXApcbXVfMlxcClxtdV8zClxlbmR7Ym1hdHJpeH0kJAokJEFBXlQ9ClxiZWdpbntibWF0cml4fQpcc2lnbWFfMV4yICYgXHNpZ21hX3sxMn1eMiAmIFxjZG90cyAmIFxzaWdtYV97MXB9XjJcXApcc2lnbWFfezIxfV4yICYgXHNpZ21hX3syfV4yICYgXGNkb3RzICYgXHNpZ21hX3sycH1eMlxcClx2ZG90cyAmIFx2ZG90cyAmIFxkZG90cyAmIFx2ZG90c1xcClxzaWdtYV97cDF9XjIgJiBcc2lnbWFfe3AyfV4yICYgXGNkb3RzICYgXHNpZ21hX3twfV4yClxlbmR7Ym1hdHJpeH0kJAokQUFeVCQgaXMgdGhlIHZhcmlhbmNlL2NvdmFyaWFuY2UgbWF0cml4LiBJdCBpcyBhIHN5bW1ldHJpYyBtYXRyaXguXAoKR29hbDogVG8gZ2VuZXJhdGUgVyAobXVsdGl2YXJpYXRlKSwgc3VjaCB0aGF0LCAKJFdcc2ltXG1hdGhjYWx7Tn0oXG11LFxzdW0pJAoKRXhhbXBsZTogJHA9MiQKJCRXPQpcYmVnaW57Ym1hdHJpeH0Kd18xXFwKd18yClxlbmR7Ym1hdHJpeH0kJAokJFxtdT0KXGJlZ2lue2JtYXRyaXh9CjAuMVxcCjAuMwpcZW5ke2JtYXRyaXh9JCQKJCRcc3VtPQpcYmVnaW57Ym1hdHJpeH0KMC41ICYgMC4xXFwKMC4xICYgMC40ClxlbmR7Ym1hdHJpeH0kJApUYWtlIENob2xlc2t5IGRlY29tcG9zaXRpb24gb2YgJFxzdW09VV5UVSQuCkluIFIsICRcbXUrVV5UWiBcc2ltXG1hdGhjYWx7Tn0oXG11LCBVXlRVKSQ=</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiTUFUIDY1MzogU3RhdGlzdGljYWwgU2ltdWxhdGlvbiIKYXV0aG9yOiBJbnN0cnVjdG9yJDokIERyLiBXZWkgTGkKZGF0ZTogImByIFN5cy5EYXRlKClgIgpnZW9tZXRyeTogbGVmdD0yY20sIHJpZ2h0PTJjbSwgdG9wPTJjbSwgYm90dG9tPTJjbQpsaW5lc3RyZXRjaDogMS4zCm91dHB1dDoKICBodG1sX2RvY3VtZW50OgogICAgZGZfcHJpbnQ6IHBhZ2VkCiAgICBtYXRoamF4X2NvbmZpZzoKICAgICAgLSBUZVgtQU1TLU1NTF9IVE1Mb3JNTUwgICAKICBwZGZfZG9jdW1lbnQ6IAogICAgICBpbmNsdWRlOgogICAgICAgIGluX2hlYWRlcjogcHJlYW1ibGVfcm1kLnRleAogIGh0bWxfbm90ZWJvb2s6IGRlZmF1bHQKZm9udHNpemU6IDE0cHQKaGVhZGVyLWluY2x1ZGVzOgotIFx1c2VwYWNrYWdle2Ftc21hdGh9Ci0gXHVzZXBhY2thZ2VbbGluZXdpZHRoPTFwdF17bWRmcmFtZWR9Ci0gXG5ld2NvbW1hbmRcaW5uZXJbMl17XGxlZnRcbGFuZ2xlIzEsIzJccmlnaHRccmFuZ2xlfQotIFxuZXdjb21tYW5kXGZsb29yWzFde1xsZmxvb3IjMVxyZmxvb3J9Ci0gXG5ld2NvbW1hbmRcY2VpbFsxXXtcbGNlaWwjMVxyY2VpbH0KLSBcbmV3Y29tbWFuZFxtYlsxXXtcbWF0aGJmeyMxfX0KLSBcbmV3Y29tbWFuZFxic1sxXXtcYm9sZHN5bWJvbHsjMX19Ci0gXG5ld2NvbW1hbmRcbXJbMV17XG1hdGhybXsjMX19Ci0gXG5ld2NvbW1hbmRcd2hbMV17XHdpZGVoYXR7IzF9fQotIFxuZXdjb21tYW5kXG9wWzFde1xvcGVyYXRvcm5hbWV7IzF9fQotIFxuZXdjb21tYW5kXG1iYlsxXXtcbWF0aGJieyMxfX0KLSBcdXNlcGFja2FnZXtjYXB0aW9ufQotIFxjYXB0aW9uc2V0dXBbZmlndXJlXXtsYWJlbGZvcm1hdD1lbXB0eX0KLSBcbmV3Y29tbWFuZHtcd2VpfVsxXXtcdGV4dGNvbG9ye29yYW5nZX17KFdlaTojMSl9fQotLS0KCjxzY3JpcHQgdHlwZT0idGV4dC94LW1hdGhqYXgtY29uZmlnIj4KTWF0aEpheC5IdWIuQ29uZmlnKHsKICBUZVg6IHsgZXF1YXRpb25OdW1iZXJzOiB7IGF1dG9OdW1iZXI6ICJBTVMiIH0gfQp9KTsKPC9zY3JpcHQ+CgoKPHNwYW4gc3R5bGU9ImJhY2tncm91bmQtY29sb3I6ICNmNWY1ZjU7IHBhZGRpbmc6IDVweDsgZGlzcGxheTogYmxvY2s7Ij4KICAgIDxzcGFuIHN0eWxlPSJ3aWR0aDogMjUlOyBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7IHRleHQtYWxpZ246IGxlZnQ7Ij4KICAgICAgICBbQmFja10oamF2YXNjcmlwdDp3aW5kb3cuaGlzdG9yeS5iYWNrKCkpCiAgICA8L3NwYW4+CiAgICA8c3BhbiBzdHlsZT0id2lkdGg6IDMwJTsgZGlzcGxheTogaW5saW5lLWJsb2NrOyB0ZXh0LWFsaWduOiBjZW50ZXI7IGNvbG9yOiBncmV5OyI+CiAgICAgICAgKipVcGRhdGVkOioqIGByIFN5cy5EYXRlKClgCiAgICA8L3NwYW4+CiAgICA8c3BhbiBzdHlsZT0id2lkdGg6IDM1JTsgZGlzcGxheTogaW5saW5lLWJsb2NrOyB0ZXh0LWFsaWduOiByaWdodDsgY29sb3I6IGdyZXk7Ij4KICAgICAgICBTdGF0aXN0aWNhbCBTaW11bGF0aW9uLCBXZWkgTGkKICAgIDwvc3Bhbj4KPC9zcGFuPgoKPCEtLS0tLS0tLS0tLS0tPgoKClBMUyBhbGdvcml0aG0KRm9yIHJlY29yZCBwdXJwb3NlLCBJIGFtIGRlcml2aW5nIHRoZSBQTFMgYWxnb3JpdGhtIGluIHRoaXMgcG9zdC4KCkNvbnNpZGVyIGEgbGluZWFyIHJlZ3Jlc3Npb24gcHJvYmxlbSBpbiBhIHZlY3RvciBmb3JtYXQgYXMgaW4gRXEuW2VxOjFdIGdpdmVuIGFuIG9ic2VydmVkIGRhdGEsIHdoaWNoIGlzIGRlbm90ZWQgYnkgYSB2ZWN0b3IgXChcYm9sZHN5bWJvbHt4fV57VH09KHhfezF9LHhfezJ9LFxjZG90cyx4X3tufSlcKQoKJCQKXGJlZ2lue2FsaWdufQp5ICY9Yl97MX14X3sxfStcY2RvdHMrYl97bn14X3tufStlIFxcCiY9XGJvbGRzeW1ib2x7eH1ee1R9XGJvbGRzeW1ib2x7Yn0rZSBcdGFnezF9ClxlbmR7YWxpZ259CiQkCgpXZSBhcmUgYWltaW5nIHRvIHdvcmsgb3V0IHRoZSB1bmtub3duIHJlZ3Jlc3Npb24gY29lZmZpY2llbnRzIHZlY3RvciBcKFxib2xkc3ltYm9se2J9XCkgZm9yIGZ1dHVyZSBwcmVkaWN0aW9uIG9mIFwoeVwpIG9uY2Ugd2UgaGF2ZSB0aGUgb2JzZXJ2ZWQgZGF0YSBcKFxib2xkc3ltYm9se3h9XCkuIFRvIGtlZXAgdGhlIHByZWRpY3Rpb24gYXMgYWNjdXJhdGUgYXMgcG9zc2libGUsIHdlIHdpbGwgd2FudCB0byBtYWtlIHRoZSByZXNpZHVhbCBlcnJvciBlIGFzIHNtYWxsIGFzIHBvc3NpYmxlLiBUaGlzIGlzIHNpbXBseSB0aGUgd2hvbGUgaWRlYSBvZiB0aGUgbGluZWFyIHJlZ3Jlc3Npb24gbWV0aG9kLiBTbyBvbmUgc29sdXRpb24gaXMgdG8gdXNlIHRyYWluaW5nIHNhbXBsZXMsIHRoYXQgaXMgZ2l2ZW4gbSBvYnNlcnZhdGlvbnMgXChcYm9sZHN5bWJvbHt5fV57VH09KHlfezF9LFxjZG90cyx5X3ttfSksWD1beF97aWp9XSxpPTEsXGNkb3RzLG0saj0xLFxjZG90cyxuIFwpCnRvIHNvbHZlIFwoXGJvbGRzeW1ib2x7Yn1cKSBvdXQgaW4gdGVybXMgb2Yga2VlcGluZyB0aGUgcmVzaWR1YWwgZXJyb3Igc3VmZmljaWVudGx5IHNtYWxsCgokJApcYmVnaW57cG1hdHJpeH0KeV97MX1cXAp5X3syfVxcClx2ZG90c1xcCnlfe219ClxlbmR7cG1hdHJpeH09XGJlZ2lue3BtYXRyaXh9CnhfezExfSAmIHhfezEyfSAmIFxjZG90cyAmIHhfezFufVxcCnhfezIxfSAmIHhfezIyfSAmIFxjZG90cyAmIHhfezJufVxcClx2ZG90cyAmIFx2ZG90cyAmIFxkZG90cyAmIFx2ZG90c1xcCnhfe20xfSAmIHhfe20yfSAmIFxjZG90cyAmIHhfe21ufQpcZW5ke3BtYXRyaXh9XGJlZ2lue3BtYXRyaXh9CmJfezF9XFwKYl97Mn1cXApcdmRvdHNcXApiX3tufQpcZW5ke3BtYXRyaXh9K1xiZWdpbntwbWF0cml4fQplX3sxfVxcCmVfezJ9XFwKXHZkb3RzXFwKZV97bX0KXGVuZHtwbWF0cml4fVx0YWd7Mn0KJCQKCkZvciBjb21wYXJhYmlsaXR5IGFtb25nIGRpZmZlcmVudCBkYXRhLCBhbGwgdGhlIG9ic2VydmF0aW9ucyBhcmUgYXNzdW1lZCB0byBiZSBjZW50ZXJlZCBhbmQgbm9ybWFsaXplZCBpbiBhZHZhbmNlLiBOb3cgdGhlIHByb2JsZW0gaXMgdHJhbnNsYXRlZCB0byBhbiBvcHRpbWl6YXRpb24gcHJvYmxlbSwgdGhhdCBpcyB0byBmaW5kIGEgbGVhc3Qgc3F1YXJlIHNvbHV0aW9uIGZvciB0aGUgcmVncmVzc2lvbiBjb2VmZmljaWVudHMgc3VjaCB0aGF0IHRoZSBzdW0gb2YgdGhlIHNxdWFyZSBlcnJvcnMgb2YgdGhlIHJlc2lkdWFscyBpcyBtaW5pbWl6ZWQuIEZvciBzaW1wbGljaXR5LCBJIHdvdWxkIGxpa2UgdG8gdXNlIHRoZSBtYXRyaXggZm9ybSBmb3IgRXEuWzJdCgokJApZPVhcYm9sZHN5bWJvbHtifStcYm9sZHN5bWJvbHtlfS4gXHRhZ3szfQokJAoKV2Ugd2FudCB0byBmaW5kIG91dCBcKFxib2xkc3ltYm9se2J9XCkgc3VjaCB0aGF0CgokJAptaW5ce1xib2xkc3ltYm9se2V9XntUfVxib2xkc3ltYm9se2V9XH0uCiQkCgpUaGUgbGVhc3Qgc3F1YXJlIHNvbHV0aW9uIGZvciBcKFxib2xkc3ltYm9se2J9XCkgaXMgZ2l2ZW4gYnkKCiQkClxib2xkc3ltYm9se2J9PShYXntUfVgpXnstMX1YXntUfVkuIFx0YWd7NH0KJCQKClRoZSBkZXJpdmF0aW9uIGlzIHNpbXBseSBhcyBmb2xsb3dzOgoKJCQKRl97XGJvbGRzeW1ib2x7Yn19PVxmcmFjezF9ezJ9KFhcYm9sZHN5bWJvbHtifS1ZKV57VH0oWFxib2xkc3ltYm9se2J9LVkpIFx0YWd7NX0KJCQKClNvIHRoZSBkZXJpdmF0aXZlIG9mIEZfe1xib2xkc3ltYm9se2J9fSB5aWVsZHMKCiQkClxiZWdpbnthbGlnbn0KXG5hYmxhX3tcYm9sZHN5bWJvbHtifX1GX3tcYm9sZHN5bWJvbHtifX0KJj1cZnJhY3sxfXsyfVxuYWJsYV97XGJvbGRzeW1ib2x7Yn19KFhcYm9sZHN5bWJvbHtifS1ZKV57VH0oWFxib2xkc3ltYm9se2J9LVkpXFwKJj1cZnJhY3sxfXsyfVxuYWJsYV97XGJvbGRzeW1ib2x7Yn19KFxib2xkc3ltYm9se2J9XntUfVhee1R9LVlee1R9KShYXGJvbGRzeW1ib2x7Yn0tWSlcXAomPVxmcmFjezF9ezJ9XG5hYmxhX3tcYm9sZHN5bWJvbHtifX0oXGJvbGRzeW1ib2x7Yn1ee1R9WF57VH1YXGJvbGRzeW1ib2x7Yn0tXGJvbGRzeW1ib2x7Yn1ee1R9WF57VH1ZLVlee1R9WFxib2xkc3ltYm9se2J9K1lee1R9WSlcXAomPVxmcmFjezF9ezJ9XG5hYmxhX3tcYm9sZHN5bWJvbHtifX10cihcYm9sZHN5bWJvbHtifV57VH1YXntUfVhcYm9sZHN5bWJvbHtifS1cYm9sZHN5bWJvbHtifV57VH1YXntUfVktWV57VH1YXGJvbGRzeW1ib2x7Yn0rWV57VH1ZKVxcCiY9XGZyYWN7MX17Mn1cbmFibGFfe1xib2xkc3ltYm9se2J9fVxsZWZ0KHRyKFxib2xkc3ltYm9se2J9XntUfVhee1R9WFxib2xkc3ltYm9se2J9KS0ydHIoWV57VH1YXGJvbGRzeW1ib2x7Yn0pK3RyKFlee1R9WSlccmlnaHQpXFwKJj1YXntUfVhcYm9sZHN5bWJvbHtifS1YXntUfVkuClxlbmR7YWxpZ259CiQkCgpCeSBzZXR0aW5nIHRoZSBkZXJpdmF0aXZlIHRvIGJlIDAsIHNvbHV0aW9uIEVxLls0XSBpcyBvYnRhaW5lZC4KSG93ZXZlciwgdGhpcyBsZWFzdCBzcXVhcmUgc29sdXRpb24gbWF5IGhhdmUgcHJvYmxlbSB3aGVuIHRoZSB0cmFpbmluZyBzYW1wbGUgaXMgbm90IGVub3VnaCwgdGhhdCBpcyBtPG4uIEluIHRoYXQgY2FzZSwgdGhlIG1hdHJpeCBcKFhee1R9WFwpIGRvZXNu4oCZdCBoYXZlIGZ1bGwgcmFuayB3aGljaCBtZWFucyBpdCBpcyBub25zaW5ndWxhci4KClRvIHNvbHZlIHRoaXMgcHJvYmxlbSwgd2UgY2FuIHByb2plY3QgZWFjaCBtZWFzdXJlbWVudCBcKFxib2xkc3ltYm9se3hfe2l9fT0oeF97aTF9LFxjZG90cyx4X3tpbn0pXCkgaW50byBhIGxvd2VyLWRpbWVuc2lvbmFsIHN1YnNwYWNlIHNwYW5uZWQgYnkgZGF0YSBcKFQ9WFdcKS4gV2UgY2FuIHRoaW5rIG9mIHRoaXMgYXMgZm9ybWluZyBhIHNtYWxsZXIgc2V0IG9mIGZlYXR1cmVzLCBlYWNoIGJlaW5nIHRoZSBsaW5lYXIgY29tYmluYXRpb24gb2YgdGhlIG9yaWdpbmFsIHNldCBvZiBmZWF0dXJlcy4gVGhlc2UgbmV3IGZlYXR1cmVzIGFyZSBhbHNvIGNhbGxlZCDigJxsYXRlbnTigJ0gdmFyaWFibGVzLiBUaGVyZWZvcmUsIHRoZSBsaW5lYXIgcmVncmVzc2lvbiBjYW4gYmUgd3JpdHRlbiBhcyBhIGxpbmVhciByZWdyZXNzaW9uIHN5c3RlbSBvbiB0aGUgbmV3IGxhdGVudCB2YXJpYWJsZXMKCiQkClxiZWdpbnthbGlnbn0KWSAmPVRRXntUfStGIFx0YWd7Nn0gXFwKWCAmPVRQXntUfStFIFx0YWd7N30KXGVuZHthbGlnbn0KJCQKCndoZXJlIFwoUCxRXCkgYXJlIHRoZSBjb2VmZmljaWVudCBtYXRyaWNlcyBhbmQgRSxGIGFyZSBtYXRyaWNlcyBvZiBlcnJvcnMuIEFzIGluIHBhcnRpYWwgbGVhc3Qgc3F1YXJlcyByZWdyZXNzaW9uIChQTFNSKSwgdGhlIHdlaWdodCBtYXRyaXggXChXXCkgcmVmbGVjdHMgdGhlIGNvdmFyaWFuY2Ugc3RydWN0dXJlIGJldHdlZW4gdGhlIHByZWRpY3RvciBhbmQgcmVzcG9uc2UgdmFyaWFibGVzLiBIZW5jZSwgbWF4aW1pemluZyB0aGUgY292YXJpYW5jZSBvZiB0aGUgbGF0ZW50IHZhcmlhYmxlcyBhbmQgdGhlIHJlc3BvbnNlIHZhcmlhYmxlcyBcKENvdihULFkpXCkgZ2l2ZXMgdXMgdGhlIHdlaWdodCBtYXRyaXggXChXXCkuIE9uY2Ugb2J0YWluaW5nIFwoV1wpIGFuZCB0aGVuIGNvbnN0cnVjdGluZyBcKFRcKSwgXChRXntUfVwpIGlzIHNvbHZlZCBieSB0aGUgbGVhc3Qgc3F1YXJlcyBzb2x1dGlvbiBFcS5bNl06CgokJApRXntUfT0oVF57VH1UKV57LTF9VF57VH1ZLgokJAoKUGx1ZyBFcS5bZXE6bGF0ZW50XSBpbnRvIHRoZSByZWdyZXNzaW9uIGVxdWF0aW9uIEVxLls2XSwgd2Ugb2J0YWluIHRoZSBzb2x1dGlvbiBvZiB0aGUgbWF0cml4IFwoXGJvbGRzeW1ib2x7Yn1cKSBvZiB0aGUgY29lZmZpY2llbnQgaW4gdGhlIG1vZGVsIEVxLlszXQoKJCQKXGJvbGRzeW1ib2x7Yn09VyhUXntUfVQpXnstMX1UXntUfVkuCiQkCgpTbyB0aGlzIGlzIHRoZSB3aG9sZSBpZGVhIG9mIFBMUy4gQSBjb21tb25seSB1c2VkIGFsZ29yaXRobSB0byBjb21wdXRlIFBMU1IgaXMgdGhlIG5vbmxpbmVhciBpdGVyYXRpdmUgcGFydGlhbCBsZWFzdCBzcXVhcmUgKE5JUEFMUykgbWV0aG9kLiBUaGUgc3RlcHMgYXJlIHN1bW1hcml6ZWQgYXMgZm9sbG93czoKCk5JUEFMUwoKTm9ybWFsaXplIFwobVwpIHRyYWluaW5nIHNhbXBsZXMgYnkKJCQKXGJlZ2lue2FsaWdufQp4X3tpan0gJj1cbGVmdCh4X3tpan0tXGJhcnt4fSB7XGNkb3RcIGp9XHJpZ2h0KS8gXHNpZ21hIHt4e1xjZG90XCBqfX0gXFwKeXtpfSAmPVxsZWZ0KHlfe2l9LVxiYXJ7eX1ccmlnaHQpLyBcc2lnbWEgX3t5fVwgXHRleHR7Zm9yIH1pPTEsXGNkb3RzLG0saj0xLFxjZG90cyxuClxlbmR7YWxpZ259CiQkCgpDb21wdXRlIHRoZSBzY29yZXMKCkNvbXB1dGUgdGhlIGRvbWluYW50IGVpZ2VudmVjdG9yIG9mIFwoWF97MH1ee1R9WV97MH1ZX3swfV57VH1YX3swfVwpIGFuZCBhc3NpZ24gaXQgdG8gXCh3X3sxfVwpICh0aGUgc3RlcCBvZiBtYXhpbWl6aW5nIHRoZSBjb3ZhcmlhbmNlKS4gTm9ybWFsaXplIFwod197MX1cKS4gVGhlIHNjb3JlcyBcKHRfezF9XCkgb2YgXChYX3swfVwpIHlpZWxkcwokJAp0X3sxfT1YX3swfXdfezF9LgokJAoKRG8gdGhlIHNhbWUgdG8gXChZX3swfVwpIGFuZCBvYnRhaW4gYSBub3JtYWxpemVkIHZlY3RvciBcKGNfezF9XCkuIFRoZSBzY29yZXMgXCh2X3sxfVwpIG9mIFwoWV97MH1cKSB5aWVsZHMKCiQkCnZfezF9PVlfezB9Y197MX0uCiQkCgpDb21wdXRlIHRoZSBsb2FkaW5ncwoKQmFzZWQgb24gdGhlIHJlZ3Jlc3Npb24gZXF1YXRpb25zCiQkClxiZWdpbnthbGlnbn0KWCAmPXRfezF9cF97MX1ee1R9K0UgXFwKWSAmPXRfezF9cV97MX1ee1R9K0YsClxlbmR7YWxpZ259CiQkCgp0aGUgbGVhc3Qgc3F1YXJlIG1ldGhvZCBnaXZlcyB1cwoKJCQKXGJlZ2lue2FsaWdufQpwX3sxfSAmPVxmcmFje1hee1R9dF97MX19e3RfezF9dF97MX1ee1R9fSBcXApxX3sxfSAmPVxmcmFje1lee1R9dF97MX19e3RfezF9dF97MX1ee1R9fS4KXGVuZHthbGlnbn0KJCQKCkNoZWNrIGlmIFwoRlwpIGlzIHN1ZmZpY2llbnRseSBzbWFsbC4gT3RoZXJ3aXNlLCBzZXQgXChFXCkgYXMgXChYX3sxfVwpLCBcKEZcKSBhcyBcKFlfezF9XCkuIFJlcGVhdCBzdGVwIDItMy4KCkZpbmFsbHksIHdlIG9idGFpbgoKJCQKXGJlZ2lue2FsaWdufQpYICY9dF97MX1wX3sxfV57VH0rdF97Mn1wX3syfV57VH0rXGNkb3RzK3Rfe259cF97bn1ee1R9K0UgXFwKWSAmPXRfezF9cV97MX1ee1R9K3RfezJ9cV97Mn1ee1R9K1xjZG90cyt0X3tufXFfe259XntUfStGClxlbmR7YWxpZ259CiQkCgp3aGljaCBpbiBhIG1hdHJpeCBmb3JtYXQgaXMgYXMgZm9sbG93czoKCiQkClxiZWdpbnthbGlnbn0KWCAmPVRQXntUfStFIFxcClkgJj1UUV57VH0rRiBcXAomPVhXUV57VH0rRiBcXAomOj1YQitGLgpcZW5ke2FsaWdufQokJAoKU28sIHdoZW4gd2UgaGF2ZSBhIG5ldyBkYXRhIFwoeF97bmV3fVwpLCB0byBkZWZpbmUgdGhlIFBMUyBjb21wb25lbnRzIGluIG91ciBBQkMtTUNNQyBhbGdvcml0aG0sIHdlIG9ubHkgbmVlZCB0byBjb21wdXRlCgokJAp0X3sxfT14X3tuZXd9XntUfXBfezF9LHRfezJ9PXhfe25ld31ee1R9cF97Mn0sXGNkb3RzLHRfe259PXhfe25ld31ee1R9cF97bn0KJCQKCgo8IS0tLS0tLS0tLS0tLS0+CjxzcGFuIHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiAjZjVmNWY1OyBwYWRkaW5nOiA1cHg7IGRpc3BsYXk6IGJsb2NrOyI+CiAgICA8c3BhbiBzdHlsZT0id2lkdGg6IDI1JTsgZGlzcGxheTogaW5saW5lLWJsb2NrOyB0ZXh0LWFsaWduOiBsZWZ0OyI+CiAgICAgICAgW0JhY2tdKGphdmFzY3JpcHQ6d2luZG93Lmhpc3RvcnkuYmFjaygpKQogICAgPC9zcGFuPgogICAgPHNwYW4gc3R5bGU9IndpZHRoOiAzMCU7IGRpc3BsYXk6IGlubGluZS1ibG9jazsgdGV4dC1hbGlnbjogY2VudGVyOyBjb2xvcjogZ3JleTsiPgogICAgICAgICoqVXBkYXRlZDoqKiBgciBTeXMuRGF0ZSgpYAogICAgPC9zcGFuPgogICAgPHNwYW4gc3R5bGU9IndpZHRoOiAzNSU7IGRpc3BsYXk6IGlubGluZS1ibG9jazsgdGV4dC1hbGlnbjogcmlnaHQ7IGNvbG9yOiBncmV5OyI+CiAgICAgICAgU3RhdGlzdGljYWwgU2ltdWxhdGlvbiwgV2VpIExpCiAgICA8L3NwYW4+Cjwvc3Bhbj4KCgo=</div>
 
 
 
@@ -1911,7 +1996,7 @@ $(document).ready(function () {
 <!-- code folding -->
 <script>
 $(document).ready(function () {
-  window.initializeSourceEmbed("5_Principal_Component_Multivariate_Normal.Rmd");
+  window.initializeSourceEmbed("5_Partial_Least_Squares.Rmd");
   window.initializeCodeFolding("show" === "show");
 });
 </script>

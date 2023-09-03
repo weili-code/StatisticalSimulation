@@ -103,8 +103,28 @@ We are not going to discuss Gaussian elimination here. You can find more details
 
 **Theorem** (Cholesky factorization/decomposition): If symmetric matrix $A>0$ (positive-definite), then there exists a unique upper triangular matrix $U$ s.t. $A=U^{\top}U$.
 
+*Application 1: Multivariate Normal*
 
-*Application*: Given $A>0$ (hence invertible), solve for $Ax=b$. There are three steps in the algorithm.
+If $Z_1,Z_2,\dots,Z_p\overset{iid}\sim \mathcal{N}(0,1)$, $Z=(Z_1, \ldots, Z_p)^T \sim \mathcal{N}(0,I)$.
+
+Also, by the well known property of multivariate normal distribution, $\mu+AZ\sim\mathcal{N}(\mu,AA^T)$
+$$\mu=
+\begin{bmatrix}
+\mu_1\\
+\mu_2\\
+\mu_3
+\end{bmatrix}, \qquad AA^T=
+\begin{bmatrix}
+\sigma_1^2 & \sigma_{12}^2 & \cdots & \sigma_{1p}^2\\
+\sigma_{21}^2 & \sigma_{2}^2 & \cdots & \sigma_{2p}^2\\
+\vdots & \vdots & \ddots & \vdots\\
+\sigma_{p1}^2 & \sigma_{p2}^2 & \cdots & \sigma_{p}^2
+\end{bmatrix}.$$
+$AA^T$ is the variance/covariance matrix. 
+
+Goal: To generate (multivariate) $W\sim\mathcal{N}(\mu,\sum)$. Take Cholesky decomposition of $\sum=U^TU$, then $\mu+U^TZ \sim\mathcal{N}(\mu, U^TU)$
+
+*Application 2*: Given $A>0$ (hence invertible), solve for $Ax=b$. There are three steps in the algorithm.
 
 1. Compute $A=U^{\top}U$. (Then we have $U^{\top}Ux=b$, denote $Ux=y$, now $U^{\top}y=b$)
 
