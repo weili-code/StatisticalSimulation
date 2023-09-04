@@ -22,14 +22,16 @@ y <- data[,2]
 plot_range <- range(c(x, y))
 
 # 2. Plotting the Scatter Plot
-plot(x, y, xlab="X", ylab="Y", pch=19, main="Scatter Plot with PCA Directions", xlim=plot_range, ylim=plot_range)
+plot(x, y, xlab="X", ylab="Y", pch=19, main="Scatter Plot with PC Directions", xlim=plot_range, ylim=plot_range)
 
 # 3. Calculating Eigenvectors using PCA
 pca_result <- prcomp(data, center=TRUE, scale.=TRUE)
 eigenvectors <- pca_result$rotation[, 1:2]
+# column j in eigenvectors is the j-th PC direction
 
 # 4. Plotting the Eigenvectors with transparent colors
 # Arrows for the positive direction of the PCs
+# all vectors are scaled by 2 for better visualization
 arrows(mean(x), mean(y), mean(x) + eigenvectors[1, 1]*2, mean(y) + eigenvectors[2, 1]*2, col=rgb(1,0,0,alpha=0.5), lwd=2)
 arrows(mean(x), mean(y), mean(x) + eigenvectors[1, 2]*2, mean(y) + eigenvectors[2, 2]*2, col=rgb(0,0,1,alpha=0.5), lwd=2)
 # Arrows for the negative direction of the PCs
@@ -107,6 +109,7 @@ ggplot(df_pca, aes(x=PC1, y=PC2, label=Car)) +
   theme_minimal() +
   theme(legend.position="none")  
 # Individuals with a similar profile are grouped together.
+# The colors of individuals points are pure for aesthetic purpose and do not have any meaning.
 
 #####################################
 # spree plot and plot of variances explained
@@ -143,7 +146,8 @@ abline(h=0.95, col="blue", lty=2) # line at 95% variance explained
 # For the variance explained graph, the goal is typically to identify the number 
 # of principal components required to account for a specific percentage of the variance, 
 # like 95%. A horizontal line drawn at 0.95 will assist in visually pinpointing this.
-# 
+
+
 #####################################
 #### individual case' contribution ##
 #####################################

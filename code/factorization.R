@@ -73,18 +73,19 @@ x1 <- x - mean(x)
 y1 <- y - mean(y)
 plot(x1,y1); abline(h=0,v=0,lty=3)
 
-m <- matrix(c(x1,y1),ncol=2) # make a matrix of the given data
-m
+M <- matrix(c(x1,y1),ncol=2) # make a matrix of the given data
+M
 
 # compute sample covariances/covariances
-# This gives t(m)%*%m/(nrow(m)-1) since columns of m are demeanded
-cov.m <- cov(m)
-cov.m  
+# This gives t(M)%*%m/(nrow(M)-1) since columns of m are demeanded
+cov.M <- cov(M)
+cov.M  
 
-cov.eig <- eigen(cov.m)
+cov.eig <- eigen(cov.M)
 cov.eig
 
-# Eigenvectors of cov.m
+# Eigenvectors of cov.m (orthogonal)
+# cov.eig$vectors give eigenvectors
 cov.eig$vectors[,1] %*% cov.eig$vectors[,2]
 
 # let's plot these eigenvectors onto the data to present the new basis
@@ -94,47 +95,49 @@ abline(a=0,b=(cov.eig$vectors[1,2]/cov.eig$vectors[2,2]),col="green")
 
 # construct principal components
 V_sel=as.matrix(cov.eig$vectors[,c(1,2)],ncol=2) # select both PCs
-Z=m%*%V_sel
+Z=M%*%V_sel # PCs matrix
 cov(Z) # note the covariance
 
-# plot PC scores
+# plot PC scores (for ann data points)
 plot(Z[,1],Z[,2],ylim=c(-2,2));abline(h=0,v=0,lty=3)
 
 # recover initial dataset cbind(x,y) from z
-m2=Z%*%t(V_sel)
-m2[,1]=m2[,1]+mean(x)
-m2[,2]=m2[,2]+mean(y)
-m2-cbind(x,y)
+M2=Z%*%t(V_sel)
+M2[,1]=M2[,1]+mean(x)
+M2[,2]=M2[,2]+mean(y)
+# check
+M2-cbind(x,y)
 
-###using svd() and prcomp
+### prcomp() and svd()
+## prcomp() uses SVD to perform pricipal components analysis
 
-# get singular value decomposition of m
-svd.m <- svd(m)
-svd.m
+# (1) get singular value decomposition of M (demeaned data matrix)
+svd.M <- svd(M)
+svd.M
 # note that the V vectors from svd.mare same to that from cov.eig
 # except for the signs
 
-pca.m <- prcomp(m, center=FALSE, scale=FALSE)
-pca.m
+pca.M <- prcomp(M, center=FALSE, scale=FALSE)
+pca.M
 
 # When variables have different units (for columns), then it may 
 # sense to scale them.
 # so that all have unit variance (scale=TRUE)  (it uses correlation 
 # matrix). This is necessary if the data has different  units.
 
-svd.m <- svd(scale(m))
-?scale
+svd.M <- svd(scale(M))
+# ?scale
 # scale(x, center = TRUE, scale = TRUE)
-svd.m$v 
-pca.m <- prcomp(m, center=TRUE, scale=TRUE)
-pca.m
-# The V matrix are different from above obtained without scaling.
+svd.M$v 
+pca.M <- prcomp(m, center=TRUE, scale=TRUE)
+pca.M
+# The V matrix are different from above obtained if without scaling.
 
+# pca.m$rotation gives the eigenvectors
 # We check 
 plot(x1,y1); abline(h=0,v=0,lty=3)
 abline(a=0,b=(pca.m$rotation[1,1]/pca.m$rotation[2,1]),col="red")
 abline(a=0,b=(pca.m$rotation[1,2]/pca.m$rotation[2,2]),col="green")
-# Note the difference compared to when no scaling is done.
 
-summary(pca.m)
+summary(pca.M)
 
