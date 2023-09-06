@@ -241,7 +241,7 @@ Any square matrix with orthonormal columns is an orthogonal matrix, and such a m
 Check: 
 \end{mdframed}
 
-**Positive definite matrix**: A square and symmetric matrix $A$ is called a positive definite matrix (denoted by $A>0$), if $x^TAx>0$ for all $x\neq 0$. A positive definite matrix is invertible. But the converse is not true. Similarly, one can define negative definite matrix. 
+**Positive definite matrix**: A square and symmetric matrix $A$ is called a positive definite matrix (denoted by $A>0$), if $x^TAx>0$ for all $x\neq 0$. Similarly, one can define negative definite matrix. Both positive definite matrices and negative definite matrices are invertible. But the converse is not true. 
 
 **Positive semi-definite matrix**: A square and symmetric matrix $A$ is called a positive semi-definite matrix (denoted by $A\geq 0$), if $x^TAx\geq 0$ for all $x\neq 0$. For a positive semi-definite matrix, it is invertible if and only if it is also positive definite. Similarly, one can define negative semi-definite matrix. 
 
