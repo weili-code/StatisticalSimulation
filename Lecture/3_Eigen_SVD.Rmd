@@ -142,7 +142,7 @@ Now $A=P\Lambda P^T=
 For a $m \times n$ matrix ${A}$, $A^{T}A$ is a symmetric matrix. Let $\{ v_{1},\ldots,v_{n} \}$ be the collection of all the orthonormal eigenvectors of $A^{T}A$ (eigen-decomposition); let  $\lambda_{1},...,\lambda_{n}$ be the associated eigenvalues, $\lambda_{1} \ge \lambda_{2} \ge \cdots \geq \lambda_{n} \ge 0$. We have $\lVert Av_{i}\lVert^{2} = \lambda_{i}$, since 
 $$
 A^{T}Av_{i} = \lambda_{i}v_{i} \Rightarrow
-v_{i}^{T}A^{T}Av_{i} = \lambda_{i}v_{i}^{T}v_{i}\lambda_{i}.
+v_{i}^{T}A^{T}Av_{i} = \lambda_{i}.
 $$
 The singular values of $A$ are squared roots of the eigenvalues of $A^{T}A$, denoted by $\sigma_{i} = \sqrt{\lambda_{i}}$; $\sigma_{1} \ge \sigma_{2} \ge \cdots \geq \sigma_{n} \ge 0$
 
@@ -157,7 +157,7 @@ $$ \Sigma_{m \times n} =
 $$
 $$
  D = \begin{bmatrix}
-      \sigma_{1} \\ & \ddots & \\ & & \sigma_{n}
+      \sigma_{1} \\ & \ddots & \\ & & \sigma_{r}
      \end{bmatrix}.
 $$
 The Singular Value Decomposition of A is:

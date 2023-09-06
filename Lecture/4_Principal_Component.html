@@ -11,7 +11,7 @@
 
 <meta name="author" content="Instructor: Dr. Wei Li" />
 
-<meta name="date" content="2023-09-03" />
+<meta name="date" content="2023-09-06" />
 
 <title>MAT 653: Statistical Simulation</title>
 
@@ -1570,23 +1570,17 @@ overflow-y: auto;
 border: 1px solid #ddd;
 border-radius: 4px;
 }
-.tabset-dropdown > .nav-tabs > li.active:before {
-content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+content: "\e259";
 font-family: 'Glyphicons Halflings';
 display: inline-block;
 padding: 10px;
 border-right: 1px solid #ddd;
 }
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-content: "";
-border: none;
-}
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-content: "";
+content: "\e258";
 font-family: 'Glyphicons Halflings';
-display: inline-block;
-padding: 10px;
-border-right: 1px solid #ddd;
+border: none;
 }
 .tabset-dropdown > .nav-tabs > li.active {
 display: block;
@@ -1630,7 +1624,7 @@ display: none;
 <h1 class="title toc-ignore">MAT 653: Statistical Simulation</h1>
 <h4 class="author">Instructor<span class="math inline">\(:\)</span>
 Dr. Wei Li</h4>
-<h4 class="date">2023-09-03</h4>
+<h4 class="date">2023-09-06</h4>
 
 </div>
 
@@ -1641,7 +1635,7 @@ MathJax.Hub.Config({
 });
 </script>
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2023-09-03 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2023-09-06 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 <!------------->
 <div id="pca" class="section level1">
@@ -1682,11 +1676,12 @@ Z_p)^T\)</span>, <span class="math inline">\(V=(\mathbf{v}_1, \ldots,
 \operatorname{Cov}\left(Z_{j}, Z_{k}\right)=\mathbf{v}_{j}^{T} \Sigma
 \mathbf{v}_{k}, \quad \forall j \neq k
 \end{array}
-\]</span> Principal component analysis is a statistical procedure that
-finds directions (<span class="math inline">\(\mathbf{v}_{j},
+\]</span> Principal component analysis is a procedure that finds
+directions (<span class="math inline">\(\mathbf{v}_{j},
 j=1,\ldots,p\)</span>) such that <span class="math inline">\(Z_{1},
 \cdots, Z_{p}\)</span> has maximum variability and also are linearly
-uncorrelated.</p>
+uncorrelated and uses these <span class="math inline">\(Z_j\)</span>’s
+for subsequent statistical analysis.</p>
 <p>Principal components (PCs):</p>
 <ul>
 <li>The <strong>principal components</strong> of <span class="math inline">\(X\)</span> are (linearly) uncorrelated, linear
@@ -1711,7 +1706,7 @@ X\right)\)</span> subject to <span class="math inline">\(\left\|\mathbf{v}_{1}\r
 linear combination <span class="math inline">\(\mathrm{Z}_{2}=\mathbf{v}_{2}^{T}
 \mathrm{X}\)</span> that maximizes <span class="math inline">\(\operatorname{Var}\left(\mathbf{v}_{2}^{T}
 X\right)\)</span> subject to <span class="math inline">\(\left\|\mathbf{v}_{2}\right\|=1\)</span> and <span class="math inline">\(\operatorname{Cov}\left(\mathbf{v}_{1}^{T} X,
-\mathbf{v}_{2}^{T} X\right)=0\)</span></p></li>
+\mathbf{v}_{2}^{T} X\right)=0\)</span>.</p></li>
 <li><p>The <span class="math inline">\(j\)</span>-th PC satisfies <span class="math display">\[\begin{align*}
 \max &amp; \operatorname{Var}\left(\mathbf{v}_{j}^{T} X \right) \\
 \text { subject to } &amp;\left\|\mathbf{v}_{j}\right\|=1 \\
@@ -1744,7 +1739,7 @@ variance is <span class="math display">\[
 \mathbf{v}_{j}=\lambda_{j}
 \]</span> <span class="math display">\[
 \operatorname{Cov}\left(Z_{j}, Z_{k}\right)=\mathbf{v}_{j}^{T} \Sigma
-\mathbf{v}_{k} = 0
+\mathbf{v}_{k} = 0, \quad j \neq k.
 \]</span></li>
 </ul>
 <p>We may view <span class="math inline">\(X\)</span> is a function of
@@ -1754,15 +1749,14 @@ X=\sum_{k=1}^p \mathbf{v}_{k}Z_k,
 \]</span> where each <span class="math inline">\(Z_k\)</span> can be
 viewed the coordinate representation of <span class="math inline">\(X\)</span> in the coordinate system given the
 columns of <span class="math inline">\(V\)</span>.</p>
-<p>Note also that <span class="math inline">\(\operatorname{Var}(X)=\operatorname{Cov}(X,
-Z)=V\operatorname{Var}(Z)V^T=\sum_{j=1}^p \lambda_j \mathbf{v}_j
-\mathbf{v}^T_j\)</span>. So <span class="math inline">\(\operatorname{Cov}(X_s,
-X_t)=\operatorname{Cov}(X_s, Z_t)=\sum_{j=1}^p \lambda_j v_{sj}
-v_{tj}\)</span>. Similarity of the PC loadings for the first few
-components between different <span class="math inline">\(X_j\)</span>’s
-can be heuristically viewed as a degree of linear association. Variables
-<span class="math inline">\(X_j\)</span>’s that are correlated with the
-first few principal components are the most important in explaining the
+<p>Note also that <span class="math inline">\(\operatorname{Var}(X)=\sum_{j=1}^p \lambda_j
+\mathbf{v}_j \mathbf{v}^T_j\)</span>. So <span class="math inline">\(\operatorname{Cov}(X_s, X_t)=\sum_{j=1}^p
+\lambda_j v_{sj} v_{tj}\)</span>. Similarity of the PC loadings for the
+first few components between different <span class="math inline">\(X_j\)</span>’s can be heuristically viewed as a
+degree of linear association. Note <span class="math inline">\(\operatorname{Cov}(X,
+Z)=V\operatorname{Var}(Z)=[\lambda_1 \mathbf{v}_1, \ldots, \lambda_p
+\mathbf{v}_p]\)</span>, variables <span class="math inline">\(X_j\)</span>’s that are correlated with the first
+few principal components are the most important in explaining the
 variability in the data set.</p>
 <p>Note <span class="math inline">\(\operatorname{Var}(X_i)=\sum_{j=1}^p\lambda_jv_{ij}^2\)</span>.
 The square of the loading value represents the variance of the variable
@@ -1982,7 +1976,7 @@ generation of <span class="math inline">\(\mathbf{x}_i\)</span>: given
 to some specified distribution.</p>
 <!------------->
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2023-09-03 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2023-09-06 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 </div>
 </div>

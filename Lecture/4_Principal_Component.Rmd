@@ -89,7 +89,7 @@ $$
 \operatorname{Cov}\left(Z_{j}, Z_{k}\right)=\mathbf{v}_{j}^{T} \Sigma \mathbf{v}_{k}, \quad \forall j \neq k
 \end{array}
 $$
-Principal component analysis is a statistical procedure that finds directions ($\mathbf{v}_{j}, j=1,\ldots,p$) such that $Z_{1}, \cdots, Z_{p}$ has maximum variability and also are linearly uncorrelated.
+Principal component analysis is a procedure that finds directions ($\mathbf{v}_{j}, j=1,\ldots,p$) such that $Z_{1}, \cdots, Z_{p}$ has maximum variability and also are linearly uncorrelated and uses these $Z_j$'s for subsequent statistical analysis. 
 
 
 Principal components (PCs):
@@ -100,7 +100,7 @@ Principal components (PCs):
 The procedure can be described as 
 
 - The first $\mathrm{PC}=$ linear combination $Z_{1}=\mathbf{v}_{1}^{T} X$ that maximizes $\operatorname{Var}\left(\mathbf{v}_{1}^{T} X\right)$ subject to $\left\|\mathbf{v}_{1}\right\|=1$
-- The second $\mathrm{PC}=$ linear combination $\mathrm{Z}_{2}=\mathbf{v}_{2}^{T} \mathrm{X}$ that maximizes $\operatorname{Var}\left(\mathbf{v}_{2}^{T} X\right)$ subject to $\left\|\mathbf{v}_{2}\right\|=1$ and $\operatorname{Cov}\left(\mathbf{v}_{1}^{T} X, \mathbf{v}_{2}^{T} X\right)=0$
+- The second $\mathrm{PC}=$ linear combination $\mathrm{Z}_{2}=\mathbf{v}_{2}^{T} \mathrm{X}$ that maximizes $\operatorname{Var}\left(\mathbf{v}_{2}^{T} X\right)$ subject to $\left\|\mathbf{v}_{2}\right\|=1$ and $\operatorname{Cov}\left(\mathbf{v}_{1}^{T} X, \mathbf{v}_{2}^{T} X\right)=0$.
 
 - The $j$-th PC satisfies
 \begin{align*}
@@ -133,7 +133,7 @@ $$
 \operatorname{Var}\left(Z_{j}\right)=\mb{v}_{j}^{T} \Sigma \mb{v}_{j}=\lambda_{j}
 $$
 $$
-\operatorname{Cov}\left(Z_{j}, Z_{k}\right)=\mathbf{v}_{j}^{T} \Sigma \mathbf{v}_{k} = 0
+\operatorname{Cov}\left(Z_{j}, Z_{k}\right)=\mathbf{v}_{j}^{T} \Sigma \mathbf{v}_{k} = 0, \quad j \neq k.
 $$
 
 We may view $X$ is a function of $Z$. Since $V$ is orthogonal matrix, we also have $X=VZ$, therefore, 
@@ -142,7 +142,7 @@ X=\sum_{k=1}^p \mb{v}_{k}Z_k,
 $$
 where each $Z_k$ can be viewed the coordinate representation of $X$ in the coordinate system given the columns of $V$.
 
-Note also that $\op{Var}(X)=\op{Cov}(X, Z)=V\op{Var}(Z)V^T=\sum_{j=1}^p \lambda_j \mb{v}_j \mb{v}^T_j$. So $\op{Cov}(X_s, X_t)=\op{Cov}(X_s, Z_t)=\sum_{j=1}^p \lambda_j v_{sj} v_{tj}$. Similarity of the PC loadings for the first few components between different $X_j$'s can be heuristically viewed as a degree of linear association. Variables $X_j$'s that are correlated with the first few principal components are the most important in explaining the variability in the data set.
+Note also that $\op{Var}(X)=\sum_{j=1}^p \lambda_j \mb{v}_j \mb{v}^T_j$. So $\op{Cov}(X_s, X_t)=\sum_{j=1}^p \lambda_j v_{sj} v_{tj}$. Similarity of the PC loadings for the first few components between different $X_j$'s can be heuristically viewed as a degree of linear association. Note $\op{Cov}(X, Z)=V\op{Var}(Z)=[\lambda_1 \mb{v}_1, \ldots, \lambda_p \mb{v}_p]$, variables $X_j$'s that are correlated with the first few principal components are the most important in explaining the variability in the data set.
 
 Note $\op{Var}(X_i)=\sum_{j=1}^p\lambda_jv_{ij}^2$. The square of the loading value represents the variance of the variable explained by the principal component, can be heuristically understood to be the importance of the variable.
 The contribution of the variable $X_i$ to the $j$-th component can be measured by 
