@@ -1772,217 +1772,208 @@ MathJax.Hub.Config({
 <strong>Updated:</strong> 2023-09-07 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 <!------------->
-<div id="some-basics-of-matrix-algebra" class="section level1">
-<h1>Some basics of matrix algebra</h1>
-<div id="notations" class="section level2">
-<h2>Notations</h2>
-<p><strong>Convention</strong> (unless otherwise noted):</p>
-<p>All vector are taken as column vectors by default, for example, if
-<span class="math inline">\(x \in \mathbb{R}^n\)</span>, then we can
-write <span class="math display">\[
-x= \begin{bmatrix}
-x_1 \\
+<div id="basics-of-vector-calculus" class="section level1">
+<h1>Basics of vector calculus</h1>
+<p><strong>Gradient</strong>. For <span class="math inline">\(f:{\mathbb{R}^n}\to{\mathbb{R}}\)</span> a smooth
+function, its gradient is the <span class="math inline">\(n{\times}1\)</span> vector <span class="math display">\[
+{\nabla}f(x)=\begin{bmatrix}
+\frac{\partial f(x)}{\partial x_1} \\
+\frac{\partial f(x)}{\partial x_2} \\
 \vdots \\
-x_n
-\end{bmatrix}.\]</span></p>
-<p>Generic capital letter will often denote a matrix, e.g. <span class="math inline">\({A}\)</span>, a <span class="math inline">\(m
-\times n\)</span> matrix,</p>
-<p><span class="math display">\[\begin{align*}
-{A}
-=
-\left[\begin{array}{c}
-{a}_{1},{a}_{2} \cdots {a}_{n}
-\end{array}\right]
-\end{align*}\]</span> with each <span class="math inline">\(a_i\)</span>
-belonging to <span class="math inline">\(\mathbb{R}^m\)</span>.</p>
-<p>Suppose <span class="math inline">\({e}_{i}, i=1, \ldots, n\)</span>
-is <span class="math inline">\(n \times 1\)</span> unit vector, with 1
-in the ith position and zeros elsewhere, i.e., the identity <span class="math inline">\(n \times n\)</span> matrix can be written as <span class="math display">\[\begin{align*}
-{I}_n
-=
-\left[\begin{array}{c}
-{e}_{1},{e}_{2} \cdots {e}_{n}
-\end{array}\right]
-\end{align*}\]</span></p>
-<p>For <span class="math inline">\(A\)</span> an <span class="math inline">\(m \times n\)</span> matrix, Then the ith column of
-<span class="math inline">\(A\)</span> can be expresed as <span class="math inline">\(A \mathbf{e}_{i},\)</span> for <span class="math inline">\(i=1, \ldots, n\)</span>.</p>
+\frac{\partial f(x)}{\partial x_n} \\
+\end{bmatrix}.
+\]</span></p>
+<p><strong>Hessian matrix</strong>. The Hessian matrix of <span class="math inline">\(f\)</span> is a <span class="math inline">\(n{\times}n\)</span> symmetric matrix defined as
+<span class="math display">\[
+{\nabla}^2f(x)=\begin{bmatrix}
+{\frac{\partial^2 f(x)}{\partial x_1 \partial x_1}}&amp;
+{\frac{\partial^2 f(x)}{\partial x_2 \partial x_1}}&amp; \cdots &amp;
+{\frac{\partial^2 f(x)}{\partial x_n \partial x_1}}\\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+{\frac{\partial^2 f(x)}{\partial x_1 \partial x_n}}&amp;
+{\frac{\partial^2 f(x)}{\partial x_2 \partial x_n}}&amp; \cdots &amp;
+{\frac{\partial^2 f(x)}{\partial x_n \partial x_n}}\\
+\end{bmatrix}.
+\]</span></p>
+<p>Some results from calculus:</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(f(x)=a^Tx
+:{\mathbb{R^n}}\to{\mathbb{R}}\)</span>, <span class="math inline">\(f(x)\)</span> can also written in <span class="math inline">\(f(x)={\sum_{i=1}^{n}}a_ix_i\)</span>, the gradient
+for <span class="math inline">\(f(x)\)</span>, <span class="math display">\[{\nabla}f(x)=a.\]</span></li>
+<li><span class="math inline">\(f(x)=x^TAx\)</span> (<span class="math inline">\(A\)</span> is square matrix), the gradient for
+<span class="math inline">\(f(x)\)</span>, <span class="math display">\[
+{\nabla}f(x)=Ax+A^Tx;
+\]</span> if A is symmetric matrix, <span class="math display">\[
+{\nabla}f(x)=2Ax.
+\]</span></li>
+</ol>
+<p><strong>Example</strong>: For the linear least square problem <span class="math inline">\(\min\limits_{x}{f(x)}=\min\limits_{x}{\lVert
+Ax-b\rVert^2}\)</span>,</p>
+<p><span class="math display">\[
+\begin{aligned}
+f(x)&amp;=\lVert Ax-b\rVert^2\\&amp;=\langle Ax-b,
+Ax-b\rangle\\&amp;=(Ax-b)^T(Ax-b)
+\\&amp;=x^TA^TAx-2b^TAx+b^Tb
+\end{aligned}
+\]</span></p>
+<p>the gradient of <span class="math inline">\(f(x)\)</span> is <span class="math display">\[
+{\nabla}f(x)=\frac{{\partial}f(x)}{{\partial}x}=2A^TAx-2b^TA\overset{set}{=}0
+\]</span></p>
 </div>
-<div id="elementary-definitions-and-results" class="section level2">
-<h2>Elementary definitions and results</h2>
-<p><strong>Matrix-vector multiplication</strong>: <span class="math display">\[
-Ax=\begin{bmatrix}
-{a}_{1},{a}_{2} \cdots {a}_{n}
-\end{bmatrix}
-\begin{bmatrix}
-x_1 \\
-\vdots \\
-x_n
-\end{bmatrix}=b
-\]</span> <span class="math inline">\(Ax\)</span> is a linear
-combination of columns vectors of <span class="math inline">\(A\)</span>. The coefficients of the linear
-combinations are stored in <span class="math inline">\(x\)</span>.</p>
-<p><strong>Matrix-matrix multiplication</strong>: Let <span class="math display">\[\begin{align*}
-{A}
-=
-\left[\begin{array}{c}
-{a}_{1},{a}_{2} \cdots {a}_{n}
+<div id="optimization" class="section level1">
+<h1>Optimization</h1>
+<p>reference: Numerical Optimization (Nocedal and Wright)</p>
+<div id="definition" class="section level2">
+<h2>Definition</h2>
+<p>Given <span class="math inline">\(f:{\mathbb{R^n}}\to{\mathbb{R}}\)</span>, <span class="math inline">\(S{\subseteq}{\mathbb{R^n}}\)</span> is feasible
+convex set.</p>
+<p><strong>1. Convex set</strong>: <span class="math inline">\(S\)</span> is a convex set if and only if <span class="math inline">\(x,y{\in}S\)</span> entails <span class="math inline">\({\alpha}x+(1-{\alpha})y{\in}S\)</span> for all
+<span class="math inline">\({\alpha}{\in}[0,1]\)</span></p>
+<p><strong>2. Global minimizer</strong>: A point <span class="math inline">\(x^*{\in}S\)</span> is a global minimizer of <span class="math inline">\(f\)</span> in <span class="math inline">\(S\)</span> if and only if <span class="math inline">\(f(x^*){\le}f(x)\)</span> for all <span class="math inline">\(x{\in}S\)</span>.</p>
+<p><strong>3. Local minimizer</strong> A point <span class="math inline">\(x^*{\in}S\)</span> is a local minimizer of <span class="math inline">\(f\)</span> in <span class="math inline">\(S\)</span> if and only if there exists a
+neighborhood of <span class="math inline">\(x^*\)</span>, <span class="math inline">\(N(x^*)\)</span> such that <span class="math inline">\(f(x^*){\le}f(x)\)</span>, for all <span class="math inline">\(x{\in}N(x^*){\cap}S.\)</span></p>
+<p><strong>4. Strict local minimizer</strong>: A point <span class="math inline">\(x^*{\in}S\)</span> is a local minimizer of <span class="math inline">\(f\)</span> in <span class="math inline">\(S\)</span> if and only if there exists a
+neighborhood of <span class="math inline">\(x^*\)</span>, <span class="math inline">\(N(x^*)\)</span> such that <span class="math inline">\(f(x^*)&lt;f(x)\)</span>, for all <span class="math inline">\(x{\in}N(x^*){\cap}S.\)</span></p>
+<p><strong>5. Convex functions</strong>:</p>
+<ol style="list-style-type: decimal">
+<li>A “smooth” function <span class="math inline">\(f\)</span> is a
+convex at the point <span class="math inline">\(v\)</span> if and only
+if <span class="math inline">\({\nabla}^2f(v){\ge}0\)</span> (positive
+semidefinite). If <span class="math inline">\(f:{\mathbb{R}}\to{\mathbb{R}}\)</span>, <span class="math inline">\(({\partial}^2f(x)/\partial
+x^2)|_{x=v}{\ge}0\)</span>, noting <span class="math inline">\({\partial}f(v)/{\partial}x\)</span> slope at <span class="math inline">\(v\)</span> = rate of change of <span class="math inline">\(f\)</span> at <span class="math inline">\(v\)</span>; <span class="math inline">\({\partial}^2f(v)/{\partial x^2}=\)</span> rate of
+change of the slope of <span class="math inline">\(f\)</span> at <span class="math inline">\(v\)</span>. This is second order definition.</li>
+<li>A “differentialbe” function <span class="math inline">\(f\)</span>
+is convex at <span class="math inline">\(v\)</span> if and only if for
+all <span class="math inline">\(w\)</span> in the neighborhood of <span class="math inline">\(v\)</span>, <span class="math inline">\(f(w){\ge}f(v)+{\nabla}f(v)^T(w-v)\)</span>. This
+is first order definition.</li>
+<li>A function <span class="math inline">\(f\)</span> is convex on <span class="math inline">\(S\)</span> if and only if it’s convex at every
+point of <span class="math inline">\(S\)</span>. A function <span class="math inline">\(f\)</span> is convex on <span class="math inline">\(S\)</span>, if and only if <span class="math inline">\(x,y{\in}S\)</span> entails <span class="math inline">\(f({\alpha}x+(1-{\alpha})y){\le}{\alpha}f(x)+(1-{\alpha})f(y)\)</span>
+for <span class="math inline">\({\alpha}{\in}[0,1]\)</span>.</li>
+</ol>
+<p><strong>6. stationary point and saddle point</strong></p>
+<p>A stationary point <span class="math inline">\(v\)</span> of <span class="math inline">\(f\)</span> is any point that satisfies the FOC
+<span class="math inline">\({\nabla}f(v){=}0\)</span>. In general, a
+stationary point could be minimizer, maximizer or saddle point.</p>
+<p>A saddle point is a stationary point at which the curvature of the
+function changes from negative to positive or vice versa (i.e., also a
+point of inflection). More precise definition is given below.</p>
+<p><strong>7. Consequence of convexity</strong></p>
+<p>When <span class="math inline">\(f\)</span> is convex on <span class="math inline">\(S\)</span>, then any local minimizer is also a
+global minimizer. If, in addition, <span class="math inline">\(f\)</span> is differentiable, then any stationary
+point is a global minimizer.</p>
+<div id="necessary-and-sufficient-conditions." class="section level3">
+<h3>Necessary and sufficient conditions.</h3>
+<p>Let’s consider the minimization problem <span class="math inline">\(\min _{x \in \mathbb{R}^n} f(x)\)</span> for some
+smooth <span class="math inline">\(f: \mathbb{R}^n \mapsto
+\mathbb{R}.\)</span></p>
+<div id="necessary-condition" class="section level4">
+<h4>Necessary condition</h4>
+<p>First order result: suppose <span class="math inline">\(f\)</span> is
+continuously differentiable. If <span class="math inline">\(x^*\)</span>
+is a minimizer of <span class="math inline">\(f\)</span> then <span class="math inline">\(\nabla f\left(x^*\right)=0\)</span>.</p>
+<p>Second order result: suppose <span class="math inline">\(f\)</span>
+is twice continuously differentiable. If <span class="math inline">\(x^*\)</span> is a minimizer of <span class="math inline">\(f\)</span>, then <span class="math inline">\(\nabla f\left(x^*\right)=0\)</span> and <span class="math inline">\(\nabla^2 f\left(x^*\right) \geq 0.\)</span></p>
+</div>
+<div id="sufficient-condition" class="section level4">
+<h4>Sufficient condition</h4>
+<p>Second order result: suppose <span class="math inline">\(f\)</span>
+is twice continuously differentiable, for some <span class="math inline">\(x^* \in \mathbb{R}^n\)</span>, <span class="math inline">\(\nabla^2 f\left(x^*\right) &gt; 0\)</span> and
+<span class="math inline">\(\nabla f\left(x^*\right)=0\)</span>. Then
+<span class="math inline">\(x^*\)</span> is a strict local
+minimizer.</p>
+</div>
+</div>
+<div id="hessian-eigenvalues-and-eigenvectors" class="section level3">
+<h3>Hessian, eigenvalues and eigenvectors</h3>
+<p>Hessian matrix contains important geometric information about the
+surface of the function <span class="math inline">\(f\)</span> (in
+particular the concavity of the surface).</p>
+<p>Recall that the Taylor approximation to <span class="math inline">\(z=f(x, y)\)</span> at <span class="math inline">\(\left(x_{0}, y_{0}\right)\)</span> is <span class="math display">\[\begin{align*}
+f(x, y) \approx f\left(x_{0}, y_{0}\right)+{\nabla} f\left(x_{0},
+y_{0}\right) \left[\begin{array}{c}
+x-x_{0} \\
+y-y_{0}
+\end{array}\right]+\frac{1}{2}\left[\begin{array}{ll}
+x-x_{0} &amp; y-y_{0}
+\end{array}\right] \nabla^2f\left(x_{0},
+y_{0}\right)\left[\begin{array}{l}
+x-x_{0} \\
+y-y_{0}
 \end{array}\right]
-\end{align*}\]</span> a <span class="math inline">\(\ell \times
-m\)</span> matrix, and <span class="math display">\[\begin{align*}
-{C}
-=
-\left[\begin{array}{c}
-{c}_{1},{c}_{2} \cdots {c}_{n}
-\end{array}\right]
-\end{align*}\]</span> a <span class="math inline">\(m \times n\)</span>
-matrix, then <span class="math display">\[
-AC=B=[b_1, \cdots, b_n] : \quad  ( \ell \times n)
-\]</span> where <span class="math inline">\(b_j=Ac_j\)</span>, <span class="math inline">\(j=1, \ldots, n.\)</span></p>
-<p><strong>Range space (column space)</strong>: The column space <span class="math inline">\(\rm{col}(A)\)</span> of <span class="math inline">\(A\)</span> is the span of vectors <span class="math inline">\(a_1, \ldots, a_n\)</span>, i.e., <span class="math inline">\(\rm{span}\{a_1, \ldots, a_n\}\)</span> the set of
-all linear combinations of <span class="math inline">\(a_1, \ldots,
-a_n\)</span>.</p>
-<p><span class="math display">\[\begin{align*}
-\operatorname{Col} (A)=\left\{b: b=A x \text { for some } x \in
-\mathbb{R}^{n}\right\}
-\end{align*}\]</span></p>
-<p>The vector <span class="math inline">\(b \in \mathbb{R}^m\)</span>
-belongs to <span class="math inline">\(\rm{Col}(A)\)</span> iff <span class="math inline">\(\exists\)</span> scalars <span class="math inline">\(x_1, \ldots, x_n\)</span> such that <span class="math inline">\(b=x_1a_1+\cdots+x_na_n\)</span>.</p>
-<p><strong>Kernel space (null space)</strong>: The kernel space of an
-<span class="math inline">\(m \times n\)</span> matrix <span class="math inline">\(A\)</span>, written as <span class="math inline">\(\rm{ker}(A)\)</span>, is the set of all solutions
-of the homogeneous equation <span class="math inline">\(Ax=0\)</span>.
-In set notation, <span class="math display">\[\begin{align*}
-\operatorname{ker}(A)=\left\{x: x \in \mathbb{R}^{n} \text { and } A
-x=0\right\}
-\end{align*}\]</span></p>
-<p><strong>Linear independence of a set of vectors</strong>: suppose we
-have <span class="math inline">\(p\)</span> vectors in <span class="math inline">\(\mathbb{R}^n\)</span>, say, <span class="math inline">\(v_1,\ldots, v_p\)</span></p>
+\end{align*}\]</span> for <span class="math inline">\((x, y)\)</span>
+close to <span class="math inline">\(\left(x_{0}, y_{0}\right)
+.\)</span></p>
+<p>More generally, <span class="math inline">\(f: \mathbb{R^2}
+\rightarrow \mathbb{R}\)</span> has continuous second partial
+derivatives such that <span class="math inline">\(\nabla f(x^*) =
+0\)</span>, Hessian matrix at <span class="math inline">\(x^*\)</span>
+provides the following information:</p>
+<ol style="list-style-type: decimal">
+<li>If <span class="math inline">\(\nabla^2 f(x^*) &gt; 0\)</span>, then
+any local minimizer <span class="math inline">\(x^*\)</span> is a strict
+local minimizer.</li>
+<li>If <span class="math inline">\(\nabla^2 f(x^*) &lt; 0\)</span>, then
+local maximizer <span class="math inline">\(x^*\)</span> is a strict
+local maximizer.</li>
+<li>If <span class="math inline">\(\nabla^2 f(x^*)\)</span> is
+indefinite (i.e. neither positive semi-definite nor negative
+semi-definite), then the local minimizer <span class="math inline">\(x^*\)</span> is a <strong>saddle
+point</strong>.</li>
+<li>If those cases not listed above, then the test is inconclusive.</li>
+</ol>
+<p>Note <span class="math inline">\(f\)</span> has four second partial
+derivatives-four measures of concavity (in <span class="math inline">\(\nabla^2 f\)</span>). In fact, eigenvalues of the
+Hessian <span class="math inline">\(\nabla^2 f\)</span> measures
+concavity in the corresponding eigendirections (take for example, <span class="math inline">\(v^THv=\lambda v^Tv=\lambda\)</span> for an
+eigenvector <span class="math inline">\(v\)</span>).</p>
+<p>In view of the classical results:</p>
 <ul>
-<li>we call this collection <span class="math inline">\(V=\{v_1,\ldots,
-v_p\}\)</span> to be linearly independent if whenever <span class="math inline">\(x_1v_1+\cdots+x_pv_p=0\)</span>, we have <span class="math inline">\(x_1=\cdots=x_p=0\)</span></li>
-<li><span class="math inline">\(V=\{v_1,\ldots, v_p\}\)</span> is said
-to be linearly dependent if <span class="math inline">\(\exists\)</span>
-some vector in <span class="math inline">\(V\)</span> that is a linear
-combination of the other vectors in <span class="math inline">\(V\)</span>.</li>
+<li>A square (symmetric) matrix is positive definite if and only if all
+its eigenvalues are positive.</li>
+<li>A square (symmetric) matrix is negative definite if and only if all
+its eigenvalues are negative.</li>
+<li>A square (symmetric) matrix is indefinite (i.e., neither p.s.d. nor
+n.s.d. ) if and only if it has both positive and negative
+eigenvalues.</li>
 </ul>
-<p><strong>Rank of a matrix</strong>: The <strong>row rank</strong> of a
-matrix is the maximum number of rows, thought of as vectors, which are
-linearly independent. Similarly, the <strong>column rank</strong> is the
-maximum number of columns which are linearly independent. A basic fact
-is show that the row and column ranks of a matrix are equal to each
-other. Thus one simply speaks of the <strong>rank</strong> of a matrix.
-For a <span class="math inline">\(m\times n\)</span> matrix <span class="math inline">\(A\)</span>, we call it <strong>full row
-rank</strong> if it rows are linearly independent; <strong>full column
-rank</strong> if its columns are linearly independent.</p>
-<p><strong>Theorem</strong> (rank-nullity theorem): Let <span class="math inline">\(A\)</span> be an <span class="math inline">\(m
-\times n\)</span> matrix, Then <span class="math display">\[\begin{align*}
-n=\operatorname{dim}(Col(A))+\operatorname{dim}(\operatorname{ker}(A)) =
-\operatorname{rank} +  \operatorname{dim}(\operatorname{ker}(A))
-\end{align*}\]</span> where the dimension <span class="math inline">\(\operatorname{dim}\)</span> is the maximal number
-of linearly independent elements that span the space.</p>
-<p><strong>Determinant of a matrix</strong>: Determinant is a number
-associated with any square matrix; we’ll write it as <span class="math inline">\(det(A)\)</span> or <span class="math inline">\(|A|\)</span>. There are several equivalent ways to
-define determinant. The determinant encodes a lot of information about
-the matrix. A square matrix is invertible exactly when the determinant
-is non-zero. Example:</p>
-<p><span class="math display">\[\begin{align*}
-\left|\left[\begin{array}{ll}
-a &amp; b \\
-c &amp; d
-\end{array}\right]\right|=ad-bc
-\end{align*}\]</span></p>
-<p>The determinant of a square matrix is equal to the product of its
-eigenvalues (see later for definition).</p>
-<p><strong>Inverse of a matrix</strong>: Suppose <span class="math inline">\(A\)</span> is an <span class="math inline">\(m
-\times m\)</span> square matrix, the <span class="math inline">\(m
-\times m\)</span> matrix <span class="math inline">\(Z\)</span> is said
-to be the inverse of <span class="math inline">\(A\)</span> iff <span class="math inline">\(AZ=I=ZA\)</span>. We then call <span class="math inline">\(A\)</span> is invertible, denote its inverse by
-<span class="math inline">\(A^{-1}\)</span>. A square matrix that is not
-invertible is called singular. When <span class="math inline">\(A\)</span> is invertible, then its inverse is
-given by <span class="math display">\[
-A^{-1}=\frac{1}{|A|}adj(A)
-\]</span> where <span class="math inline">\(adj(A)\)</span> is the
-adjoint matrix of <span class="math inline">\(A\)</span>.</p>
-<p>A square matrix is invertible if and only if its determinant is not
-zero (i.e., its eigenvalues are all non-zero).</p>
-<p>Example:</p>
-<p><span class="math display">\[\begin{align*}
-\left[\begin{array}{ll}
-a &amp; b \\
-c &amp; d
-\end{array}\right]^{-1}=\frac{1}{a d-b c}\left[\begin{array}{cc}
-d &amp; -b \\
--c &amp; a
-\end{array}\right]
-\end{align*}\]</span> if <span class="math inline">\(ad-bc \neq
-0.\)</span></p>
-<p><strong>Theorems</strong>: A square matrix has a unique inverse,
-<span class="math inline">\(A^{-1}\)</span> iff the column vector are
-linearly independent, i.e., no column vector of <span class="math inline">\(A\)</span> is a linear combination of the
-others.</p>
-<p>If <span class="math inline">\(A\)</span> is invertible, then for any
-<span class="math inline">\(b\)</span> vector, <span class="math inline">\(Ax=b\)</span> has a unique solution <span class="math inline">\(x\)</span> which is <span class="math inline">\(x=A^{-1}b\)</span>, the coefficients needed to
-represent <span class="math inline">\(b\)</span> as a linear combination
-of columns of <span class="math inline">\(A\)</span>.</p>
-<p><strong>Transpose of a matrix</strong>: The transpose of a matrix
-<span class="math inline">\(A=[a_{i,j}]\)</span> is given by <span class="math inline">\(A^T=[a_{j,i}].\)</span></p>
-<p><strong>Inner prodcut</strong>: Suppose <span class="math inline">\(x, y \in \mathbb{R}^n\)</span>, Euclidean inner
-product is <span class="math inline">\(\langle x, y\rangle=
-x^Ty=\sum_{i=1}^n x_iy_i.\)</span> The Euclidean norm of <span class="math inline">\(x\)</span> is <span class="math inline">\(\|x\|:=\sqrt{\langle x,
-x\rangle}=\sqrt{\sum_{i=1}^nx_i^2}.\)</span> The angel <span class="math inline">\(\alpha\)</span> (<span class="math inline">\(0
-\leq \alpha \leq \pi\)</span>) between the two vectors <span class="math inline">\(x, y\)</span> is defined by <span class="math inline">\(\cos(\alpha)=\frac{\langle x, y\rangle}{\|x
-\|\|y\|}.\)</span></p>
-<p><strong>Trace of a matrix</strong>: The trace of a square matrix
-<span class="math inline">\(A\)</span> is the sum of all the diagonal
-entries of <span class="math inline">\(A\)</span>. Note: for compatiblae
-matrices, trace has cyclic property, namely, <span class="math display">\[\rm{tr}(ABCD)=\rm{tr}(DABC)=\rm{tr}(CDAB).\]</span></p>
-<p><strong>Orthogonal vectors</strong>: Two vectors <span class="math inline">\(v, w\)</span> are orthogonal to each other if
-<span class="math inline">\(\langle v, w\rangle=0\)</span>.</p>
-<p><strong>orthogonal complement</strong>: The orthogonal complement of
-a subspace <span class="math inline">\(W\)</span> in a vector space
-<span class="math inline">\(V\)</span> is the set of all vectors in
-<span class="math inline">\(V\)</span> that are orthogonal to every
-vector in <span class="math inline">\(W\)</span>. It’s denoted as <span class="math inline">\(W^{\perp}\)</span>.</p>
-<p>Column space and Kernel space: <span class="math inline">\(\operatorname{Col}(A)^{\perp}=\operatorname{Ker}\left(A^T\right)\)</span>
-and <span class="math inline">\(\operatorname{Row}(A)^{\perp}=\operatorname{Ker}(A)\)</span></p>
-<p><strong>Theorem</strong>: <span class="math inline">\(S=\{v_1,
-\ldots, v_p \}\)</span> be a set of nonzero orthogonal vectors in <span class="math inline">\(\mathbb{R}^n\)</span>, then <span class="math inline">\(S\)</span> is linearly independent.</p>
-<p><strong>Orthogonal/orthonormal matrix</strong>: An <span class="math inline">\(m \times n\)</span> matrix <span class="math inline">\(U\)</span> has orthonormal columns if <span class="math inline">\(U^TU=I\)</span>.</p>
-<p>An <span class="math inline">\(m \times m\)</span> square matrix
-<span class="math inline">\(P\)</span> is called an orthogonal matrix if
-<span class="math display">\[\begin{align*}
-P P^{T}=P^{T} P=I_{m}, \quad \text { or } P^{-1}=P^{T} .
-\end{align*}\]</span></p>
-<p>Any square matrix with orthonormal columns is an orthogonal matrix,
-and such a matrix must have orthonormal rows too.</p>
-<strong>Fact</strong>: Multiplication by orthogonal matrices preserves
-inner product, hence length and angles. For this reason, orthogonal
-matrices are often called rotation matrices.
-<p><strong>Positive definite matrix</strong>: A square and symmetric
-matrix <span class="math inline">\(A\)</span> is called a positive
-definite matrix (denoted by <span class="math inline">\(A&gt;0\)</span>), if <span class="math inline">\(x^TAx&gt;0\)</span> for all <span class="math inline">\(x\neq 0\)</span>. A key characterization of a
-positive definite matrix is that the eigenvalues must be strictly
-positive. Similarly, one can define negative definite matrix. Both
-positive definite matrices and negative definite matrices are
-invertible. But the converse is not true.</p>
-<p><strong>Positive semi-definite matrix</strong>: A square and
-symmetric matrix <span class="math inline">\(A\)</span> is called a
-positive semi-definite matrix (denoted by <span class="math inline">\(A\geq 0\)</span>), if <span class="math inline">\(x^TAx\geq 0\)</span> for all <span class="math inline">\(x\neq 0\)</span>. A positive semi-definite matrix
-have non-negative eigenvalues (some possibly are zero). For a positive
-semi-definite matrix, it is invertible if and only if it is also
-positive definite. Similarly, one can define negative semi-definite
-matrix.</p>
-<p><strong>Indefinite matrix</strong>: A square and symmetric matrix
-<span class="math inline">\(A\)</span> that is neither positive
-semi-definite nor negative semi-definite is called indefinite.</p>
-<p><strong>Projection of a vector on the span of another
-vector</strong>: the projection of a vector <span class="math inline">\(y \in \mathbb{R}^n\)</span> onto the span of
-another vector <span class="math inline">\(x \in \mathbb{R}^n\)</span>
-(<span class="math inline">\(\|x\|\neq 0\)</span>), i.e., <span class="math inline">\(\rm{span}(x):=\{ax:a \in\mathbb{R}\}\)</span> is
-given by <span class="math display">\[
-P_xy=\frac{\left\langle x,y\right\rangle}{\left\langle
-x,x\right\rangle}x=\frac{xx&#39;}{\left\langle x,x\right\rangle}y
-\]</span> which has the property that <span class="math inline">\(\left\langle
-y-P_xy,P_xy\right\rangle=0\)</span></p>
+<p><strong>Theorem</strong>: Suppose the function <span class="math inline">\(f(x, y)\)</span> has continuous second partial
+derivatives. Let <span class="math inline">\(\left(x_{0},
+y_{0}\right)\)</span> be a stationary point of <span class="math inline">\(f\)</span>, and let <span class="math inline">\(\lambda_{1}\)</span> and <span class="math inline">\(\lambda_{2}\)</span> be the eigenvalues of <span class="math inline">\(\nabla^2{f}\left(x_{0}, y_{0}\right)\)</span>.</p>
+<ol style="list-style-type: lower-alpha">
+<li>If <span class="math inline">\(\lambda_{1}&lt;0\)</span> and <span class="math inline">\(\lambda_{2}&lt;0\)</span>, then <span class="math inline">\(\left(x_{0}, y_{0}\right)\)</span> is a strict
+local maximum.</li>
+<li>If <span class="math inline">\(\lambda_{1}&lt;0\)</span> and <span class="math inline">\(\lambda_{2}&gt;0\)</span> or if <span class="math inline">\(\lambda_{1}&gt;0\)</span> and <span class="math inline">\(\lambda_{2}&lt;0\)</span>, then <span class="math inline">\(\left(x_{0}, y_{0}\right)\)</span> is a
+<strong>saddle point</strong>.</li>
+<li>If <span class="math inline">\(\lambda_{1}&gt;0\)</span> and <span class="math inline">\(\lambda_{2}&gt;0\)</span>, then <span class="math inline">\(\left(x_{0}, y_{0}\right)\)</span> is a strict
+local minimum.</li>
+<li>If either <span class="math inline">\(\lambda_{1}=0\)</span> or
+<span class="math inline">\(\lambda_{2}=0\)</span> (or both), then no
+conclusion can be drawn without further information.</li>
+</ol>
+<p>For a function <span class="math inline">\(f\)</span> of three or
+more variables, there is a generalization of the rule above. In this
+context, instead of examining the determinant of the Hessian matrix, one
+must look at the eigenvalues of the Hessian matrix at the stationary
+point. The following test can be applied at any stationary point <span class="math inline">\(x^*\)</span>:</p>
+<ul>
+<li>If the Hessian is positive definite (equivalently, has all
+eigenvalues positive) at <span class="math inline">\(x^*\)</span>, then
+<span class="math inline">\(f\)</span> attains a strict local minimum at
+<span class="math inline">\(x^*\)</span>.</li>
+<li>If the Hessian is negative definite (equivalently, has all
+eigenvalues negative) at <span class="math inline">\(x^*\)</span>, then
+<span class="math inline">\(f\)</span> attains a strict local maximum at
+<span class="math inline">\(x^*\)</span>.</li>
+<li>If the Hessian has both positive and negative eigenvalues (i.e.,
+indefinite matrix) then <span class="math inline">\(x^*\)</span> is a
+<strong>saddle point</strong> for <span class="math inline">\(f\)</span>
+(and in fact this is true even if the Hessian is degenerate).</li>
+<li>In those cases not listed above (e.g., p.s.d but not p.d, n.s.d. but
+not n.d., or all entries are zeros), the test is inconclusive (i.e.,
+cannot tell if local max/min or saddle point)</li>
+</ul>
+<p>Note: in the definition of a saddle point, some authors would require
+eigenvalues to be non-zero.</p>
 <!------------->
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
 <strong>Updated:</strong> 2023-09-07 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
@@ -1990,8 +1981,9 @@ Statistical Simulation, Wei Li </span> </span></p>
 <!-- rnb-text-end -->
 </div>
 </div>
+</div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiTUFUIDY1MzogU3RhdGlzdGljYWwgU2ltdWxhdGlvbiIKYXV0aG9yOiBJbnN0cnVjdG9yJDokIERyLiBXZWkgTGkKZGF0ZTogImByIFN5cy5EYXRlKClgIgpnZW9tZXRyeTogbGVmdD0yY20sIHJpZ2h0PTJjbSwgdG9wPTJjbSwgYm90dG9tPTJjbQpsaW5lc3RyZXRjaDogMS4zCm91dHB1dDoKICBodG1sX2RvY3VtZW50OgogICAgZGZfcHJpbnQ6IHBhZ2VkCiAgICBtYXRoamF4X2NvbmZpZzoKICAgICAgLSBUZVgtQU1TLU1NTF9IVE1Mb3JNTUwgICAgICAgICAKICBwZGZfZG9jdW1lbnQ6IAogICAgICBpbmNsdWRlOgogICAgICAgIGluX2hlYWRlcjogcHJlYW1ibGVfcm1kLnRleAogIGh0bWxfbm90ZWJvb2s6IGRlZmF1bHQKZm9udHNpemU6IDE0cHQKaGVhZGVyLWluY2x1ZGVzOgotIFx1c2VwYWNrYWdle2Ftc21hdGh9Ci0gXHVzZXBhY2thZ2VbbGluZXdpZHRoPTFwdF17bWRmcmFtZWR9Ci0gXG5ld2NvbW1hbmRcaW5uZXJbMl17XGxlZnRcbGFuZ2xlIzEsIzJccmlnaHRccmFuZ2xlfQotIFxuZXdjb21tYW5kXGZsb29yWzFde1xsZmxvb3IjMVxyZmxvb3J9Ci0gXG5ld2NvbW1hbmRcY2VpbFsxXXtcbGNlaWwjMVxyY2VpbH0KLSBcbmV3Y29tbWFuZFxtYlsxXXtcbWF0aGJmeyMxfX0KLSBcbmV3Y29tbWFuZFxic1sxXXtcYm9sZHN5bWJvbHsjMX19Ci0gXG5ld2NvbW1hbmRcbXJbMV17XG1hdGhybXsjMX19Ci0gXG5ld2NvbW1hbmRcd2hbMV17XHdpZGVoYXR7IzF9fQotIFxuZXdjb21tYW5kXG9wWzFde1xvcGVyYXRvcm5hbWV7IzF9fQotIFxuZXdjb21tYW5kXG1iYlsxXXtcbWF0aGJieyMxfX0KLSBcdXNlcGFja2FnZXtjYXB0aW9ufQotIFxjYXB0aW9uc2V0dXBbZmlndXJlXXtsYWJlbGZvcm1hdD1lbXB0eX0KLSBcbmV3Y29tbWFuZHtcd2VpfVsxXXtcdGV4dGNvbG9ye29yYW5nZX17KFdlaTojMSl9fQotLS0KCjxzY3JpcHQgdHlwZT0idGV4dC94LW1hdGhqYXgtY29uZmlnIj4KTWF0aEpheC5IdWIuQ29uZmlnKHsKICBUZVg6IHsgZXF1YXRpb25OdW1iZXJzOiB7IGF1dG9OdW1iZXI6ICJBTVMiIH0gfQp9KTsKPC9zY3JpcHQ+CgoKPHNwYW4gc3R5bGU9ImJhY2tncm91bmQtY29sb3I6ICNmNWY1ZjU7IHBhZGRpbmc6IDVweDsgZGlzcGxheTogYmxvY2s7Ij4KICAgIDxzcGFuIHN0eWxlPSJ3aWR0aDogMjUlOyBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7IHRleHQtYWxpZ246IGxlZnQ7Ij4KICAgICAgICBbQmFja10oamF2YXNjcmlwdDp3aW5kb3cuaGlzdG9yeS5iYWNrKCkpCiAgICA8L3NwYW4+CiAgICA8c3BhbiBzdHlsZT0id2lkdGg6IDMwJTsgZGlzcGxheTogaW5saW5lLWJsb2NrOyB0ZXh0LWFsaWduOiBjZW50ZXI7IGNvbG9yOiBncmV5OyI+CiAgICAgICAgKipVcGRhdGVkOioqIGByIFN5cy5EYXRlKClgCiAgICA8L3NwYW4+CiAgICA8c3BhbiBzdHlsZT0id2lkdGg6IDM1JTsgZGlzcGxheTogaW5saW5lLWJsb2NrOyB0ZXh0LWFsaWduOiByaWdodDsgY29sb3I6IGdyZXk7Ij4KICAgICAgICBTdGF0aXN0aWNhbCBTaW11bGF0aW9uLCBXZWkgTGkKICAgIDwvc3Bhbj4KPC9zcGFuPgoKPCEtLS0tLS0tLS0tLS0tPgoKCiMgU29tZSBiYXNpY3Mgb2YgbWF0cml4IGFsZ2VicmEKCiMjIE5vdGF0aW9ucwoKKipDb252ZW50aW9uKiogKHVubGVzcyBvdGhlcndpc2Ugbm90ZWQpOgoKQWxsIHZlY3RvciBhcmUgdGFrZW4gYXMgY29sdW1uIHZlY3RvcnMgYnkgZGVmYXVsdCwgZm9yIGV4YW1wbGUsIGlmICR4IFxpbiBcbWF0aGJie1J9Xm4kLCB0aGVuIHdlIGNhbiB3cml0ZQokJAp4PSBcYmVnaW57Ym1hdHJpeH0KeF8xIFxcClx2ZG90cyBcXAp4X24gClxlbmR7Ym1hdHJpeH0uJCQKCkdlbmVyaWMgY2FwaXRhbCBsZXR0ZXIgd2lsbCBvZnRlbiBkZW5vdGUgYSBtYXRyaXgsIGUuZy4gJHtBfSQsIGEgJG0gXHRpbWVzIG4kIG1hdHJpeCwKClxiZWdpbnthbGlnbip9CntBfQo9ClxsZWZ0W1xiZWdpbnthcnJheX17Y30Ke2F9X3sxfSx7YX1fezJ9IFxjZG90cyB7YX1fe259ClxlbmR7YXJyYXl9XHJpZ2h0XQpcZW5ke2FsaWduKn0Kd2l0aCBlYWNoICRhX2kkIGJlbG9uZ2luZyB0byAkXG1iYntSfV5tJC4KClN1cHBvc2UgJHtlfV97aX0sIGk9MSwgXGxkb3RzLCBuJCBpcyAkbiBcdGltZXMgMSQgdW5pdCB2ZWN0b3IsIHdpdGggMSBpbiB0aGUgaXRoIHBvc2l0aW9uIGFuZCB6ZXJvcyBlbHNld2hlcmUsIGkuZS4sIHRoZSBpZGVudGl0eSAkbiBcdGltZXMgbiQgbWF0cml4IGNhbiBiZSB3cml0dGVuIGFzClxiZWdpbnthbGlnbip9CntJfV9uCj0KXGxlZnRbXGJlZ2lue2FycmF5fXtjfQp7ZX1fezF9LHtlfV97Mn0gXGNkb3RzIHtlfV97bn0KXGVuZHthcnJheX1ccmlnaHRdClxlbmR7YWxpZ24qfQoKRm9yICRBJCBhbiAkbSBcdGltZXMgbiQgbWF0cml4LCBUaGVuIHRoZSBpdGggY29sdW1uIG9mICRBJCBjYW4gYmUgZXhwcmVzZWQgYXMgJEEgXG1hdGhiZntlfV97aX0sJCBmb3IgJGk9MSwgXGxkb3RzLCBuJC4KCgoKIyMgRWxlbWVudGFyeSBkZWZpbml0aW9ucyBhbmQgcmVzdWx0cwoKCgoqKk1hdHJpeC12ZWN0b3IgbXVsdGlwbGljYXRpb24qKjoKJCQKQXg9XGJlZ2lue2JtYXRyaXh9CnthfV97MX0se2F9X3syfSBcY2RvdHMge2F9X3tufQpcZW5ke2JtYXRyaXh9ClxiZWdpbntibWF0cml4fQp4XzEgXFwKXHZkb3RzIFxcCnhfbiAKXGVuZHtibWF0cml4fT1iCiQkCiRBeCQgaXMgYSBsaW5lYXIgY29tYmluYXRpb24gb2YgY29sdW1ucyB2ZWN0b3JzIG9mICRBJC4gVGhlIGNvZWZmaWNpZW50cyBvZiB0aGUgbGluZWFyIGNvbWJpbmF0aW9ucyBhcmUgc3RvcmVkIGluICR4JC4KCioqTWF0cml4LW1hdHJpeCBtdWx0aXBsaWNhdGlvbioqOgpMZXQgClxiZWdpbnthbGlnbip9CntBfQo9ClxsZWZ0W1xiZWdpbnthcnJheX17Y30Ke2F9X3sxfSx7YX1fezJ9IFxjZG90cyB7YX1fe259ClxlbmR7YXJyYXl9XHJpZ2h0XQpcZW5ke2FsaWduKn0KYSAkXGVsbCBcdGltZXMgbSQgbWF0cml4LCAKYW5kIApcYmVnaW57YWxpZ24qfQp7Q30KPQpcbGVmdFtcYmVnaW57YXJyYXl9e2N9CntjfV97MX0se2N9X3syfSBcY2RvdHMge2N9X3tufQpcZW5ke2FycmF5fVxyaWdodF0KXGVuZHthbGlnbip9CmEgJG0gXHRpbWVzIG4kIG1hdHJpeCwgdGhlbiAKJCQKQUM9Qj1bYl8xLCBcY2RvdHMsIGJfbl0gOiBccXVhZCAgKCBcZWxsIFx0aW1lcyBuKSAKJCQKd2hlcmUgJGJfaj1BY19qJCwgJGo9MSwgXGxkb3RzLCBuLiQKCioqUmFuZ2Ugc3BhY2UgKGNvbHVtbiBzcGFjZSkqKjogVGhlIGNvbHVtbiBzcGFjZSAkXHJte2NvbH0oQSkkIG9mICRBJCBpcyB0aGUgc3BhbiBvZiB2ZWN0b3JzICRhXzEsIFxsZG90cywgYV9uJCwgaS5lLiwgJFxybXtzcGFufVx7YV8xLCBcbGRvdHMsIGFfblx9JCB0aGUgc2V0IG9mIGFsbCBsaW5lYXIgY29tYmluYXRpb25zIG9mICRhXzEsIFxsZG90cywgYV9uJC4KClxiZWdpbnthbGlnbip9ClxvcGVyYXRvcm5hbWV7Q29sfSAoQSk9XGxlZnRce2I6IGI9QSB4IFx0ZXh0IHsgZm9yIHNvbWUgfSB4IFxpbiBcbWF0aGJie1J9XntufVxyaWdodFx9ClxlbmR7YWxpZ24qfQoKVGhlIHZlY3RvciAkYiBcaW4gXG1iYntSfV5tJCBiZWxvbmdzIHRvICRccm17Q29sfShBKSQgaWZmICRcZXhpc3RzJCBzY2FsYXJzICR4XzEsIFxsZG90cywgeF9uJCBzdWNoIHRoYXQgJGI9eF8xYV8xK1xjZG90cyt4X25hX24kLgoKKipLZXJuZWwgc3BhY2UgKG51bGwgc3BhY2UpKio6IFRoZSBrZXJuZWwgc3BhY2Ugb2YgYW4gJG0gXHRpbWVzIG4kIG1hdHJpeCAkQSQsIHdyaXR0ZW4gYXMgJFxybXtrZXJ9KEEpJCwgaXMgdGhlIHNldCBvZiBhbGwgc29sdXRpb25zIG9mIHRoZSBob21vZ2VuZW91cyBlcXVhdGlvbiAkQXg9MCQuIEluIHNldCBub3RhdGlvbiwKXGJlZ2lue2FsaWduKn0KXG9wZXJhdG9ybmFtZXtrZXJ9KEEpPVxsZWZ0XHt4OiB4IFxpbiBcbWF0aGJie1J9XntufSBcdGV4dCB7IGFuZCB9IEEgeD0wXHJpZ2h0XH0KXGVuZHthbGlnbip9CgoqKkxpbmVhciBpbmRlcGVuZGVuY2Ugb2YgYSBzZXQgb2YgdmVjdG9ycyoqOiBzdXBwb3NlIHdlIGhhdmUgJHAkIHZlY3RvcnMgaW4gJFxtYmJ7Un1ebiQsIHNheSwgJHZfMSxcbGRvdHMsIHZfcCQKCi0gd2UgY2FsbCB0aGlzIGNvbGxlY3Rpb24gJFY9XHt2XzEsXGxkb3RzLCB2X3BcfSQgdG8gYmUgbGluZWFybHkgaW5kZXBlbmRlbnQgaWYgd2hlbmV2ZXIgJHhfMXZfMStcY2RvdHMreF9wdl9wPTAkLCB3ZSBoYXZlICR4XzE9XGNkb3RzPXhfcD0wJAotICRWPVx7dl8xLFxsZG90cywgdl9wXH0kIGlzIHNhaWQgdG8gYmUgbGluZWFybHkgZGVwZW5kZW50IGlmICRcZXhpc3RzJCBzb21lIHZlY3RvciBpbiAkViQgdGhhdCBpcyBhIGxpbmVhciBjb21iaW5hdGlvbiBvZiB0aGUgb3RoZXIgdmVjdG9ycyBpbiAkViQuCgoqKlJhbmsgb2YgYSBtYXRyaXgqKjogVGhlICoqcm93IHJhbmsqKiBvZiBhIG1hdHJpeCBpcyB0aGUgbWF4aW11bSBudW1iZXIgb2Ygcm93cywgdGhvdWdodApvZiBhcyB2ZWN0b3JzLCB3aGljaCBhcmUgbGluZWFybHkgaW5kZXBlbmRlbnQuIFNpbWlsYXJseSwgdGhlICoqY29sdW1uCnJhbmsqKiBpcyB0aGUgbWF4aW11bSBudW1iZXIgb2YgY29sdW1ucyB3aGljaCBhcmUgbGluZWFybHkgaW5kZXBlbmRlbnQuIEEgYmFzaWMgZmFjdCBpcyBzaG93IHRoYXQgdGhlIHJvdyBhbmQKY29sdW1uIHJhbmtzIG9mIGEgbWF0cml4IGFyZSBlcXVhbCB0byBlYWNoIG90aGVyLiBUaHVzIG9uZSBzaW1wbHkKc3BlYWtzIG9mIHRoZSAqKnJhbmsqKiBvZiBhIG1hdHJpeC4gRm9yIGEgJG1cdGltZXMgbiQgbWF0cml4ICRBJCwgd2UgY2FsbCBpdCAqKmZ1bGwgcm93IHJhbmsqKiBpZiBpdCByb3dzIGFyZSBsaW5lYXJseSBpbmRlcGVuZGVudDsgKipmdWxsIGNvbHVtbiByYW5rKiogaWYgaXRzIGNvbHVtbnMgYXJlIGxpbmVhcmx5IGluZGVwZW5kZW50LiAgCgoqKlRoZW9yZW0qKiAocmFuay1udWxsaXR5IHRoZW9yZW0pOiBMZXQgJEEkIGJlIGFuICRtIFx0aW1lcyBuJCBtYXRyaXgsClRoZW4KXGJlZ2lue2FsaWduKn0Kbj1cb3BlcmF0b3JuYW1le2RpbX0oQ29sKEEpKStcb3BlcmF0b3JuYW1le2RpbX0oXG9wZXJhdG9ybmFtZXtrZXJ9KEEpKSA9IFxvcHtyYW5rfSArICBcb3BlcmF0b3JuYW1le2RpbX0oXG9wZXJhdG9ybmFtZXtrZXJ9KEEpKSAKXGVuZHthbGlnbip9CndoZXJlIHRoZSBkaW1lbnNpb24gJFxvcGVyYXRvcm5hbWV7ZGltfSQgaXMgdGhlIG1heGltYWwgbnVtYmVyIG9mIGxpbmVhcmx5IGluZGVwZW5kZW50IGVsZW1lbnRzIHRoYXQgc3BhbiB0aGUgc3BhY2UuCgoKKipEZXRlcm1pbmFudCBvZiBhIG1hdHJpeCoqOiBEZXRlcm1pbmFudCBpcyBhIG51bWJlciBhc3NvY2lhdGVkIHdpdGggYW55IHNxdWFyZSBtYXRyaXg7IHdl4oCZbGwgd3JpdGUKaXQgYXMgJGRldChBKSQgb3IgJHxBfCQuIFRoZXJlIGFyZSBzZXZlcmFsIGVxdWl2YWxlbnQgd2F5cyB0byBkZWZpbmUgZGV0ZXJtaW5hbnQuIFRoZSBkZXRlcm1pbmFudCBlbmNvZGVzIGEgbG90IG9mIGluZm9ybWF0aW9uIGFib3V0IHRoZQptYXRyaXguIEEgc3F1YXJlIG1hdHJpeCBpcyBpbnZlcnRpYmxlIGV4YWN0bHkgd2hlbiB0aGUgZGV0ZXJtaW5hbnQgaXMgbm9uLXplcm8uIEV4YW1wbGU6CgpcYmVnaW57YWxpZ24qfQpcbGVmdHxcbGVmdFtcYmVnaW57YXJyYXl9e2xsfQphICYgYiBcXApjICYgZApcZW5ke2FycmF5fVxyaWdodF1ccmlnaHR8PWFkLWJjClxlbmR7YWxpZ24qfQoKVGhlIGRldGVybWluYW50IG9mIGEgc3F1YXJlIG1hdHJpeCBpcyBlcXVhbCB0byB0aGUgcHJvZHVjdCBvZiBpdHMgZWlnZW52YWx1ZXMgKHNlZSBsYXRlciBmb3IgZGVmaW5pdGlvbikuCgoqKkludmVyc2Ugb2YgYSBtYXRyaXgqKjoKU3VwcG9zZSAkQSQgaXMgYW4gJG0gXHRpbWVzIG0kIHNxdWFyZSBtYXRyaXgsIHRoZSAkbSBcdGltZXMgbSQgbWF0cml4ICRaJCBpcyBzYWlkIHRvIGJlIHRoZSBpbnZlcnNlIG9mICRBJCBpZmYgJEFaPUk9WkEkLiBXZSB0aGVuIGNhbGwgJEEkIGlzIGludmVydGlibGUsIGRlbm90ZSBpdHMgaW52ZXJzZSBieSAkQV57LTF9JC4gQSBzcXVhcmUgbWF0cml4IHRoYXQgaXMgbm90IGludmVydGlibGUgaXMgY2FsbGVkIHNpbmd1bGFyLgpXaGVuICRBJCBpcyBpbnZlcnRpYmxlLCB0aGVuIGl0cyBpbnZlcnNlIGlzIGdpdmVuIGJ5CiQkCkFeey0xfT1cZnJhY3sxfXt8QXx9YWRqKEEpCiQkCndoZXJlICRhZGooQSkkIGlzIHRoZSBhZGpvaW50IG1hdHJpeCBvZiAkQSQuIAoKQSBzcXVhcmUgbWF0cml4IGlzIGludmVydGlibGUgaWYgYW5kIG9ubHkgaWYgaXRzIGRldGVybWluYW50IGlzIG5vdCB6ZXJvIChpLmUuLCBpdHMgZWlnZW52YWx1ZXMgYXJlIGFsbCBub24temVybykuCgpFeGFtcGxlOgoKXGJlZ2lue2FsaWduKn0KXGxlZnRbXGJlZ2lue2FycmF5fXtsbH0KYSAmIGIgXFwKYyAmIGQKXGVuZHthcnJheX1ccmlnaHRdXnstMX09XGZyYWN7MX17YSBkLWIgY31cbGVmdFtcYmVnaW57YXJyYXl9e2NjfQpkICYgLWIgXFwKLWMgJiBhClxlbmR7YXJyYXl9XHJpZ2h0XQpcZW5ke2FsaWduKn0KaWYgJGFkLWJjIFxuZXEgMC4kCgoqKlRoZW9yZW1zKio6IEEgc3F1YXJlIG1hdHJpeCBoYXMgYSB1bmlxdWUgaW52ZXJzZSwgJEFeey0xfSQgaWZmIHRoZSBjb2x1bW4gdmVjdG9yIGFyZSBsaW5lYXJseSBpbmRlcGVuZGVudCwgaS5lLiwgbm8gY29sdW1uIHZlY3RvciBvZiAkQSQgaXMgYSBsaW5lYXIgY29tYmluYXRpb24gb2YgdGhlIG90aGVycy4gCgpJZiAkQSQgaXMgaW52ZXJ0aWJsZSwgdGhlbiBmb3IgYW55ICRiJCB2ZWN0b3IsICRBeD1iJCBoYXMgYSB1bmlxdWUgc29sdXRpb24gJHgkIHdoaWNoIGlzICR4PUFeey0xfWIkLCB0aGUgY29lZmZpY2llbnRzIG5lZWRlZCB0byByZXByZXNlbnQgJGIkIGFzIGEgbGluZWFyIGNvbWJpbmF0aW9uIG9mIGNvbHVtbnMgb2YgJEEkLiAKCioqVHJhbnNwb3NlIG9mIGEgbWF0cml4Kio6IFRoZSB0cmFuc3Bvc2Ugb2YgYSBtYXRyaXggJEE9W2Ffe2ksan1dJCBpcyBnaXZlbiBieSAkQV5UPVthX3tqLGl9XS4kCgoqKklubmVyIHByb2RjdXQqKjogU3VwcG9zZSAkeCwgeSBcaW4gXG1iYntSfV5uJCwgRXVjbGlkZWFuIGlubmVyIHByb2R1Y3QgaXMgJFxsYW5nbGUgeCwgeVxyYW5nbGU9IHheVHk9XHN1bV97aT0xfV5uIHhfaXlfaS4kIFRoZSBFdWNsaWRlYW4gbm9ybSBvZiAkeCQgaXMgJFx8eFx8Oj1cc3FydHtcbGFuZ2xlIHgsIHhccmFuZ2xlfT1cc3FydHtcc3VtX3tpPTF9Xm54X2leMn0uJApUaGUgYW5nZWwgJFxhbHBoYSQgKCQwIFxsZXEgXGFscGhhIFxsZXEgXHBpJCkgYmV0d2VlbiB0aGUgdHdvIHZlY3RvcnMgJHgsIHkkIGlzIGRlZmluZWQgYnkgJFxjb3MoXGFscGhhKT1cZnJhY3tcbGFuZ2xlIHgsIHlccmFuZ2xlfXtcfHggXHxcfHlcfH0uJAoKKipUcmFjZSBvZiBhIG1hdHJpeCoqOiBUaGUgdHJhY2Ugb2YgYSBzcXVhcmUgbWF0cml4ICRBJCBpcyB0aGUgc3VtIG9mIGFsbCB0aGUgZGlhZ29uYWwgZW50cmllcyBvZiAkQSQuIE5vdGU6IGZvciBjb21wYXRpYmxhZSBtYXRyaWNlcywgdHJhY2UgaGFzIGN5Y2xpYyBwcm9wZXJ0eSwgbmFtZWx5LAokJFxybXt0cn0oQUJDRCk9XHJte3RyfShEQUJDKT1ccm17dHJ9KENEQUIpLiQkCgoqKk9ydGhvZ29uYWwgdmVjdG9ycyoqOiBUd28gdmVjdG9ycyAkdiwgdyQgYXJlIG9ydGhvZ29uYWwgdG8gZWFjaCBvdGhlciBpZiAkXGxhbmdsZSB2LCB3XHJhbmdsZT0wJC4gCgoqKm9ydGhvZ29uYWwgY29tcGxlbWVudCoqOiBUaGUgb3J0aG9nb25hbCBjb21wbGVtZW50IG9mIGEgc3Vic3BhY2UgJFckIGluIGEgdmVjdG9yIHNwYWNlICRWJCBpcyB0aGUgc2V0IG9mIGFsbCB2ZWN0b3JzIGluICRWJCB0aGF0IGFyZSBvcnRob2dvbmFsIHRvIGV2ZXJ5IHZlY3RvciBpbiAkVyQuIEl0J3MgZGVub3RlZCBhcyAkV157XHBlcnB9JC4KCkNvbHVtbiBzcGFjZSBhbmQgS2VybmVsIHNwYWNlOiAkXG9wZXJhdG9ybmFtZXtDb2x9KEEpXntccGVycH09XG9wZXJhdG9ybmFtZXtLZXJ9XGxlZnQoQV5UXHJpZ2h0KSQgYW5kICRcb3BlcmF0b3JuYW1le1Jvd30oQSlee1xwZXJwfT1cb3BlcmF0b3JuYW1le0tlcn0oQSkkCgoKKipUaGVvcmVtKio6ICRTPVx7dl8xLCBcbGRvdHMsIHZfcCBcfSQgYmUgYSBzZXQgb2Ygbm9uemVybyBvcnRob2dvbmFsIHZlY3RvcnMgaW4gJFxtYmJ7Un1ebiQsIHRoZW4gJFMkIGlzIGxpbmVhcmx5IGluZGVwZW5kZW50LiAKClxiZWdpbnttZGZyYW1lZH0KUHJvb2Y6IApcdnNwYWNlezcwbW19ClxlbmR7bWRmcmFtZWR9CgoqKk9ydGhvZ29uYWwvb3J0aG9ub3JtYWwgbWF0cml4Kio6IApBbiAkbSBcdGltZXMgbiQgbWF0cml4ICRVJCBoYXMgb3J0aG9ub3JtYWwgY29sdW1ucyBpZiAkVV5UVT1JJC4KCkFuICRtIFx0aW1lcyBtJCBzcXVhcmUgbWF0cml4ICRQJCBpcyBjYWxsZWQgYW4gb3J0aG9nb25hbCBtYXRyaXggaWYKXGJlZ2lue2FsaWduKn0KUCBQXntUfT1QXntUfSBQPUlfe219LCBccXVhZCBcdGV4dCB7IG9yIH0gUF57LTF9PVBee1R9IC4KXGVuZHthbGlnbip9CgpBbnkgc3F1YXJlIG1hdHJpeCB3aXRoIG9ydGhvbm9ybWFsIGNvbHVtbnMgaXMgYW4gb3J0aG9nb25hbCBtYXRyaXgsIGFuZCBzdWNoIGEgbWF0cml4IG11c3QgaGF2ZSBvcnRob25vcm1hbCByb3dzIHRvby4KCioqRmFjdCoqOiBNdWx0aXBsaWNhdGlvbiBieSBvcnRob2dvbmFsIG1hdHJpY2VzIHByZXNlcnZlcyBpbm5lciBwcm9kdWN0LCBoZW5jZSBsZW5ndGggYW5kIGFuZ2xlcy4gRm9yIHRoaXMgcmVhc29uLCBvcnRob2dvbmFsIG1hdHJpY2VzIGFyZSBvZnRlbiBjYWxsZWQgcm90YXRpb24gbWF0cmljZXMuClxiZWdpbnttZGZyYW1lZH0KQ2hlY2s6IApcZW5ke21kZnJhbWVkfQoKKipQb3NpdGl2ZSBkZWZpbml0ZSBtYXRyaXgqKjogQSBzcXVhcmUgYW5kIHN5bW1ldHJpYyBtYXRyaXggJEEkIGlzIGNhbGxlZCBhIHBvc2l0aXZlIGRlZmluaXRlIG1hdHJpeCAoZGVub3RlZCBieSAkQT4wJCksIGlmICR4XlRBeD4wJCBmb3IgYWxsICR4XG5lcSAwJC4gQSBrZXkgY2hhcmFjdGVyaXphdGlvbiBvZiBhIHBvc2l0aXZlIGRlZmluaXRlIG1hdHJpeCBpcyB0aGF0IHRoZSBlaWdlbnZhbHVlcyBtdXN0IGJlIHN0cmljdGx5IHBvc2l0aXZlLiBTaW1pbGFybHksIG9uZSBjYW4gZGVmaW5lIG5lZ2F0aXZlIGRlZmluaXRlIG1hdHJpeC4gQm90aCBwb3NpdGl2ZSBkZWZpbml0ZSBtYXRyaWNlcyBhbmQgbmVnYXRpdmUgZGVmaW5pdGUgbWF0cmljZXMgYXJlIGludmVydGlibGUuIEJ1dCB0aGUgY29udmVyc2UgaXMgbm90IHRydWUuIAoKKipQb3NpdGl2ZSBzZW1pLWRlZmluaXRlIG1hdHJpeCoqOiBBIHNxdWFyZSBhbmQgc3ltbWV0cmljIG1hdHJpeCAkQSQgaXMgY2FsbGVkIGEgcG9zaXRpdmUgc2VtaS1kZWZpbml0ZSBtYXRyaXggKGRlbm90ZWQgYnkgJEFcZ2VxIDAkKSwgaWYgJHheVEF4XGdlcSAwJCBmb3IgYWxsICR4XG5lcSAwJC4gQSBwb3NpdGl2ZSBzZW1pLWRlZmluaXRlIG1hdHJpeCBoYXZlIG5vbi1uZWdhdGl2ZSBlaWdlbnZhbHVlcyAoc29tZSBwb3NzaWJseSBhcmUgemVybykuIEZvciBhIHBvc2l0aXZlIHNlbWktZGVmaW5pdGUgbWF0cml4LCBpdCBpcyBpbnZlcnRpYmxlIGlmIGFuZCBvbmx5IGlmIGl0IGlzIGFsc28gcG9zaXRpdmUgZGVmaW5pdGUuIFNpbWlsYXJseSwgb25lIGNhbiBkZWZpbmUgbmVnYXRpdmUgc2VtaS1kZWZpbml0ZSBtYXRyaXguIAoKKipJbmRlZmluaXRlIG1hdHJpeCoqOiBBIHNxdWFyZSBhbmQgc3ltbWV0cmljIG1hdHJpeCAkQSQgdGhhdCBpcyBuZWl0aGVyIHBvc2l0aXZlIHNlbWktZGVmaW5pdGUgbm9yIG5lZ2F0aXZlIHNlbWktZGVmaW5pdGUgaXMgY2FsbGVkIGluZGVmaW5pdGUuCgoqKlByb2plY3Rpb24gb2YgYSB2ZWN0b3Igb24gdGhlIHNwYW4gb2YgYW5vdGhlciB2ZWN0b3IqKjogdGhlIHByb2plY3Rpb24gb2YgYSB2ZWN0b3IgJHkgXGluIFxtYXRoYmJ7Un1ebiQgb250byB0aGUgc3BhbiBvZiBhbm90aGVyIHZlY3RvciAkeCBcaW4gXG1iYntSfV5uJCAoJFx8eFx8XG5lcSAwJCksIGkuZS4sICRccm17c3Bhbn0oeCk6PVx7YXg6YSBcaW5cbWJie1J9XH0kIGlzIGdpdmVuIGJ5IAokJApQX3h5PVxmcmFje1xpbm5lcnt4fXt5fX17XGlubmVye3h9e3h9fXg9XGZyYWN7eHgnfXtcaW5uZXJ7eH17eH19eQokJAp3aGljaCBoYXMgdGhlIHByb3BlcnR5IHRoYXQgJFxpbm5lcnt5LVBfeHl9e1BfeHl9PTAkCgpcYmVnaW57bWRmcmFtZWR9ClByb29mOiAKXGVuZHttZGZyYW1lZH0KCgo8IS0tLS0tLS0tLS0tLS0+Cgo8c3BhbiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjogI2Y1ZjVmNTsgcGFkZGluZzogNXB4OyBkaXNwbGF5OiBibG9jazsiPgogICAgPHNwYW4gc3R5bGU9IndpZHRoOiAyNSU7IGRpc3BsYXk6IGlubGluZS1ibG9jazsgdGV4dC1hbGlnbjogbGVmdDsiPgogICAgICAgIFtCYWNrXShqYXZhc2NyaXB0OndpbmRvdy5oaXN0b3J5LmJhY2soKSkKICAgIDwvc3Bhbj4KICAgIDxzcGFuIHN0eWxlPSJ3aWR0aDogMzAlOyBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7IHRleHQtYWxpZ246IGNlbnRlcjsgY29sb3I6IGdyZXk7Ij4KICAgICAgICAqKlVwZGF0ZWQ6KiogYHIgU3lzLkRhdGUoKWAKICAgIDwvc3Bhbj4KICAgIDxzcGFuIHN0eWxlPSJ3aWR0aDogMzUlOyBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7IHRleHQtYWxpZ246IHJpZ2h0OyBjb2xvcjogZ3JleTsiPgogICAgICAgIFN0YXRpc3RpY2FsIFNpbXVsYXRpb24sIFdlaSBMaQogICAgPC9zcGFuPgo8L3NwYW4+</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiTUFUIDY1MzogU3RhdGlzdGljYWwgU2ltdWxhdGlvbiIKYXV0aG9yOiBJbnN0cnVjdG9yJDokIERyLiBXZWkgTGkKZGF0ZTogImByIFN5cy5EYXRlKClgIgpnZW9tZXRyeTogbGVmdD0yY20sIHJpZ2h0PTJjbSwgdG9wPTJjbSwgYm90dG9tPTJjbQpsaW5lc3RyZXRjaDogMS4zCm91dHB1dDoKICBwZGZfZG9jdW1lbnQ6IAogICAgICBpbmNsdWRlOgogICAgICAgIGluX2hlYWRlcjogcHJlYW1ibGVfcm1kLnRleAogIGh0bWxfZG9jdW1lbnQ6CiAgICBkZl9wcmludDogcGFnZWQKICAgIG1hdGhqYXhfY29uZmlnOgogICAgICAtIFRlWC1BTVMtTU1MX0hUTUxvck1NTCAgIAogIGh0bWxfbm90ZWJvb2s6IGRlZmF1bHQKZm9udHNpemU6IDE0cHQKaGVhZGVyLWluY2x1ZGVzOgotIFx1c2VwYWNrYWdle2Ftc21hdGh9Ci0gXHVzZXBhY2thZ2VbbGluZXdpZHRoPTFwdF17bWRmcmFtZWR9Ci0gXG5ld2NvbW1hbmRcaW5uZXJbMl17XGxlZnRcbGFuZ2xlIzEsIzJccmlnaHRccmFuZ2xlfQotIFxuZXdjb21tYW5kXGZsb29yWzFde1xsZmxvb3IjMVxyZmxvb3J9Ci0gXG5ld2NvbW1hbmRcY2VpbFsxXXtcbGNlaWwjMVxyY2VpbH0KLSBcbmV3Y29tbWFuZFxtYlsxXXtcbWF0aGJmeyMxfX0KLSBcbmV3Y29tbWFuZFxic1sxXXtcYm9sZHN5bWJvbHsjMX19Ci0gXG5ld2NvbW1hbmRcbXJbMV17XG1hdGhybXsjMX19Ci0gXG5ld2NvbW1hbmRcd2hbMV17XHdpZGVoYXR7IzF9fQotIFxuZXdjb21tYW5kXG9wWzFde1xvcGVyYXRvcm5hbWV7IzF9fQotIFxuZXdjb21tYW5kXG1iYlsxXXtcbWF0aGJieyMxfX0KLSBcdXNlcGFja2FnZXtjYXB0aW9ufQotIFx1c2VwYWNrYWdle21hdGh0b29sc30KLSBcY2FwdGlvbnNldHVwW2ZpZ3VyZV17bGFiZWxmb3JtYXQ9ZW1wdHl9Ci0gXG5ld2NvbW1hbmR7XHdlaX1bMV17XHRleHRjb2xvcntvcmFuZ2V9eyhXZWk6IzEpfX0KLS0tCgoKPHNjcmlwdCB0eXBlPSJ0ZXh0L3gtbWF0aGpheC1jb25maWciPgpNYXRoSmF4Lkh1Yi5Db25maWcoewogIFRlWDogeyBlcXVhdGlvbk51bWJlcnM6IHsgYXV0b051bWJlcjogIkFNUyIgfSB9Cn0pOwo8L3NjcmlwdD4KCgo8c3BhbiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjogI2Y1ZjVmNTsgcGFkZGluZzogNXB4OyBkaXNwbGF5OiBibG9jazsiPgogICAgPHNwYW4gc3R5bGU9IndpZHRoOiAyNSU7IGRpc3BsYXk6IGlubGluZS1ibG9jazsgdGV4dC1hbGlnbjogbGVmdDsiPgogICAgICAgIFtCYWNrXShqYXZhc2NyaXB0OndpbmRvdy5oaXN0b3J5LmJhY2soKSkKICAgIDwvc3Bhbj4KICAgIDxzcGFuIHN0eWxlPSJ3aWR0aDogMzAlOyBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7IHRleHQtYWxpZ246IGNlbnRlcjsgY29sb3I6IGdyZXk7Ij4KICAgICAgICAqKlVwZGF0ZWQ6KiogYHIgU3lzLkRhdGUoKWAKICAgIDwvc3Bhbj4KICAgIDxzcGFuIHN0eWxlPSJ3aWR0aDogMzUlOyBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7IHRleHQtYWxpZ246IHJpZ2h0OyBjb2xvcjogZ3JleTsiPgogICAgICAgIFN0YXRpc3RpY2FsIFNpbXVsYXRpb24sIFdlaSBMaQogICAgPC9zcGFuPgo8L3NwYW4+Cgo8IS0tLS0tLS0tLS0tLS0+CgoKCiMgQmFzaWNzIG9mIHZlY3RvciBjYWxjdWx1cwoKKipHcmFkaWVudCoqLiBGb3IgJGY6e1xtYXRoYmJ7Un1ebn1cdG97XG1hdGhiYntSfX0kIGEgc21vb3RoIGZ1bmN0aW9uLCBpdHMgZ3JhZGllbnQgaXMgdGhlICRue1x0aW1lc30xJCB2ZWN0b3IKJCQKe1xuYWJsYX1mKHgpPVxiZWdpbntibWF0cml4fQpcZnJhY3tccGFydGlhbCBmKHgpfXtccGFydGlhbCB4XzF9IFxcClxmcmFje1xwYXJ0aWFsIGYoeCl9e1xwYXJ0aWFsIHhfMn0gXFwKXHZkb3RzIFxcClxmcmFje1xwYXJ0aWFsIGYoeCl9e1xwYXJ0aWFsIHhfbn0gXFwgClxlbmR7Ym1hdHJpeH0uCiQkCgoKKipIZXNzaWFuIG1hdHJpeCoqLiBUaGUgSGVzc2lhbiBtYXRyaXggb2YgJGYkIGlzIGEgJG57XHRpbWVzfW4kIHN5bW1ldHJpYyBtYXRyaXggZGVmaW5lZCBhcwokJAp7XG5hYmxhfV4yZih4KT1cYmVnaW57Ym1hdHJpeH0Ke1xmcmFje1xwYXJ0aWFsXjIgZih4KX17XHBhcnRpYWwgeF8xIFxwYXJ0aWFsIHhfMX19JiB7XGZyYWN7XHBhcnRpYWxeMiBmKHgpfXtccGFydGlhbCB4XzIgXHBhcnRpYWwgeF8xfX0mIFxjZG90cyAmIHtcZnJhY3tccGFydGlhbF4yIGYoeCl9e1xwYXJ0aWFsIHhfbiBccGFydGlhbCB4XzF9fVxcClx2ZG90cyAmIFx2ZG90cyAmIFxkZG90cyAmIFx2ZG90cyBcXAp7XGZyYWN7XHBhcnRpYWxeMiBmKHgpfXtccGFydGlhbCB4XzEgXHBhcnRpYWwgeF9ufX0mIHtcZnJhY3tccGFydGlhbF4yIGYoeCl9e1xwYXJ0aWFsIHhfMiBccGFydGlhbCB4X259fSYgXGNkb3RzICYge1xmcmFje1xwYXJ0aWFsXjIgZih4KX17XHBhcnRpYWwgeF9uIFxwYXJ0aWFsIHhfbn19XFwgClxlbmR7Ym1hdHJpeH0uCiQkCgpTb21lIHJlc3VsdHMgZnJvbSBjYWxjdWx1czoKCigxKQokZih4KT1hXlR4IDp7XG1hdGhiYntSXm59fVx0b3tcbWF0aGJie1J9fSQsICRmKHgpJCBjYW4gYWxzbyB3cml0dGVuIGluICRmKHgpPXtcc3VtX3tpPTF9XntufX1hX2l4X2kkLAp0aGUgZ3JhZGllbnQgZm9yICRmKHgpJCwKJCR7XG5hYmxhfWYoeCk9YS4kJAooMikKJGYoeCk9eF5UQXgkICgkQSQgaXMgc3F1YXJlIG1hdHJpeCksIHRoZSBncmFkaWVudCBmb3IgJGYoeCkkLAokJAp7XG5hYmxhfWYoeCk9QXgrQV5UeDsKJCQKaWYgQSBpcyBzeW1tZXRyaWMgbWF0cml4LAokJAp7XG5hYmxhfWYoeCk9MkF4LgokJAoKCioqRXhhbXBsZSoqOiBGb3IgdGhlIGxpbmVhciBsZWFzdCBzcXVhcmUgcHJvYmxlbSAkXG1pblxsaW1pdHNfe3h9e2YoeCl9PVxtaW5cbGltaXRzX3t4fXtcbFZlcnQgQXgtYlxyVmVydF4yfSQsCgokJApcYmVnaW57YWxpZ25lZH0KZih4KSY9XGxWZXJ0IEF4LWJcclZlcnReMlxcJj1cbGFuZ2xlIEF4LWIsIEF4LWJccmFuZ2xlXFwmPShBeC1iKV5UKEF4LWIpClxcJj14XlRBXlRBeC0yYl5UQXgrYl5UYgpcZW5ke2FsaWduZWR9CiQkCgp0aGUgZ3JhZGllbnQgb2YgJGYoeCkkIGlzCiQkCntcbmFibGF9Zih4KT1cZnJhY3t7XHBhcnRpYWx9Zih4KX17e1xwYXJ0aWFsfXh9PTJBXlRBeC0yYl5UQVxvdmVyc2V0e3NldH17PX0wCiQkCgojIE9wdGltaXphdGlvbgpyZWZlcmVuY2U6IE51bWVyaWNhbCBPcHRpbWl6YXRpb24gKE5vY2VkYWwgYW5kIFdyaWdodCkKCiMjIERlZmluaXRpb24KCgpHaXZlbiAkZjp7XG1hdGhiYntSXm59fVx0b3tcbWF0aGJie1J9fSQsICRTe1xzdWJzZXRlcX17XG1hdGhiYntSXm59fSQgaXMgZmVhc2libGUgY29udmV4IHNldC4KCioqMS4gQ29udmV4IHNldCoqOiAkUyQgaXMgYSBjb252ZXggc2V0IGlmIGFuZCBvbmx5IGlmICR4LHl7XGlufVMkIGVudGFpbHMgJHtcYWxwaGF9eCsoMS17XGFscGhhfSl5e1xpbn1TJCBmb3IgYWxsICR7XGFscGhhfXtcaW59WzAsMV0kCgoqKjIuIEdsb2JhbCBtaW5pbWl6ZXIqKjogQSBwb2ludCAkeF4qe1xpbn1TJCBpcyBhIGdsb2JhbCBtaW5pbWl6ZXIgb2YgJGYkIGluICRTJCBpZiBhbmQgb25seSBpZiAkZih4Xiope1xsZX1mKHgpJCBmb3IgYWxsICR4e1xpbn1TJC4KCioqMy4gTG9jYWwgbWluaW1pemVyKiogQSBwb2ludCAkeF4qe1xpbn1TJCBpcyBhIGxvY2FsIG1pbmltaXplciBvZiAkZiQgaW4gJFMkIGlmIGFuZCBvbmx5IGlmIHRoZXJlIGV4aXN0cyBhIG5laWdoYm9yaG9vZCBvZiAkeF4qJCwgJE4oeF4qKSQgc3VjaCB0aGF0ICRmKHheKil7XGxlfWYoeCkkLCBmb3IgYWxsICR4e1xpbn1OKHheKil7XGNhcH1TLiQKCioqNC4gU3RyaWN0IGxvY2FsIG1pbmltaXplcioqOiBBIHBvaW50ICR4Xip7XGlufVMkIGlzIGEgbG9jYWwgbWluaW1pemVyIG9mICRmJCBpbiAkUyQgaWYgYW5kIG9ubHkgaWYgdGhlcmUgZXhpc3RzIGEgbmVpZ2hib3Job29kIG9mICR4XiokLCAkTih4XiopJCBzdWNoIHRoYXQgJGYoeF4qKTxmKHgpJCwgZm9yIGFsbCAkeHtcaW59Tih4Xiope1xjYXB9Uy4kCgoqKjUuIENvbnZleCBmdW5jdGlvbnMqKjogCgooMSkgQSAic21vb3RoIiBmdW5jdGlvbiAkZiQgaXMgYSBjb252ZXggYXQgdGhlIHBvaW50ICR2JCBpZiBhbmQgb25seSBpZiAke1xuYWJsYX1eMmYodil7XGdlfTAkICAocG9zaXRpdmUgc2VtaWRlZmluaXRlKS4gSWYgJGY6e1xtYXRoYmJ7Un19XHRve1xtYXRoYmJ7Un19JCwgJCh7XHBhcnRpYWx9XjJmKHgpL1xwYXJ0aWFsIHheMil8X3t4PXZ9e1xnZX0wJCwgbm90aW5nICR7XHBhcnRpYWx9Zih2KS97XHBhcnRpYWx9eCQgc2xvcGUgYXQgJHYkID0gcmF0ZSBvZiBjaGFuZ2Ugb2YgJGYkIGF0ICR2JDsgJHtccGFydGlhbH1eMmYodikve1xwYXJ0aWFsIHheMn09JCByYXRlIG9mIGNoYW5nZSBvZiB0aGUgc2xvcGUgb2YgJGYkIGF0ICR2JC4gVGhpcyBpcyBzZWNvbmQgb3JkZXIgZGVmaW5pdGlvbi4KKDIpIEEgImRpZmZlcmVudGlhbGJlIiBmdW5jdGlvbiAkZiQgaXMgY29udmV4IGF0ICR2JCBpZiBhbmQgb25seSBpZiBmb3IgYWxsICR3JCBpbiB0aGUgbmVpZ2hib3Job29kIG9mICR2JCwgJGYodyl7XGdlfWYodikre1xuYWJsYX1mKHYpXlQody12KSQuIFRoaXMgaXMgZmlyc3Qgb3JkZXIgZGVmaW5pdGlvbi4KKDMpIEEgZnVuY3Rpb24gJGYkIGlzIGNvbnZleCBvbiAkUyQgaWYgYW5kIG9ubHkgaWYgaXQncyBjb252ZXggYXQgZXZlcnkgcG9pbnQgb2YgJFMkLiBBIGZ1bmN0aW9uICRmJCBpcyBjb252ZXggb24gJFMkLCBpZiBhbmQgb25seSBpZiAkeCx5e1xpbn1TJCBlbnRhaWxzICRmKHtcYWxwaGF9eCsoMS17XGFscGhhfSl5KXtcbGV9e1xhbHBoYX1mKHgpKygxLXtcYWxwaGF9KWYoeSkkIGZvciAke1xhbHBoYX17XGlufVswLDFdJC4KCioqNi4gc3RhdGlvbmFyeSBwb2ludCBhbmQgc2FkZGxlIHBvaW50KioKCkEgc3RhdGlvbmFyeSBwb2ludCAkdiQgb2YgJGYkIGlzIGFueSBwb2ludCB0aGF0IHNhdGlzZmllcyB0aGUgRk9DICR7XG5hYmxhfWYodil7PX0wJC4gSW4gZ2VuZXJhbCwgYSBzdGF0aW9uYXJ5IHBvaW50IGNvdWxkIGJlIG1pbmltaXplciwgbWF4aW1pemVyIG9yIHNhZGRsZSBwb2ludC4KCkEgc2FkZGxlIHBvaW50IGlzIGEgc3RhdGlvbmFyeSBwb2ludCBhdCB3aGljaCB0aGUgY3VydmF0dXJlIG9mIHRoZSBmdW5jdGlvbiBjaGFuZ2VzIGZyb20gbmVnYXRpdmUgdG8gcG9zaXRpdmUgb3IgdmljZSB2ZXJzYSAoaS5lLiwgYWxzbyBhIHBvaW50IG9mIGluZmxlY3Rpb24pLiBNb3JlIHByZWNpc2UgZGVmaW5pdGlvbiBpcyBnaXZlbiBiZWxvdy4KCioqNy4gQ29uc2VxdWVuY2Ugb2YgY29udmV4aXR5KioKCldoZW4gJGYkIGlzIGNvbnZleCBvbiAkUyQsIHRoZW4gYW55IGxvY2FsIG1pbmltaXplciBpcyBhbHNvIGEgZ2xvYmFsIG1pbmltaXplci4gSWYsIGluIGFkZGl0aW9uLCAkZiQgaXMgZGlmZmVyZW50aWFibGUsIHRoZW4gYW55IHN0YXRpb25hcnkgcG9pbnQgaXMgYSBnbG9iYWwgbWluaW1pemVyLgoKIyMjIE5lY2Vzc2FyeSBhbmQgc3VmZmljaWVudCBjb25kaXRpb25zLgoKTGV0J3MgY29uc2lkZXIgdGhlIG1pbmltaXphdGlvbiBwcm9ibGVtIAokXG1pbiBfe3ggXGluIFxtYXRoYmJ7Un1ebn0gZih4KSQKZm9yIHNvbWUgc21vb3RoICRmOiBcbWF0aGJie1J9Xm4gXG1hcHN0byBcbWF0aGJie1J9LiQKCiMjIyMgTmVjZXNzYXJ5IGNvbmRpdGlvbgoKRmlyc3Qgb3JkZXIgcmVzdWx0OiBzdXBwb3NlICRmJCBpcyBjb250aW51b3VzbHkgZGlmZmVyZW50aWFibGUuIElmICR4XiokIGlzIGEgbWluaW1pemVyIG9mICRmJCB0aGVuICRcbmFibGEgZlxsZWZ0KHheKlxyaWdodCk9MCQuCgpTZWNvbmQgb3JkZXIgcmVzdWx0OiBzdXBwb3NlICRmJCBpcyB0d2ljZSBjb250aW51b3VzbHkgZGlmZmVyZW50aWFibGUuIElmICR4XiokIGlzIGEgbWluaW1pemVyIG9mICRmJCwgdGhlbiAkXG5hYmxhIGZcbGVmdCh4XipccmlnaHQpPTAkIGFuZCAkXG5hYmxhXjIgZlxsZWZ0KHheKlxyaWdodCkgXGdlcSAwLiQKCiMjIyMgU3VmZmljaWVudCBjb25kaXRpb24KClNlY29uZCBvcmRlciByZXN1bHQ6IHN1cHBvc2UgJGYkIGlzIHR3aWNlIGNvbnRpbnVvdXNseSBkaWZmZXJlbnRpYWJsZSwgZm9yIHNvbWUgJHheKiBcaW4gXG1hdGhiYntSfV5uJCwgICRcbmFibGFeMiBmXGxlZnQoeF4qXHJpZ2h0KSA+IDAkIGFuZCAkXG5hYmxhIGZcbGVmdCh4XipccmlnaHQpPTAkLiBUaGVuICR4XiokIGlzIGEgc3RyaWN0IGxvY2FsIG1pbmltaXplci4KCiMjIyBIZXNzaWFuLCBlaWdlbnZhbHVlcyBhbmQgZWlnZW52ZWN0b3JzCgoKSGVzc2lhbiBtYXRyaXggY29udGFpbnMgaW1wb3J0YW50IGdlb21ldHJpYyBpbmZvcm1hdGlvbiBhYm91dCB0aGUKc3VyZmFjZSBvZiB0aGUgZnVuY3Rpb24gJGYkIChpbiBwYXJ0aWN1bGFyIHRoZSBjb25jYXZpdHkgb2YgdGhlIHN1cmZhY2UpLgoKUmVjYWxsIHRoYXQgdGhlIFRheWxvciBhcHByb3hpbWF0aW9uIHRvICR6PWYoeCwgeSkkIGF0ICRcbGVmdCh4X3swfSwgeV97MH1ccmlnaHQpJCBpcwpcYmVnaW57YWxpZ24qfQpmKHgsIHkpIFxhcHByb3ggZlxsZWZ0KHhfezB9LCB5X3swfVxyaWdodCkre1xuYWJsYX0gZlxsZWZ0KHhfezB9LCB5X3swfVxyaWdodCkgXGxlZnRbXGJlZ2lue2FycmF5fXtjfQp4LXhfezB9IFxcCnkteV97MH0KXGVuZHthcnJheX1ccmlnaHRdK1xmcmFjezF9ezJ9XGxlZnRbXGJlZ2lue2FycmF5fXtsbH0KeC14X3swfSAmIHkteV97MH0KXGVuZHthcnJheX1ccmlnaHRdIFxuYWJsYV4yZlxsZWZ0KHhfezB9LCB5X3swfVxyaWdodClcbGVmdFtcYmVnaW57YXJyYXl9e2x9CngteF97MH0gXFwKeS15X3swfQpcZW5ke2FycmF5fVxyaWdodF0KXGVuZHthbGlnbip9CmZvciAkKHgsIHkpJCBjbG9zZSB0byAkXGxlZnQoeF97MH0sIHlfezB9XHJpZ2h0KSAuJCAKCgoKTW9yZSBnZW5lcmFsbHksICRmOiBcbWF0aGJie1JeMn0gXHJpZ2h0YXJyb3cgXG1hdGhiYntSfSQgaGFzIGNvbnRpbnVvdXMgc2Vjb25kIHBhcnRpYWwgZGVyaXZhdGl2ZXMgc3VjaCB0aGF0ICRcbmFibGEgZih4XiopID0gMCQsIEhlc3NpYW4gbWF0cml4IGF0ICR4XiokIHByb3ZpZGVzIHRoZSBmb2xsb3dpbmcgaW5mb3JtYXRpb246CgoxLiBJZiAkXG5hYmxhXjIgZih4XiopID4gMCQsIHRoZW4gYW55IGxvY2FsIG1pbmltaXplciAkeF4qJCBpcyBhIHN0cmljdCBsb2NhbCBtaW5pbWl6ZXIuCjIuIElmICRcbmFibGFeMiBmKHheKikgPCAwJCwgdGhlbiBsb2NhbCBtYXhpbWl6ZXIgJHheKiQgaXMgYSBzdHJpY3QgbG9jYWwgbWF4aW1pemVyLgozLiBJZiAkXG5hYmxhXjIgZih4XiopJCBpcyBpbmRlZmluaXRlIChpLmUuIG5laXRoZXIgcG9zaXRpdmUgc2VtaS1kZWZpbml0ZSBub3IgbmVnYXRpdmUgc2VtaS1kZWZpbml0ZSksIHRoZW4gdGhlIGxvY2FsIG1pbmltaXplciAkeF4qJCBpcyBhICoqc2FkZGxlIHBvaW50KiouCjQuIElmIHRob3NlIGNhc2VzIG5vdCBsaXN0ZWQgYWJvdmUsIHRoZW4gdGhlIHRlc3QgaXMgaW5jb25jbHVzaXZlLgoKCk5vdGUgJGYkIGhhcyBmb3VyIHNlY29uZCBwYXJ0aWFsIGRlcml2YXRpdmVzLWZvdXIgbWVhc3VyZXMgb2YgY29uY2F2aXR5IChpbiAkXG5hYmxhXjIgZiQpLiBJbiBmYWN0LCBlaWdlbnZhbHVlcyBvZiB0aGUgSGVzc2lhbiAkXG5hYmxhXjIgZiQgbWVhc3VyZXMgY29uY2F2aXR5IGluIHRoZSBjb3JyZXNwb25kaW5nIGVpZ2VuZGlyZWN0aW9ucyAodGFrZSBmb3IgZXhhbXBsZSwgJHZeVEh2PVxsYW1iZGEgdl5Udj1cbGFtYmRhJCBmb3IgYW4gZWlnZW52ZWN0b3IgJHYkKS4KCkluIHZpZXcgb2YgdGhlIGNsYXNzaWNhbCByZXN1bHRzOgoKLSBBIHNxdWFyZSAoc3ltbWV0cmljKSBtYXRyaXggaXMgcG9zaXRpdmUgZGVmaW5pdGUgaWYgYW5kIG9ubHkgaWYgYWxsIGl0cyBlaWdlbnZhbHVlcyBhcmUgcG9zaXRpdmUuCi0gQSBzcXVhcmUgKHN5bW1ldHJpYykgbWF0cml4IGlzIG5lZ2F0aXZlIGRlZmluaXRlIGlmIGFuZCBvbmx5IGlmIGFsbCBpdHMgZWlnZW52YWx1ZXMgYXJlIG5lZ2F0aXZlLgotIEEgc3F1YXJlIChzeW1tZXRyaWMpIG1hdHJpeCBpcyBpbmRlZmluaXRlIChpLmUuLCBuZWl0aGVyIHAucy5kLiBub3Igbi5zLmQuICkgaWYgYW5kIG9ubHkgaWYgaXQgaGFzIGJvdGggcG9zaXRpdmUgYW5kIG5lZ2F0aXZlIGVpZ2VudmFsdWVzLgoKKipUaGVvcmVtKio6IFN1cHBvc2UgdGhlIGZ1bmN0aW9uICRmKHgsIHkpJCBoYXMgY29udGludW91cyBzZWNvbmQgcGFydGlhbCBkZXJpdmF0aXZlcy4gTGV0ICRcbGVmdCh4X3swfSwgeV97MH1ccmlnaHQpJCBiZSBhIHN0YXRpb25hcnkgcG9pbnQgb2YgJGYkLCBhbmQgbGV0ICRcbGFtYmRhX3sxfSQgYW5kICRcbGFtYmRhX3syfSQgYmUgdGhlIGVpZ2VudmFsdWVzIG9mICRcbmFibGFeMntmfVxsZWZ0KHhfezB9LCB5X3swfVxyaWdodCkkLgoKYS4gSWYgJFxsYW1iZGFfezF9PDAkIGFuZCAkXGxhbWJkYV97Mn08MCQsIHRoZW4gJFxsZWZ0KHhfezB9LCB5X3swfVxyaWdodCkkIGlzIGEgc3RyaWN0IGxvY2FsIG1heGltdW0uCmIuIElmICRcbGFtYmRhX3sxfTwwJCBhbmQgJFxsYW1iZGFfezJ9PjAkIG9yIGlmICRcbGFtYmRhX3sxfT4wJCBhbmQgJFxsYW1iZGFfezJ9PDAkLCB0aGVuICRcbGVmdCh4X3swfSwgeV97MH1ccmlnaHQpJCBpcyBhICoqc2FkZGxlIHBvaW50KiouCmMuIElmICRcbGFtYmRhX3sxfT4wJCBhbmQgJFxsYW1iZGFfezJ9PjAkLCB0aGVuICRcbGVmdCh4X3swfSwgeV97MH1ccmlnaHQpJCBpcyBhIHN0cmljdCBsb2NhbCBtaW5pbXVtLgpkLiBJZiBlaXRoZXIgJFxsYW1iZGFfezF9PTAkIG9yICRcbGFtYmRhX3syfT0wJCAob3IgYm90aCksIHRoZW4gbm8gY29uY2x1c2lvbiBjYW4gYmUgZHJhd24gd2l0aG91dCBmdXJ0aGVyIGluZm9ybWF0aW9uLgoKRm9yIGEgZnVuY3Rpb24gJGYkIG9mIHRocmVlIG9yIG1vcmUgdmFyaWFibGVzLCB0aGVyZSBpcyBhIGdlbmVyYWxpemF0aW9uIG9mIHRoZSBydWxlIGFib3ZlLiBJbiB0aGlzIGNvbnRleHQsIGluc3RlYWQgb2YgZXhhbWluaW5nIHRoZSBkZXRlcm1pbmFudCBvZiB0aGUgSGVzc2lhbiBtYXRyaXgsIG9uZSBtdXN0IGxvb2sgYXQgdGhlIGVpZ2VudmFsdWVzIG9mIHRoZSBIZXNzaWFuIG1hdHJpeCBhdCB0aGUgc3RhdGlvbmFyeSBwb2ludC4gVGhlIGZvbGxvd2luZyB0ZXN0IGNhbiBiZSBhcHBsaWVkIGF0IGFueSBzdGF0aW9uYXJ5IHBvaW50ICR4XiokOgoKLSBJZiB0aGUgSGVzc2lhbiBpcyBwb3NpdGl2ZSBkZWZpbml0ZSAoZXF1aXZhbGVudGx5LCBoYXMgYWxsIGVpZ2VudmFsdWVzIHBvc2l0aXZlKSBhdCAkeF4qJCwgdGhlbiAkZiQgYXR0YWlucyBhIHN0cmljdCBsb2NhbCBtaW5pbXVtIGF0ICR4XiokLgotIElmIHRoZSBIZXNzaWFuIGlzIG5lZ2F0aXZlIGRlZmluaXRlIChlcXVpdmFsZW50bHksIGhhcyBhbGwgZWlnZW52YWx1ZXMgbmVnYXRpdmUpIGF0ICR4XiokLCB0aGVuICRmJCBhdHRhaW5zIGEgc3RyaWN0IGxvY2FsIG1heGltdW0gYXQgJHheKiQuCi0gSWYgdGhlIEhlc3NpYW4gaGFzIGJvdGggcG9zaXRpdmUgYW5kIG5lZ2F0aXZlIGVpZ2VudmFsdWVzIChpLmUuLCBpbmRlZmluaXRlIG1hdHJpeCkgdGhlbiAkeF4qJCBpcyBhICoqc2FkZGxlIHBvaW50KiogZm9yICRmJCAoYW5kIGluIGZhY3QgdGhpcyBpcyB0cnVlIGV2ZW4gaWYgdGhlIEhlc3NpYW4gaXMgZGVnZW5lcmF0ZSkuCi0gSW4gdGhvc2UgY2FzZXMgbm90IGxpc3RlZCBhYm92ZSAoZS5nLiwgcC5zLmQgYnV0IG5vdCBwLmQsIG4ucy5kLiBidXQgbm90IG4uZC4sIG9yIGFsbCBlbnRyaWVzIGFyZSB6ZXJvcyksIHRoZSB0ZXN0IGlzIGluY29uY2x1c2l2ZSAoaS5lLiwgY2Fubm90IHRlbGwgaWYgbG9jYWwgbWF4L21pbiBvciBzYWRkbGUgcG9pbnQpCgpOb3RlOiBpbiB0aGUgZGVmaW5pdGlvbiBvZiBhIHNhZGRsZSBwb2ludCwgc29tZSBhdXRob3JzIHdvdWxkIHJlcXVpcmUgZWlnZW52YWx1ZXMgdG8gYmUgbm9uLXplcm8uCgoKCjwhLS0tLS0tLS0tLS0tLT4KPHNwYW4gc3R5bGU9ImJhY2tncm91bmQtY29sb3I6ICNmNWY1ZjU7IHBhZGRpbmc6IDVweDsgZGlzcGxheTogYmxvY2s7Ij4KICAgIDxzcGFuIHN0eWxlPSJ3aWR0aDogMjUlOyBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7IHRleHQtYWxpZ246IGxlZnQ7Ij4KICAgICAgICBbQmFja10oamF2YXNjcmlwdDp3aW5kb3cuaGlzdG9yeS5iYWNrKCkpCiAgICA8L3NwYW4+CiAgICA8c3BhbiBzdHlsZT0id2lkdGg6IDMwJTsgZGlzcGxheTogaW5saW5lLWJsb2NrOyB0ZXh0LWFsaWduOiBjZW50ZXI7IGNvbG9yOiBncmV5OyI+CiAgICAgICAgKipVcGRhdGVkOioqIGByIFN5cy5EYXRlKClgCiAgICA8L3NwYW4+CiAgICA8c3BhbiBzdHlsZT0id2lkdGg6IDM1JTsgZGlzcGxheTogaW5saW5lLWJsb2NrOyB0ZXh0LWFsaWduOiByaWdodDsgY29sb3I6IGdyZXk7Ij4KICAgICAgICBTdGF0aXN0aWNhbCBTaW11bGF0aW9uLCBXZWkgTGkKICAgIDwvc3Bhbj4KPC9zcGFuPgoK</div>
 
 
 
@@ -2038,7 +2030,7 @@ $(document).ready(function () {
 <!-- code folding -->
 <script>
 $(document).ready(function () {
-  window.initializeSourceEmbed("1_basics.Rmd");
+  window.initializeSourceEmbed("5_basics_of_optimization.Rmd");
   window.initializeCodeFolding("show" === "show");
 });
 </script>

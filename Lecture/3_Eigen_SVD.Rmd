@@ -55,9 +55,12 @@ MathJax.Hub.Config({
 
 # Eigenvalue decomposition
 
-Given a square matrix $M$ so that $Mx=\lambda x$ for some nonzero vector $x$ and some $\lambda$(scalar). We call $\lambda$ an eigenvalue of $M$ whose associated eigenvector is $x$.
+Given a square matrix $M$ so that $Mx=\lambda x$ for some nonzero vector $x$ and some $\lambda$(scalar). We call $\lambda$ an eigenvalue of $M$ whose associated eigenvector is $x$ (it is possible to have multiple identical eigenvalues. i.e., multiplicity greater than 1). When an eigenvalue is repeated (has a multiplicity greater than 1), there can be multiple linearly independent eigenvectors associated with that eigenvalue, or there might be fewer than expected. The number of linearly independent eigenvectors corresponding to a repeated eigenvalue is called its geometric multiplicity.
 
-Note: $A$ is a square matrix, $\det(A)=\prod_{i=1}^n \lambda_i$. A square matrix is invertible if and only if its eigenvalues are non-zero.
+If the geometric multiplicity is less than the algebraic multiplicity (the number of times the eigenvalue is repeated), then the matrix is not diagonalizable.
+If the geometric multiplicity is equal to the algebraic multiplicity, then there are that as many linearly independent eigenvectors associated with the repeated eigenvalue. 
+
+Note: $A: (n \times n )$ is a square matrix, $\det(A)=\prod_{i=1}^n \lambda_i$. A square matrix is invertible if and only if its eigenvalues are non-zero.
 
 **Eigen-decomposition:** $A$ is a square and symmetric matrix, then we can write $A=P \Lambda P^T$ where 
 \begin{align*}
