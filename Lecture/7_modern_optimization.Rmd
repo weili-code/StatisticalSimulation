@@ -66,17 +66,17 @@ here $f(x_i)=f(x_i;w)$, i.e., parametrized by some parameters $w$. Special case,
 ### Recap 
 
 Consider an iterative method to find the minimizaer $w^*$:
-$$w_{new}=w_{old}+\alpha \Delta$$ for some $\Delta$ and some fixed positive scalar $\alpha$.
+$$w_{new}=w_{old}+\alpha \Delta,$$ for some $\Delta$ and some fixed positive scalar $\alpha$.
 
 By Taylor expansion, note that
 $$L(w+\alpha \Delta)=L(w)+\alpha \Delta^T \nabla L(w)+ \cdots.$$
-The requirement that $L(w+\alpha)<L(w)$ implies $\Delta^T \nabla L(w)<0$.
+The requirement that $L(w+\alpha \nabla)<L(w)$ implies $\Delta^T \nabla L(w)<0$.
 
 Let $\beta$ be the angle between $\Delta$ and $\nabla L(w)$, by linear algebra fact, 
 $$-1 \leq \cos(\beta)= \frac{ \Delta^T \nabla L(w)}{ \|\Delta\| \|\nabla L(w)\|}\leq 1.$$
-Therefore, $L(w+\alpha \Delta)-L(\alpha)=\Delta^T \nabla L(w)=  \|\Delta\| \|\nabla L(w)\|\cos(\beta)$ becomes smallest (most negative) when $cos(\beta)=-1$,i.e., $\beta=180^{\circ}.$
+Therefore, $L(w+\alpha \Delta)-L(w)=\alpha \Delta^T \nabla L(w)= \alpha  \|\Delta\| \|\nabla L(w)\|\cos(\beta)$ becomes smallest (most negative) when $cos(\beta)=-1$,i.e., $\beta=180^{\circ}.$
 
-Therefore, the best direction $\Delta$ is the opposite direction of the gradient $\nabla L(w)$ (that is the gradient is the steepest ascent direction). The $\nabla: = -\nabla L(w)$ is the steepest descent direction.
+Therefore, the best direction $\Delta$ is the opposite direction of the gradient $\nabla L(w)$. The solution $\nabla = -\nabla L(w)$ is the steepest descent direction.
 
 ```python
 X, Y: data matrices
@@ -89,28 +89,27 @@ def gradient_descent():
 ```
 Terminologies: 1 epoch = 1 pass over all data; 1 step = 1 update of parameters.
 
-Note that above is the **vanilla gradient descent**, aka, **batch gradient descent**. As we need to calculate the gradients for the whole dataset to perform just one update. 
+This is the **vanilla gradient descent**, or **(batch) gradient descent**, as we calculate the gradients using the whole dataset to perform just *one* update. 
 
 
 # Gradient Descent with Momentum
-One major problem with gradient descent is that the update of the parameters is slow, because gradients in flat regions are very small.
+One major problem with gradient descent is that the update of the parameters becomes slow as gradients in flat regions become very small.
 
-The gradient descent with momentum instead update the velocity using the gradient vector, then update the parameters (locations) using the velocity.
-
+The gradient descent with momentum instead update the velocity or momentum using the gradient vector, then update the parameters (locations) using the velocity:
 \begin{align*}
 {v}_{t} &=\gamma  {v}_{t-1}+\alpha \nabla L(w_{t}), \qquad \gamma>0, \alpha>0 \\
-w_{t+1} &=w_{t}-{v}_{t}
+w_{t+1} &=w_{t}-{v}_{t}.
 \end{align*}
 
-Note that, if $\gamma=0$. we recover the gradient descent. When $\gamma\neq 0$, setting $v_0=0$, then one can see that
+Note that, if $\gamma=0$, we recover the gradient descent. When $\gamma\neq 0$ (setting $v_0=0$), one gets
 \begin{align*}
-{v}_{t}=\gamma \text {v}_{t-1}+\alpha \nabla L(w_{t})=\gamma^{t-1}  \alpha \nabla L(w_{1})+\gamma^{t-2} \alpha \nabla L(w_{2})+\ldots+\gamma \alpha \nabla L(w_{t-1})+\alpha \nabla L(w_{t})
+{v}_{t}=\gamma \text {v}_{t-1}+\alpha \nabla L(w_{t})=\gamma^{t-1}  \alpha \nabla L(w_{1})+\gamma^{t-2} \alpha \nabla L(w_{2})+\ldots+\gamma \alpha \nabla L(w_{t-1})+\alpha \nabla L(w_{t}),
 \end{align*}
-therefore, the current velocity depends on the histories of the gradients. 
+Indeed the current velocity (or momentum) depends on the history of the gradients, thus the name "with momentum".
 
-With Momentum update, the parameter vector will build up velocity in any direction that has consistent gradient. It mains an exponentially decaying average of gradients. Note that 
-$$v_t=\alpha \sum_{j=1}^t \gamma^{t-j} \nabla L(w_j),$$ 
-therefore the weight for $\nabla L(w_j)$ is $\alpha \gamma^{t-j}$, a weight factor that decays exponentially as further in the past (i.e., $j$ decreases). So $\gamma$ is the exponential decay rate. The larger $\gamma$, the slower is the decay.
+With Momentum update, the parameter vector will build up velocity in any direction that has consistent gradient. It mains an exponentially decaying average of gradients, as shown in 
+$$v_t=\alpha \sum_{j=1}^t \gamma^{t-j} \nabla L(w_j).$$ 
+Therefore the weight for $\nabla L(w_j)$ is $\alpha \gamma^{t-j}$, a weight factor that decays exponentially as further in the past (i.e., $j$ decreases). So $\gamma$ is the exponential decay rate. The larger $\gamma$, the slower is the decay.
 
 
 
@@ -128,21 +127,19 @@ def momentum_gradient_descent():
 ```
 
 
-An equivalent way to implement is:
-
+An equivalent algorithm is:
 \begin{align*}
 {v}_{t} &=\gamma {v}_{t-1} - \alpha \nabla L(w_{t}), \qquad \gamma>0, \alpha>0 \\
-w_{t+1} &=w_{t}+{v}_{t}
+w_{t+1} &=w_{t}+{v}_{t}.
 \end{align*}
 
-
-Even in the regions having gentle slopes, momentum based gradient descent is
+There is a potential issue with the momentum. Even in the regions having gentle slopes, momentum based gradient descent is
 able to take large steps because the momentum carries it along
-Is moving fast always good? Would there be a situation where momentum
+But is moving fast always good? Would there be a situation where momentum
 would cause us to run pass our goal? In some situaions, momentum based gradient descent
 oscillates in and out of the minima
 valley as the momentum carries it out
-of the valley. We do something to reduce these oscillations. 
+of the valley. We want to do something to reduce these oscillations. 
 
 We know that we will use our momentum term $\gamma v_{t-1}$ to
 move the parameters $w_t$. Computing $w_t-\gamma v_{t-1}$ thus gives us an approximation
@@ -162,12 +159,6 @@ w_{t+1} &=w_{t}-v_{t}
 \end{align*}
 
 
-An alternative form is to store only the look-ahead version of $w$, and update this version:
-  \begin{align*} 
-{v}_{t} &=\gamma  {v}_{t-1}+\alpha \nabla L(w_{\text{look ahead}, t}) \\ 
-w_{\text{look ahead}, t+1} &=w_{\text{look ahead}, t}+\gamma v_{t-1}-(1+\gamma){v}_{t} 
-\end{align*}
-
 ```python
 X, Y: data matrices
 def nesterov_gradient_descent():
@@ -182,35 +173,36 @@ def nesterov_gradient_descent():
         prev_vw=v_w
 ```
 
-
-Looking ahead helps correcting its course quicker than momentum
-based gradient descent
-Hence the oscillations are smaller and the chances of escaping the minima valley
-also smaller.
-
-An equivalent way is
-
+An equivalent algorithm is:
 \begin{align*} 
-w_{\text{look ahead},t} &=w_{t} + \gamma  {v}_{t-1} \\ 
-{v}_{t} &=\gamma \cdot {v}_{t-1} - \alpha \nabla L(w_{\text{look ahead},t}) \\ 
-w_{t+1} &=w_{t} + v_{t} 
+w_{\text{look ahead},t} &=w_{t} + \gamma  {v}_{t-1}, \\ 
+{v}_{t} &=\gamma \cdot {v}_{t-1} - \alpha \nabla L(w_{\text{look ahead},t}), \\ 
+w_{t+1} &=w_{t} + v_{t}.
+\end{align*}
+
+Looking ahead helps correcting the descending course quicker than momentum
+based gradient descent. Hence the oscillations are smaller and the chances of escaping the minima valley also smaller.
+
+An alternative form is to store only the look-ahead version of $w$, and update this version:
+  \begin{align*} 
+{v}_{t} &=\gamma  {v}_{t-1}+\alpha \nabla L(w_{\text{look ahead}, t}), \\ 
+w_{\text{look ahead}, t+1} &=w_{\text{look ahead}, t}+\gamma v_{t-1}-(1+\gamma){v}_{t}. 
 \end{align*}
 
 
-  
 
 
 # Stochastic gradient descent
 
 
-Consider $L(w)=E_{\mathcal{P}_n}[\ell(Y, f(X; w))]$, where $\mathcal{P}_n$ is the empirical distribution of $(X, Y)$'s, the population version of $L(w)$ is $E[\ell(Y, f(X; w))]$, in principle, for the descent algorithm, any gradient $g$ such that $E(g)=E[\nabla\ell(Y, f(X; w))]$ would work. Obviously, $\nabla L(w)$ is one example. Yet $\nabla L(w)$ goes over the entire
-data once before updating the parameters. The pros is that the gradient is accurately calculated. The cons is that the data size is large, it is very slow to update parameters. 
+Note that our objective function has the form: $L(w)=E_{\mathcal{P}_n}[\ell(Y, f(X; w))]$, where $\mathcal{P}_n$ is the empirical distribution of $(X, Y)$'s, the population version of $L(w)$ is $E[\ell(Y, f(X; w))]$, in principle, for the descent algorithm, any gradient $g$ such that $E(g)=E[\nabla\ell(Y, f(X; w))]$ would work. Obviously, $\nabla L(w)$ is one example. Yet $\nabla L(w)$ goes over the entire
+data once before updating the parameters. The pros is that the gradient is accurately calculated. The cons is that when the data size is large (such as that in deep learning), it is very slow to update parameters. 
 
-More generally, in each step, instead of 
+More generally, in each step, instead of using
 $$
 w_{t+1} = w_t - \alpha \nabla L(w_t),
 $$
-$\nabla L(w_t)$ may be replaced with the gradient at one point at a time as we update 
+$\nabla L(w_t)$ may be replaced with the gradient at *one data point* at a time as we update 
 $$
 w_{t+1} = w_t - \alpha \nabla \ell(y_t, f(x_t, w_t)), \qquad \text{ for } (y_t, x_t) \sim \mathcal{P}_n.
 $$
@@ -224,62 +216,9 @@ def stochastic_gradient_descent():
           dw= grad_w(w,x,y) # replace dw
           w=w-alpha*dw
 ```
+This is often called **stochastic gradient descent** or **online learning**, although the term "stochastic gradient descent" can be more broadly defined (to be discussed in a separate note). 
 
-However, the drawback is for each update the gradient is not accurately estimated. A compromise is to do the mini-batch gradient descent by using gradient
-$$\frac{1}{|B_t|}\sum_{i\in B_t} \ell(y_i, f(x_i; w_t)),$$
-where $B_t$ is a set of randomly chosen observations at iteration $t$.
 
-In general, we choose a fix $B$ called batch size.
-
-- online learning (stochastic gradient descent): $B=1$.
-- mini batch learning: the number of batches $n / B>1$.
-
-In the mini-batch gradient descent method, the parameters are updated based only on the current mini-batch and continue iterating over all the mini-batches till we have seen the entire data set. The process of iterating through the whole training dataset is referred to as an epoch.
-
-- Total number of epochs: the number of times the algorithm "sees" the entire training data. So one epoch would take $n / B$ iterations.
-- Total number of steps (iterations): the total number of epochs times number of batches $(n / B)$.
-
-With mini-batch gradient descent, we will loop over the mini-batches instead of looping over individual training examples. There are two stages involved in building a mini-batch
-
-- Shuffle the data set (both $X$ and $Y$ values simultaneously), so that the observations are split randomly.
-- Partition the data set into the defined mini-batch size set.
-
-The commonly used mini-batch sizes are betwelen 50 and 256 . This method is typically the choice when training a neural network with a large data set. The general rule is
-
-- For a relatively small training data set, with $\leq 2000$ observations, use batch gradient descent.
-- For a larger training data set, use mini-batch sizes $64,128,256,512, \ldots$, i.e., a power of 2 (due to the computer architecture).
-The choice of the learning rate is delicate and very influential on the convergence of the SGD algorithm.
-
-The algorithm update the parameters after it sees $B$ data points. 
-```python
-X, Y: data matrices
-def minibatch_gradient_descent():
-    minibatch_size, num_points_seen=k,0
-    for b in range(max_epochs):
-        dw,num_points=0,0
-        for x, y in (X,Y): # update gradient across observations
-            dw+= grad_w(w,x,y)
-            num_points_seen +=1
-            if num_points_seen % minibath_size==0:
-            # seen one mini_batch
-                w=w-alpha*dw
-                dw=0 # reset gradients
-```
-
-- 1 epoch $=$ one pass over the entire data
-- 1 step $=$ one update of the parameters
-- $n=$ number of data points
-- $\mathrm{B}=$ Mini batch size 
-
-\begin{align*}
-\begin{array}{cc}
-\text { Algorithm } & \# \text { of steps in } 1 \text{epoch } \\
-\hline \text { Vanilla (Batch) Gradient Descent } & 1 \\
-\text { Stochastic Gradient Descent } & \mathrm{n} \\
-\text { Mini-Batch Gradient Descent } & \frac{n}{B} \\
-\hline
-\end{array}
-\end{align*}
 
 ```python
 X, Y: data matrices
@@ -307,6 +246,80 @@ def stochastic_nesterov_gradient_descent():
             w=w-v_w
             prev_vw=v_w
 ```
+
+The drawback with this approach is for each update the gradient is not accurately estimated. A compromise is to do the mini-batch gradient descent by using gradient
+$$\frac{1}{|B_t|}\sum_{i\in B_t} \nabla \ell(y_i, f(x_i; w_t)),$$
+where $B_t$ is a set of randomly chosen observations at iteration $t$.
+
+In general, we choose a fix $B$--called **batch size**.
+
+- online learning (stochastic gradient descent): $B=1$.
+- mini batch learning: the number of batches $n / B>1$.
+
+In the mini-batch gradient descent method, the parameters are updated based only on the current mini-batch and continue iterating over all the mini-batches till we have seen the entire data set. The process of iterating through the whole training dataset is referred to as an **epoch**.
+
+- Total number of epochs $M$: the number of times the algorithm "sees" the entire training data. So one epoch would take $n / B$ iterations.
+- Total number of steps (iterations): the total number of epochs ($M$) times number of batches $(n / B)$.
+
+\begin{align*}
+\begin{array}{cc}
+\text { Algorithm } & \# \text { of steps in } 1 \text{epoch } \\
+\hline \text { Vanilla (Batch) Gradient Descent } & 1 \\
+\text { Stochastic Gradient Descent } & \mathrm{n} \\
+\text { Mini-Batch Gradient Descent } & \frac{n}{B} \\
+\hline
+\end{array}
+\end{align*}
+
+With mini-batch gradient descent, we will loop over the mini-batches instead of looping over individual training examples. 
+
+The algorithm makes one update on the parameters after it sees $B$ data points. 
+```python
+X, Y: data matrices
+def minibatch_gradient_descent():
+    minibatch_size, num_points_seen=k,0
+    for b in range(max_epochs):
+        dw,num_points=0,0
+        for x, y in (X,Y): # update gradient across observations
+            dw+= grad_w(w,x,y)
+            num_points_seen +=1
+            if num_points_seen % minibath_size==0:
+            # seen one mini_batch
+                w=w-alpha*dw
+                dw=0 # reset gradients
+```
+
+Oftentimes there are two stages involved in building a mini-batch:
+
+- Shuffle the data set (both $X$ and $Y$ values simultaneously), so that the observations are split randomly.
+- Partition the data set into the defined mini-batch size set.
+
+In training a neural network with a large data set, the commonly used mini-batch sizes are between 50 and 256. 
+
+- For a relatively small training data set, use batch gradient descent.
+- For a larger training data set, use mini-batch sizes $64,128,256,512, \ldots$, i.e., a power of 2 (due to the computer architecture).
+
+```python
+X, Y: data matrices
+def minibatch_gradient_descent():
+    for b in range(max_epochs):
+        dw = 0
+        # Shuffling the data
+        combined = list(zip(X, Y))
+        random.shuffle(combined)
+        X[:], Y[:] = zip(*combined)
+        # Create mini-batches
+        for i in range(0, len(X), minibatch_size):
+            X_mini_batch = X[i:i + minibatch_size]
+            Y_mini_batch = Y[i:i + minibatch_size]
+            # Loop over points in the mini-batch
+            for x, y in zip(X_mini_batch, Y_mini_batch):
+                dw += grad_w(w, x, y)
+            # Update weights after processing one mini-batch
+            w = w - alpha * dw
+            dw = 0  # Reset gradients
+```
+
 Note: the minibatch versions for momemtum and Nesterov gradient descent can be obtained similarly.
 
 
@@ -314,12 +327,12 @@ Note: the minibatch versions for momemtum and Nesterov gradient descent can be o
 If we decay it slowly there are chances that our system will bounce around chaotically with little improvement; if we decay it very fast, our system will be unable to reach the best position.
 A sufficient condition for SGD to converge is the Robbins-Monro Condition:
 \begin{align*}
-\frac{\sum_{t=1}^{\infty} \epsilon_t^2}{\sum_{t=1}^{\infty} \epsilon_t} \rightarrow 0 \quad \text { as } \epsilon_t \rightarrow 0
+\frac{\sum_{t=1}^{\infty} \alpha_t^2}{\sum_{t=1}^{\infty} \alpha_t} \rightarrow 0 \quad \text { as } \alpha_t \rightarrow 0
 \end{align*}
 
 - Step decay - Reduce the learning rate by some factor every few epochs. A typical heuristic could be to observe the validation error, while training with a fixed learning rate, and reduce the learning rate by a constant (say 0.5 ) whenever there is no improvement in the validation error. Another method is to reduce the learning rate by half every 5 epochs, or by 0.1 every 20 epochs.
-- Exponential decay - as the name signifies, it is represented as $\epsilon_t=\epsilon_0 e^{-k t}$ where $\epsilon_0$ and $k$ are hyperparameters and $t$ is the iteration number or epoch number.
-- Polynomial decay - this is represented as $\epsilon_t=\frac{\epsilon_0}{(1+k t)^a}$ where, $\epsilon_0$ and $a, k$ are the hyperparameters and $t$ is the iteration number. This is often used in stochastic gradient descent (i.e., batch size=1).
+- Exponential decay - such as $\alpha_t=\epsilon_0 e^{-k t}$ where $\epsilon_0$ and $k$ are hyperparameters and $t$ is the iteration number or epoch number.
+- Polynomial decay - such as $\alpha_t=\frac{\epsilon_0}{(1+k t)^a}$ where, $\epsilon_0$ and $a, k$ are the hyperparameters and $t$ is the iteration number. This is often used in stochastic gradient descent (i.e., batch size=1).
 
 
 
@@ -327,19 +340,18 @@ A sufficient condition for SGD to converge is the Robbins-Monro Condition:
 
 **Adagrad**:
   
-  Note momentum and Nesteroc momentum update all components of $w$ with the *same learning rate* $\alpha$.
-Adagrad, or the **adaptive subgradient method**, adapst a learning rate for each component of $w$. A component adaptive discount factor is in place to adjust learning rate. This factor is a square root of the cumulative sum of squared gradients.
+Note that the momentum and Nesterov momentum update all components of $w$ with the *same learning rate* $\alpha$.
+Adagrad, or the **adaptive subgradient method**, adapts a learning rate for each component of $w$. A component adaptive discount factor is in place to adjust learning rate. This factor is a square root of the cumulative sum of squared gradients.
 
 Its update rule is (interpreted element-wise):
   \begin{align*}
 s_{t} &=s_{t-1}+\left(\nabla L(w_{t})\right)^{2} \\
-w_{t+1} &=w_{t}-\frac{\alpha}{\sqrt{s_{t}+\epsilon}} \nabla L( w_{t})
+w_{t+1} &=w_{t}-\frac{\alpha}{\sqrt{s_{t}+\epsilon}} \nabla L( w_{t}), \quad \epsilon>0,
 \end{align*}
-
 or if setting $s_{0}=0$, for $j$-th element, 
 \begin{align*}
-&s_{t,j}=\sum_{t=1}^t (\nabla_j L(w_{t}))^{2}\\
-w_{t+1,j} &=w_{t,j}-\frac{\alpha}{\sqrt{s_{t,j}+\epsilon}} \nabla_j L( w_{t}) 
+&s_{t,j}=\sum_{t=1}^t (\nabla_j L(w_{t}))^{2},\\
+w_{t+1,j} &=w_{t,j}-\frac{\alpha}{\sqrt{s_{t,j}+\epsilon}} \nabla_j L( w_{t}). 
 \end{align*}
 
 Adagrad excels when the gradient is sparse. It dulls the inflennce of parameters with consistently high gradients, thereby increasing the influence of parameters with infrequent updates. One weakness of Adagrad is that components of $s$ are each strictly non-decreasing. Therefore, after a while, frequent parameters will have infinitesimally small effective learning rate before convergence.
@@ -391,13 +403,13 @@ def rmsprop():
 
 **Adam**:
   
-  Adam, adaptive moment estimation method. It stores both an exponentially decaying squared gradients like RMSProp, but also an exponentially decaying gradient like momentum. Some references describe *Adam* as combining the advantages of both *AdaGrad* and *RMSProp*.
+Adam, adaptive moment estimation method: it stores both an exponentially decaying squared gradients like RMSProp, but also an exponentially decaying gradient like momentum. Some references describe *Adam* as combining the advantages of both *AdaGrad* and *RMSProp*.
 
 \begin{align*}
-v_{t} &=\beta_{1} * v_{t-1}+\left(1-\beta_{1}\right) * \nabla L( w_{t}) \text{ : (biased) decaying momentum}\\
-s_{t} &=\beta_{2} * s_{t-1}+\left(1-\beta_{2}\right) *\left(\nabla L( w_{t})\right)^{2} \text{ : (biased) decaying sq. gradients} \\
+v_{t} &=\beta_{1} v_{t-1}+\left(1-\beta_{1}\right)  \nabla L( w_{t}) \text{ : (biased) decaying momentum}\\
+s_{t} &=\beta_{2} s_{t-1}+\left(1-\beta_{2}\right) \left(\nabla L( w_{t})\right)^{2} \text{ : (biased) decaying sq. gradients} \\
 \hat{v}_{t} &=\frac{v_{t}}{1-\beta_{1}^{t}}, \quad \hat{s}_{t}=\frac{s_{t}}{1-\beta_{2}^{t}} \text{ : corrected decaying momentum} \\
-w_{t+1} &=w_{t}-\frac{\alpha}{\sqrt{\hat{s}_{t}+\epsilon}} * \hat{v}_{t} \text{ : corrected decaying sq.gradients}
+w_{t+1} &=w_{t}-\frac{\alpha}{\sqrt{\hat{s}_{t}+\epsilon}}  \hat{v}_{t} \text{ : corrected decaying sq.gradients}
 \end{align*}
 
 ```python
@@ -421,10 +433,7 @@ Why need biased corrected terms $\hat{v}_t$ and $\hat{s}_t$?
   
 Note that we are taking a running average of the gradients as $v_{t}$. The reason we are doing this is that we don't want to rely too much on the current gradient and instead rely on the overall behaviour of the gradients over many timesteps. One way of looking at this is that we are interested in the expected value of the gradients and not on a single point estimate computed at time $t$. However, instead of computing $E\left[\nabla L(w_{t})\right]$ we are computing $v_{t}$ as the exponentially moving average. Ideally we would want $E\left[v_{t}\right]$ to be equal to $E\left[\nabla L(w_{t})\right]$. It turns out that for stationary $E\left[\nabla L(w_{t})\right]$, one can show that $E\left[\hat{v}_{t}\right]=E\left[\nabla L(w_{t})\right].$ 
 
-
-### Comments:
-
-KM (2022): p.295. For adaptive learning rates methods, the base learning rate is still needed. It is shown that with the weighted exponentially decaying moving average methods, they may result in non-convergence even in convex problems.
+**Comments**: KM (2022) p.295. For adaptive learning rates methods, the base learning rate is still needed. It is shown that with the weighted exponentially decaying moving average methods, they may result in non-convergence even in convex problems.
 
 
 
