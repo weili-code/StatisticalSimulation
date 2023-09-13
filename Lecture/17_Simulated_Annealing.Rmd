@@ -40,6 +40,20 @@ MathJax.Hub.Config({
 </script>
 
 
+# Stochastic Gradient Descent
+
+Recall the basic gradient descent
+$$
+w_{t+1} \leftarrow w_t -\alpha_t \nabla L(w_t), \quad \alpha_t>0.
+$$
+The general idea for stochastic gradient descent is that we move $w_t$ to $w_{t+1}$ in a random direction, say $w_{t+1} \leftarrow w_t + \epsilon_t$, for some random $\epsilon_t$. The expectation $E(\epsilon_t)$ should be a good approximation to $E(\nabla L(w_t))$. Consider the finite-difference approximation
+$$
+\nabla L(w_t) \approx \frac{L(w_t+\beta_t \eta_t)- L(w_t-\beta_t \eta_t)}{2 \beta_t} \eta_t:=\frac{\nabla L(w_t, \beta_t \eta_t)}{2\beta_t}\eta_t,
+$$
+- $\{\beta_t\}$ decreases to $0$
+- $\eta_t$ uniformly distributed over the unit sphere $\|\eta\|=1$, say
+
+
 # Simulated Annealing
 Consider maximize $h(\theta)$ (global maximization):
 

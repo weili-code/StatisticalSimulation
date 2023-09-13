@@ -10,7 +10,7 @@
 
 
 <meta name="author" content="Instructor: Dr. Wei Li" />
-<meta name="author" content="Scribe: Yuan Liu" />
+<meta name="author" content="Scribe: Meng He" />
 
 
 <title>MAT 653: Statistical Simulation</title>
@@ -1751,9 +1751,9 @@ display: none;
 <h1 class="title toc-ignore">MAT 653: Statistical Simulation</h1>
 <h4 class="author">Instructor<span class="math inline">\(:\)</span>
 Dr. Wei Li</h4>
-<h4 class="author">Scribe<span class="math inline">\(:\)</span> Yuan
-Liu</h4>
-<h4 class="date">Oct 28th, 2021</h4>
+<h4 class="author">Scribe<span class="math inline">\(:\)</span> Meng
+He</h4>
+<h4 class="date">Oct 21th , 2021</h4>
 
 </div>
 
@@ -1766,77 +1766,195 @@ MathJax.Hub.Config({
   TeX: { equationNumbers: { autoNumber: "AMS" } }
 });
 </script>
-<div id="stochastic-gradient-descent" class="section level1">
-<h1>Stochastic Gradient Descent</h1>
-<p>Recall the basic gradient descent <span class="math display">\[
-w_{t+1} \leftarrow w_t -\alpha_t \nabla L(w_t), \quad \alpha_t&gt;0.
-\]</span> The general idea for stochastic gradient descent is that we
-move <span class="math inline">\(w_t\)</span> to <span class="math inline">\(w_{t+1}\)</span> in a random direction, say <span class="math inline">\(w_{t+1} \leftarrow w_t + \epsilon_t\)</span>, for
-some random <span class="math inline">\(\epsilon_t\)</span>. The
-expectation <span class="math inline">\(E(\epsilon_t)\)</span> should be
-a good approximation to <span class="math inline">\(E(\nabla
-L(w_t))\)</span>. Consider the finite-difference approximation <span class="math display">\[
-\nabla L(w_t) \approx \frac{L(w_t+\beta_t \eta_t)- L(w_t-\beta_t
-\eta_t)}{2 \beta_t} \eta_t:=\frac{\nabla L(w_t, \beta_t
-\eta_t)}{2\beta_t}\eta_t,
-\]</span> - <span class="math inline">\(\{\beta_t\}\)</span> decreases
-to <span class="math inline">\(0\)</span> - <span class="math inline">\(\eta_t\)</span> uniformly distributed over the
-unit sphere <span class="math inline">\(\|\eta\|=1\)</span>, say</p>
+<div id="em-algorithms" class="section level1">
+<h1>EM Algorithms</h1>
+<div id="e-step" class="section level2">
+<h2>E-step</h2>
+<p><span class="math display">\[
+Q(\theta\mid\theta^{(m)},\overrightharpoon{X})=E_{\theta^{(m)}}\big[\log
+L^c(\theta\mid\overrightharpoon{X},\overrightharpoon{Z})\mid\overrightharpoon{X}\big]
+\]</span></p>
+<p>where <span class="math inline">\(\overrightharpoon{X}\)</span> is
+observable, <span class="math inline">\(\overrightharpoon{Z}\)</span> is
+unobservable; <span class="math inline">\(E_{\theta^{(m)}}\)</span> is
+the conditional expectation of <span class="math inline">\(Z\)</span>
+given <span class="math inline">\(X\)</span>, where the conditional
+density is given by <span class="math inline">\(f(\overrightharpoon{Z}\mid\overrightharpoon{X},\theta^{(m)})\)</span>;<br />
+<span class="math inline">\(\log
+L^c(\theta\mid\overrightharpoon{X},\overrightharpoon{Z})\)</span> is
+complete data likelihood function.</p>
 </div>
-<div id="simulated-annealing" class="section level1">
-<h1>Simulated Annealing</h1>
-<p>Consider maximize <span class="math inline">\(h(\theta)\)</span>
-(global maximization):</p>
-<p>Assume <span class="math inline">\(h: \Theta \mapsto \mathbb{R},
-\int_H h(\theta)&lt;\infty\)</span>, <span class="math inline">\(H(\theta) \propto exp(\frac{h(\theta)}{T}),
-T&gt;0\)</span>, where T is the temperature.</p>
-<p>Define the so-called Boltzman-Gibbs transformation of h to be <span class="math display">\[\pi_t(\theta) \propto exp
-\Big(\frac{h(\theta)}{T_t}\Big),\]</span></p>
-<p>As <span class="math inline">\(T_t \downarrow\)</span> 0, the kernel
-of density will become more and more concentrated in a narrower
-neighborhood of the maximizer of <span class="math inline">\(h\)</span>.</p>
-<div id="algorithm" class="section level2">
-<h2>Algorithm</h2>
-<p>Suppose <span class="math inline">\(g(\cdot)\)</span> symmetric
-density function <span class="math inline">\(g(-x)=g(x)\)</span>,
-e.g. N(0,1).</p>
-<ol style="list-style-type: decimal">
-<li><p>simulate <span class="math inline">\(\zeta^{(t)}\)</span> from
-<span class="math inline">\(g\)</span></p></li>
-<li><p>generate <span class="math inline">\(\theta^{(t+1)}\)</span> as
-<span class="math display">\[\theta^{(t+1)}=
+<div id="m-step" class="section level2">
+<h2>M-step</h2>
+<p>maximize <span class="math inline">\(\theta\to
+Q(\theta\mid\theta^{(m)},\overrightharpoon{X})\)</span><br />
+let <span class="math inline">\(\theta^{(m+1)}\gets\mathop{\arg\max}\limits_{\theta}\
+\ Q(\theta\mid\theta^{(m)},\overrightharpoon{X})\)</span></p>
+</div>
+</div>
+<div id="two-component-mixture-of-normals" class="section level1">
+<h1>Two component mixture of normals</h1>
+<p>Let <span class="math inline">\(X_i\overset{iid}{\sim}\frac{1}{4}N(\mu_1,1)+\frac{3}{4}N(\mu_2,1)\)</span>,
+<span class="math inline">\(\theta=(\mu_1,\mu_2)\)</span><br />
+log-likelihood function: <span class="math display">\[\log
+L(\theta\mid\overrightharpoon{X})=\sum\limits_{i=1}^{n}\log\big(\frac{1}{4}f(X_i\mid\mu_1)+\frac{3}{4}f(X_i\mid\mu_2)\big)\]</span>
+where <span class="math inline">\(L(\theta\mid\overrightharpoon{X})=\prod\limits_{i=1}^{n}f(X_i\mid\mu_1,\mu_2)\)</span><br />
+The p.d.f of <span class="math inline">\(X_i\)</span> is:<br />
+<span class="math display">\[
+f(X_i\mid \mu_j)=\frac{1}{\sqrt{2\pi}}e^{-\frac{(X_i-\mu_j)^2}{2}}
+\]</span> Define some latent variables (binary):<br />
+<span class="math display">\[P(Z_i=1)=\frac{1}{4},
+P(Z_i=0)=\frac{3}{4}\]</span> where <span class="math inline">\(Z_i\perp(W_{1i},W_{2i})\)</span></p>
+<p>If <span class="math inline">\(W_1\sim f_1\)</span>, <span class="math inline">\(W_2\sim f_2\)</span>, <span class="math inline">\(Z\sim Bernoulli(p)\)</span> and <span class="math inline">\(Z\perp(W_1,W_2)\)</span>, <span class="math inline">\(Z,W_1,W_2\)</span> are independent. <span class="math display">\[
+X=ZW_1+(1-Z)W_2
+\]</span></p>
+<p>Complete data likelihood function <span class="math inline">\((\overrightharpoon{X},\overrightharpoon{Z})\)</span>:<br />
+<span class="math display">\[
+\begin{aligned}
+L^c=P(\overrightharpoon{X},\overrightharpoon{Z})&amp;=\prod\limits_{i=1}^{n}P(X_i,Z_i)\\
+&amp;=\prod\limits_{i=1}^{n}\big[P(X_i\mid
+Z_i=1)P(Z_i=1)Z\big]^{Z_i}\big[P(X_i\mid Z_i=0)P(Z_i=0)\big]^{1-Z_i}
+\end{aligned}
+\]</span></p>
+<p>So the log-likelihood function: <span class="math display">\[
+\log\big(L^c(\theta\mid\overrightharpoon{X},
+\overrightharpoon{Z})\big)=\sum\limits_{i=1}^{n}\big[Z_i\log f(X_i\mid
+\mu_1)+Z_i\log\frac{1}{4}+(1-Z_i)\log f(X_i\mid
+\mu_2)+(1-Z_i)\log\frac{3}{4}\big]
+\]</span> Let <span class="math inline">\(\theta^{(0)}=(\mu_1^{(0)},\mu_2^{(0)})\)</span><br />
+<span class="math display">\[
+\begin{aligned}
+Q(\theta\mid\theta^{(0)},\overrightharpoon{X})&amp;=E_{\theta^{(0)}}\big[\log
+L^c(\theta\mid\overrightharpoon{X},\overrightharpoon{Z})\mid\overrightharpoon{X}\big]\\
+&amp;=-\sum\limits_{i=1}^{n}\Big\{\frac{1}{2}E_{\theta^{(0)}}[Z_i(X_i-\mu_1)^2\mid
+X_i]+\frac{1}{2}E_{\theta^{(0)}}\big[(1-Z_i)(X_i-\mu_2)^2\mid
+X_i\big]\Big\}\\
+&amp;\ \ \ \ \ +\sum\limits_{i=1}^{n}\Big\{\big(\log(\frac{1}{4})\big)
+E_{\theta^{(0)}}(Z_i\mid X_i)-\big( \log(\frac{3}{4}) \big)
+E_{\theta^{(0)}}(1-Z_i\mid X_i)\Big\}+C
+\end{aligned}
+\]</span></p>
+where <span class="math display">\[
+E_{\theta^{(0)}}[Z_i(X_i-\mu_1)^2\mid
+X_i]=(X_i-\mu_1)^2E_{\theta^{(0)}}[Z_i\mid X_i]
+\]</span> we can calculate <span class="math display">\[E[Z\mid
+X]=\frac{P(X\mid Z=1)P(Z=1)}{P(X=x\mid Z=1)P(Z=1)+P(X=x\mid
+Z=0)P(Z=0)}\]</span>
+<p>So we can calculate <span class="math inline">\(E_{\theta^{(0)}}[Z_i(X_i-\mu_1)^2\mid
+X_i]\)</span>:</p>
+<p><span class="math display">\[
+\begin{aligned}
+E_{\theta^{(0)}}\big[Z_i(X_i-\mu_1)^2\mid
+X_i\big]&amp;=\frac{\frac{1}{4}f_1(X_i\mid
+\mu_1^{(0)})}{\frac{1}{4}f_1(X_i\mid\mu_1^{(0)})+\frac{3}{4}f_2(X_i\mid\mu_2^{(0)})}\\
+&amp;=\alpha_i^{(0)}(X_i;\mu_1^{(0)},\mu_2^{(0)})
+\end{aligned}
+\]</span></p>
+<p>And <span class="math inline">\(Q(\theta\mid\theta^{(0)},\overrightharpoon{X})\)</span>
+can be expressed: <span class="math display">\[
+Q(\theta\mid\theta^{(0)},\overrightharpoon{X})=-\sum\limits_{i=1}^{n}\Big\{\frac{1}{2}(X_i-\mu_1)^2\alpha_i^{(0)}(X_i;\mu_1^{(0)},\mu_2^{(0)})+\frac{1}{2}(X_i-\mu_2)^2\big(1-\alpha_i^{(0)}(X_i;\mu_1^{(0)},\mu_2^{(0)})\big)\Big\}+const
+\]</span></p>
+<p>Set the derivatives w.r.t. the <span class="math inline">\(\theta\)</span> to zero function: <span class="math display">\[
 \begin{cases}
-\theta^{(t)}+\zeta^{(t)} &amp; with \ prob\ \rho=exp(\frac{\triangle
-h}{T_t})\land1, \triangle h =
-h(\theta^{(t)}+\zeta^{(t)})-h(\theta^{(t)})\\
-\theta^{(t)} &amp; with \ prob \ 1-\rho\\
-\end{cases}\]</span></p></li>
-<li><p>update <span class="math inline">\(T_{t+1} \leftarrow
-T_t\)</span>. For example, one can let <span class="math inline">\(T_t =
-\frac{1}{log(1+t)}\)</span> or <span class="math inline">\((\frac{1}{1.2})^t.\)</span></p></li>
-</ol>
+\frac{\partial Q(\theta\mid\theta^{(0)},\overrightharpoon{X})}{\partial
+\mu_1}\overset{set}{=}0\\
+\frac{\partial Q(\theta\mid\theta^{(0)},\overrightharpoon{X})}{\partial
+\mu_2}\overset{set}{=}0
+\end{cases}
+\]</span></p>
+<p>we can calculate the solutions <span class="math inline">\(\mu_1^{(1)}\)</span> and <span class="math inline">\(\mu_2^{(1)}\)</span></p>
+<p><span class="math display">\[
+\begin{cases}
+\mu_1^{(1)}=\frac{\sum\limits_{i=1}^{n}\alpha_i^{(0)}(X_i;\mu_1^{(0)},\mu_2^{(0)})X_i}{\sum\limits_{i=1}^{n}\alpha_i^{(0)}(X_i;\mu_1^{(0)},\mu_2^{(0)})}\\
+\mu_2^{(1)}=\frac{\sum\limits_{i=1}^{n}\big[1-\alpha_i^{(0)}(X_i;\mu_1^{(0)},\mu_2^{(0)})\big]X_i}{\sum\limits_{i=1}^{n}\big[1-\alpha_i^{(0)}(X_i;\mu_1^{(0)},\mu_2^{(0)})\big]}
+\end{cases}
+\]</span></p>
 </div>
-<div id="remarks" class="section level2">
-<h2>Remarks:</h2>
-<ol style="list-style-type: decimal">
-<li><p>If the perturbation increases h (i.e., <span class="math inline">\(\triangle h\geq 0\)</span>), the new proposal is
-automatically accepted. If <span class="math inline">\(\triangle
-h&lt;0\)</span>, then still accept it with certain probability <span class="math inline">\(\rho(&lt;1)\)</span>.</p></li>
-<li><p>When <span class="math inline">\(T_t\)</span> is relatively
-large, many “bad” proposals (that is those <span class="math inline">\(\triangle h&lt;0\)</span>) are still accepted.
-Therefore a larger part of the space can be explored. But at larger
-stages, as <span class="math inline">\(T_t \downarrow 0\)</span>, that
-will limit the “bad” proposal that we allow.</p></li>
-<li><p>When <span class="math inline">\(T_t\)</span> is sufficiently
-small, one essentially “quenches” the process by accepting only “good”
-proposals (i.e., <span class="math inline">\(\triangle h\geq
-0\)</span>).</p></li>
-</ol>
+<div id="right-censored-data-r.c-example-5.13-and-5.14" class="section level1">
+<h1>Right censored data (R.C example 5.13 and 5.14)</h1>
+<p>Let <span class="math inline">\(X_i\overset{iid}{\sim}f(x-\theta)\)</span>, where
+<span class="math inline">\(f\)</span> is density function of <span class="math inline">\(N(0,1)\)</span>, <span class="math inline">\(F\)</span> be the CDF of <span class="math inline">\(N(0,1)\)</span>, so <span class="math inline">\(X_i\sim N(\theta,1)\)</span><br />
+The Goal is to estimate <span class="math inline">\(\theta\)</span>.
+However, <span class="math inline">\(X_i\)</span> are not fully
+observed. They are right censored. The actual observation are <span class="math inline">\(Y_i\)</span>.<br />
+Let (1) <span class="math inline">\(Y_i\)</span> is observed <span class="math display">\[
+Y_i=
+\begin{cases}
+a \ \ \ if \ X_i\ge a \\
+X_i \ \ \ if \ X_i\le a
+\end{cases}
+\]</span> where <span class="math inline">\(a\)</span> is fixed.<br />
+It implies <span class="math inline">\(Y_i=\min(X_i,a)\)</span>.<br />
+(2)<span class="math inline">\(\delta_i=I(X_i\le a)\)</span> be the
+indicator for non-censoring, or equivalently, for observing the actual
+<span class="math inline">\(X_i\)</span>;<br />
+(3)<span class="math inline">\(n\)</span> be sample size.</p>
+<p>Assume (1)<span class="math inline">\((Y_1, Y_2, \dots, Y_m)\)</span>
+all less than <span class="math inline">\(a\)</span>,<br />
+(2)<span class="math inline">\((Y_{m+1}, Y_{m+2}, \dots, Y_n)\)</span>
+all equal than <span class="math inline">\(a\)</span>.</p>
+<p>So the observed data likelihood function: <span class="math display">\[
+\begin{aligned}
+L(\theta\mid Y_1, Y_2, \dots, Y_n, \delta_1, \delta_2, \dots,
+\delta_n)&amp;=\prod\limits_{i=1}^{n}\big(f(Y_i-\theta)\big)^{\delta_i}\big(P(Y_i=a)\big)^{1-\delta_i}\\
+&amp;=\prod\limits_{i=1}^{n}\big(f(Y_i-\theta)\big)^{\delta_i}\big(1-P(X_i\le
+a)\big)^{1-\delta_i}\\
+&amp;=\prod\limits_{i=1}^{n}\big(f(Y_i-\theta)\big)^{\delta_i}\big(1-F(a-\theta)\big)^{1-\delta_i}
+\end{aligned}
+\]</span></p>
+<p>Since <span class="math inline">\((Y_1, Y_2, \dots, Y_m)\)</span> are
+uncensored, <span class="math inline">\((Y_{m+1}, Y_{m+2}, \dots,
+Y_n)\)</span> are censored.<br />
+Let <span class="math inline">\(\overrightharpoon{Z}\)</span> be the
+vector of the unobservable <span class="math inline">\(X_{m+1}, X_{m+2},
+\dots, X_n\)</span>.<br />
+The complete data likelihood function: <span class="math display">\[
+L^c(\theta\mid Y_1, Y_2, \dots, Y_m;
+\overrightharpoon{Z})=\prod\limits_{i=1}^{m}f(Y_i-\theta)\prod\limits_{i=m+1}^{n}f(X_i-\theta)
+\]</span> The log-likelihood function: <span class="math display">\[
+\log L^c(\theta\mid Y_1, Y_2, \dots, Y_m;
+\overrightharpoon{Z})=\sum\limits_{i=1}^{m}\log
+f(Y_i-\theta)+\sum\limits_{i=m+1}^{n}\log f(X_i-\theta)
+\]</span></p>
+<p><span class="math inline">\(Q(\theta\mid\theta^{(0)},\overrightharpoon{X})\)</span>
+can be expressed: <span class="math display">\[
+\begin{aligned}
+Q(\theta\mid\theta^{(0)};Y_1, \dots, Y_n, \delta_1, \dots,
+\delta_n)&amp;=E_{\theta^{(0)}}\big[\log L^c(\theta\mid X_1, \dots,
+X_n)\mid Y_1, \dots, Y_n, \delta_1, \dots, \delta_n\big]\\
+&amp;=-\frac{1}{2}\sum\limits_{i=1}^{m}(Y_i-\theta)^2-\frac{1}{2}\sum\limits_{i=m+1}^{n}E_{\theta^{(0)}}\big[(Z_i-\theta)^2\mid
+Y_1, \dots, Y_n, \delta_1, \dots, \delta_n\big]
+\end{aligned}
+\]</span></p>
+<p>For those <span class="math inline">\(i=m+1, \dots, n\)</span>, <span class="math inline">\(\delta_i=0\)</span>, So<br />
+<span class="math display">\[
+E_{\theta^{(0)}}\big[(Z_i-\theta)^2\mid Y_i,
+\delta_i\big]=E_{\theta^{(0)}}\big[(X_i-\theta)^2\mid X_i\ge a \big]
+\]</span></p>
+<p>We can calculate <span class="math inline">\(\theta^{(1)}\)</span>
+by: <span class="math display">\[
+\frac{\partial Q(\theta\mid\theta^{(0)};Y_1, \dots, Y_n, \delta_1,
+\dots, \delta_n)}{\partial\theta}\overset{set}{=}0
+\]</span></p>
+<p>Which can be expressed: <span class="math display">\[
+\sum\limits_{i=1}^{m}(Y_i-\theta)+\sum\limits_{i=m+1}^{n}E_{\theta^{(0)}}\big[(X_i-\theta)\mid
+X_i\ge a\big]\overset{set}{=}0  \\
+\]</span> <span class="math display">\[
+\sum\limits_{i=1}^{m}Y_i-m\theta+\sum\limits_{i=m+1}^{n}E_{\theta^{(0)}}[X_i\mid
+X_i\ge a]-(n-m)\theta\overset{set}{=}0
+\]</span></p>
+<p>we can calculate the solution <span class="math inline">\(\theta^{(1)}\)</span>: <span class="math display">\[
+\theta^{(1)}=\frac{\sum\limits_{i=1}^{m}Y_i+(n-m)E_{\theta^{(0)}}[X_i\mid
+X_i\ge a]}{n}
+\]</span></p>
+Finally, we can show that <span class="math display">\[
+E_{\theta^{(0)}}[X_i\mid X_i\ge
+a]=\theta^{(0)}+\frac{\phi(a-\theta^{(0)})}{1-\Phi(a-\theta^{(0)})}
+\]</span>
 <!-- rnb-text-end -->
 </div>
-</div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAnTUFUIDY1MzogU3RhdGlzdGljYWwgU2ltdWxhdGlvbicKYXV0aG9yOgotIEluc3RydWN0b3IkOiQgRHIuIFdlaSBMaQotIFNjcmliZSQ6JCBZdWFuIExpdQpkYXRlOiAiT2N0IDI4dGgsIDIwMjEiCm91dHB1dDoKICBwZGZfZG9jdW1lbnQ6IAogICAgICBpbmNsdWRlOgogICAgICAgIGluX2hlYWRlcjogcHJlYW1ibGVfcm1kLnRleAogIGh0bWxfZG9jdW1lbnQ6CiAgICBkZl9wcmludDogcGFnZWQKICBodG1sX25vdGVib29rOiBkZWZhdWx0CmZvbnRzaXplOiAxNHB0CmhlYWRlci1pbmNsdWRlczoKLSBcdXNlcGFja2FnZXthbXNtYXRofQotIFx1c2VwYWNrYWdlW2xpbmV3aWR0aD0xcHRde21kZnJhbWVkfQotIFxuZXdjb21tYW5kXGlubmVyWzJde1xsZWZ0XGxhbmdsZSMxLCMyXHJpZ2h0XHJhbmdsZX0KLSBcbmV3Y29tbWFuZFxmbG9vclsxXXtcbGZsb29yIzFccmZsb29yfQotIFxuZXdjb21tYW5kXGNlaWxbMV17XGxjZWlsIzFccmNlaWx9Ci0gXG5ld2NvbW1hbmRcbWJbMV17XG1hdGhiZnsjMX19Ci0gXG5ld2NvbW1hbmRcYnNbMV17XGJvbGRzeW1ib2x7IzF9fQotIFxuZXdjb21tYW5kXG1yWzFde1xtYXRocm17IzF9fQotIFxuZXdjb21tYW5kXHdoWzFde1x3aWRlaGF0eyMxfX0KLSBcbmV3Y29tbWFuZFxvcFsxXXtcb3BlcmF0b3JuYW1leyMxfX0KLSBcbmV3Y29tbWFuZFxtYmJbMV17XG1hdGhiYnsjMX19Ci0gXHVzZXBhY2thZ2V7Y2FwdGlvbn0KLSBcY2FwdGlvbnNldHVwW2ZpZ3VyZV17bGFiZWxmb3JtYXQ9ZW1wdHl9Ci0gXG5ld2NvbW1hbmR7XHdlaX1bMV17XHRleHRjb2xvcntvcmFuZ2V9eyhXZWk6IzEpfX0KbGluZXN0cmV0Y2g6IDEuMwpnZW9tZXRyeTogbGVmdD0yY20sIHJpZ2h0PTJjbSwgdG9wPTJjbSwgYm90dG9tPTJjbQotLS0KYGBge3Igc2V0dXAsIGluY2x1ZGU9RkFMU0V9CmtuaXRyOjpvcHRzX2NodW5rJHNldChlY2hvID0gVFJVRSxldmFsPVQpCmBgYAo8c2NyaXB0IHR5cGU9InRleHQveC1tYXRoamF4LWNvbmZpZyI+Ck1hdGhKYXguSHViLkNvbmZpZyh7CiAgVGVYOiB7IGVxdWF0aW9uTnVtYmVyczogeyBhdXRvTnVtYmVyOiAiQU1TIiB9IH0KfSk7Cjwvc2NyaXB0PgoKCiMgU3RvY2hhc3RpYyBHcmFkaWVudCBEZXNjZW50CgpSZWNhbGwgdGhlIGJhc2ljIGdyYWRpZW50IGRlc2NlbnQKJCQKd197dCsxfSBcbGVmdGFycm93IHdfdCAtXGFscGhhX3QgXG5hYmxhIEwod190KSwgXHF1YWQgXGFscGhhX3Q+MC4KJCQKVGhlIGdlbmVyYWwgaWRlYSBmb3Igc3RvY2hhc3RpYyBncmFkaWVudCBkZXNjZW50IGlzIHRoYXQgd2UgbW92ZSAkd190JCB0byAkd197dCsxfSQgaW4gYSByYW5kb20gZGlyZWN0aW9uLCBzYXkgJHdfe3QrMX0gXGxlZnRhcnJvdyB3X3QgKyBcZXBzaWxvbl90JCwgZm9yIHNvbWUgcmFuZG9tICRcZXBzaWxvbl90JC4gVGhlIGV4cGVjdGF0aW9uICRFKFxlcHNpbG9uX3QpJCBzaG91bGQgYmUgYSBnb29kIGFwcHJveGltYXRpb24gdG8gJEUoXG5hYmxhIEwod190KSkkLiBDb25zaWRlciB0aGUgZmluaXRlLWRpZmZlcmVuY2UgYXBwcm94aW1hdGlvbgokJApcbmFibGEgTCh3X3QpIFxhcHByb3ggXGZyYWN7TCh3X3QrXGJldGFfdCBcZXRhX3QpLSBMKHdfdC1cYmV0YV90IFxldGFfdCl9ezIgXGJldGFfdH0gXGV0YV90Oj1cZnJhY3tcbmFibGEgTCh3X3QsIFxiZXRhX3QgXGV0YV90KX17MlxiZXRhX3R9XGV0YV90LAokJAotICRce1xiZXRhX3RcfSQgZGVjcmVhc2VzIHRvICQwJAotICRcZXRhX3QkIHVuaWZvcm1seSBkaXN0cmlidXRlZCBvdmVyIHRoZSB1bml0IHNwaGVyZSAkXHxcZXRhXHw9MSQsIHNheQoKCiMgU2ltdWxhdGVkIEFubmVhbGluZwpDb25zaWRlciBtYXhpbWl6ZSAkaChcdGhldGEpJCAoZ2xvYmFsIG1heGltaXphdGlvbik6CgpBc3N1bWUgJGg6IFxUaGV0YSBcbWFwc3RvIFxtYXRoYmJ7Un0sIFxpbnRfSCBoKFx0aGV0YSk8XGluZnR5JCwgICRIKFx0aGV0YSkgXHByb3B0byBleHAoXGZyYWN7aChcdGhldGEpfXtUfSksIFQ+MCQsIHdoZXJlIFQgaXMgdGhlIHRlbXBlcmF0dXJlLgoKRGVmaW5lIHRoZSBzby1jYWxsZWQgQm9sdHptYW4tR2liYnMgdHJhbnNmb3JtYXRpb24gb2YgaCB0byBiZSAKJCRccGlfdChcdGhldGEpIFxwcm9wdG8gZXhwIFxCaWcoXGZyYWN7aChcdGhldGEpfXtUX3R9XEJpZyksJCQgCgpBcyAkVF90IFxkb3duYXJyb3ckIDAsIHRoZSBrZXJuZWwgb2YgZGVuc2l0eSB3aWxsIGJlY29tZSBtb3JlIGFuZCBtb3JlIGNvbmNlbnRyYXRlZCBpbiBhIG5hcnJvd2VyIG5laWdoYm9yaG9vZCBvZiB0aGUgbWF4aW1pemVyIG9mICRoJC4KCiMjIEFsZ29yaXRobQpTdXBwb3NlICRnKFxjZG90KSQgc3ltbWV0cmljIGRlbnNpdHkgZnVuY3Rpb24gJGcoLXgpPWcoeCkkLCBlLmcuIE4oMCwxKS4KCjEuIHNpbXVsYXRlICRcemV0YV57KHQpfSQgZnJvbSAkZyQKCjIuIGdlbmVyYXRlICRcdGhldGFeeyh0KzEpfSQgYXMKJCRcdGhldGFeeyh0KzEpfT0KXGJlZ2lue2Nhc2VzfQpcdGhldGFeeyh0KX0rXHpldGFeeyh0KX0gJiB3aXRoIFwgcHJvYlwgXHJobz1leHAoXGZyYWN7XHRyaWFuZ2xlIGh9e1RfdH0pXGxhbmQxLCBcdHJpYW5nbGUgaCA9IGgoXHRoZXRhXnsodCl9K1x6ZXRhXnsodCl9KS1oKFx0aGV0YV57KHQpfSlcXApcdGhldGFeeyh0KX0gJiB3aXRoIFwgcHJvYiBcIDEtXHJob1xcClxlbmR7Y2FzZXN9JCQKCjMuIHVwZGF0ZSAkVF97dCsxfSBcbGVmdGFycm93IFRfdCQuIEZvciBleGFtcGxlLCBvbmUgY2FuIGxldCAkVF90ID0gXGZyYWN7MX17bG9nKDErdCl9JCBvciAkKFxmcmFjezF9ezEuMn0pXnQuJAoKIyMgUmVtYXJrczoKCjEuIElmIHRoZSBwZXJ0dXJiYXRpb24gaW5jcmVhc2VzIGggKGkuZS4sICRcdHJpYW5nbGUgaFxnZXEgMCQpLCB0aGUgbmV3IHByb3Bvc2FsIGlzIGF1dG9tYXRpY2FsbHkgYWNjZXB0ZWQuIElmICRcdHJpYW5nbGUgaDwwJCwgdGhlbiBzdGlsbCBhY2NlcHQgaXQgd2l0aCBjZXJ0YWluIHByb2JhYmlsaXR5ICAkXHJobyg8MSkkLgoKMi4gV2hlbiAkVF90JCBpcyByZWxhdGl2ZWx5IGxhcmdlLCBtYW55ICJiYWQiIHByb3Bvc2FscyAodGhhdCBpcyB0aG9zZSAkXHRyaWFuZ2xlIGg8MCQpIGFyZSBzdGlsbCBhY2NlcHRlZC4gVGhlcmVmb3JlIGEgbGFyZ2VyIHBhcnQgb2YgdGhlIHNwYWNlIGNhbiBiZSBleHBsb3JlZC4gQnV0IGF0IGxhcmdlciBzdGFnZXMsIGFzICRUX3QgXGRvd25hcnJvdyAwJCwgdGhhdCB3aWxsIGxpbWl0IHRoZSAiYmFkIiBwcm9wb3NhbCB0aGF0IHdlIGFsbG93LgoKMy4gV2hlbiAkVF90JCBpcyBzdWZmaWNpZW50bHkgc21hbGwsIG9uZSBlc3NlbnRpYWxseSAicXVlbmNoZXMiIHRoZSBwcm9jZXNzIGJ5IGFjY2VwdGluZyBvbmx5ICJnb29kIiBwcm9wb3NhbHMgKGkuZS4sICRcdHJpYW5nbGUgaFxnZXEgMCQpLgoKCg==</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiTUFUIDY1MzogU3RhdGlzdGljYWwgU2ltdWxhdGlvbiIKYXV0aG9yOgogIC0gSW5zdHJ1Y3RvciQ6JCBEci4gV2VpIExpCiAgLSBTY3JpYmUkOiQgTWVuZyBIZSAgCmRhdGU6IE9jdCAyMXRoICAsIDIwMjEKZ2VvbWV0cnk6IGxlZnQ9MmNtLCByaWdodD0yY20sIHRvcD0yY20sIGJvdHRvbT0yY20KbGluZXN0cmV0Y2g6IDEuMwpvdXRwdXQ6CiAgaHRtbF9kb2N1bWVudDoKICAgIGRmX3ByaW50OiBwYWdlZAogIHBkZl9kb2N1bWVudDogCiAgICAgIGxhdGV4X2VuZ2luZTogeGVsYXRleAogICAgICBpbmNsdWRlOgogICAgICAgIGluX2hlYWRlcjogcHJlYW1ibGVfcm1kLnRleAogICAgICAgIGV4dHJhX2RlcGVuZGVuY2llczogWyJmZHN5bWJvbCJdCiAgaHRtbF9ub3RlYm9vazogZGVmYXVsdApmb250c2l6ZTogMTRwdApoZWFkZXItaW5jbHVkZXM6Ci0gXHVzZXBhY2thZ2V7YW1zbWF0aH0KLSBcdXNlcGFja2FnZVtsaW5ld2lkdGg9MXB0XXttZGZyYW1lZH0KLSBcbmV3Y29tbWFuZFxpbm5lclsyXXtcbGVmdFxsYW5nbGUjMSwjMlxyaWdodFxyYW5nbGV9Ci0gXG5ld2NvbW1hbmRcZmxvb3JbMV17XGxmbG9vciMxXHJmbG9vcn0KLSBcbmV3Y29tbWFuZFxjZWlsWzFde1xsY2VpbCMxXHJjZWlsfQotIFxuZXdjb21tYW5kXG1iWzFde1xtYXRoYmZ7IzF9fQotIFxuZXdjb21tYW5kXGJzWzFde1xib2xkc3ltYm9seyMxfX0KLSBcbmV3Y29tbWFuZFxtclsxXXtcbWF0aHJteyMxfX0KLSBcbmV3Y29tbWFuZFx3aFsxXXtcd2lkZWhhdHsjMX19Ci0gXG5ld2NvbW1hbmRcb3BbMV17XG9wZXJhdG9ybmFtZXsjMX19Ci0gXG5ld2NvbW1hbmRcbWJiWzFde1xtYXRoYmJ7IzF9fQotIFx1c2VwYWNrYWdle2NhcHRpb259Ci0gXHVzZXBhY2thZ2V7bWF0aHRvb2xzfQotIFx1c2VwYWNrYWdle2Zkc3ltYm9sfQotIFxjYXB0aW9uc2V0dXBbZmlndXJlXXtsYWJlbGZvcm1hdD1lbXB0eX0KLSBcbmV3Y29tbWFuZHtcd2VpfVsxXXtcdGV4dGNvbG9ye29yYW5nZX17KFdlaTojMSl9fQotLS0KYGBge3Igc2V0dXAsIGluY2x1ZGU9RkFMU0V9CmtuaXRyOjpvcHRzX2NodW5rJHNldChlY2hvID0gVFJVRSxldmFsPVQpCmBgYAo8c2NyaXB0IHR5cGU9InRleHQveC1tYXRoamF4LWNvbmZpZyI+Ck1hdGhKYXguSHViLkNvbmZpZyh7CiAgVGVYOiB7IGVxdWF0aW9uTnVtYmVyczogeyBhdXRvTnVtYmVyOiAiQU1TIiB9IH0KfSk7Cjwvc2NyaXB0PgoKCiMgRU0gQWxnb3JpdGhtcwojIyBFLXN0ZXAKJCQKUShcdGhldGFcbWlkXHRoZXRhXnsobSl9LFxvdmVycmlnaHRoYXJwb29ue1h9KT1FX3tcdGhldGFeeyhtKX19XGJpZ1tcbG9nIExeYyhcdGhldGFcbWlkXG92ZXJyaWdodGhhcnBvb257WH0sXG92ZXJyaWdodGhhcnBvb257Wn0pXG1pZFxvdmVycmlnaHRoYXJwb29ue1h9XGJpZ10KJCQKCndoZXJlICRcb3ZlcnJpZ2h0aGFycG9vbntYfSQgaXMgb2JzZXJ2YWJsZSwgJFxvdmVycmlnaHRoYXJwb29ue1p9JCBpcyB1bm9ic2VydmFibGU7ICRFX3tcdGhldGFeeyhtKX19JCBpcyB0aGUgY29uZGl0aW9uYWwgZXhwZWN0YXRpb24gb2YgJFokIGdpdmVuICRYJCwgd2hlcmUgdGhlIGNvbmRpdGlvbmFsIGRlbnNpdHkgaXMgZ2l2ZW4gYnkgJGYoXG92ZXJyaWdodGhhcnBvb257Wn1cbWlkXG92ZXJyaWdodGhhcnBvb257WH0sXHRoZXRhXnsobSl9KSQ7ICAKJFxsb2cgTF5jKFx0aGV0YVxtaWRcb3ZlcnJpZ2h0aGFycG9vbntYfSxcb3ZlcnJpZ2h0aGFycG9vbntafSkkIGlzIGNvbXBsZXRlIGRhdGEgbGlrZWxpaG9vZCBmdW5jdGlvbi4KCgoKIyMgTS1zdGVwCm1heGltaXplICRcdGhldGFcdG8gUShcdGhldGFcbWlkXHRoZXRhXnsobSl9LFxvdmVycmlnaHRoYXJwb29ue1h9KSQgIApsZXQgJFx0aGV0YV57KG0rMSl9XGdldHNcbWF0aG9we1xhcmdcbWF4fVxsaW1pdHNfe1x0aGV0YX1cIFwgUShcdGhldGFcbWlkXHRoZXRhXnsobSl9LFxvdmVycmlnaHRoYXJwb29ue1h9KSQgIAoKIyBUd28gY29tcG9uZW50IG1peHR1cmUgb2Ygbm9ybWFscwpMZXQgJFhfaVxvdmVyc2V0e2lpZH17XHNpbX1cZnJhY3sxfXs0fU4oXG11XzEsMSkrXGZyYWN7M317NH1OKFxtdV8yLDEpJCwgJFx0aGV0YT0oXG11XzEsXG11XzIpJCAgCmxvZy1saWtlbGlob29kIGZ1bmN0aW9uOgokJFxsb2cgTChcdGhldGFcbWlkXG92ZXJyaWdodGhhcnBvb257WH0pPVxzdW1cbGltaXRzX3tpPTF9XntufVxsb2dcYmlnKFxmcmFjezF9ezR9ZihYX2lcbWlkXG11XzEpK1xmcmFjezN9ezR9ZihYX2lcbWlkXG11XzIpXGJpZykkJCAKd2hlcmUgJEwoXHRoZXRhXG1pZFxvdmVycmlnaHRoYXJwb29ue1h9KT1ccHJvZFxsaW1pdHNfe2k9MX1ee259ZihYX2lcbWlkXG11XzEsXG11XzIpJCAgClRoZSBwLmQuZiBvZiAkWF9pJCBpczogIAokJApmKFhfaVxtaWQgXG11X2opPVxmcmFjezF9e1xzcXJ0ezJccGl9fWVeey1cZnJhY3soWF9pLVxtdV9qKV4yfXsyfX0KJCQKRGVmaW5lIHNvbWUgbGF0ZW50IHZhcmlhYmxlcyAoYmluYXJ5KTogIAokJFAoWl9pPTEpPVxmcmFjezF9ezR9LCBQKFpfaT0wKT1cZnJhY3szfXs0fSQkCndoZXJlICRaX2lccGVycChXX3sxaX0sV197Mml9KSQgIAoKSWYgJFdfMVxzaW0gZl8xJCwgJFdfMlxzaW0gZl8yJCwgJFpcc2ltIEJlcm5vdWxsaShwKSQgYW5kICRaXHBlcnAoV18xLFdfMikkLCAkWixXXzEsV18yJCBhcmUgaW5kZXBlbmRlbnQuCiQkClg9WldfMSsoMS1aKVdfMgokJAoKCkNvbXBsZXRlIGRhdGEgbGlrZWxpaG9vZCBmdW5jdGlvbiAkKFxvdmVycmlnaHRoYXJwb29ue1h9LFxvdmVycmlnaHRoYXJwb29ue1p9KSQ6ICAKJCQKXGJlZ2lue2FsaWduZWR9CkxeYz1QKFxvdmVycmlnaHRoYXJwb29ue1h9LFxvdmVycmlnaHRoYXJwb29ue1p9KSY9XHByb2RcbGltaXRzX3tpPTF9XntufVAoWF9pLFpfaSlcXAomPVxwcm9kXGxpbWl0c197aT0xfV57bn1cYmlnW1AoWF9pXG1pZCBaX2k9MSlQKFpfaT0xKVpcYmlnXV57Wl9pfVxiaWdbUChYX2lcbWlkIFpfaT0wKVAoWl9pPTApXGJpZ11eezEtWl9pfQpcZW5ke2FsaWduZWR9CiQkCgpTbyB0aGUgbG9nLWxpa2VsaWhvb2QgZnVuY3Rpb246CiQkClxsb2dcYmlnKExeYyhcdGhldGFcbWlkXG92ZXJyaWdodGhhcnBvb257WH0sIFxvdmVycmlnaHRoYXJwb29ue1p9KVxiaWcpPVxzdW1cbGltaXRzX3tpPTF9XntufVxiaWdbWl9pXGxvZyBmKFhfaVxtaWQgXG11XzEpK1pfaVxsb2dcZnJhY3sxfXs0fSsoMS1aX2kpXGxvZyBmKFhfaVxtaWQgXG11XzIpKygxLVpfaSlcbG9nXGZyYWN7M317NH1cYmlnXQokJApMZXQgJFx0aGV0YV57KDApfT0oXG11XzFeeygwKX0sXG11XzJeeygwKX0pJCAgCiQkClxiZWdpbnthbGlnbmVkfQpRKFx0aGV0YVxtaWRcdGhldGFeeygwKX0sXG92ZXJyaWdodGhhcnBvb257WH0pJj1FX3tcdGhldGFeeygwKX19XGJpZ1tcbG9nIExeYyhcdGhldGFcbWlkXG92ZXJyaWdodGhhcnBvb257WH0sXG92ZXJyaWdodGhhcnBvb257Wn0pXG1pZFxvdmVycmlnaHRoYXJwb29ue1h9XGJpZ11cXAomPS1cc3VtXGxpbWl0c197aT0xfV57bn1cQmlnXHtcZnJhY3sxfXsyfUVfe1x0aGV0YV57KDApfX1bWl9pKFhfaS1cbXVfMSleMlxtaWQgWF9pXStcZnJhY3sxfXsyfUVfe1x0aGV0YV57KDApfX1cYmlnWygxLVpfaSkoWF9pLVxtdV8yKV4yXG1pZCBYX2lcYmlnXVxCaWdcfVxcCiZcIFwgXCBcIFwgK1xzdW1cbGltaXRzX3tpPTF9XntufVxCaWdce1xiaWcoXGxvZyhcZnJhY3sxfXs0fSlcYmlnKSBFX3tcdGhldGFeeygwKX19KFpfaVxtaWQgWF9pKS1cYmlnKCBcbG9nKFxmcmFjezN9ezR9KSBcYmlnKSBFX3tcdGhldGFeeygwKX19KDEtWl9pXG1pZCBYX2kpXEJpZ1x9K0MKXGVuZHthbGlnbmVkfQokJAoKCndoZXJlCiQkCkVfe1x0aGV0YV57KDApfX1bWl9pKFhfaS1cbXVfMSleMlxtaWQgWF9pXT0oWF9pLVxtdV8xKV4yRV97XHRoZXRhXnsoMCl9fVtaX2lcbWlkIFhfaV0KJCQKd2UgY2FuIGNhbGN1bGF0ZSAKJCRFW1pcbWlkIFhdPVxmcmFje1AoWFxtaWQgWj0xKVAoWj0xKX17UChYPXhcbWlkIFo9MSlQKFo9MSkrUChYPXhcbWlkIFo9MClQKFo9MCl9JCQKXGJlZ2lue21kZnJhbWVkfQpQcm9vZjogClxiZWdpbnthbGlnbip9CkVbWlxtaWQgWF0mPSBQKFo9MVxtaWQgWClcXAomPVxmcmFje1AoWj0xLCBYKX17UChYPXgpfVxcCiY9XGZyYWN7UChYXG1pZCBaPTEpUChaPTEpfXtQKFg9eCl9XFwKJj1cZnJhY3tQKFhcbWlkIFo9MSlQKFo9MSl9e1AoWD14XG1pZCBaPTEpUChaPTEpK1AoWD14XG1pZCBaPTApUChaPTApfQpcZW5ke2FsaWduKn0KXGVuZHttZGZyYW1lZH0KClNvIHdlIGNhbiBjYWxjdWxhdGUgJEVfe1x0aGV0YV57KDApfX1bWl9pKFhfaS1cbXVfMSleMlxtaWQgWF9pXSQ6CgokJApcYmVnaW57YWxpZ25lZH0KRV97XHRoZXRhXnsoMCl9fVxiaWdbWl9pKFhfaS1cbXVfMSleMlxtaWQgWF9pXGJpZ10mPVxmcmFje1xmcmFjezF9ezR9Zl8xKFhfaVxtaWQgXG11XzFeeygwKX0pfXtcZnJhY3sxfXs0fWZfMShYX2lcbWlkXG11XzFeeygwKX0pK1xmcmFjezN9ezR9Zl8yKFhfaVxtaWRcbXVfMl57KDApfSl9XFwKJj1cYWxwaGFfaV57KDApfShYX2k7XG11XzFeeygwKX0sXG11XzJeeygwKX0pClxlbmR7YWxpZ25lZH0KJCQKCkFuZCAkUShcdGhldGFcbWlkXHRoZXRhXnsoMCl9LFxvdmVycmlnaHRoYXJwb29ue1h9KSQgY2FuIGJlIGV4cHJlc3NlZDoKJCQKUShcdGhldGFcbWlkXHRoZXRhXnsoMCl9LFxvdmVycmlnaHRoYXJwb29ue1h9KT0tXHN1bVxsaW1pdHNfe2k9MX1ee259XEJpZ1x7XGZyYWN7MX17Mn0oWF9pLVxtdV8xKV4yXGFscGhhX2leeygwKX0oWF9pO1xtdV8xXnsoMCl9LFxtdV8yXnsoMCl9KStcZnJhY3sxfXsyfShYX2ktXG11XzIpXjJcYmlnKDEtXGFscGhhX2leeygwKX0oWF9pO1xtdV8xXnsoMCl9LFxtdV8yXnsoMCl9KVxiaWcpXEJpZ1x9K2NvbnN0CiQkCgpTZXQgdGhlIGRlcml2YXRpdmVzIHcuci50LiB0aGUgJFx0aGV0YSQgdG8gemVybyBmdW5jdGlvbjoKJCQKXGJlZ2lue2Nhc2VzfQpcZnJhY3tccGFydGlhbCBRKFx0aGV0YVxtaWRcdGhldGFeeygwKX0sXG92ZXJyaWdodGhhcnBvb257WH0pfXtccGFydGlhbCBcbXVfMX1cb3ZlcnNldHtzZXR9ez19MFxcClxmcmFje1xwYXJ0aWFsIFEoXHRoZXRhXG1pZFx0aGV0YV57KDApfSxcb3ZlcnJpZ2h0aGFycG9vbntYfSl9e1xwYXJ0aWFsIFxtdV8yfVxvdmVyc2V0e3NldH17PX0wClxlbmR7Y2FzZXN9CiQkCgoKd2UgY2FuIGNhbGN1bGF0ZSB0aGUgc29sdXRpb25zICRcbXVfMV57KDEpfSQgYW5kICRcbXVfMl57KDEpfSQKCgokJApcYmVnaW57Y2FzZXN9ClxtdV8xXnsoMSl9PVxmcmFje1xzdW1cbGltaXRzX3tpPTF9XntufVxhbHBoYV9pXnsoMCl9KFhfaTtcbXVfMV57KDApfSxcbXVfMl57KDApfSlYX2l9e1xzdW1cbGltaXRzX3tpPTF9XntufVxhbHBoYV9pXnsoMCl9KFhfaTtcbXVfMV57KDApfSxcbXVfMl57KDApfSl9XFwKXG11XzJeeygxKX09XGZyYWN7XHN1bVxsaW1pdHNfe2k9MX1ee259XGJpZ1sxLVxhbHBoYV9pXnsoMCl9KFhfaTtcbXVfMV57KDApfSxcbXVfMl57KDApfSlcYmlnXVhfaX17XHN1bVxsaW1pdHNfe2k9MX1ee259XGJpZ1sxLVxhbHBoYV9pXnsoMCl9KFhfaTtcbXVfMV57KDApfSxcbXVfMl57KDApfSlcYmlnXX0KXGVuZHtjYXNlc30KJCQKCiMgUmlnaHQgY2Vuc29yZWQgZGF0YSAoUi5DIGV4YW1wbGUgNS4xMyBhbmQgNS4xNCkKTGV0ICRYX2lcb3ZlcnNldHtpaWR9e1xzaW19Zih4LVx0aGV0YSkkLCB3aGVyZSAkZiQgaXMgZGVuc2l0eSBmdW5jdGlvbiBvZiAkTigwLDEpJCwgJEYkIGJlIHRoZSBDREYgb2YgJE4oMCwxKSQsIHNvICRYX2lcc2ltIE4oXHRoZXRhLDEpJCAgClRoZSBHb2FsIGlzIHRvIGVzdGltYXRlICRcdGhldGEkLiBIb3dldmVyLCAkWF9pJCBhcmUgbm90IGZ1bGx5IG9ic2VydmVkLiBUaGV5IGFyZSByaWdodCBjZW5zb3JlZC4gVGhlIGFjdHVhbCBvYnNlcnZhdGlvbiBhcmUgJFlfaSQuICAgICAKTGV0ICgxKSAkWV9pJCBpcyBvYnNlcnZlZCAKJCQgCllfaT0KXGJlZ2lue2Nhc2VzfQphIFwgXCBcIGlmIFwgWF9pXGdlIGEgXFwKWF9pIFwgXCBcIGlmIFwgWF9pXGxlIGEKXGVuZHtjYXNlc30KJCQKd2hlcmUgJGEkIGlzIGZpeGVkLiAgIApJdCBpbXBsaWVzICRZX2k9XG1pbihYX2ksYSkkLiAgCigyKSRcZGVsdGFfaT1JKFhfaVxsZSBhKSQgYmUgdGhlIGluZGljYXRvciBmb3Igbm9uLWNlbnNvcmluZywgb3IgZXF1aXZhbGVudGx5LCBmb3Igb2JzZXJ2aW5nIHRoZSBhY3R1YWwgJFhfaSQ7ICAKKDMpJG4kIGJlIHNhbXBsZSBzaXplLiAgCiAgCkFzc3VtZSAKKDEpJChZXzEsIFlfMiwgXGRvdHMsIFlfbSkkIGFsbCBsZXNzIHRoYW4gJGEkLCAgCigyKSQoWV97bSsxfSwgWV97bSsyfSwgXGRvdHMsIFlfbikkIGFsbCBlcXVhbCB0aGFuICRhJC4gIAoKCgogIApTbyB0aGUgb2JzZXJ2ZWQgZGF0YSBsaWtlbGlob29kIGZ1bmN0aW9uOgokJApcYmVnaW57YWxpZ25lZH0KTChcdGhldGFcbWlkIFlfMSwgWV8yLCBcZG90cywgWV9uLCBcZGVsdGFfMSwgXGRlbHRhXzIsIFxkb3RzLCBcZGVsdGFfbikmPVxwcm9kXGxpbWl0c197aT0xfV57bn1cYmlnKGYoWV9pLVx0aGV0YSlcYmlnKV57XGRlbHRhX2l9XGJpZyhQKFlfaT1hKVxiaWcpXnsxLVxkZWx0YV9pfVxcCiY9XHByb2RcbGltaXRzX3tpPTF9XntufVxiaWcoZihZX2ktXHRoZXRhKVxiaWcpXntcZGVsdGFfaX1cYmlnKDEtUChYX2lcbGUgYSlcYmlnKV57MS1cZGVsdGFfaX1cXAomPVxwcm9kXGxpbWl0c197aT0xfV57bn1cYmlnKGYoWV9pLVx0aGV0YSlcYmlnKV57XGRlbHRhX2l9XGJpZygxLUYoYS1cdGhldGEpXGJpZyleezEtXGRlbHRhX2l9ClxlbmR7YWxpZ25lZH0KJCQKClNpbmNlICQoWV8xLCBZXzIsIFxkb3RzLCBZX20pJCBhcmUgdW5jZW5zb3JlZCwgJChZX3ttKzF9LCBZX3ttKzJ9LCBcZG90cywgWV9uKSQgYXJlIGNlbnNvcmVkLiAgCkxldCAkXG92ZXJyaWdodGhhcnBvb257Wn0kIGJlIHRoZSB2ZWN0b3Igb2YgdGhlIHVub2JzZXJ2YWJsZSAkWF97bSsxfSwgWF97bSsyfSwgXGRvdHMsIFhfbiQuICAKVGhlIGNvbXBsZXRlIGRhdGEgbGlrZWxpaG9vZCBmdW5jdGlvbjoKJCQKTF5jKFx0aGV0YVxtaWQgWV8xLCBZXzIsIFxkb3RzLCBZX207IFxvdmVycmlnaHRoYXJwb29ue1p9KT1ccHJvZFxsaW1pdHNfe2k9MX1ee219ZihZX2ktXHRoZXRhKVxwcm9kXGxpbWl0c197aT1tKzF9XntufWYoWF9pLVx0aGV0YSkKJCQKVGhlIGxvZy1saWtlbGlob29kIGZ1bmN0aW9uOgokJApcbG9nIExeYyhcdGhldGFcbWlkIFlfMSwgWV8yLCBcZG90cywgWV9tOyBcb3ZlcnJpZ2h0aGFycG9vbntafSk9XHN1bVxsaW1pdHNfe2k9MX1ee219XGxvZyBmKFlfaS1cdGhldGEpK1xzdW1cbGltaXRzX3tpPW0rMX1ee259XGxvZyBmKFhfaS1cdGhldGEpCiQkCgokUShcdGhldGFcbWlkXHRoZXRhXnsoMCl9LFxvdmVycmlnaHRoYXJwb29ue1h9KSQgY2FuIGJlIGV4cHJlc3NlZDoKJCQKXGJlZ2lue2FsaWduZWR9ClEoXHRoZXRhXG1pZFx0aGV0YV57KDApfTtZXzEsIFxkb3RzLCBZX24sIFxkZWx0YV8xLCBcZG90cywgXGRlbHRhX24pJj1FX3tcdGhldGFeeygwKX19XGJpZ1tcbG9nIExeYyhcdGhldGFcbWlkIFhfMSwgXGRvdHMsIFhfbilcbWlkIFlfMSwgXGRvdHMsIFlfbiwgXGRlbHRhXzEsIFxkb3RzLCBcZGVsdGFfblxiaWddXFwKJj0tXGZyYWN7MX17Mn1cc3VtXGxpbWl0c197aT0xfV57bX0oWV9pLVx0aGV0YSleMi1cZnJhY3sxfXsyfVxzdW1cbGltaXRzX3tpPW0rMX1ee259RV97XHRoZXRhXnsoMCl9fVxiaWdbKFpfaS1cdGhldGEpXjJcbWlkIFlfMSwgXGRvdHMsIFlfbiwgXGRlbHRhXzEsIFxkb3RzLCBcZGVsdGFfblxiaWddClxlbmR7YWxpZ25lZH0KJCQKCkZvciB0aG9zZSAkaT1tKzEsIFxkb3RzLCBuJCwgJFxkZWx0YV9pPTAkLCBTbyAgCiQkCkVfe1x0aGV0YV57KDApfX1cYmlnWyhaX2ktXHRoZXRhKV4yXG1pZCBZX2ksIFxkZWx0YV9pXGJpZ109RV97XHRoZXRhXnsoMCl9fVxiaWdbKFhfaS1cdGhldGEpXjJcbWlkIFhfaVxnZSBhIFxiaWddCiQkCgoKV2UgY2FuIGNhbGN1bGF0ZSAkXHRoZXRhXnsoMSl9JCBieToKJCQKXGZyYWN7XHBhcnRpYWwgUShcdGhldGFcbWlkXHRoZXRhXnsoMCl9O1lfMSwgXGRvdHMsIFlfbiwgXGRlbHRhXzEsIFxkb3RzLCBcZGVsdGFfbil9e1xwYXJ0aWFsXHRoZXRhfVxvdmVyc2V0e3NldH17PX0wCiQkCgpXaGljaCBjYW4gYmUgZXhwcmVzc2VkOgokJApcc3VtXGxpbWl0c197aT0xfV57bX0oWV9pLVx0aGV0YSkrXHN1bVxsaW1pdHNfe2k9bSsxfV57bn1FX3tcdGhldGFeeygwKX19XGJpZ1soWF9pLVx0aGV0YSlcbWlkIFhfaVxnZSBhXGJpZ11cb3ZlcnNldHtzZXR9ez19MCAgXFwKJCQKJCQKXHN1bVxsaW1pdHNfe2k9MX1ee219WV9pLW1cdGhldGErXHN1bVxsaW1pdHNfe2k9bSsxfV57bn1FX3tcdGhldGFeeygwKX19W1hfaVxtaWQgWF9pXGdlIGFdLShuLW0pXHRoZXRhXG92ZXJzZXR7c2V0fXs9fTAgCiQkCgp3ZSBjYW4gY2FsY3VsYXRlIHRoZSBzb2x1dGlvbiAkXHRoZXRhXnsoMSl9JDoKJCQKXHRoZXRhXnsoMSl9PVxmcmFje1xzdW1cbGltaXRzX3tpPTF9XnttfVlfaSsobi1tKUVfe1x0aGV0YV57KDApfX1bWF9pXG1pZCBYX2lcZ2UgYV19e259CiQkCgpGaW5hbGx5LCB3ZSBjYW4gc2hvdyB0aGF0IAokJApFX3tcdGhldGFeeygwKX19W1hfaVxtaWQgWF9pXGdlIGFdPVx0aGV0YV57KDApfStcZnJhY3tccGhpKGEtXHRoZXRhXnsoMCl9KX17MS1cUGhpKGEtXHRoZXRhXnsoMCl9KX0KJCQKXGJlZ2lue21kZnJhbWVkfQpQcm9vZjogClRoZSBjb25kaXRpb25hbCBkZW5zaXR5IG9mICRYX2kkIGdpdmVuICRYX2lcZ2UgYSQsICRYX2kgXHNpbSBmKHgtXHRoZXRhKSQsICRmXHNpbSBOKDAsMSkkCgokJApmKFhfaT14XG1pZCBYX2lcZ2UgYSk9XGZyYWN7XHBoaSh4LVx0aGV0YSl9ezEtXFBoaShhLVx0aGV0YSl9XCBcIFwgXCB4PmEKJCQKVGhlIGxhc3QgdGhpbmcgaXMgdG8gY29tcHV0ZSB0aGUgZXhwZWN0YXRpb24uIAokJApcYmVnaW57YWxpZ25lZH0KRV97XHRoZXRhXnsoMCl9fVtYX2lcbWlkIFhfaVxnZSBhXSY9XGludF97YX1ee1xpbmZ0eX14XGZyYWN7XHBoaSh4LVx0aGV0YV57KDApfSl9ezEtXFBoaShhLVx0aGV0YV57KDApfSl9XCxkeFxcCiY9XGludF97YX1ee1xpbmZ0eX0oXHRoZXRhXnsoMCl9K3gtXHRoZXRhXnsoMCl9KVxmcmFje1xwaGkoeC1cdGhldGFeeygwKX0pfXsxLVxQaGkoYS1cdGhldGFeeygwKX0pfVwsZHhcXAomPVx0aGV0YV57KDApfStcaW50X3thfV57XGluZnR5fSh4LVx0aGV0YV57KDApfSlcZnJhY3tccGhpKHgtXHRoZXRhXnsoMCl9KX17MS1cUGhpKGEtXHRoZXRhXnsoMCl9KX1cLGR4XFwKJlxvdmVyc2V0e3c9eC1cdGhldGFeeygwKX19ez19XHRoZXRhXnsoMCl9K1xmcmFje1xpbnRfe2EtXHRoZXRhXnsoMCl9fV57XGluZnR5fXdccGhpKHcpXCxkd317MS1cUGhpKGEtXHRoZXRhXnsoMCl9KX1cXAomPVx0aGV0YV57KDApfStcZnJhY3stXHBoaSh3KVxCaWd8X3thLVx0aGV0YV57KDApfX1ee1xpbmZ0eX19ezEtXFBoaShhLVx0aGV0YV57KDApfSl9XFwKJj1cdGhldGFeeygwKX0rXGZyYWN7XHBoaShhLVx0aGV0YV57KDApfSl9ezEtXFBoaShhLVx0aGV0YV57KDApfSl9ClxlbmR7YWxpZ25lZH0KJCQKXGVuZHttZGZyYW1lZH0KCgoK</div>
 
 
 
@@ -1883,7 +2001,7 @@ $(document).ready(function () {
 <!-- code folding -->
 <script>
 $(document).ready(function () {
-  window.initializeSourceEmbed("17_Simulated_Annealing.Rmd");
+  window.initializeSourceEmbed("15_two_example_of_EM_algorithm.Rmd");
   window.initializeCodeFolding("show" === "show");
 });
 </script>
