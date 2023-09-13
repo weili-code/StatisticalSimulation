@@ -1,17 +1,17 @@
 ---
-title: "MAT 653: Statistical Simulation"
+title: "MAT 653: Statistical Simulation--WL"
 author: Instructor$:$ Dr. Wei Li
 date: "`r Sys.Date()`"
 geometry: left=2cm, right=2cm, top=2cm, bottom=2cm
 linestretch: 1.3
 output:
+  pdf_document: 
+      include:
+        in_header: preamble_rmd.tex
   html_document:
     df_print: paged
     mathjax_config:
       - TeX-AMS-MML_HTMLorMML         
-  pdf_document: 
-      include:
-        in_header: preamble_rmd.tex
   html_notebook: default
 fontsize: 14pt
 header-includes:
