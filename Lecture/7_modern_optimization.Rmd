@@ -62,7 +62,8 @@ Data: $\left\{x_{i}, y_{i}\right\}_{i=1}^{n}$.
 Goal: find $w$ such that:
 $$\underset{w}{\operatorname{minimize}} L(w)=\frac{1}{n}\sum_{i=1}^{n}\ell\left(y_{i},f\left(x_{i}\right)\right),$$
 here $f(x_i)=f(x_i;w)$, i.e., parametrized by some parameters $w$. Special case, $\ell\left(y_{i},f\left(x_{i}\right)\right)=\left(y_{i}-f\left(x_{i}\right)\right)^{2}$.  
-In the neural networkwe setting, $w$ refers to both the weights and biases. 
+
+### Recap 
 
 Consider an iterative method to find the minimizaer $w^*$:
 $$w_{new}=w_{old}+\alpha \Delta$$ for some $\Delta$ and some fixed positive scalar $\alpha$.

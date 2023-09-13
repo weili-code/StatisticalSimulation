@@ -1646,9 +1646,9 @@ y_{i}\right\}_{i=1}^{n}\)</span>.</p>
 L(w)=\frac{1}{n}\sum_{i=1}^{n}\ell\left(y_{i},f\left(x_{i}\right)\right),\]</span>
 here <span class="math inline">\(f(x_i)=f(x_i;w)\)</span>, i.e.,
 parametrized by some parameters <span class="math inline">\(w\)</span>.
-Special case, <span class="math inline">\(\ell\left(y_{i},f\left(x_{i}\right)\right)=\left(y_{i}-f\left(x_{i}\right)\right)^{2}\)</span>.<br />
-In the neural networkwe setting, <span class="math inline">\(w\)</span>
-refers to both the weights and biases.</p>
+Special case, <span class="math inline">\(\ell\left(y_{i},f\left(x_{i}\right)\right)=\left(y_{i}-f\left(x_{i}\right)\right)^{2}\)</span>.</p>
+<div id="recap" class="section level3">
+<h3>Recap</h3>
 <p>Consider an iterative method to find the minimizaer <span class="math inline">\(w^*\)</span>: <span class="math display">\[w_{new}=w_{old}+\alpha \Delta\]</span> for some
 <span class="math inline">\(\Delta\)</span> and some fixed positive
 scalar <span class="math inline">\(\alpha\)</span>.</p>
@@ -1677,6 +1677,7 @@ parameters.</p>
 <p>Note that above is the <strong>vanilla gradient descent</strong>,
 aka, <strong>batch gradient descent</strong>. As we need to calculate
 the gradients for the whole dataset to perform just one update.</p>
+</div>
 </div>
 <div id="gradient-descent-with-momentum" class="section level1">
 <h1>Gradient Descent with Momentum</h1>
@@ -1766,7 +1767,7 @@ gradient descent Hence the oscillations are smaller and the chances of
 escaping the minima valley also smaller.</p>
 <p>An equivalent way is</p>
 <p><span class="math display">\[\begin{align*}
-w_{\text{look ahead},t} &amp;=w_{t} + \gamma \cdot {v}_{t-1} \\
+w_{\text{look ahead},t} &amp;=w_{t} + \gamma  {v}_{t-1} \\
 {v}_{t} &amp;=\gamma \cdot {v}_{t-1} - \alpha \nabla L(w_{\text{look
 ahead},t}) \\
 w_{t+1} &amp;=w_{t} + v_{t}
