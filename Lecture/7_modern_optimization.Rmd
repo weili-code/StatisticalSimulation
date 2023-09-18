@@ -107,9 +107,9 @@ Note that, if $\gamma=0$, we recover the gradient descent. When $\gamma\neq 0$ (
 \end{align*}
 Indeed the current velocity (or momentum) depends on the history of the gradients, thus the name "with momentum".
 
-With Momentum update, the parameter vector will build up velocity in any direction that has consistent gradient. It mains an exponentially decaying average of gradients, as shown in 
+With Momentum update, the parameter vector will build up velocity in any direction that has consistent gradient. The velocity effectively is exponentially decaying moving average of gradients, as shown in 
 $$v_t=\alpha \sum_{j=1}^t \gamma^{t-j} \nabla L(w_j).$$ 
-Therefore the weight for $\nabla L(w_j)$ is $\alpha \gamma^{t-j}$, a weight factor that decays exponentially as further in the past (i.e., $j$ decreases). So $\gamma$ is the exponential decay rate. The larger $\gamma$, the slower is the decay.
+Therefore the weight for $\nabla L(w_j)$ is $\gamma^{t-j}$, a weight factor that decays exponentially as further in the past (i.e., $j$ decreases). So $\gamma$ is the exponential decay rate. The larger $\gamma$, the slower is the decay.
 
 
 
@@ -142,9 +142,9 @@ valley as the momentum carries it out
 of the valley. We want to do something to reduce these oscillations. 
 
 We know that we will use our momentum term $\gamma v_{t-1}$ to
-move the parameters $w_t$. Computing $w_t-\gamma v_{t-1}$ thus gives us an approximation
-of the next position of the parameters (the gradient is missing for the full update), a rough idea where our parameters are going to be. We can now
-effectively look ahead by calculating the gradient evaluated not at our current
+move the parameters $w_t$. To attempt to decrease the effect of momentum preemptively, we compute $w_t-\gamma v_{t-1}$ which gives us an approximation
+of the next position of the parameters. We can now
+effectively "look ahead" by calculating the gradient evaluated not at our current
 parameters $w_t$ but at the approximate future position of our parameters.
 
 
@@ -173,15 +173,6 @@ def nesterov_gradient_descent():
         prev_vw=v_w
 ```
 
-An equivalent algorithm is:
-\begin{align*} 
-w_{\text{look ahead},t} &=w_{t} + \gamma  {v}_{t-1}, \\ 
-{v}_{t} &=\gamma \cdot {v}_{t-1} - \alpha \nabla L(w_{\text{look ahead},t}), \\ 
-w_{t+1} &=w_{t} + v_{t}.
-\end{align*}
-
-Looking ahead helps correcting the descending course quicker than momentum
-based gradient descent. Hence the oscillations are smaller and the chances of escaping the minima valley also smaller.
 
 An alternative form is to store only the look-ahead version of $w$, and update this version:
   \begin{align*} 
@@ -189,7 +180,120 @@ An alternative form is to store only the look-ahead version of $w$, and update t
 w_{\text{look ahead}, t+1} &=w_{\text{look ahead}, t}+\gamma v_{t-1}-(1+\gamma){v}_{t}. 
 \end{align*}
 
+Looking ahead helps correcting the descending course quicker than momentum
+based gradient descent. Hence the oscillations are smaller and the chances of escaping the minima valley also smaller.
 
+An equivalent algorithm is:
+\begin{align*} 
+w_{\text{look ahead},t} &=w_{t} + \gamma  {v}_{t-1}, \\ 
+{v}_{t} &=\gamma {v}_{t-1} - \alpha \nabla L(w_{\text{look ahead},t}), \\ 
+w_{t+1} &=w_{t} + v_{t}.
+\end{align*}
+
+
+
+
+
+
+
+## Adagrad, RMSProp, Adam
+
+**Adagrad**:
+  
+Note that the momentum and Nesterov momentum update all components of $w$ with the *same learning rate* $\alpha$.
+Adagrad, or the **adaptive subgradient method**, adapts a learning rate for each component of $w$. A component adaptive discount factor is in place to adjust learning rate. This factor is a square root of the cumulative sum of squared gradients.
+
+Its update rule is (interpreted element-wise):
+  \begin{align*}
+s_{t} &=s_{t-1}+\left(\nabla L(w_{t})\right)^{2} \\
+w_{t+1} &=w_{t}-\frac{\alpha}{\sqrt{s_{t}+\epsilon}} \nabla L( w_{t}), \quad \epsilon>0,
+\end{align*}
+or if setting $s_{0}=0$, for $j$-th element, 
+\begin{align*}
+&s_{t,j}=\sum_{t=1}^t (\nabla_j L(w_{t}))^{2},\\
+w_{t+1,j} &=w_{t,j}-\frac{\alpha}{\sqrt{s_{t,j}+\epsilon}} \nabla_j L( w_{t}). 
+\end{align*}
+
+Adagrad is particularly effective for situations where the gradient is sparse (only a subset of features are informative). It decreases the impact of parameters that have consistently large gradients, allowing parameters that are updated less frequently to have more influence. However, Adagrad has a downside: the components of its squared gradient accumulator, $s$'s are monotonically increasing. As a result, over time, parameters that are updated frequently may suffer from a vanishingly small effective learning rate before the model fully converges. Also Adagrad doesn't have a mechanism to "forget" past gradients, so it may become overly conservative in its updates.
+
+```python
+X, Y: data matrices
+def adagrad():
+    s_w=0
+    for b in range(max_epochs):
+        dw=0
+        for x, y in (X,Y): # update gradient across all observations
+            dw+= grad_w(w,x,y) 
+        s_w=s_w+dw**2
+        w=w-(alpha/sqrt(s_w+eps))*dw
+```
+
+**RMSProp**:
+  
+RMSProp (Root Mean Square Propagation) builds upon Adagrad to avoid the quick, one-directional reduction of the learning rate. It accomplishes this by normalizing the learning rate through an exponentially decaying moving average of past squared gradients.
+
+The update rule is
+\begin{align*}
+s_{t} &=\beta  s_{t-1}+(1-\beta)\left(\nabla L(w_{t})\right)^{2} \\
+w_{t+1} &=w_{t}-\frac{\alpha}{\sqrt{s_{t}+\epsilon}} \nabla L( w_{t})
+\end{align*}
+
+Note that setting $s_0=0$, we obtain 
+$$s_t=(1-\beta)\sum_{i=1}^t \beta^{t-i} (\nabla L(W_i))^2,$$ 
+therefore the weight for $(\nabla L(W_i))^2$ is $(1-\beta)\beta^{t-i}$, a weight factor that decays exponentially as further in the past (i.e., i decreases). So $\beta$ is the exponential decay rate. The larger $\beta$, the slower is the decay of the weight, the higher the effects the past gradients have on $s_t$.
+
+An alternative update rule is $w_{t+1} =w_{t}-\frac{\alpha}{\sqrt{s_{t}}+\epsilon} \nabla L( w_{t})$, where $\sqrt{s_t}$ is the squared root of exponentially decaying moving average of squared gradients (hence the name RMS).
+
+The value of $\epsilon$ is set at 10e-08, so that we do not get a divide by zero situation.
+Some reference suggests a value of $0.9$ for $\beta$, and a value of $0.001$ for the learning rate $\alpha$.
+
+```python
+X, Y: data matrices
+def rmsprop():
+    s_w=0
+    for b in range(max_epochs):
+        dw=0
+        for x, y in (X,Y): # update gradient across all observations
+            dw+= grad_w(w,x,y) 
+        s_w=beta1*s_w+(1-beta1)*dw**2
+        w=w-(alpha/sqrt(s_w+eps))*dw
+```
+
+**Adam**:
+  
+Adam, adaptive moment estimation method: it stores both an exponentially decaying squared gradients like RMSProp, but also an exponentially decaying gradient like momentum. Some references describe *Adam* as combining the advantages of both *AdaGrad* and *RMSProp*.
+
+\begin{align*}
+v_{t} &=\beta_{1} v_{t-1}+\left(1-\beta_{1}\right)  \nabla L( w_{t}) \text{ : (biased) decaying momentum}\\
+s_{t} &=\beta_{2} s_{t-1}+\left(1-\beta_{2}\right) \left(\nabla L( w_{t})\right)^{2} \text{ : (biased) decaying sq. gradients} \\
+\hat{v}_{t} &=\frac{v_{t}}{1-\beta_{1}^{t}}, \quad \hat{s}_{t}=\frac{s_{t}}{1-\beta_{2}^{t}} \text{ : corrected decaying momentum} \\
+w_{t+1} &=w_{t}-\frac{\alpha}{\sqrt{\hat{s}_{t}+\epsilon}}  \hat{v}_{t} \text{ : corrected decaying sq.gradients}
+\end{align*}
+
+```python
+X, Y: data matrices
+def adam():
+    v_w,s_w,v_w_hat,s_w_hat=0,0,0,0
+    for b in range(max_epochs):
+        dw=0
+        for x, y in (X,Y): # update gradient across all observations
+            dw+= grad_w(w,x,y) 
+        v_w=beta1*v_w+(1-beta1)*dw
+        s_w=beta2*s_w+(1-beta2)*dw**2
+        v_w_hat=v_w/(1-pow(beta1,b+1))
+        s_w_hat=s_w/(1-pow(beta2,b+1))        
+        w=w-(alpha/sqrt(s_w_hat+eps))*v_w_hat
+```
+
+Default choices $\beta_{1}=0.9, \beta_{2}=0.999$ and $\epsilon=10^{-8}$ and $\alpha=0.001$ or $0.0001$ seems to work best in many circumstances.
+
+Why need biased corrected terms $\hat{v}_t$ and $\hat{s}_t$? 
+
+The purpose of the bias correction term $1-\beta_1^t$ is to counteract the bias introduced by the initialization at zero and the decay factor $\beta_1$. When $t$ is small, $\beta_1^t$ will be relatively large, making the term $1-\beta_1^t$ small. As $t$ increases, $\beta_1^t$ approaches zero, making $1-\beta_1^t$ approach 1 . Therefore, the bias correction term effectively scales up the estimated average gradient $v_t$ at the beginning of training, where the bias is most significant, and gradually becomes less impactful as training progresses.
+  
+Note that we are taking a running average of the gradients as $v_{t}$. The reason we are doing this is that we don't want to rely too much on the current gradient and instead rely on the overall behaviour of the gradients over many timesteps. One way of looking at this is that we are interested in the expected value of the gradients and not on a single point estimate computed at time $t$. However, instead of computing $E\left[\nabla L(w_{t})\right]$ we are computing $v_{t}$ as the exponentially moving average. Ideally we would want $E\left[v_{t}\right]$ to be equal to $E\left[\nabla L(w_{t})\right]$. It turns out that for stationary $E\left[\nabla L(w_{t})\right]$, one can show that $E\left[\hat{v}_{t}\right]=E\left[\nabla L(w_{t})\right].$ 
+
+**Comments**: KM (2022) p.295. For adaptive learning rates methods, the base learning rate is still needed. It is shown that with the weighted exponentially decaying moving average methods, they may result in non-convergence even in convex problems.
 
 
 # Stochastic gradient descent
@@ -333,108 +437,6 @@ A sufficient condition for SGD to converge is the Robbins-Monro Condition:
 - Step decay - Reduce the learning rate by some factor every few epochs. A typical heuristic could be to observe the validation error, while training with a fixed learning rate, and reduce the learning rate by a constant (say 0.5 ) whenever there is no improvement in the validation error. Another method is to reduce the learning rate by half every 5 epochs, or by 0.1 every 20 epochs.
 - Exponential decay - such as $\alpha_t=\epsilon_0 e^{-k t}$ where $\epsilon_0$ and $k$ are hyperparameters and $t$ is the iteration number or epoch number.
 - Polynomial decay - such as $\alpha_t=\frac{\epsilon_0}{(1+k t)^a}$ where, $\epsilon_0$ and $a, k$ are the hyperparameters and $t$ is the iteration number. This is often used in stochastic gradient descent (i.e., batch size=1).
-
-
-
-## Adagrad, RMSProp, Adam
-
-**Adagrad**:
-  
-Note that the momentum and Nesterov momentum update all components of $w$ with the *same learning rate* $\alpha$.
-Adagrad, or the **adaptive subgradient method**, adapts a learning rate for each component of $w$. A component adaptive discount factor is in place to adjust learning rate. This factor is a square root of the cumulative sum of squared gradients.
-
-Its update rule is (interpreted element-wise):
-  \begin{align*}
-s_{t} &=s_{t-1}+\left(\nabla L(w_{t})\right)^{2} \\
-w_{t+1} &=w_{t}-\frac{\alpha}{\sqrt{s_{t}+\epsilon}} \nabla L( w_{t}), \quad \epsilon>0,
-\end{align*}
-or if setting $s_{0}=0$, for $j$-th element, 
-\begin{align*}
-&s_{t,j}=\sum_{t=1}^t (\nabla_j L(w_{t}))^{2},\\
-w_{t+1,j} &=w_{t,j}-\frac{\alpha}{\sqrt{s_{t,j}+\epsilon}} \nabla_j L( w_{t}). 
-\end{align*}
-
-Adagrad excels when the gradient is sparse. It dulls the inflennce of parameters with consistently high gradients, thereby increasing the influence of parameters with infrequent updates. One weakness of Adagrad is that components of $s$ are each strictly non-decreasing. Therefore, after a while, frequent parameters will have infinitesimally small effective learning rate before convergence.
-
-
-```python
-X, Y: data matrices
-def adagrad():
-    s_w=0
-    for b in range(max_epochs):
-        dw=0
-        for x, y in (X,Y): # update gradient across all observations
-            dw+= grad_w(w,x,y) 
-        s_w=s_w+dw**2
-        w=w-(alpha/sqrt(s_w+eps))*dw
-```
-
-**RMSProp**:
-  
-RMSProp (root mean square propgation) extends Adagrad to prevent a rapid monotonically decreasing learning rate. RMSprop divides the learning rate by an
-*exponentially decaying moving average* of squared gradients.
-
-The update rule is
-\begin{align*}
-s_{t} &=\beta  s_{t-1}+(1-\beta)\left(\nabla L(w_{t})\right)^{2} \\
-w_{t+1} &=w_{t}-\frac{\alpha}{\sqrt{s_{t}+\epsilon}} \nabla L( w_{t})
-\end{align*}
-
-Note that setting $s_0=0$, we obtain 
-$$s_t=(1-\beta)\sum_{i=1}^t \beta^{t-i} (\nabla L(W_i))^2,$$ 
-therefore the weight for $(\nabla L(W_i))^2$ is $(1-\beta)\beta^{t-i}$, a weight factor that decays exponentially as further in the past (i.e., i decreases). So $\beta$ is the exponential decay rate. The larger $\beta$, the slower is the decay of the weight, the higher the effects the past gradients have on $s_t$.
-
-An alternative update rule is $w_{t+1} =w_{t}-\frac{\alpha}{\sqrt{s_{t}}+\epsilon} \nabla L( w_{t})$, where $\sqrt{s_t}$ is the squared root of exponentially decaying moving average of squared gradients (hence the name RMS).
-
-The value of $\epsilon$ is set at 10e-08, so that we do not get a divide by zero situation.
-Some reference suggests a value of $0.9$ for $\beta$, and a value of $0.001$ for the learning rate $\alpha$.
-
-```python
-X, Y: data matrices
-def rmsprop():
-    s_w=0
-    for b in range(max_epochs):
-        dw=0
-        for x, y in (X,Y): # update gradient across all observations
-            dw+= grad_w(w,x,y) 
-        s_w=beta1*s_w+(1-beta1)*dw**2
-        w=w-(alpha/sqrt(s_w+eps))*dw
-```
-
-**Adam**:
-  
-Adam, adaptive moment estimation method: it stores both an exponentially decaying squared gradients like RMSProp, but also an exponentially decaying gradient like momentum. Some references describe *Adam* as combining the advantages of both *AdaGrad* and *RMSProp*.
-
-\begin{align*}
-v_{t} &=\beta_{1} v_{t-1}+\left(1-\beta_{1}\right)  \nabla L( w_{t}) \text{ : (biased) decaying momentum}\\
-s_{t} &=\beta_{2} s_{t-1}+\left(1-\beta_{2}\right) \left(\nabla L( w_{t})\right)^{2} \text{ : (biased) decaying sq. gradients} \\
-\hat{v}_{t} &=\frac{v_{t}}{1-\beta_{1}^{t}}, \quad \hat{s}_{t}=\frac{s_{t}}{1-\beta_{2}^{t}} \text{ : corrected decaying momentum} \\
-w_{t+1} &=w_{t}-\frac{\alpha}{\sqrt{\hat{s}_{t}+\epsilon}}  \hat{v}_{t} \text{ : corrected decaying sq.gradients}
-\end{align*}
-
-```python
-X, Y: data matrices
-def adam():
-    v_w,s_w,v_w_hat,s_w_hat=0,0,0,0
-    for b in range(max_epochs):
-        dw=0
-        for x, y in (X,Y): # update gradient across all observations
-            dw+= grad_w(w,x,y) 
-        v_w=beta1*v_w+(1-beta1)*dw
-        s_w=beta2*s_w+(1-beta2)*dw**2
-        v_w_hat=v_w/(1-pow(beta1,b+1))
-        s_w_hat=s_w/(1-pow(beta2,b+1))        
-        w=w-(alpha/sqrt(s_w_hat+eps))*v_w_hat
-```
-
-Default choices $\beta_{1}=0.9, \beta_{2}=0.999$ and $\epsilon=10^{-8}$ and $\alpha=0.001$ or $0.0001$ seems to work best in many circumstances.
-
-Why need biased corrected terms $\hat{v}_t$ and $\hat{s}_t$?
-  
-Note that we are taking a running average of the gradients as $v_{t}$. The reason we are doing this is that we don't want to rely too much on the current gradient and instead rely on the overall behaviour of the gradients over many timesteps. One way of looking at this is that we are interested in the expected value of the gradients and not on a single point estimate computed at time $t$. However, instead of computing $E\left[\nabla L(w_{t})\right]$ we are computing $v_{t}$ as the exponentially moving average. Ideally we would want $E\left[v_{t}\right]$ to be equal to $E\left[\nabla L(w_{t})\right]$. It turns out that for stationary $E\left[\nabla L(w_{t})\right]$, one can show that $E\left[\hat{v}_{t}\right]=E\left[\nabla L(w_{t})\right].$ 
-
-**Comments**: KM (2022) p.295. For adaptive learning rates methods, the base learning rate is still needed. It is shown that with the weighted exponentially decaying moving average methods, they may result in non-convergence even in convex problems.
-
 
 
 <!------------->
