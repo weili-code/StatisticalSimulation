@@ -132,7 +132,7 @@ $B_k$ is required to satisfy: (1). $B_k$ is symmetric; (2). $B_k(x_{k+1} - x_k) 
 
 Let $s_k= x_{k+1} - x_k$, $y_k = \nabla f(x_{k+1}) - \nabla f(x_k)$. If $B_0 >0$ and $s_k^T y_k > 0$ (curvature condition), the BFGS update produces positive definite approximation to Hessian. The curvature condition is satisfied if the Wolfe conditions are imposed on the line search for the step length $\alpha_k$ (see below).
 
-**BFGS**: The idea of BFGS method is to update $B_k$ using $B_{k+1}=B_k+\alpha {u} {u}^{T}+\beta {v} {v}^{T}$. Imposing the secant condition, $B_{k} {s}_k={y}_k$. Choosing ${u}={y}_k$ and ${v}=B_k {s}_k$, we can solve for $\alpha, \beta$:
+**BFGS**: The idea of BFGS method is to update $B_k$ using $B_{k+1}=B_k+\alpha {u} {u}^{T}+\beta {v} {v}^{T}$. Imposing the secant condition, $B_{k+1} {s}_k={y}_k$. Choosing ${u}={y}_k$ and ${v}=B_k {s}_k$, we can solve for $\alpha, \beta$:
 \begin{align*}
 \alpha=\frac{1}{{y}_k^T {s}_k}, \qquad \beta=-\frac{1}{{s}_k^T B_k {s}_k} .
 \end{align*}
@@ -308,6 +308,8 @@ By definition, $\nabla^2f(x_k)V_k=V_kD_k \text{ where } (D_k={\delta_j}$diagonal
 If $\delta_j<\epsilon$, then set $\delta_j\leftarrow 2\epsilon$, call the new $D_k\rightarrow\widetilde{D}_k$; 
 redefine Hessian to be $V_k\widetilde{D}_kV_K^T$. Note that $\nabla^2f(x_k)^{-1}=V_k \widetilde{D}_k^{-1}V^T_k$.
 
+More generally, we can modify $\nabla^2f(x_k)$ to $\nabla^2f(x_k)+\tau_kI$ where $\tau_k \geq -min\{0, \delta_1, \ldots, \delta_n\}$--this guarantees the modified Hessian to be positive definite.
+
 ## No linear-LS-Problems
 
 $f(x)=\frac{1}{2}\sum_{j=1}^{m}r_j^2(x),f:R^n\rightarrow R$, each $r_j$ is some residual term, assume $m \geq n$.
@@ -342,7 +344,7 @@ On the right hand side, the first term $\sum_{j=1}^{m}\nabla r_j(x)\nabla r_j(x)
 Recall Newton's Method: solve $p_k$ from $\nabla^2f(x_k)p_k=-\nabla f(x_k)$. Here we solve 
 $J_k^TJ_k p_k=-J_k^Tr_k$ iteratively. This method is sometimes called **Gauss-Newton method**.
 
-### Solve non-linear equatins
+### Solve non-linear equations
 
 $r: R^n\rightarrow R^n, r(x)=0$
 
@@ -351,7 +353,7 @@ We solve for $p_k=-J^{-1}(x_k)r(x_k)$ if $J(x_k)$ is invertible. Then $x_{k-1}\l
 
 Note: if the solution to $r(x)=0$ exists, then solving the equation is equivalent to the optimization problem $\min_{x\in \mathbb{R}^n}\|r(x)\|^2.$
 
-### L2-regularzation
+### L2-regularization
 
 **Example**: Linear LS problem
 
@@ -368,7 +370,7 @@ $$ \widetilde{\beta} =
  \alpha \\
 \beta
 \end{bmatrix}, \quad 
-\widetilde{x_i} = 
+\tilde{x_i} = 
 \begin{bmatrix}
  1 \\
 x_i
@@ -384,7 +386,7 @@ $$
 **Regularized logistic regression**:
 $\sum_{i=1}^{n}(\delta(\alpha+x_i^T\beta)-y_i)^2+\lambda||\beta||^2$
 
-*Note*: From a pure optimization's perspective, regularize is a simple convex function that is often added to a non-convex objective function slightly convexifying it and helping numerical optimization technique avoid some poor solution in some flat area.
+*Note*: From a pure optimization's perspective, regularizer is a simple convex function that is often added to a non-convex objective function slightly convexifying it and helping numerical optimization technique avoid some poor solution in some flat area.
 
 <!------------->
 <span style="background-color: #f5f5f5; padding: 5px; display: block;">

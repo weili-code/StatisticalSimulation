@@ -11,7 +11,7 @@
 
 <meta name="author" content="Instructor: Dr. Wei Li" />
 
-<meta name="date" content="2023-09-14" />
+<meta name="date" content="2023-09-19" />
 
 <title>MAT 653: Statistical Simulation</title>
 
@@ -1624,7 +1624,7 @@ display: none;
 <h1 class="title toc-ignore">MAT 653: Statistical Simulation</h1>
 <h4 class="author">Instructor<span class="math inline">\(:\)</span>
 Dr. Wei Li</h4>
-<h4 class="date">2023-09-14</h4>
+<h4 class="date">2023-09-19</h4>
 
 </div>
 
@@ -1635,7 +1635,7 @@ MathJax.Hub.Config({
 });
 </script>
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2023-09-14 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2023-09-19 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 <!------------->
 <div id="numerical-method-for-optimization" class="section level1">
@@ -1749,7 +1749,7 @@ the BFGS update produces positive definite approximation to Hessian. The
 curvature condition is satisfied if the Wolfe conditions are imposed on
 the line search for the step length <span class="math inline">\(\alpha_k\)</span> (see below).</p>
 <p><strong>BFGS</strong>: The idea of BFGS method is to update <span class="math inline">\(B_k\)</span> using <span class="math inline">\(B_{k+1}=B_k+\alpha {u} {u}^{T}+\beta {v}
-{v}^{T}\)</span>. Imposing the secant condition, <span class="math inline">\(B_{k} {s}_k={y}_k\)</span>. Choosing <span class="math inline">\({u}={y}_k\)</span> and <span class="math inline">\({v}=B_k {s}_k\)</span>, we can solve for <span class="math inline">\(\alpha, \beta\)</span>: <span class="math display">\[\begin{align*}
+{v}^{T}\)</span>. Imposing the secant condition, <span class="math inline">\(B_{k+1} {s}_k={y}_k\)</span>. Choosing <span class="math inline">\({u}={y}_k\)</span> and <span class="math inline">\({v}=B_k {s}_k\)</span>, we can solve for <span class="math inline">\(\alpha, \beta\)</span>: <span class="math display">\[\begin{align*}
 \alpha=\frac{1}{{y}_k^T {s}_k}, \qquad \beta=-\frac{1}{{s}_k^T B_k
 {s}_k} .
 \end{align*}\]</span> Then substitute <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> back into <span class="math inline">\(B_{k+1}=B_k+\alpha {u} {u}^{T}+\beta {v}
@@ -1946,6 +1946,9 @@ set <span class="math inline">\(\delta_j\leftarrow 2\epsilon\)</span>,
 call the new <span class="math inline">\(D_k\rightarrow\widetilde{D}_k\)</span>; redefine
 Hessian to be <span class="math inline">\(V_k\widetilde{D}_kV_K^T\)</span>. Note that <span class="math inline">\(\nabla^2f(x_k)^{-1}=V_k
 \widetilde{D}_k^{-1}V^T_k\)</span>.</p>
+<p>More generally, we can modify <span class="math inline">\(\nabla^2f(x_k)\)</span> to <span class="math inline">\(\nabla^2f(x_k)+\tau_kI\)</span> where <span class="math inline">\(\tau_k \geq -min\{0, \delta_1, \ldots,
+\delta_n\}\)</span>–this guarantees the modified Hessian to be positive
+definite.</p>
 </div>
 <div id="no-linear-ls-problems" class="section level2">
 <h2>No linear-LS-Problems</h2>
@@ -1983,8 +1986,8 @@ because of small residuals.</p>
 solve <span class="math inline">\(J_k^TJ_k p_k=-J_k^Tr_k\)</span>
 iteratively. This method is sometimes called <strong>Gauss-Newton
 method</strong>.</p>
-<div id="solve-non-linear-equatins" class="section level3">
-<h3>Solve non-linear equatins</h3>
+<div id="solve-non-linear-equations" class="section level3">
+<h3>Solve non-linear equations</h3>
 <p><span class="math inline">\(r: R^n\rightarrow R^n,
 r(x)=0\)</span></p>
 <p><span class="math inline">\(r(x_k+p)\approx r(x_k)+J(x_k)p\)</span>
@@ -1994,8 +1997,8 @@ exists, then solving the equation is equivalent to the optimization
 problem <span class="math inline">\(\min_{x\in
 \mathbb{R}^n}\|r(x)\|^2.\)</span></p>
 </div>
-<div id="l2-regularzation" class="section level3">
-<h3>L2-regularzation</h3>
+<div id="l2-regularization" class="section level3">
+<h3>L2-regularization</h3>
 <p><strong>Example</strong>: Linear LS problem</p>
 <p><span class="math inline">\(\min
 f(x)=||Ax-b||^2=x^TA^TAx-2b^TAx+b^Tb\)</span></p>
@@ -2010,7 +2013,7 @@ y_i\)</span>; logistic function (sigmoid): <span class="math inline">\(\delta(t)
 \alpha \\
 \beta
 \end{bmatrix}, \quad
-\widetilde{x_i} =
+\tilde{x_i} =
 \begin{bmatrix}
 1 \\
 x_i
@@ -2023,13 +2026,13 @@ RSS(\widetilde{\beta})&amp;=\frac{d}{d_{\widetilde{\beta}}}\sum_{i=1}^{n}(\delta
 \end{aligned}
 \]</span></p>
 <p><strong>Regularized logistic regression</strong>: <span class="math inline">\(\sum_{i=1}^{n}(\delta(\alpha+x_i^T\beta)-y_i)^2+\lambda||\beta||^2\)</span></p>
-<p><em>Note</em>: From a pure optimization’s perspective, regularize is
+<p><em>Note</em>: From a pure optimization’s perspective, regularizer is
 a simple convex function that is often added to a non-convex objective
 function slightly convexifying it and helping numerical optimization
 technique avoid some poor solution in some flat area.</p>
 <!------------->
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2023-09-14 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2023-09-19 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 </div>
 </div>

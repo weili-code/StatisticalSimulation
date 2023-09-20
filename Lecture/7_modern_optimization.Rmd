@@ -76,7 +76,7 @@ Let $\beta$ be the angle between $\Delta$ and $\nabla L(w)$, by linear algebra f
 $$-1 \leq \cos(\beta)= \frac{ \Delta^T \nabla L(w)}{ \|\Delta\| \|\nabla L(w)\|}\leq 1.$$
 Therefore, $L(w+\alpha \Delta)-L(w)=\alpha \Delta^T \nabla L(w)= \alpha  \|\Delta\| \|\nabla L(w)\|\cos(\beta)$ becomes smallest (most negative) when $cos(\beta)=-1$,i.e., $\beta=180^{\circ}.$
 
-Therefore, the best direction $\Delta$ is the opposite direction of the gradient $\nabla L(w)$. The solution $\nabla = -\nabla L(w)$ is the steepest descent direction.
+Therefore, the best direction $\Delta$ is the opposite direction of the gradient $\nabla L(w)$. The solution $\Delta = -\nabla L(w)$ is the steepest descent direction.
 
 ```python
 X, Y: data matrices
@@ -367,8 +367,8 @@ In the mini-batch gradient descent method, the parameters are updated based only
 
 \begin{align*}
 \begin{array}{cc}
-\text { Algorithm } & \# \text { of steps in } 1 \text{epoch } \\
-\hline \text { Vanilla (Batch) Gradient Descent } & 1 \\
+\text { Algorithm } & \# \text { of steps per epoch } \\
+\hline \text { (Batch) Gradient Descent } & 1 \\
 \text { Stochastic Gradient Descent } & \mathrm{n} \\
 \text { Mini-Batch Gradient Descent } & \frac{n}{B} \\
 \hline
