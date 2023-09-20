@@ -214,7 +214,7 @@ or if setting $s_{0}=0$, for $j$-th element,
 w_{t+1,j} &=w_{t,j}-\frac{\alpha}{\sqrt{s_{t,j}+\epsilon}} \nabla_j L( w_{t}). 
 \end{align*}
 
-Adagrad is particularly effective for situations where the gradient is sparse (only a subset of features are informative). It decreases the impact of parameters that have consistently large gradients, allowing parameters that are updated less frequently to have more influence. However, Adagrad has a downside: the components of its squared gradient accumulator, $s$'s are monotonically increasing. As a result, over time, parameters that are updated frequently may suffer from a vanishingly small effective learning rate before the model fully converges. Also Adagrad doesn't have a mechanism to "forget" past gradients, so it may become overly conservative in its updates.
+Adagrad is particularly effective for situations where the gradient is sparse (only a subset of features are informative). It decreases the impact of parameters that have consistently large gradients, allowing parameters that are updated less frequently to have more influence. However, Adagrad has a downside: the components of its squared gradient accumulator, $s$'s may grow too fast. As a result, over time, parameters that are updated frequently may suffer from a vanishingly small effective learning rate before the model fully converges. Also Adagrad doesn't have a mechanism to "forget" past gradients, so it may become overly conservative in its updates.
 
 ```python
 X, Y: data matrices

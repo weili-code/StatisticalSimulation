@@ -11,7 +11,7 @@
 
 <meta name="author" content="Instructor: Dr. Wei Li" />
 
-<meta name="date" content="2023-09-19" />
+<meta name="date" content="2023-09-20" />
 
 <title>MAT 653: Statistical Simulation</title>
 
@@ -1624,7 +1624,7 @@ display: none;
 <h1 class="title toc-ignore">MAT 653: Statistical Simulation</h1>
 <h4 class="author">Instructor<span class="math inline">\(:\)</span>
 Dr. Wei Li</h4>
-<h4 class="date">2023-09-19</h4>
+<h4 class="date">2023-09-20</h4>
 
 </div>
 
@@ -1635,7 +1635,7 @@ MathJax.Hub.Config({
 });
 </script>
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2023-09-19 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2023-09-20 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 <!------------->
 <div id="gradient-descent" class="section level1">
@@ -1793,12 +1793,11 @@ is sparse (only a subset of features are informative). It decreases the
 impact of parameters that have consistently large gradients, allowing
 parameters that are updated less frequently to have more influence.
 However, Adagrad has a downside: the components of its squared gradient
-accumulator, <span class="math inline">\(s\)</span>’s are monotonically
-increasing. As a result, over time, parameters that are updated
-frequently may suffer from a vanishingly small effective learning rate
-before the model fully converges. Also Adagrad doesn’t have a mechanism
-to “forget” past gradients, so it may become overly conservative in its
-updates.</p>
+accumulator, <span class="math inline">\(s\)</span>’s may grow too fast.
+As a result, over time, parameters that are updated frequently may
+suffer from a vanishingly small effective learning rate before the model
+fully converges. Also Adagrad doesn’t have a mechanism to “forget” past
+gradients, so it may become overly conservative in its updates.</p>
 <pre class="python"><code>X, Y: data matrices
 def adagrad():
     s_w=0
@@ -2065,7 +2064,7 @@ used in stochastic gradient descent (i.e., batch size=1).</li>
 </ul>
 <!------------->
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2023-09-19 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2023-09-20 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 </div>
 
