@@ -1,0 +1,171 @@
+---
+title: "MAT 653: Statistical Simulation"
+author: Instructor$:$ Dr. Wei Li
+date: "`r Sys.Date()`"
+geometry: left=2cm, right=2cm, top=2cm, bottom=2cm
+linestretch: 1.3
+output:
+  html_document:
+    df_print: paged
+    mathjax_config:
+      - TeX-AMS-MML_HTMLorMML   
+  pdf_document: 
+      include:
+        in_header: preamble_rmd.tex
+  html_notebook: default
+fontsize: 14pt
+header-includes:
+- \usepackage{amsmath}
+- \usepackage[linewidth=1pt]{mdframed}
+- \newcommand\inner[2]{\left\langle#1,#2\right\rangle}
+- \newcommand\floor[1]{\lfloor#1\rfloor}
+- \newcommand\ceil[1]{\lceil#1\rceil}
+- \newcommand\mb[1]{\mathbf{#1}}
+- \newcommand\bs[1]{\boldsymbol{#1}}
+- \newcommand\mr[1]{\mathrm{#1}}
+- \newcommand\wh[1]{\widehat{#1}}
+- \newcommand\op[1]{\operatorname{#1}}
+- \newcommand\mbb[1]{\mathbb{#1}}
+- \usepackage{caption}
+- \usepackage{mathtools}
+- \captionsetup[figure]{labelformat=empty}
+- \newcommand{\wei}[1]{\textcolor{orange}{(Wei:#1)}}
+---
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+
+
+<span style="background-color: #f5f5f5; padding: 5px; display: block;">
+    <span style="width: 25%; display: inline-block; text-align: left;">
+        [Back](javascript:window.history.back())
+    </span>
+    <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
+        **Updated:** `r Sys.Date()`
+    </span>
+    <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+        Statistical Simulation, Wei Li
+    </span>
+</span>
+
+<!------------->
+
+# Random Variable Generation
+
+**Definition**: A random variable $U$ has a uniform distribution $U \sim U(0,1)$ if $P(U\in (a,b))=b-a$ for any $0<a<b<1$.
+
+**Definition**: A random variable $X$ has PDF (probability density function) $f(x)$ if $P(X \in A)=\int_A f(x)dx$ for some $f(x) \geq 0$ and $\int_{\mathbb{R}} f(x)dx=1$.
+
+- **PDF** $f(x)$:
+1. $f(x) \ge 0$
+2. $\int_{\mathbb{R}}f(x)dx=1$
+
+- The **support** of $X$ is $\left\{ x: f(x) > 0\right\}$, denoted by $\mathcal{X}$.
+
+- **CDF**: the CDF of $X$ is given by $F(a)=P(X \leq a)$, for all $a \in \mathbb{R}$.
+
+1. $\displaystyle \lim_{x \to -\infty}F(a)=0$
+
+2. $\displaystyle \lim_{x \to \infty}F(a)=1$
+
+3. $F(a)$ is nondecreasing function.
+
+4. $\displaystyle \lim_{h_{n} \to 0^+}F(a+h_{n})=F(a)$. i.e., $F(a)$ is right continuous.
+
+**Fact**: Any non-negative function $\tilde{f}$ that is integrable on its support can be used to construct a PDF by normalization.
+
+**Examples**:
+
+1. $\tilde{f}(x)=e^{-\frac{x^2}{2}}$, $\mathcal{X}=(-\infty,\infty)$. Let 
+   $f(x)=\tilde{f}(x)/\int_{-\infty}^{\infty} \tilde{f}(x)dx= e^{-\frac{x^2}{2}}/\sqrt{2\pi}$. So $e^{-\frac{x^2}{2}}$ is called the kernel of $N(0,1)$. We write $f(x) \propto e^{-\frac{x^2}{2}}$.
+2. $\tilde{f}(x)=x^{\alpha-1} e^{-\beta x}$,  $x>0, \alpha,\beta>0$. Let $f(x)=\tilde{f(x)}/\int_{0}^{\infty} x^{\alpha-1} e^{-\beta x}dx =\beta^{\alpha}x^{\alpha-1} e^{-\beta x}1(x>0)/\Gamma(\alpha) \sim Gamma(\alpha,\beta)$. We write $f(x) \propto x^{\alpha-1} e^{-\beta x}.$
+  
+### Inverse transform sampling
+(works only for $\mathbb{R}$)
+
+**Theorem**: Suppose $X$ has a CDF $F$, i.e. $F(x)=P(X \leq x)$. Suppose $F$ is invertible, and define $Y=F^{-1}(U)$ where $U\sim U(0,1)$. Then $Y \sim F$.
+
+More generally, define the inverse of $F$ as $F^{-1}(u)=\inf \left\{ x \in \mathbb{R}:F(x) \geq u \right\}$.
+
+**Fact 1**: For every $0<p<1$, $F \circ F^{-1}(p) \geq p$. The equality holds iff (if and only if) $p$ in the range of $F$.
+
+**Fact 2**: For every $0<p<1$ and $x_{0} \in \mathbb{R}$, $p \leq F(x_{0})$ iff $F^{-1}(p) \leq x_{0}$.
+
+**Theorem**: Let $F: \mathbb{R} \mapsto [0, 1]$ be a distribution function and $U \sim U(0,1)$. Define $Y=F^{-1}(U)$. Then $Y \sim F$.
+
+
+**Example**: ref. Example 2.1 from R.C. $X \sim exp(1)$, i.e. the CDF of $exp(1)$ is $F(x)=1- e^{-x}$. Then $F^{-1}(u)= -log(1-u)$. To generate this random variable, 1. generate $u \sim U(0,1)$. 2. evaluate $F^{-1}(u)$.
+
+**Remark**: We'll need to compute the inverse CDF, which may not always be easy to compute. The method is more difficult to be applied if a random vector is involved.
+
+
+
+## The Accept-Reject Method
+
+Motivation: Suppose we wish to generate random variables following a distribution $f$, however we can only generate random variables from another distribution $g$ (that somehow relates to $f$). 
+
+**Assumptions**: 
+
+i. For all $x$, if $f(x)>0$ then $g(x)>0$, or equivalently $supp(f)\subseteq supp(g)$.
+ii. For all $x$, $f(x) \leq Mg(x)$, for some $M$ and $M\geq 1$.
+
+**Algorithm** to generate $X\sim f$:
+
+1. Generate $Y\sim g$ and $U \sim unif(0,1)$ independently
+2. Accept $X=Y$ if $U\leq \frac{f(Y)}{Mg(Y)}$, otherwise repeat step 1.
+
+Proof idea: 
+Consider the cumulative distribution function as $P(Y \leq x \mid U \leq (f(Y)/Mg(Y)))$ and show this is equal to $P(X\leq x)$ by first rewriting using formula for conditional probability, then direct computation using the integral over the correct ranges to calculate the relevant probabilities.
+
+
+**Remark**: 
+
+- When $f,g$ are probability density functions and $M\geq 1$ then $P(U\leq (f(Y)/Mg(Y))) = 1/M$, so the acceptance probability is $1/M$, as such we should choose the smallest M possible in order to minimize the number of draws that are rejected, so $M = max(f(x)/g(x))$ is an ideal choice.
+- When only the kernels of some probability density functions$\tilde{f},\tilde{g}$ are known (but still we can draw from $g$), then the same method can still be used to generate from the actual $f$ by applying the algorithm with $\tilde{M}>0$ when $\tilde{f}\leq \tilde{M}\tilde{g}$. Note that now $1/\tilde{M}$ needs not be equal to the probability of acceptance.
+- The Drawback of Accept-Reject method is that when proposals are rejected, there is no use for the generated values, wasting computational time.
+
+## The Fundamental Theorem of Simulation
+
+**Theorem**: If $f$ is a probability density function in $\mathbb{R}^d$ (supported on $\mathcal{X}$), then we can write $f(x)=\int_0^{f(x)}1du$ where $1$ is the p.d.f of the uniform random variable. Hence we can consider $f$ as the marginal distribution of $X$ in the joint distribution 
+$$(X,U)\sim \rm{unif}(\{(x,u):0<u<f(x), x\in \mathcal{X}\}).$$
+
+Therefore, generating $X\sim f$ can be thought as a procedure of generating $(X,U)\sim \rm{unif}(\{(x,u):0<u<f(x)\})$ from where then collecting the generated $X$'s. So this is essentially the same as sampling uniformly from the area under the curve of $f$. 
+
+How do we sample uniformly from the area under the curve of $f$, i.e., generate $(X,U)\sim \rm{unif}(\{(x,u):0<u<f(x)\})$?
+
+1. Can we generate $X \sim f$ then generate $U\mid f(X)=f(x) \sim  \mbox{unif}(0,f(x))$? This would indeed generate $(X,U)\sim \rm{unif}(\{(x,u):0<u<f(x)\})$ (can prove it). But the answer is no, since the purpose of this simulation is to make simulating $f$ simpler, so simulating from $f$ directly is pointless.
+2. Can we generate $U$ from its marginal distribution and then generate $f\mid U$? No, this would require knowing how to generate the marginal distribution of $U$, and generate $f$ given $U$, both may be not feasible.
+
+**Solution**: Suppose we have another p.d.f. $g$ such that $f(\cdot)\leq Mg(\cdot)$. So we can see that $\mbox{supp}(f)\subseteq \mbox{supp}(g)$. Also suppose we can draw from some larger set $(Y,U)\sim \mbox{unif}\{(y,u):0<u<g(y)\}$. Then iteratively draw from this distribution and keep the pairs of $(y,u)$'s such that $y$ that satisfy $u<f(y)$. Then we collect these $y$'s--the samples we keep will satisfy $y\sim f$.
+
+ 
+**Corollary**: If $X\sim f$ and we have another distribution $g$ so that $f(\cdot)\leq Mg(\cdot)$, for some $M\geq 1$ and $f,g :\mathbb{R}^d\to \mathbb{R}$. Then to simulate $f$ it suffices to generate:
+
+* $Y\sim g$ and $U\mid Y=y \sim \mbox{unif}(0,Mg(y))$, collect $\{(y,u)\}$
+* Keep those pairs  $(y,u)$ that satisfy $u<f(y)$, discard $u$'s and let the kept $y$ be $x$.
+
+We can show that each of the kept $Y \sim f$. Thus the whole collection selected is a sample from $f$.
+
+
+**Intuitive argument**:  The **first step** of the corollary creates a uniform distribution on $E = \{(y,u):0<u<Mg(y)\}\subseteq \mathbb{R}^{d+1}$ (can prove it). Further, the uniform distribution on $E$ gives another uniform distribution when restricted onto a subset of $E$ (intuitively correct, but why?). Note that $\{(x,u):0<u<f(x) \}$ is a subset of $E$. The **second step** of the corollary practically enforces this restriction of $E$ onto $\{(x,u):0<u<f(x) \}$, thus retaining samples that are essentially uniform draws on $\{(x,u):0<u<f(x) \}$. Finally, invoking the Fundamental Theorem of Simulation, the uniform drawing on the restricted set $\{(x,u):0<u<f(x) \}$ has a marginal pdf for $x$ which is the target pdf $f$, giving the conclusion of the corollary.
+A formal proof is given in the class.
+
+**Remark**: The above corollary is equivalent to the Accept-reject method. The algorithm also works for $x \propto \tilde{f}$ where $\tilde{f}$ is the kernel function of some pdf $f$.
+
+
+<!------------->
+<span style="background-color: #f5f5f5; padding: 5px; display: block;">
+    <span style="width: 25%; display: inline-block; text-align: left;">
+        [Back](javascript:window.history.back())
+    </span>
+    <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
+        **Updated:** `r Sys.Date()`
+    </span>
+    <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+        Statistical Simulation, Wei Li
+    </span>
+</span>

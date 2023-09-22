@@ -10,8 +10,8 @@
 
 
 <meta name="author" content="Instructor: Dr. Wei Li" />
-<meta name="author" content="Scribe: Liming ZHAO" />
 
+<meta name="date" content="2023-09-22" />
 
 <title>MAT 653: Statistical Simulation</title>
 
@@ -1624,9 +1624,7 @@ display: none;
 <h1 class="title toc-ignore">MAT 653: Statistical Simulation</h1>
 <h4 class="author">Instructor<span class="math inline">\(:\)</span>
 Dr. Wei Li</h4>
-<h4 class="author">Scribe<span class="math inline">\(:\)</span> Liming
-ZHAO</h4>
-<h4 class="date">Oct 5st, 2021</h4>
+<h4 class="date">2023-09-22</h4>
 
 </div>
 
@@ -1636,34 +1634,26 @@ MathJax.Hub.Config({
   TeX: { equationNumbers: { autoNumber: "AMS" } }
 });
 </script>
+<p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
+<strong>Updated:</strong> 2023-09-22 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+Statistical Simulation, Wei Li </span> </span></p>
+<!------------->
 <div id="random-variable-generation" class="section level1">
 <h1>Random Variable Generation</h1>
-<div id="reading-parts" class="section level2">
-<h2>Reading Parts:</h2>
-<p>1.Chapter 2 from Introducing Monte Carlo Methods with R, by
-Christian. P. Robert and George Casella.</p>
-<p>2.Section 1.4.1, 1.4.2, 1.4.3, 1.4.4 from An Introduction to
-Statistical Computing: A Simulation-based Approach, by Jochen Voss.</p>
-</div>
-<div id="definition" class="section level2">
-<h2>Definition</h2>
-<p>A random variable U has a uniform distribution <span class="math inline">\(U \sim U(0,1)\)</span> if <span class="math inline">\(P(U\in (a,b))=b-a\)</span> for <span class="math inline">\(0&lt;a&lt;b&lt;1\)</span>.</p>
-</div>
-<div id="definition-1" class="section level2">
-<h2>Definition</h2>
-<p>A random variable has PDF (probability density function) <span class="math inline">\(f(x)\)</span> if <span class="math inline">\(P(X
-\in A)=\int_A f(x)dx\)</span>.</p>
+<p><strong>Definition</strong>: A random variable <span class="math inline">\(U\)</span> has a uniform distribution <span class="math inline">\(U \sim U(0,1)\)</span> if <span class="math inline">\(P(U\in (a,b))=b-a\)</span> for any <span class="math inline">\(0&lt;a&lt;b&lt;1\)</span>.</p>
+<p><strong>Definition</strong>: A random variable <span class="math inline">\(X\)</span> has PDF (probability density function)
+<span class="math inline">\(f(x)\)</span> if <span class="math inline">\(P(X \in A)=\int_A f(x)dx\)</span> for some <span class="math inline">\(f(x) \geq 0\)</span> and <span class="math inline">\(\int_{\mathbb{R}} f(x)dx=1\)</span>.</p>
 <ul>
 <li><strong>PDF</strong> <span class="math inline">\(f(x)\)</span>:</li>
 </ul>
 <ol style="list-style-type: decimal">
-<li><p><span class="math inline">\(f(x) \ge 0\)</span></p></li>
-<li><p><span class="math inline">\(\int_{\mathbb{R}}f(x)dx=1\)</span></p></li>
+<li><span class="math inline">\(f(x) \ge 0\)</span></li>
+<li><span class="math inline">\(\int_{\mathbb{R}}f(x)dx=1\)</span></li>
 </ol>
-<p>The support of X is <span class="math inline">\(\left\{ x: f(x) &gt;
-0\right\}\)</span> denoted by <span class="math inline">\(\mathcal{X}\)</span>.</p>
 <ul>
-<li><strong>CDF</strong>: the CDF of X (on <span class="math inline">\(\mathbb{R}\)</span>) is given by <span class="math inline">\(F(a)=P(X \leq a)\)</span>, for all <span class="math inline">\(a \in \mathbb{R}\)</span>.</li>
+<li><p>The <strong>support</strong> of <span class="math inline">\(X\)</span> is <span class="math inline">\(\left\{
+x: f(x) &gt; 0\right\}\)</span>, denoted by <span class="math inline">\(\mathcal{X}\)</span>.</p></li>
+<li><p><strong>CDF</strong>: the CDF of <span class="math inline">\(X\)</span> is given by <span class="math inline">\(F(a)=P(X \leq a)\)</span>, for all <span class="math inline">\(a \in \mathbb{R}\)</span>.</p></li>
 </ul>
 <ol style="list-style-type: decimal">
 <li><p><span class="math inline">\(\displaystyle \lim_{x \to
@@ -1673,46 +1663,151 @@ Statistical Computing: A Simulation-based Approach, by Jochen Voss.</p>
 <li><p><span class="math inline">\(F(a)\)</span> is nondecreasing
 function.</p></li>
 <li><p><span class="math inline">\(\displaystyle \lim_{h_{n} \to
-0^+}F(a+h_{n})=F(a)\)</span>. i.e., F(a) is right continuous.</p></li>
+0^+}F(a+h_{n})=F(a)\)</span>. i.e., <span class="math inline">\(F(a)\)</span> is right continuous.</p></li>
 </ol>
 <p><strong>Fact</strong>: Any non-negative function <span class="math inline">\(\tilde{f}\)</span> that is integrable on its
 support can be used to construct a PDF by normalization.</p>
 <p><strong>Examples</strong>:</p>
-<p>1.<span class="math inline">\(\tilde{f}(x)=e^{-\frac{x^2}{2}}\)</span>, <span class="math inline">\(\mathcal{X}=(-\infty,\infty)\)</span></p>
-<p><span class="math inline">\(f(x)=\frac{\tilde{f}(x)}
-{\int_{-\infty}^{\infty} \tilde{f}(x)dx}\)</span> (normalization) <span class="math inline">\(= \frac
-{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}\)</span> where <span class="math inline">\(e^{-\frac{x^2}{2}}\)</span> is the kernel of <span class="math inline">\(N(0,1)\)</span>.</p>
-<p><span class="math inline">\(f(x) \propto
-e^{-\frac{x^2}{2}}\)</span>.</p>
-<p>2.<span class="math inline">\(\tilde{f}(x)=x^{\alpha-1} e^{-\beta
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(\tilde{f}(x)=e^{-\frac{x^2}{2}}\)</span>, <span class="math inline">\(\mathcal{X}=(-\infty,\infty)\)</span>. Let <span class="math inline">\(f(x)=\tilde{f}(x)/\int_{-\infty}^{\infty}
+\tilde{f}(x)dx= e^{-\frac{x^2}{2}}/\sqrt{2\pi}\)</span>. So <span class="math inline">\(e^{-\frac{x^2}{2}}\)</span> is called the kernel
+of <span class="math inline">\(N(0,1)\)</span>. We write <span class="math inline">\(f(x) \propto e^{-\frac{x^2}{2}}\)</span>.</li>
+<li><span class="math inline">\(\tilde{f}(x)=x^{\alpha-1} e^{-\beta
 x}\)</span>, <span class="math inline">\(x&gt;0,
-\alpha,\beta&gt;0\)</span></p>
-<p><span class="math inline">\(f(x)=\frac{\tilde{f(x)}}
-{\int_{0}^{\infty} x^{\alpha-1} e^{-\beta x}dx}
-=\frac{\beta^{\alpha}}{\Gamma(\alpha)}x^{\alpha-1} e^{-\beta x}\)</span>
-<span class="math inline">\((x&gt;0)\)</span> <span class="math inline">\(\sim Gamma(\alpha,\beta)\)</span></p>
-<p><span class="math inline">\(f(x) \propto x^{\alpha-1} e^{-\beta
-x}\)</span></p>
-</div>
-</div>
-<div id="probability-integral-transform" class="section level1">
-<h1>Probability integral transform</h1>
+\alpha,\beta&gt;0\)</span>. Let <span class="math inline">\(f(x)=\tilde{f(x)}/\int_{0}^{\infty} x^{\alpha-1}
+e^{-\beta x}dx =\beta^{\alpha}x^{\alpha-1} e^{-\beta
+x}1(x&gt;0)/\Gamma(\alpha) \sim Gamma(\alpha,\beta)\)</span>. We write
+<span class="math inline">\(f(x) \propto x^{\alpha-1} e^{-\beta
+x}.\)</span></li>
+</ol>
+<div id="inverse-transform-sampling" class="section level3">
+<h3>Inverse transform sampling</h3>
 <p>(works only for <span class="math inline">\(\mathbb{R}\)</span>)</p>
-<p>Suppose X has a CDF <span class="math inline">\(F\)</span>,
-i.e. <span class="math inline">\(F(x)=P(X \leq x)\)</span>. If <span class="math inline">\(F\)</span> is invertible and <span class="math inline">\(Y=F^{-1}(U)\)</span>. <span class="math inline">\(U\sim U(0,1)\)</span>.</p>
-<p>Then <span class="math inline">\(Y \sim F\)</span>.</p>
-<p>More generally, define the inverse of <span class="math inline">\(F\)</span> as <span class="math inline">\(F^{-1}(u)=inf \left\{ x \in \mathbb{R}:F(x) \geq u
-\right\}\)</span>.</p>
-<p><strong>Fact1</strong>: For every <span class="math inline">\(0&lt;p&lt;1\)</span>, <span class="math inline">\(F \circ F^{-1}(p) \geq p\)</span>. The equality
+<p><strong>Theorem</strong>: Suppose <span class="math inline">\(X\)</span> has a CDF <span class="math inline">\(F\)</span>, i.e. <span class="math inline">\(F(x)=P(X \leq x)\)</span>. Suppose <span class="math inline">\(F\)</span> is invertible, and define <span class="math inline">\(Y=F^{-1}(U)\)</span> where <span class="math inline">\(U\sim U(0,1)\)</span>. Then <span class="math inline">\(Y \sim F\)</span>.</p>
+<p>More generally, define the inverse of <span class="math inline">\(F\)</span> as <span class="math inline">\(F^{-1}(u)=\inf \left\{ x \in \mathbb{R}:F(x) \geq
+u \right\}\)</span>.</p>
+<p><strong>Fact 1</strong>: For every <span class="math inline">\(0&lt;p&lt;1\)</span>, <span class="math inline">\(F \circ F^{-1}(p) \geq p\)</span>. The equality
 holds iff (if and only if) <span class="math inline">\(p\)</span> in the
 range of <span class="math inline">\(F\)</span>.</p>
-<p><strong>Fact2</strong>: For every <span class="math inline">\(0&lt;p&lt;1\)</span> and <span class="math inline">\(x_{0} \in \mathbb{R}\)</span>, <span class="math inline">\(p \leq F(x_{0})\)</span> iff <span class="math inline">\(F^{-1}(p) \leq x_{0}\)</span>.</p>
-<p><strong>Example 2.1 from R.C.</strong>:</p>
-<p><span class="math inline">\(X \sim exp(1)\)</span>, the CDF of <span class="math inline">\(exp(1)\)</span> is <span class="math inline">\(F(x)=1- e^{-x}\)</span>.</p>
-<p>Then <span class="math inline">\(F^{-1}(u)= -log(1-u)\)</span>.</p>
-<p>1.Generate <span class="math inline">\(u \sim U(0,1)\)</span>.</p>
-<p>2.Evaluate <span class="math inline">\(F^{-1}(u)\)</span>, gives one
-sample.</p>
+<p><strong>Fact 2</strong>: For every <span class="math inline">\(0&lt;p&lt;1\)</span> and <span class="math inline">\(x_{0} \in \mathbb{R}\)</span>, <span class="math inline">\(p \leq F(x_{0})\)</span> iff <span class="math inline">\(F^{-1}(p) \leq x_{0}\)</span>.</p>
+<p><strong>Theorem</strong>: Let <span class="math inline">\(F:
+\mathbb{R} \mapsto [0, 1]\)</span> be a distribution function and <span class="math inline">\(U \sim U(0,1)\)</span>. Define <span class="math inline">\(Y=F^{-1}(U)\)</span>. Then <span class="math inline">\(Y \sim F\)</span>.</p>
+<p><strong>Example</strong>: ref. Example 2.1 from R.C. <span class="math inline">\(X \sim exp(1)\)</span>, i.e. the CDF of <span class="math inline">\(exp(1)\)</span> is <span class="math inline">\(F(x)=1- e^{-x}\)</span>. Then <span class="math inline">\(F^{-1}(u)= -log(1-u)\)</span>. To generate this
+random variable, 1. generate <span class="math inline">\(u \sim
+U(0,1)\)</span>. 2. evaluate <span class="math inline">\(F^{-1}(u)\)</span>.</p>
+<p><strong>Remark</strong>: We’ll need to compute the inverse CDF, which
+may not always be easy to compute. The method is more difficult to be
+applied if a random vector is involved.</p>
+</div>
+<div id="the-accept-reject-method" class="section level2">
+<h2>The Accept-Reject Method</h2>
+<p>Motivation: Suppose we wish to generate random variables following a
+distribution <span class="math inline">\(f\)</span>, however we can only
+generate random variables from another distribution <span class="math inline">\(g\)</span> (that somehow relates to <span class="math inline">\(f\)</span>).</p>
+<p><strong>Assumptions</strong>:</p>
+<ol style="list-style-type: lower-roman">
+<li>For all <span class="math inline">\(x\)</span>, if <span class="math inline">\(f(x)&gt;0\)</span> then <span class="math inline">\(g(x)&gt;0\)</span>, or equivalently <span class="math inline">\(supp(f)\subseteq supp(g)\)</span>.</li>
+<li>For all <span class="math inline">\(x\)</span>, <span class="math inline">\(f(x) \leq Mg(x)\)</span>, for some <span class="math inline">\(M\)</span> and <span class="math inline">\(M\geq
+1\)</span>.</li>
+</ol>
+<p><strong>Algorithm</strong> to generate <span class="math inline">\(X\sim f\)</span>:</p>
+<ol style="list-style-type: decimal">
+<li>Generate <span class="math inline">\(Y\sim g\)</span> and <span class="math inline">\(U \sim unif(0,1)\)</span> independently</li>
+<li>Accept <span class="math inline">\(X=Y\)</span> if <span class="math inline">\(U\leq \frac{f(Y)}{Mg(Y)}\)</span>, otherwise
+repeat step 1.</li>
+</ol>
+<p>Proof idea: Consider the cumulative distribution function as <span class="math inline">\(P(Y \leq x \mid U \leq (f(Y)/Mg(Y)))\)</span> and
+show this is equal to <span class="math inline">\(P(X\leq x)\)</span> by
+first rewriting using formula for conditional probability, then direct
+computation using the integral over the correct ranges to calculate the
+relevant probabilities.</p>
+<p><strong>Remark</strong>:</p>
+<ul>
+<li>When <span class="math inline">\(f,g\)</span> are probability
+density functions and <span class="math inline">\(M\geq 1\)</span> then
+<span class="math inline">\(P(U\leq (f(Y)/Mg(Y))) = 1/M\)</span>, so the
+acceptance probability is <span class="math inline">\(1/M\)</span>, as
+such we should choose the smallest M possible in order to minimize the
+number of draws that are rejected, so <span class="math inline">\(M =
+max(f(x)/g(x))\)</span> is an ideal choice.</li>
+<li>When only the kernels of some probability density functions<span class="math inline">\(\tilde{f},\tilde{g}\)</span> are known (but still
+we can draw from <span class="math inline">\(g\)</span>), then the same
+method can still be used to generate from the actual <span class="math inline">\(f\)</span> by applying the algorithm with <span class="math inline">\(\tilde{M}&gt;0\)</span> when <span class="math inline">\(\tilde{f}\leq \tilde{M}\tilde{g}\)</span>. Note
+that now <span class="math inline">\(1/\tilde{M}\)</span> needs not be
+equal to the probability of acceptance.</li>
+<li>The Drawback of Accept-Reject method is that when proposals are
+rejected, there is no use for the generated values, wasting
+computational time.</li>
+</ul>
+</div>
+<div id="the-fundamental-theorem-of-simulation" class="section level2">
+<h2>The Fundamental Theorem of Simulation</h2>
+<p><strong>Theorem</strong>: If <span class="math inline">\(f\)</span>
+is a probability density function in <span class="math inline">\(\mathbb{R}^d\)</span> (supported on <span class="math inline">\(\mathcal{X}\)</span>), then we can write <span class="math inline">\(f(x)=\int_0^{f(x)}1du\)</span> where <span class="math inline">\(1\)</span> is the p.d.f of the uniform random
+variable. Hence we can consider <span class="math inline">\(f\)</span>
+as the marginal distribution of <span class="math inline">\(X\)</span>
+in the joint distribution <span class="math display">\[(X,U)\sim
+\rm{unif}(\{(x,u):0&lt;u&lt;f(x), x\in \mathcal{X}\}).\]</span></p>
+<p>Therefore, generating <span class="math inline">\(X\sim f\)</span>
+can be thought as a procedure of generating <span class="math inline">\((X,U)\sim
+\rm{unif}(\{(x,u):0&lt;u&lt;f(x)\})\)</span> from where then collecting
+the generated <span class="math inline">\(X\)</span>’s. So this is
+essentially the same as sampling uniformly from the area under the curve
+of <span class="math inline">\(f\)</span>.</p>
+<p>How do we sample uniformly from the area under the curve of <span class="math inline">\(f\)</span>, i.e., generate <span class="math inline">\((X,U)\sim
+\rm{unif}(\{(x,u):0&lt;u&lt;f(x)\})\)</span>?</p>
+<ol style="list-style-type: decimal">
+<li>Can we generate <span class="math inline">\(X \sim f\)</span> then
+generate <span class="math inline">\(U\mid f(X)=f(x) \sim
+\mbox{unif}(0,f(x))\)</span>? This would indeed generate <span class="math inline">\((X,U)\sim
+\rm{unif}(\{(x,u):0&lt;u&lt;f(x)\})\)</span> (can prove it). But the
+answer is no, since the purpose of this simulation is to make simulating
+<span class="math inline">\(f\)</span> simpler, so simulating from <span class="math inline">\(f\)</span> directly is pointless.</li>
+<li>Can we generate <span class="math inline">\(U\)</span> from its
+marginal distribution and then generate <span class="math inline">\(f\mid U\)</span>? No, this would require knowing
+how to generate the marginal distribution of <span class="math inline">\(U\)</span>, and generate <span class="math inline">\(f\)</span> given <span class="math inline">\(U\)</span>, both may be not feasible.</li>
+</ol>
+<p><strong>Solution</strong>: Suppose we have another p.d.f. <span class="math inline">\(g\)</span> such that <span class="math inline">\(f(\cdot)\leq Mg(\cdot)\)</span>. So we can see
+that <span class="math inline">\(\mbox{supp}(f)\subseteq
+\mbox{supp}(g)\)</span>. Also suppose we can draw from some larger set
+<span class="math inline">\((Y,U)\sim
+\mbox{unif}\{(y,u):0&lt;u&lt;g(y)\}\)</span>. Then iteratively draw from
+this distribution and keep the pairs of <span class="math inline">\((y,u)\)</span>’s such that <span class="math inline">\(y\)</span> that satisfy <span class="math inline">\(u&lt;f(y)\)</span>. Then we collect these <span class="math inline">\(y\)</span>’s–the samples we keep will satisfy
+<span class="math inline">\(y\sim f\)</span>.</p>
+<p><strong>Corollary</strong>: If <span class="math inline">\(X\sim
+f\)</span> and we have another distribution <span class="math inline">\(g\)</span> so that <span class="math inline">\(f(\cdot)\leq Mg(\cdot)\)</span>, for some <span class="math inline">\(M\geq 1\)</span> and <span class="math inline">\(f,g :\mathbb{R}^d\to \mathbb{R}\)</span>. Then to
+simulate <span class="math inline">\(f\)</span> it suffices to
+generate:</p>
+<ul>
+<li><span class="math inline">\(Y\sim g\)</span> and <span class="math inline">\(U\mid Y=y \sim \mbox{unif}(0,Mg(y))\)</span>,
+collect <span class="math inline">\(\{(y,u)\}\)</span></li>
+<li>Keep those pairs <span class="math inline">\((y,u)\)</span> that
+satisfy <span class="math inline">\(u&lt;f(y)\)</span>, discard <span class="math inline">\(u\)</span>’s and let the kept <span class="math inline">\(y\)</span> be <span class="math inline">\(x\)</span>.</li>
+</ul>
+<p>We can show that each of the kept <span class="math inline">\(Y \sim
+f\)</span>. Thus the whole collection selected is a sample from <span class="math inline">\(f\)</span>.</p>
+<p><strong>Intuitive argument</strong>: The <strong>first step</strong>
+of the corollary creates a uniform distribution on <span class="math inline">\(E = \{(y,u):0&lt;u&lt;Mg(y)\}\subseteq
+\mathbb{R}^{d+1}\)</span> (can prove it). Further, the uniform
+distribution on <span class="math inline">\(E\)</span> gives another
+uniform distribution when restricted onto a subset of <span class="math inline">\(E\)</span> (intuitively correct, but why?). Note
+that <span class="math inline">\(\{(x,u):0&lt;u&lt;f(x) \}\)</span> is a
+subset of <span class="math inline">\(E\)</span>. The <strong>second
+step</strong> of the corollary practically enforces this restriction of
+<span class="math inline">\(E\)</span> onto <span class="math inline">\(\{(x,u):0&lt;u&lt;f(x) \}\)</span>, thus retaining
+samples that are essentially uniform draws on <span class="math inline">\(\{(x,u):0&lt;u&lt;f(x) \}\)</span>. Finally,
+invoking the Fundamental Theorem of Simulation, the uniform drawing on
+the restricted set <span class="math inline">\(\{(x,u):0&lt;u&lt;f(x)
+\}\)</span> has a marginal pdf for <span class="math inline">\(x\)</span> which is the target pdf <span class="math inline">\(f\)</span>, giving the conclusion of the
+corollary. A formal proof is given in the class.</p>
+<p><strong>Remark</strong>: The above corollary is equivalent to the
+Accept-reject method. The algorithm also works for <span class="math inline">\(x \propto \tilde{f}\)</span> where <span class="math inline">\(\tilde{f}\)</span> is the kernel function of some
+pdf <span class="math inline">\(f\)</span>.</p>
+<!------------->
+<p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
+<strong>Updated:</strong> 2023-09-22 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+Statistical Simulation, Wei Li </span> </span></p>
+</div>
 </div>
 
 
