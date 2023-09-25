@@ -195,7 +195,7 @@ It turns out that $(X_1^*,X_2^*,\cdots,X_m^*)$ is a random sample approximately 
 
 **Remark**: for this sampling to work, $n$ should be large and the target sample size $m$ should be no more than $10\%$ of $n$.
 
-**Remark**: If $f \propto f_0$, and $g$ is a p.d.f, a byproduct of the algorithm is that we obtain an estimator for the normalization constant in $f$ by using $\sum_{i} f_0(X_i) /(g(X_i)n)$ where $X_i \sim g.$
+**Remark**: If $f \propto f_0$, and $g$ is a p.d.f, a byproduct of the algorithm is that we obtain an estimator for the normalization constant in $f$ by using $(1/n)\times\sum_{i} (f_0(X_i) /g(X_i))$ where $X_i \sim g.$
 
 **Remark**: Accept-reject sampling and the self-normalize importance sampling can be used for multi-dimensional density function. However, in practice, the performance is bad.
 
