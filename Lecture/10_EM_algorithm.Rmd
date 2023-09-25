@@ -1,0 +1,395 @@
+---
+title: "MAT 653: Statistical Simulation"
+author: Instructor$:$ Dr. Wei Li
+date: "`r Sys.Date()`"
+geometry: left=2cm, right=2cm, top=2cm, bottom=2cm
+linestretch: 1.3
+output:
+  html_document:
+    df_print: paged
+    mathjax_config:
+      - TeX-AMS-MML_HTMLorMML   
+  pdf_document: 
+      include:
+        in_header: preamble_rmd.tex
+  html_notebook: default
+fontsize: 14pt
+header-includes:
+- \usepackage{amsmath}
+- \usepackage[linewidth=1pt]{mdframed}
+- \newcommand\inner[2]{\left\langle#1,#2\right\rangle}
+- \newcommand\floor[1]{\lfloor#1\rfloor}
+- \newcommand\ceil[1]{\lceil#1\rceil}
+- \newcommand\mb[1]{\mathbf{#1}}
+- \newcommand\bs[1]{\boldsymbol{#1}}
+- \newcommand\mr[1]{\mathrm{#1}}
+- \newcommand\wh[1]{\widehat{#1}}
+- \newcommand\op[1]{\operatorname{#1}}
+- \newcommand\mbb[1]{\mathbb{#1}}
+- \usepackage{caption}
+- \usepackage{mathtools}
+- \captionsetup[figure]{labelformat=empty}
+- \newcommand{\wei}[1]{\textcolor{orange}{(Wei:#1)}}
+---
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+
+
+<span style="background-color: #f5f5f5; padding: 5px; display: block;">
+    <span style="width: 25%; display: inline-block; text-align: left;">
+        [Back](javascript:window.history.back())
+    </span>
+    <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
+        **Updated:** `r Sys.Date()`
+    </span>
+    <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+        Statistical Simulation, Wei Li
+    </span>
+</span>
+
+<!------------->
+
+
+**EM Algorithm (Deterministic Optimization)** 
+====== 
+
+Suppose we have n observables $x_{1},x_{2},...,x_{n} \stackrel{i.i.d}{\sim} g(x|\theta)$. Let $\bs{x}=\{x_i\}_{i=1}^n$.
+Our goal is to compute:
+\begin{align*}
+  \hat{\theta} = \arg\max L(\theta | \bs{x}) = \prod^{n}_{i=1} g(x_{i} | \theta),
+\end{align*}
+Where $L(\theta | \bs{x}) = f(\bs{x}|\theta)$ is the likelihood function. 
+
+Denote $L^{c}(\theta | \bs{x},\bs{z}) = f(\bs{x},\bs{z}|\theta)$, called the complete data likelihood function. 
+
+Augment the data with $\bs{z}$ which are unobservable, so
+\begin{align*}
+  (\bs{x},\bs{z}) \sim f(\bs{x},\bs{z}|\theta).  
+\end{align*}
+
+The conditional distribution of $\bs{z}$ given the observables $\bs{x}$ is 
+\begin{align*}
+  f(\bs{z}|\bs{x},\theta) = \frac{f(\bs{x},\bs{z}|\theta)}{f(\bs{x}|\theta)}. 
+\end{align*}
+
+Use this result on the likelihood function: 
+\begin{align*}
+  logL(\theta | \bs{x}) & = log f(\bs{x}|\theta) \\
+                         & = log \frac{f(\bs{x},\bs{z}|\theta)}{f(\bs{z}|\bs{x},\theta)} \\
+                         & = log(f(\bs{x},\bs{z}|\theta)) - log(f(\bs{z}| \bs{x},\theta)). 
+\end{align*}
+
+We use the notations:
+
+\begin{align*}
+  & E_{g}(f(\bs{x})) = \int f(\bs{x})g(\bs{x}) d\bs{x} \\
+  & E_{\bs{z}|\bs{x}}(h(\bs{z},\bs{x})) = \int h(\bs{z},\bs{x})f(\bs{z}|\bs{x}) d\bs{z}. 
+\end{align*}
+
+Let $\theta^{(0)}$ as our initial guess of the parameter, and take conditional expectation of $\bs{z}$ given $\bs{x}$, that is, the integral is taken with respect to $f(\bs{z}| \bs{x},\theta^{(0)})$, on both sides: 
+
+\begin{align*}
+  E_{\theta^{(0)}}(log(L(\theta|\bs{x})))  = log(L(\theta|\bs{x})) & = E_{\theta^{(0)}}[logf(\bs{x},\bs{z}|\theta)|\bs{x}] - E_{\theta^{(0)}}[logf(\bs{z}|\bs{x},\theta)|\bs{x}] \\ 
+  & = Q(\theta | \theta^{(0)},\bs{x}) - K(\theta | \theta^{(0)},\bs{x}), 
+\end{align*}
+
+where we take $Q(\theta | \theta^{(0)},\bs{x}) = E_{\theta^{(0)}}[logf(\bs{x},\bs{z}|\theta)|\bs{x}]$. It turns out for any candidate $\theta^{'}$ for next iterate, 
+\begin{align*}
+  K(\theta^{'}|\theta^{0},\bs{x}) \le K(\theta^{(0)} | \theta^{(0)},\bs{x}). 
+\end{align*}
+
+To see this,that is, for any $\theta^{'}$: 
+\begin{align*}
+  E_{\theta^{(m)}}(\log f(\bs{z}|\bs{x},{\theta}^{'})|\bs{x}) & \le E_{\theta^{((m))}}(\log f(\bs{z}|\bs{x},\theta^{(m)})|\bs{x}) \\
+  & = \int \log f(\bs{z}| \bs{x},\theta^{(m)})f(\bs{z}|x,\theta^{(m)}) d\bs{z}. 
+\end{align*}
+
+Call $g(\bs{z}) = f(\bs{z}|\bs{x},\theta^{'})$, $h(\bs{z}) = f(\bs{z}|\bs{x},\theta^{(m)})$. It  suffies to show 
+\begin{align*}
+  E_{h}\Big[\log\frac{h(z)}{g(z)}\Big] \ge 0. 
+\end{align*}
+
+In the above inequality, we use Jesen's inequality:  
+\begin{align*}
+  LHS & = \int log(\frac{h(z)}{g(z)}h(z)) dz \\
+      & = -\int log(\frac{g(z)}{h(z)}h(z)) dz \\
+      & \ge - log \int \frac{g(z)}{h(z)}h(z) dz = 0. 
+\end{align*}
+
+So to maximize $log(L(\theta|\bs{x})$ over $\theta$, it suffices to just maximize $Q(\theta | \theta^{(0)},\bs{x})$ over $\theta$. By maximizing $Q(\theta | \theta^{(0)},\bs{x})$ over $\theta$, one obtain the maximizer $\theta^{(1)}$ as the next iterate; we then by maximizing $Q(\theta | \theta^{(1)},\bs{x})$ over $\theta$, obtaining the next iterate $\theta^{(2)}$-- the process can keep go on. 
+
+**EM algorithm**
+
+Based on the result, we have two main steps for EM algorithm: at step $m$, 
+
+(1) E Step: compute $Q(\theta |\theta^{(m)},\bs{x})$ as a function of $\theta$ and $\theta^{(m)}$.  
+(2) M Step: $\theta^{(m+1)} = \arg\max\limits_{\theta} Q(\theta |\theta^{(m)},\bs{x})$.  
+
+**Remark**  
+
+(1) EM algorithm only generates the limit point of $\theta^{(m)}$ that is a stationary point of the objective function $log(L(\theta|\bs{x})$. In practice, you'll try different starting values of $\theta^{(0)}$.  
+(2) Notice that, for $h(x)=E[H(x,Z)]$ where the expectation is taken wrt to the random variable $Z$.
+\begin{align*}
+  \max\limits_{x} h(x) &= \max \limits_{x} E[H(x,Z)] \\
+                       &= \max \limits_{x} E[H(X,Z)|X = x] \\ 
+                       &= \max \limits_{x} \int H(x,z)f(z|x)dz, 
+\end{align*}
+we can use Monte Carlo to approximate the objective function: 
+\begin{align*}
+  \frac{1}{m}\sum^{m}_{i=1}H(x,Z_{i}) \to \int H(x,z)f(z|x)dz,
+\end{align*}
+where $Z_{i} \stackrel{i.i.d}{\sim} f(z|x)$.  
+If we approximate $Q$ function by this idea, this then gives the so-called Monte-Carlo EM:
+\begin{align*}
+  \hat{Q}(\theta|\theta^{(m)},\bs{x}) = \frac{1}{T}\sum^{T}_{j=1}log[L^{c}(\theta|\bs{x},\bs{z}_j)]. 
+\end{align*}  
+where $\bs{z}_1, \ldots, \bs{z}_T$ is an i.i.d. random sample generated from $f(\bs{z}|\theta^{(m)}, \bs{x})$. 
+(3) We may not need to find the exact maximizer in the process . Instead, sometimes we just find $\theta^{(m+1)}$ that can improve upon the value of $Q$ at the current $\theta^{(m)}$, that is, 
+\begin{align*}
+  Q(\theta^{(m+1)}|\theta^{(m)},\bs{x}) \ge Q(\theta^{(m)}|\theta^{(m)},\bs{z}),  
+\end{align*}
+we called that ``generalized EM Algorithm".  
+
+
+# EM Algorithms
+## E-step
+$$
+Q(\theta\mid\theta^{(m)},\overrightharpoon{X})=E_{\theta^{(m)}}\big[\log L^c(\theta\mid\overrightharpoon{X},\overrightharpoon{Z})\mid\overrightharpoon{X}\big]
+$$
+
+where $\overrightharpoon{X}$ is observable, $\overrightharpoon{Z}$ is unobservable; $E_{\theta^{(m)}}$ is the conditional expectation of $Z$ given $X$, where the conditional density is given by $f(\overrightharpoon{Z}\mid\overrightharpoon{X},\theta^{(m)})$;  
+$\log L^c(\theta\mid\overrightharpoon{X},\overrightharpoon{Z})$ is complete data likelihood function.
+
+
+
+## M-step
+maximize $\theta\to Q(\theta\mid\theta^{(m)},\overrightharpoon{X})$  
+let $\theta^{(m+1)}\gets\mathop{\arg\max}\limits_{\theta}\ \ Q(\theta\mid\theta^{(m)},\overrightharpoon{X})$  
+
+# Two component mixture of normals
+Let $X_i\overset{iid}{\sim}\frac{1}{4}N(\mu_1,1)+\frac{3}{4}N(\mu_2,1)$, $\theta=(\mu_1,\mu_2)$  
+log-likelihood function:
+$$\log L(\theta\mid\overrightharpoon{X})=\sum\limits_{i=1}^{n}\log\big(\frac{1}{4}f(X_i\mid\mu_1)+\frac{3}{4}f(X_i\mid\mu_2)\big)$$ 
+where $L(\theta\mid\overrightharpoon{X})=\prod\limits_{i=1}^{n}f(X_i\mid\mu_1,\mu_2)$  
+The p.d.f of $X_i$ is:  
+$$
+f(X_i\mid \mu_j)=\frac{1}{\sqrt{2\pi}}e^{-\frac{(X_i-\mu_j)^2}{2}}
+$$
+Define some latent variables (binary):  
+$$P(Z_i=1)=\frac{1}{4}, P(Z_i=0)=\frac{3}{4}$$
+where $Z_i\perp(W_{1i},W_{2i})$  
+
+If $W_1\sim f_1$, $W_2\sim f_2$, $Z\sim Bernoulli(p)$ and $Z\perp(W_1,W_2)$, $Z,W_1,W_2$ are independent.
+$$
+X=ZW_1+(1-Z)W_2
+$$
+
+
+Complete data likelihood function $(\overrightharpoon{X},\overrightharpoon{Z})$:  
+$$
+\begin{aligned}
+L^c=P(\overrightharpoon{X},\overrightharpoon{Z})&=\prod\limits_{i=1}^{n}P(X_i,Z_i)\\
+&=\prod\limits_{i=1}^{n}\big[P(X_i\mid Z_i=1)P(Z_i=1)Z\big]^{Z_i}\big[P(X_i\mid Z_i=0)P(Z_i=0)\big]^{1-Z_i}
+\end{aligned}
+$$
+
+So the log-likelihood function:
+$$
+\log\big(L^c(\theta\mid\overrightharpoon{X}, \overrightharpoon{Z})\big)=\sum\limits_{i=1}^{n}\big[Z_i\log f(X_i\mid \mu_1)+Z_i\log\frac{1}{4}+(1-Z_i)\log f(X_i\mid \mu_2)+(1-Z_i)\log\frac{3}{4}\big]
+$$
+Let $\theta^{(0)}=(\mu_1^{(0)},\mu_2^{(0)})$  
+$$
+\begin{aligned}
+Q(\theta\mid\theta^{(0)},\overrightharpoon{X})&=E_{\theta^{(0)}}\big[\log L^c(\theta\mid\overrightharpoon{X},\overrightharpoon{Z})\mid\overrightharpoon{X}\big]\\
+&=-\sum\limits_{i=1}^{n}\Big\{\frac{1}{2}E_{\theta^{(0)}}[Z_i(X_i-\mu_1)^2\mid X_i]+\frac{1}{2}E_{\theta^{(0)}}\big[(1-Z_i)(X_i-\mu_2)^2\mid X_i\big]\Big\}\\
+&\ \ \ \ \ +\sum\limits_{i=1}^{n}\Big\{\big(\log(\frac{1}{4})\big) E_{\theta^{(0)}}(Z_i\mid X_i)-\big( \log(\frac{3}{4}) \big) E_{\theta^{(0)}}(1-Z_i\mid X_i)\Big\}+C
+\end{aligned}
+$$
+
+
+where
+$$
+E_{\theta^{(0)}}[Z_i(X_i-\mu_1)^2\mid X_i]=(X_i-\mu_1)^2E_{\theta^{(0)}}[Z_i\mid X_i]
+$$
+we can calculate 
+$$E[Z\mid X]=\frac{P(X\mid Z=1)P(Z=1)}{P(X=x\mid Z=1)P(Z=1)+P(X=x\mid Z=0)P(Z=0)}$$
+\begin{mdframed}
+Proof: 
+\begin{align*}
+E[Z\mid X]&= P(Z=1\mid X)\\
+&=\frac{P(Z=1, X)}{P(X=x)}\\
+&=\frac{P(X\mid Z=1)P(Z=1)}{P(X=x)}\\
+&=\frac{P(X\mid Z=1)P(Z=1)}{P(X=x\mid Z=1)P(Z=1)+P(X=x\mid Z=0)P(Z=0)}
+\end{align*}
+\end{mdframed}
+
+So we can calculate $E_{\theta^{(0)}}[Z_i(X_i-\mu_1)^2\mid X_i]$:
+
+$$
+\begin{aligned}
+E_{\theta^{(0)}}\big[Z_i(X_i-\mu_1)^2\mid X_i\big]&=\frac{\frac{1}{4}f_1(X_i\mid \mu_1^{(0)})}{\frac{1}{4}f_1(X_i\mid\mu_1^{(0)})+\frac{3}{4}f_2(X_i\mid\mu_2^{(0)})}\\
+&=\alpha_i^{(0)}(X_i;\mu_1^{(0)},\mu_2^{(0)})
+\end{aligned}
+$$
+
+And $Q(\theta\mid\theta^{(0)},\overrightharpoon{X})$ can be expressed:
+$$
+Q(\theta\mid\theta^{(0)},\overrightharpoon{X})=-\sum\limits_{i=1}^{n}\Big\{\frac{1}{2}(X_i-\mu_1)^2\alpha_i^{(0)}(X_i;\mu_1^{(0)},\mu_2^{(0)})+\frac{1}{2}(X_i-\mu_2)^2\big(1-\alpha_i^{(0)}(X_i;\mu_1^{(0)},\mu_2^{(0)})\big)\Big\}+const
+$$
+
+Set the derivatives w.r.t. the $\theta$ to zero function:
+$$
+\begin{cases}
+\frac{\partial Q(\theta\mid\theta^{(0)},\overrightharpoon{X})}{\partial \mu_1}\overset{set}{=}0\\
+\frac{\partial Q(\theta\mid\theta^{(0)},\overrightharpoon{X})}{\partial \mu_2}\overset{set}{=}0
+\end{cases}
+$$
+
+
+we can calculate the solutions $\mu_1^{(1)}$ and $\mu_2^{(1)}$
+
+
+$$
+\begin{cases}
+\mu_1^{(1)}=\frac{\sum\limits_{i=1}^{n}\alpha_i^{(0)}(X_i;\mu_1^{(0)},\mu_2^{(0)})X_i}{\sum\limits_{i=1}^{n}\alpha_i^{(0)}(X_i;\mu_1^{(0)},\mu_2^{(0)})}\\
+\mu_2^{(1)}=\frac{\sum\limits_{i=1}^{n}\big[1-\alpha_i^{(0)}(X_i;\mu_1^{(0)},\mu_2^{(0)})\big]X_i}{\sum\limits_{i=1}^{n}\big[1-\alpha_i^{(0)}(X_i;\mu_1^{(0)},\mu_2^{(0)})\big]}
+\end{cases}
+$$
+
+# Right censored data (R.C example 5.13 and 5.14)
+Let $X_i\overset{iid}{\sim}f(x-\theta)$, where $f$ is density function of $N(0,1)$, $F$ be the CDF of $N(0,1)$, so $X_i\sim N(\theta,1)$  
+The Goal is to estimate $\theta$. However, $X_i$ are not fully observed. They are right censored. The actual observation are $Y_i$.     
+Let (1) $Y_i$ is observed 
+$$ 
+Y_i=
+\begin{cases}
+a \ \ \ if \ X_i\ge a \\
+X_i \ \ \ if \ X_i\le a
+\end{cases}
+$$
+where $a$ is fixed.   
+It implies $Y_i=\min(X_i,a)$.  
+(2)$\delta_i=I(X_i\le a)$ be the indicator for non-censoring, or equivalently, for observing the actual $X_i$;  
+(3)$n$ be sample size.  
+  
+Assume 
+(1)$(Y_1, Y_2, \dots, Y_m)$ all less than $a$,  
+(2)$(Y_{m+1}, Y_{m+2}, \dots, Y_n)$ all equal than $a$.  
+
+
+
+  
+So the observed data likelihood function:
+$$
+\begin{aligned}
+L(\theta\mid Y_1, Y_2, \dots, Y_n, \delta_1, \delta_2, \dots, \delta_n)&=\prod\limits_{i=1}^{n}\big(f(Y_i-\theta)\big)^{\delta_i}\big(P(Y_i=a)\big)^{1-\delta_i}\\
+&=\prod\limits_{i=1}^{n}\big(f(Y_i-\theta)\big)^{\delta_i}\big(1-P(X_i\le a)\big)^{1-\delta_i}\\
+&=\prod\limits_{i=1}^{n}\big(f(Y_i-\theta)\big)^{\delta_i}\big(1-F(a-\theta)\big)^{1-\delta_i}
+\end{aligned}
+$$
+
+Since $(Y_1, Y_2, \dots, Y_m)$ are uncensored, $(Y_{m+1}, Y_{m+2}, \dots, Y_n)$ are censored.  
+Let $\overrightharpoon{Z}$ be the vector of the unobservable $X_{m+1}, X_{m+2}, \dots, X_n$.  
+The complete data likelihood function:
+$$
+L^c(\theta\mid Y_1, Y_2, \dots, Y_m; \overrightharpoon{Z})=\prod\limits_{i=1}^{m}f(Y_i-\theta)\prod\limits_{i=m+1}^{n}f(X_i-\theta)
+$$
+The log-likelihood function:
+$$
+\log L^c(\theta\mid Y_1, Y_2, \dots, Y_m; \overrightharpoon{Z})=\sum\limits_{i=1}^{m}\log f(Y_i-\theta)+\sum\limits_{i=m+1}^{n}\log f(X_i-\theta)
+$$
+
+$Q(\theta\mid\theta^{(0)},\overrightharpoon{X})$ can be expressed:
+$$
+\begin{aligned}
+Q(\theta\mid\theta^{(0)};Y_1, \dots, Y_n, \delta_1, \dots, \delta_n)&=E_{\theta^{(0)}}\big[\log L^c(\theta\mid X_1, \dots, X_n)\mid Y_1, \dots, Y_n, \delta_1, \dots, \delta_n\big]\\
+&=-\frac{1}{2}\sum\limits_{i=1}^{m}(Y_i-\theta)^2-\frac{1}{2}\sum\limits_{i=m+1}^{n}E_{\theta^{(0)}}\big[(Z_i-\theta)^2\mid Y_1, \dots, Y_n, \delta_1, \dots, \delta_n\big]
+\end{aligned}
+$$
+
+For those $i=m+1, \dots, n$, $\delta_i=0$, So  
+$$
+E_{\theta^{(0)}}\big[(Z_i-\theta)^2\mid Y_i, \delta_i\big]=E_{\theta^{(0)}}\big[(X_i-\theta)^2\mid X_i\ge a \big]
+$$
+
+
+We can calculate $\theta^{(1)}$ by:
+$$
+\frac{\partial Q(\theta\mid\theta^{(0)};Y_1, \dots, Y_n, \delta_1, \dots, \delta_n)}{\partial\theta}\overset{set}{=}0
+$$
+
+Which can be expressed:
+$$
+\sum\limits_{i=1}^{m}(Y_i-\theta)+\sum\limits_{i=m+1}^{n}E_{\theta^{(0)}}\big[(X_i-\theta)\mid X_i\ge a\big]\overset{set}{=}0  \\
+$$
+$$
+\sum\limits_{i=1}^{m}Y_i-m\theta+\sum\limits_{i=m+1}^{n}E_{\theta^{(0)}}[X_i\mid X_i\ge a]-(n-m)\theta\overset{set}{=}0 
+$$
+
+we can calculate the solution $\theta^{(1)}$:
+$$
+\theta^{(1)}=\frac{\sum\limits_{i=1}^{m}Y_i+(n-m)E_{\theta^{(0)}}[X_i\mid X_i\ge a]}{n}
+$$
+
+Finally, we can show that 
+$$
+E_{\theta^{(0)}}[X_i\mid X_i\ge a]=\theta^{(0)}+\frac{\phi(a-\theta^{(0)})}{1-\Phi(a-\theta^{(0)})}
+$$
+\begin{mdframed}
+Proof: 
+The conditional density of $X_i$ given $X_i\ge a$, $X_i \sim f(x-\theta)$, $f\sim N(0,1)$
+
+$$
+f(X_i=x\mid X_i\ge a)=\frac{\phi(x-\theta)}{1-\Phi(a-\theta)}\ \ \ \ x>a
+$$
+The last thing is to compute the expectation. 
+$$
+\begin{aligned}
+E_{\theta^{(0)}}[X_i\mid X_i\ge a]&=\int_{a}^{\infty}x\frac{\phi(x-\theta^{(0)})}{1-\Phi(a-\theta^{(0)})}\,dx\\
+&=\int_{a}^{\infty}(\theta^{(0)}+x-\theta^{(0)})\frac{\phi(x-\theta^{(0)})}{1-\Phi(a-\theta^{(0)})}\,dx\\
+&=\theta^{(0)}+\int_{a}^{\infty}(x-\theta^{(0)})\frac{\phi(x-\theta^{(0)})}{1-\Phi(a-\theta^{(0)})}\,dx\\
+&\overset{w=x-\theta^{(0)}}{=}\theta^{(0)}+\frac{\int_{a-\theta^{(0)}}^{\infty}w\phi(w)\,dw}{1-\Phi(a-\theta^{(0)})}\\
+&=\theta^{(0)}+\frac{-\phi(w)\Big|_{a-\theta^{(0)}}^{\infty}}{1-\Phi(a-\theta^{(0)})}\\
+&=\theta^{(0)}+\frac{\phi(a-\theta^{(0)})}{1-\Phi(a-\theta^{(0)})}
+\end{aligned}
+$$
+\end{mdframed}
+
+
+
+<!------------->
+<span style="background-color: #f5f5f5; padding: 5px; display: block;">
+    <span style="width: 25%; display: inline-block; text-align: left;">
+        [Back](javascript:window.history.back())
+    </span>
+    <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
+        **Updated:** `r Sys.Date()`
+    </span>
+    <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+        Statistical Simulation, Wei Li
+    </span>
+</span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
