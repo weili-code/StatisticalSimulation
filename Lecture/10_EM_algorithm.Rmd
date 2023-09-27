@@ -361,6 +361,82 @@ $$
 \end{mdframed}
 
 
+### Missing Data
+
+- $Z$ full data: $Z=\left(Z_1, \cdots, Z_p\right)$.
+- $R$ observation indicator $R=\left(R_1, \cdots, R_p\right) \in \{0,1\}^p$ such that
+\begin{align*}
+R_k= \begin{cases}1 & \text { if } Z_k \text { is observed } \\ 0 & \text { if } Z_k \text { is missing }\end{cases}
+\end{align*}
+For a specific $r=\left(r_1, \ldots, r_p\right) \in\{0,1\}^p$, $Z_{(r)}$ is the subset of components that are observed; $Z_{(\bar{r})}$ subset of components that are missing.
+- Let $Z_{(R)}=\sum_r Z_{(r)} I(R=r)$. Similarly, $Z_{\bar{R}}=\sum_{r} Z_{(r)} I(R \neq r)$. 
+- The ideal full data is $(R, Z)$. The observed data is $\left(R, Z_{(R)}\right)$. 
+  - A random sample of observed data is $\left(R_i, Z_{(R_i)i}\right)_{i=1}^n.$
+
+**MAR** (missing at random) assumption:
+\begin{align*}
+P(R=r \mid Z)=P(R=r \mid Z_{(r)})
+\end{align*}
+
+**Selection model factorization**:
+
+\begin{align*}
+\begin{aligned}
+P(z, r ; \psi, \theta) & =P(Z=z, R=r ; \psi, \theta) \\
+& =P(R=r|Z=z ; \psi) P(Z=z ; \theta) \\
+ & =P(R=r| Z_{(r)}=z_{(r)} ; \psi) P(Z=z ; \theta)
+\end{aligned}
+\end{align*}
+where the last equation is due to MAR. This factorization (with MAR) is called separability condition, which says that there is no information about $\theta$ in $\psi.$ Therefore, for the purpose of estimation of $\theta$, it suffices to consider $P(Z=z ; \theta).$
+
+The likelihood for the observed data point $\left(R=r, Z_{(R)}=z_{(r)}\right)$ is given by
+\begin{align*}
+P\left(R=r, z_{(R)}\right. & \left.=z_{(r)} ; \psi, \theta\right)=\int P(z ; r ; \psi, \theta) d z_{(\bar{r})} \\
+& =P\left(R=r \mid Z_{(r)}=z_{(r)} ; \psi\right) \int P(z ; \theta) d z_{(\bar{r})} \\
+& =P\left(R=r \mid Z_{(r)}=z_{(r)} ; \psi\right) P\left(Z_{(r)}=z_{(r)} ; \theta\right)
+\end{align*}
+
+The likelihood based on $\left.\left(R_i=r_i, z_{\left(R_i\right)i}=z_{\left(r_i\right)}\right)\right)_{i=1}^n$ is given by
+
+\begin{align*}
+& \prod_i \prod_r P\left(R_i=r ; z_{(r) i}=z_{(r)} ; \psi, \theta\right)^{I\left(R_i=r\right)} \\
+= & \prod_i\left(\prod_r P\left(R_i=r|Z_{(r) i}=z_{(r) ;} ; \psi \right)^{I\left(R_i=r\right)} \prod_r P\left(Z_{(r) i}=z_{(r)} ; \theta\right)^{I\left(R_i=r\right)}\right).
+\end{align*}
+It suffices to maximize the following objective function over $\theta$:
+\begin{align*}
+&\sum_{r=1}^n \sum_r I\left(R_i=r\right) \log P\left(Z_{(r)i}=z_{(r)}; \theta\right) \\
+=&\sum_{i=1}^n \sum_r \left[I\left(R_i=r\right) \log \left( \int P\left(z_{(r)i}, z_{(\bar{r})i}; \theta\right) d{z_{(\bar{r}})}\right)\right].
+\end{align*}
+
+The E-step:
+
+\begin{align*}
+Q\left(\theta, \theta^{t-1}\right)=\sum_{i=1}^n E_{\theta^{t-1}}(\log P(Z_i;\theta)|R_i, Z_{(R_i)i})= \sum_{i=1}^n \sum_{r}I\left(R_i=r\right) E_{\theta^{t-1}}\left(\log P\left(Z_i; \theta\right) \mid Z_{(r) i}\right)
+\end{align*}
+The secon equality holds because
+\begin{align*}
+& \left.E_{\theta'}\left(\log P\left(Z_i; \theta\right) \mid R_i, Z_{(R_i)i}\right)\right) \\
+= & \sum_{r}I\left(R_i=r\right) E_{\theta^{\prime}}\left(\log P\left(Z_i; \theta\right) \mid R_i=r, Z_{(r)i}\right) \\
+= &  \sum_{r}I\left(R_i=r\right) E_{\theta^{\prime}}\left(\log P\left(Z_i; \theta\right) \mid Z_{(r) i}\right)
+\end{align*}
+here the expectation is conditional on $(R_i, Z_{(r)i})$ with parameter $\theta'$. The last equality holds because of MAR.
+
+The M-step:
+
+$$\theta^t =\arg \max_{\theta} Q(\theta, \theta^{t-1}).$$
+
+**Example**: Suppose $Z$ follows a $N(\mu,\Sigma)$, here $\theta:=(\mu,\Sigma)$.
+Note that 
+\begin{align*}
+&E_{\theta^{t-1}}\left(\log P\left(Z_i; \theta\right) \mid Z_{(r) i}\right) \\ =&-\frac{1}{2} \log |2 \pi {\Sigma}|-\frac{1}{2}  {E}_{\theta^{t-1}}\left[\left(Z_i-{\mu}\right)^{\top} {\Sigma}^{-1}\left(Z_i-{\mu}\right)\right] \\
+=&-\frac{1}{2} \log |{\Sigma}|-\frac{p}{2} \log (2 \pi)-\frac{1}{2} \operatorname{tr}\left({\Sigma}^{-1} {E}_{\theta^{t-1}}[\mathbf{S}({\mu})]\right)
+\end{align*}
+where ${E}_{\theta^{t-1}}[\mathbf{S}({\mu})]:= \left({E}_{\theta^{t-1}}\left[Z_i Z_i^{\top}\right]+{\mu} {\mu}^{\top}-2 {\mu} {E}_{\theta^{t-1}}\left[Z_i\right]^{\top}\right).$ The key is to compute ${E}_{\theta^{t-1}}\left[Z_i\right]$ and ${E}_{\theta^{t-1}}\left[Z_i Z_i^{\top}\right]$ (expected sufficient statistics) and they can be computed using conditional formula for multivariate Gaussian distribution. The solution in the M-step then is given by the MLE solution with the expected sufficient statistics:
+\begin{align*}
+{\mu}^t & ={E}_{\theta^{t-1}}\left[Z_i\right] \\
+{\Sigma}^t & ={E}_{\theta^{t-1}}\left[Z_i Z_i^{\top}\right]-{\mu}^t\left({\mu}^t\right)^{\top}.
+\end{align*}
+
 
 <!------------->
 <span style="background-color: #f5f5f5; padding: 5px; display: block;">

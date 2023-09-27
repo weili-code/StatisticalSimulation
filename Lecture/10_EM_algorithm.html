@@ -11,7 +11,7 @@
 
 <meta name="author" content="Instructor: Dr. Wei Li" />
 
-<meta name="date" content="2023-09-25" />
+<meta name="date" content="2023-09-27" />
 
 <title>MAT 653: Statistical Simulation</title>
 
@@ -1624,7 +1624,7 @@ display: none;
 <h1 class="title toc-ignore">MAT 653: Statistical Simulation</h1>
 <h4 class="author">Instructor<span class="math inline">\(:\)</span>
 Dr. Wei Li</h4>
-<h4 class="date">2023-09-25</h4>
+<h4 class="date">2023-09-27</h4>
 
 </div>
 
@@ -1635,7 +1635,7 @@ MathJax.Hub.Config({
 });
 </script>
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2023-09-25 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2023-09-27 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 <!------------->
 <div id="em-algorithm-deterministic-optimization" class="section level1">
@@ -1959,10 +1959,114 @@ Finally, we can show that <span class="math display">\[
 E_{\theta^{(0)}}[X_i\mid X_i\ge
 a]=\theta^{(0)}+\frac{\phi(a-\theta^{(0)})}{1-\Phi(a-\theta^{(0)})}
 \]</span>
+<div id="missing-data" class="section level3">
+<h3>Missing Data</h3>
+<ul>
+<li><span class="math inline">\(Z\)</span> full data: <span class="math inline">\(Z=\left(Z_1, \cdots, Z_p\right)\)</span>.</li>
+<li><span class="math inline">\(R\)</span> observation indicator <span class="math inline">\(R=\left(R_1, \cdots, R_p\right) \in
+\{0,1\}^p\)</span> such that <span class="math display">\[\begin{align*}
+R_k= \begin{cases}1 &amp; \text { if } Z_k \text { is observed } \\ 0
+&amp; \text { if } Z_k \text { is missing }\end{cases}
+\end{align*}\]</span> For a specific <span class="math inline">\(r=\left(r_1, \ldots, r_p\right)
+\in\{0,1\}^p\)</span>, <span class="math inline">\(Z_{(r)}\)</span> is
+the subset of components that are observed; <span class="math inline">\(Z_{(\bar{r})}\)</span> subset of components that
+are missing.</li>
+<li>Let <span class="math inline">\(Z_{(R)}=\sum_r Z_{(r)}
+I(R=r)\)</span>. Similarly, <span class="math inline">\(Z_{\bar{R}}=\sum_{r} Z_{(r)} I(R \neq
+r)\)</span>.</li>
+<li>The ideal full data is <span class="math inline">\((R, Z)\)</span>.
+The observed data is <span class="math inline">\(\left(R,
+Z_{(R)}\right)\)</span>.
+<ul>
+<li>A random sample of observed data is <span class="math inline">\(\left(R_i,
+Z_{(R_i)i}\right)_{i=1}^n.\)</span></li>
+</ul></li>
+</ul>
+<p><strong>MAR</strong> (missing at random) assumption: <span class="math display">\[\begin{align*}
+P(R=r \mid Z)=P(R=r \mid Z_{(r)})
+\end{align*}\]</span></p>
+<p><strong>Selection model factorization</strong>:</p>
+<p><span class="math display">\[\begin{align*}
+\begin{aligned}
+P(z, r ; \psi, \theta) &amp; =P(Z=z, R=r ; \psi, \theta) \\
+&amp; =P(R=r|Z=z ; \psi) P(Z=z ; \theta) \\
+&amp; =P(R=r| Z_{(r)}=z_{(r)} ; \psi) P(Z=z ; \theta)
+\end{aligned}
+\end{align*}\]</span> where the last equation is due to MAR. This
+factorization (with MAR) is called separability condition, which says
+that there is no information about <span class="math inline">\(\theta\)</span> in <span class="math inline">\(\psi.\)</span> Therefore, for the purpose of
+estimation of <span class="math inline">\(\theta\)</span>, it suffices
+to consider <span class="math inline">\(P(Z=z ; \theta).\)</span></p>
+<p>The likelihood for the observed data point <span class="math inline">\(\left(R=r, Z_{(R)}=z_{(r)}\right)\)</span> is
+given by <span class="math display">\[\begin{align*}
+P\left(R=r, z_{(R)}\right. &amp; \left.=z_{(r)} ; \psi,
+\theta\right)=\int P(z ; r ; \psi, \theta) d z_{(\bar{r})} \\
+&amp; =P\left(R=r \mid Z_{(r)}=z_{(r)} ; \psi\right) \int P(z ; \theta)
+d z_{(\bar{r})} \\
+&amp; =P\left(R=r \mid Z_{(r)}=z_{(r)} ; \psi\right)
+P\left(Z_{(r)}=z_{(r)} ; \theta\right)
+\end{align*}\]</span></p>
+<p>The likelihood based on <span class="math inline">\(\left.\left(R_i=r_i,
+z_{\left(R_i\right)i}=z_{\left(r_i\right)}\right)\right)_{i=1}^n\)</span>
+is given by</p>
+<p><span class="math display">\[\begin{align*}
+&amp; \prod_i \prod_r P\left(R_i=r ; z_{(r) i}=z_{(r)} ; \psi,
+\theta\right)^{I\left(R_i=r\right)} \\
+= &amp; \prod_i\left(\prod_r P\left(R_i=r|Z_{(r) i}=z_{(r) ;} ; \psi
+\right)^{I\left(R_i=r\right)} \prod_r P\left(Z_{(r) i}=z_{(r)} ;
+\theta\right)^{I\left(R_i=r\right)}\right).
+\end{align*}\]</span> It suffices to maximize the following objective
+function over <span class="math inline">\(\theta\)</span>: <span class="math display">\[\begin{align*}
+&amp;\sum_{r=1}^n \sum_r I\left(R_i=r\right) \log
+P\left(Z_{(r)i}=z_{(r)}; \theta\right) \\
+=&amp;\sum_{i=1}^n \sum_r \left[I\left(R_i=r\right) \log \left( \int
+P\left(z_{(r)i}, z_{(\bar{r})i}; \theta\right)
+d{z_{(\bar{r}})}\right)\right].
+\end{align*}\]</span></p>
+<p>The E-step:</p>
+<p><span class="math display">\[\begin{align*}
+Q\left(\theta, \theta^{t-1}\right)=\sum_{i=1}^n E_{\theta^{t-1}}(\log
+P(Z_i;\theta)|R_i, Z_{(R_i)i})= \sum_{i=1}^n \sum_{r}I\left(R_i=r\right)
+E_{\theta^{t-1}}\left(\log P\left(Z_i; \theta\right) \mid Z_{(r)
+i}\right)
+\end{align*}\]</span> The secon equality holds because <span class="math display">\[\begin{align*}
+&amp; \left.E_{\theta&#39;}\left(\log P\left(Z_i; \theta\right) \mid
+R_i, Z_{(R_i)i}\right)\right) \\
+= &amp; \sum_{r}I\left(R_i=r\right) E_{\theta^{\prime}}\left(\log
+P\left(Z_i; \theta\right) \mid R_i=r, Z_{(r)i}\right) \\
+= &amp;  \sum_{r}I\left(R_i=r\right) E_{\theta^{\prime}}\left(\log
+P\left(Z_i; \theta\right) \mid Z_{(r) i}\right)
+\end{align*}\]</span> here the expectation is conditional on <span class="math inline">\((R_i, Z_{(r)i})\)</span> with parameter <span class="math inline">\(\theta&#39;\)</span>. The last equality holds
+because of MAR.</p>
+<p>The M-step:</p>
+<p><span class="math display">\[\theta^t =\arg \max_{\theta} Q(\theta,
+\theta^{t-1}).\]</span></p>
+<p><strong>Example</strong>: Suppose <span class="math inline">\(Z\)</span> follows a <span class="math inline">\(N(\mu,\Sigma)\)</span>, here <span class="math inline">\(\theta:=(\mu,\Sigma)\)</span>. Note that <span class="math display">\[\begin{align*}
+&amp;E_{\theta^{t-1}}\left(\log P\left(Z_i; \theta\right) \mid Z_{(r)
+i}\right) \\ =&amp;-\frac{1}{2} \log |2 \pi
+{\Sigma}|-\frac{1}{2}  {E}_{\theta^{t-1}}\left[\left(Z_i-{\mu}\right)^{\top}
+{\Sigma}^{-1}\left(Z_i-{\mu}\right)\right] \\
+=&amp;-\frac{1}{2} \log |{\Sigma}|-\frac{p}{2} \log (2 \pi)-\frac{1}{2}
+\operatorname{tr}\left({\Sigma}^{-1}
+{E}_{\theta^{t-1}}[\mathbf{S}({\mu})]\right)
+\end{align*}\]</span> where <span class="math inline">\({E}_{\theta^{t-1}}[\mathbf{S}({\mu})]:=
+\left({E}_{\theta^{t-1}}\left[Z_i Z_i^{\top}\right]+{\mu} {\mu}^{\top}-2
+{\mu} {E}_{\theta^{t-1}}\left[Z_i\right]^{\top}\right).\)</span> The key
+is to compute <span class="math inline">\({E}_{\theta^{t-1}}\left[Z_i\right]\)</span> and
+<span class="math inline">\({E}_{\theta^{t-1}}\left[Z_i
+Z_i^{\top}\right]\)</span> (expected sufficient statistics) and they can
+be computed using conditional formula for multivariate Gaussian
+distribution. The solution in the M-step then is given by the MLE
+solution with the expected sufficient statistics: <span class="math display">\[\begin{align*}
+{\mu}^t &amp; ={E}_{\theta^{t-1}}\left[Z_i\right] \\
+{\Sigma}^t &amp; ={E}_{\theta^{t-1}}\left[Z_i
+Z_i^{\top}\right]-{\mu}^t\left({\mu}^t\right)^{\top}.
+\end{align*}\]</span></p>
 <!------------->
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2023-09-25 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2023-09-27 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
+</div>
 </div>
 
 
