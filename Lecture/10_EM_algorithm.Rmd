@@ -367,7 +367,7 @@ $$
 R_k= \begin{cases}1 & \text { if } Z_k \text { is observed } \\ 0 & \text { if } Z_k \text { is missing }\end{cases}
 \end{align*}
 For a specific $r=\left(r_1, \ldots, r_p\right) \in\{0,1\}^p$, $Z_{(r)}$ is the subset of components that are observed; $Z_{(\bar{r})}$ subset of components that are missing.
-- Let $Z_{(R)}=\sum_r Z_{(r)} I(R=r)$. Similarly, $Z_{\bar{R}}=\sum_{r} Z_{(r)} I(R \neq r)$. 
+- Let $Z_{(R)}=\sum_r Z_{(r)} I(R=r)$. Similarly, $Z_{(\bar{R})}=\sum_{r} Z_{(r)} I(R \neq r)$. 
 - The ideal full data is $(R, Z)$. The observed data is $\left(R, Z_{(R)}\right)$. 
   - A random sample of observed data is $\left(R_i, Z_{(R_i)i}\right)_{i=1}^n.$
 
@@ -426,13 +426,13 @@ $$\theta^t =\arg \max_{\theta} Q(\theta, \theta^{t-1}).$$
 **Example**: Suppose $Z$ follows a $N(\mu,\Sigma)$, here $\theta:=(\mu,\Sigma)$.
 Note that 
 \begin{align*}
-&E_{\theta^{t-1}}\left(\log P\left(Z_i; \theta\right) \mid Z_{(r) i}\right) \\ =&-\frac{1}{2} \log |2 \pi {\Sigma}|-\frac{1}{2}  {E}_{\theta^{t-1}}\left[\left(Z_i-{\mu}\right)^{\top} {\Sigma}^{-1}\left(Z_i-{\mu}\right)\right] \\
-=&-\frac{1}{2} \log |{\Sigma}|-\frac{p}{2} \log (2 \pi)-\frac{1}{2} \operatorname{tr}\left({\Sigma}^{-1} {E}_{\theta^{t-1}}[\mathbf{S}({\mu})]\right)
+&E_{\theta^{t-1}}\left(\log P\left(Z_i; \theta\right) \mid Z_{(r) i}\right) \\ =&-\frac{1}{2} \log |2 \pi {\Sigma}|-\frac{1}{2}  {E}_{\theta^{t-1}}\left[\left(Z_i-{\mu}\right)^{\top} {\Sigma}^{-1}\left(Z_i-{\mu}\right) \mid Z_{(r) i} \right] \\
+=&-\frac{1}{2} \log |{\Sigma}|-\frac{p}{2} \log (2 \pi)-\frac{1}{2} \operatorname{tr}\left({\Sigma}^{-1} {E}_{\theta^{t-1}}[{S}({\mu})\mid Z_{(r) i}]\right)
 \end{align*}
-where ${E}_{\theta^{t-1}}[\mathbf{S}({\mu})]:= \left({E}_{\theta^{t-1}}\left[Z_i Z_i^{\top}\right]+{\mu} {\mu}^{\top}-2 {\mu} {E}_{\theta^{t-1}}\left[Z_i\right]^{\top}\right).$ The key is to compute ${E}_{\theta^{t-1}}\left[Z_i\right]$ and ${E}_{\theta^{t-1}}\left[Z_i Z_i^{\top}\right]$ (expected sufficient statistics) and they can be computed using conditional formula for multivariate Gaussian distribution. The solution in the M-step then is given by the MLE solution with the expected sufficient statistics:
+where ${E}_{\theta^{t-1}}[{S}({\mu})\mid Z_{(r) i}]:= \left({E}_{\theta^{t-1}}\left[Z_i Z_i^{\top}\mid Z_{(r) i}\right]+{\mu} {\mu}^{\top}-2 {\mu} {E}_{\theta^{t-1}}\left[Z_i\mid Z_{(r) i}\right]^{\top}\right).$ The key is to compute ${E}_{\theta^{t-1}}\left[Z_i\mid Z_{(r) i}\right]$ and ${E}_{\theta^{t-1}}\left[Z_i Z_i^{\top}\mid Z_{(r) i}\right]$ (expected sufficient statistics) and they can be computed using conditional formula for multivariate Gaussian distribution. In the above calculation, gathering all observations for all missing patterns, the solution in the M-step then is given by the MLE solution with the expected sufficient statistics:
 \begin{align*}
-{\mu}^t & ={E}_{\theta^{t-1}}\left[Z_i\right] \\
-{\Sigma}^t & ={E}_{\theta^{t-1}}\left[Z_i Z_i^{\top}\right]-{\mu}^t\left({\mu}^t\right)^{\top}.
+{\mu}^t & =\frac{1}{n}\sum_{i=1}^n \sum_r I(R_i=r){E}_{\theta^{t-1}}\left[Z_i\mid Z_{(r) i}\right] \\
+{\Sigma}^t & =\frac{1}{n} \sum_{i=1}^n \sum_r I(R_i=r){E}_{\theta^{t-1}}\left[Z_i Z_i^{\top}\mid Z_{(r) i}\right]-{\mu}^t\left({\mu}^t\right)^{\top}.
 \end{align*}
 
 
