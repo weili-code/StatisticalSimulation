@@ -11,7 +11,7 @@
 
 <meta name="author" content="Instructor: Dr. Wei Li" />
 
-<meta name="date" content="2023-09-27" />
+<meta name="date" content="2023-10-03" />
 
 <title>MAT 653: Statistical Simulation</title>
 
@@ -1624,7 +1624,7 @@ display: none;
 <h1 class="title toc-ignore">MAT 653: Statistical Simulation</h1>
 <h4 class="author">Instructor<span class="math inline">\(:\)</span>
 Dr. Wei Li</h4>
-<h4 class="date">2023-09-27</h4>
+<h4 class="date">2023-10-03</h4>
 
 </div>
 
@@ -1635,7 +1635,7 @@ MathJax.Hub.Config({
 });
 </script>
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2023-09-27 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2023-10-03 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 <!------------->
 <div id="em-algorithm" class="section level2">
@@ -1726,7 +1726,7 @@ inequality:<br />
   LHS &amp; = \int \log \Big(\frac{h(z)}{g(z)}\Big) h(z) dz \\
       &amp; = -\int \log \Big(\frac{g(z)}{h(z)}\Big) h(z) dz \\
       &amp; \ge - log \int \frac{g(z)}{h(z)}h(z) dz = 0.
-\end{align*}\]</span> One can also show that <span class="math inline">\(E_{h}\Big[\log\frac{h(z)}{g(z)}\Big] =0\)</span>
+\end{align*}\]</span> In fact <span class="math inline">\(E_{h}\Big[\log\frac{h(z)}{g(z)}\Big] =0\)</span>
 if and only if <span class="math inline">\(h=g\)</span>.</p>
 <p>So to maximize <span class="math inline">\(log(L(\theta|\boldsymbol{x})\)</span> over <span class="math inline">\(\theta\)</span>, it suffices to just maximize
 <span class="math inline">\(Q(\theta |
@@ -1816,7 +1816,7 @@ f(X_i\mid \mu_j)=\frac{1}{\sqrt{2\pi}}e^{-\frac{(X_i-\mu_j)^2}{2}}.
 \]</span> Define some latent variables (binary) <span class="math inline">\(Z_i \sim Bernoulli(p)\)</span>:<br />
 <span class="math display">\[P(Z_i=1)=\frac{1}{4},
 P(Z_i=0)=\frac{3}{4}.\]</span></p>
-<p>If <span class="math inline">\(W_{1i}\sim f_1\)</span>, <span class="math inline">\(W_{2i}\sim f_2\)</span>, and <span class="math inline">\(Z_i\perp(W_{1i},W_{2i})\)</span>, <span class="math inline">\(\{Z_i,W_{1i},W_{2i}\}_{i=1}^n\)</span> are
+<p>Assuming <span class="math inline">\(W_{1i}\sim f_1\)</span>, <span class="math inline">\(W_{2i}\sim f_2\)</span>, and <span class="math inline">\(Z_i\perp(W_{1i},W_{2i})\)</span>, <span class="math inline">\(\{Z_i,W_{1i},W_{2i}\}_{i=1}^n\)</span> are
 independent, we can write <span class="math display">\[
 X_i=Z_iW_{1i}+(1-Z_i)W_{2i}.
 \]</span></p>
@@ -1885,24 +1885,36 @@ Q(\theta\mid\theta^{(0)},
 <span class="math inline">\(f\)</span> is density function of <span class="math inline">\(N(0,1)\)</span>, <span class="math inline">\(F\)</span> be the CDF of <span class="math inline">\(N(0,1)\)</span>, so <span class="math inline">\(X_i\sim N(\theta,1)\)</span><br />
 The Goal is to estimate <span class="math inline">\(\theta\)</span>.
 However, <span class="math inline">\(X_i\)</span> are not fully
-observed. They are right censored. The actual observation are <span class="math inline">\(Y_i\)</span>.<br />
-Let (1) <span class="math inline">\(Y_i\)</span> is observed <span class="math display">\[
+observed. They are right censored.</p>
+<ol style="list-style-type: decimal">
+<li>The actual observation are <span class="math inline">\(Y_i\)</span>.
+<span class="math display">\[
 Y_i=
 \begin{cases}
 a \ \ \ if \ X_i\ge a \\
 X_i \ \ \ if \ X_i\le a
 \end{cases}
-\]</span> where <span class="math inline">\(a\)</span> is fixed.<br />
-It implies <span class="math inline">\(Y_i=\min(X_i,a)\)</span>.<br />
-(2)<span class="math inline">\(\delta_i=I(X_i\le a)\)</span> be the
+\]</span> where <span class="math inline">\(a\)</span> is some fixed
+constant. That is <span class="math inline">\(Y_i=\min(X_i,a)\)</span>.<br />
+</li>
+<li><span class="math inline">\(\delta_i=I(X_i\le a)\)</span> be the
 indicator for non-censoring, or equivalently, for observing the actual
 <span class="math inline">\(X_i\)</span>;<br />
-(3)<span class="math inline">\(n\)</span> be sample size.</p>
-<p>Assume (1)<span class="math inline">\((Y_1, Y_2, \dots, Y_m)\)</span>
-all less than <span class="math inline">\(a\)</span>,<br />
-(2)<span class="math inline">\((Y_{m+1}, Y_{m+2}, \dots, Y_n)\)</span>
-all equal than <span class="math inline">\(a\)</span>.</p>
-<p>So the observed data likelihood function: <span class="math display">\[
+</li>
+<li><span class="math inline">\(n\)</span> be sample size.</li>
+</ol>
+<p>Assume</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\((Y_1, Y_2, \dots, Y_m)\)</span> all less
+than <span class="math inline">\(a\)</span>,<br />
+</li>
+<li><span class="math inline">\((Y_{m+1}, Y_{m+2}, \dots, Y_n)\)</span>
+all equal than <span class="math inline">\(a\)</span>.</li>
+</ol>
+<p>That is, <span class="math inline">\((Y_1, Y_2, \dots, Y_m)\)</span>
+are uncensored, <span class="math inline">\((Y_{m+1}, Y_{m+2}, \dots,
+Y_n)\)</span> are censored. So the observed data likelihood function:
+<span class="math display">\[
 \begin{aligned}
 L(\theta\mid Y_1, Y_2, \dots, Y_n, \delta_1, \delta_2, \dots,
 \delta_n)&amp;=\prod\limits_{i=1}^{n}\big(f(Y_i-\theta)\big)^{\delta_i}\big(P(Y_i=a)\big)^{1-\delta_i}\\
@@ -1911,10 +1923,9 @@ a)\big)^{1-\delta_i}\\
 &amp;=\prod\limits_{i=1}^{n}\big(f(Y_i-\theta)\big)^{\delta_i}\big(1-F(a-\theta)\big)^{1-\delta_i}
 \end{aligned}
 \]</span></p>
-<p>Since <span class="math inline">\((Y_1, Y_2, \dots, Y_m)\)</span> are
-uncensored, <span class="math inline">\((Y_{m+1}, Y_{m+2}, \dots,
-Y_n)\)</span> are censored.<br />
-Let $ {Z}$ be the vector of the unobservable <span class="math inline">\(X_{m+1}, X_{m+2}, \dots, X_n\)</span>.<br />
+<p>Let <span class="math inline">\({Z}\)</span> be the vector of the
+unobservable <span class="math inline">\(X_{m+1}, X_{m+2}, \dots,
+X_n\)</span>.<br />
 The complete data likelihood function: <span class="math display">\[
 L^c(\theta\mid Y_1, Y_2, \dots,
 Y_m;  {Z})=\prod\limits_{i=1}^{m}f(Y_i-\theta)\prod\limits_{i=m+1}^{n}f(X_i-\theta)
@@ -1951,7 +1962,7 @@ X_i\ge a\big]\overset{set}{=}0  \\
 X_i\ge a]-(n-m)\theta\overset{set}{=}0
 \]</span></p>
 <p>we can calculate the solution <span class="math inline">\(\theta^{(1)}\)</span>: <span class="math display">\[
-\theta^{(1)}=\frac{\sum\limits_{i=1}^{m}Y_i+(n-m)E_{\theta^{(0)}}[X_i\mid
+\theta^{(1)}=\frac{(\sum\limits_{i=1}^{m}Y_i)+(n-m)E_{\theta^{(0)}}[X_i\mid
 X_i\ge a]}{n}
 \]</span></p>
 Finally, we can show that <span class="math display">\[
@@ -1999,7 +2010,7 @@ estimation of <span class="math inline">\(\theta\)</span>, it suffices
 to consider <span class="math inline">\(P(Z=z ; \theta).\)</span></p>
 <p>The likelihood for the observed data point <span class="math inline">\(\left(R=r, Z_{(R)}=z_{(r)}\right)\)</span> is
 given by <span class="math display">\[\begin{align*}
-P\left(R=r, z_{(R)}\right. &amp; \left.=z_{(r)} ; \psi,
+P\left(R=r, Z_{(R)}\right. &amp; \left.=z_{(r)} ; \psi,
 \theta\right)=\int P(z ; r ; \psi, \theta) d z_{(\bar{r})} \\
 &amp; =P\left(R=r \mid Z_{(r)}=z_{(r)} ; \psi\right) \int P(z ; \theta)
 d z_{(\bar{r})} \\
@@ -2007,10 +2018,10 @@ d z_{(\bar{r})} \\
 P\left(Z_{(r)}=z_{(r)} ; \theta\right)
 \end{align*}\]</span></p>
 <p>The likelihood based on <span class="math inline">\(\left.\left(R_i=r_i,
-z_{\left(R_i\right)i}=z_{\left(r_i\right)}\right)\right)_{i=1}^n\)</span>
+Z_{\left(R_i\right)i}=z_{\left(r_i\right)}\right)\right)_{i=1}^n\)</span>
 is given by</p>
 <p><span class="math display">\[\begin{align*}
-&amp; \prod_i \prod_r P\left(R_i=r ; z_{(r) i}=z_{(r)} ; \psi,
+&amp; \prod_i \prod_r P\left(R_i=r ; Z_{(r) i}=z_{(r)} ; \psi,
 \theta\right)^{I\left(R_i=r\right)} \\
 = &amp; \prod_i\left(\prod_r P\left(R_i=r|Z_{(r) i}=z_{(r) ;} ; \psi
 \right)^{I\left(R_i=r\right)} \prod_r P\left(Z_{(r) i}=z_{(r)} ;
@@ -2023,13 +2034,13 @@ P\left(Z_{(r)i}=z_{(r)}; \theta\right) \\
 P\left(z_{(r)i}, z_{(\bar{r})i}; \theta\right)
 d{z_{(\bar{r}})}\right)\right].
 \end{align*}\]</span></p>
-<p>The E-step:</p>
-<p><span class="math display">\[\begin{align*}
-Q\left(\theta, \theta^{t-1}\right)=\sum_{i=1}^n E_{\theta^{t-1}}(\log
-P(Z_i;\theta)|R_i, Z_{(R_i)i})= \sum_{i=1}^n \sum_{r}I\left(R_i=r\right)
-E_{\theta^{t-1}}\left(\log P\left(Z_i; \theta\right) \mid Z_{(r)
-i}\right)
-\end{align*}\]</span> The secon equality holds because <span class="math display">\[\begin{align*}
+<p>In the same spirit of EM discussed previously, the E-step is <span class="math display">\[\begin{align*}
+Q\left(\theta, \theta^{(t-1)}\right)=\sum_{i=1}^n
+E_{\theta^{(t-1)}}(\log P(Z_i;\theta)|R_i, Z_{(R_i)i})= \sum_{i=1}^n
+\sum_{r}I\left(R_i=r\right) E_{\theta^{(t-1)}}\left(\log P\left(Z_i;
+\theta\right) \mid Z_{(r) i}\right)
+\end{align*}\]</span> here the expectation is conditional on <span class="math inline">\((R_i, Z_{(R_i)i})\)</span> with parameter <span class="math inline">\(\theta^{(t-1)}\)</span>. The second equality holds
+because <span class="math display">\[\begin{align*}
 &amp; \left.E_{\theta&#39;}\left(\log P\left(Z_i; \theta\right) \mid
 R_i, Z_{(R_i)i}\right)\right) \\
 = &amp; \sum_{r}I\left(R_i=r\right) E_{\theta^{\prime}}\left(\log
@@ -2039,35 +2050,36 @@ P\left(Z_i; \theta\right) \mid Z_{(r) i}\right)
 \end{align*}\]</span> here the expectation is conditional on <span class="math inline">\((R_i, Z_{(r)i})\)</span> with parameter <span class="math inline">\(\theta&#39;\)</span>. The last equality holds
 because of MAR.</p>
 <p>The M-step:</p>
-<p><span class="math display">\[\theta^t =\arg \max_{\theta} Q(\theta,
-\theta^{t-1}).\]</span></p>
+<p><span class="math display">\[\theta^{(t)} =\arg \max_{\theta}
+Q(\theta, \theta^{(t-1)}).\]</span></p>
 <p><strong>Example</strong>: Suppose <span class="math inline">\(Z\)</span> follows a <span class="math inline">\(N(\mu,\Sigma)\)</span>, here <span class="math inline">\(\theta:=(\mu,\Sigma)\)</span>. Note that <span class="math display">\[\begin{align*}
-&amp;E_{\theta^{t-1}}\left(\log P\left(Z_i; \theta\right) \mid Z_{(r)
+&amp;E_{\theta^{(t-1)}}\left(\log P\left(Z_i; \theta\right) \mid Z_{(r)
 i}\right) \\ =&amp;-\frac{1}{2} \log |2 \pi
-{\Sigma}|-\frac{1}{2}  {E}_{\theta^{t-1}}\left[\left(Z_i-{\mu}\right)^{\top}
+{\Sigma}|-\frac{1}{2}  {E}_{\theta^{(t-1)}}\left[\left(Z_i-{\mu}\right)^{\top}
 {\Sigma}^{-1}\left(Z_i-{\mu}\right) \mid Z_{(r) i} \right] \\
 =&amp;-\frac{1}{2} \log |{\Sigma}|-\frac{p}{2} \log (2 \pi)-\frac{1}{2}
-\operatorname{tr}\left({\Sigma}^{-1} {E}_{\theta^{t-1}}[{S}({\mu})\mid
+\operatorname{tr}\left({\Sigma}^{-1} {E}_{\theta^{(t-1)}}[{S}({\mu})\mid
 Z_{(r) i}]\right)
-\end{align*}\]</span> where <span class="math inline">\({E}_{\theta^{t-1}}[{S}({\mu})\mid Z_{(r) i}]:=
-\left({E}_{\theta^{t-1}}\left[Z_i Z_i^{\top}\mid Z_{(r) i}\right]+{\mu}
-{\mu}^{\top}-2 {\mu} {E}_{\theta^{t-1}}\left[Z_i\mid Z_{(r)
-i}\right]^{\top}\right).\)</span> The key is to compute <span class="math inline">\({E}_{\theta^{t-1}}\left[Z_i\mid Z_{(r)
-i}\right]\)</span> and <span class="math inline">\({E}_{\theta^{t-1}}\left[Z_i Z_i^{\top}\mid Z_{(r)
-i}\right]\)</span> (expected sufficient statistics) and they can be
-computed using conditional formula for multivariate Gaussian
-distribution. In the above calculation, gathering all observations for
-all missing patterns, the solution in the M-step then is given by the
-MLE solution with the expected sufficient statistics: <span class="math display">\[\begin{align*}
-{\mu}^t &amp; =\frac{1}{n}\sum_{i=1}^n \sum_r
-I(R_i=r){E}_{\theta^{t-1}}\left[Z_i\mid Z_{(r) i}\right] \\
-{\Sigma}^t &amp; =\frac{1}{n} \sum_{i=1}^n \sum_r
-I(R_i=r){E}_{\theta^{t-1}}\left[Z_i Z_i^{\top}\mid Z_{(r)
-i}\right]-{\mu}^t\left({\mu}^t\right)^{\top}.
+\end{align*}\]</span> where <span class="math inline">\({E}_{\theta^{(t-1)}}[{S}({\mu})\mid Z_{(r) i}]:=
+\left({E}_{\theta^{(t-1)}}\left[Z_i Z_i^{\top}\mid Z_{(r)
+i}\right]+{\mu} {\mu}^{\top}-2 {\mu} {E}_{\theta^{(t-1)}}\left[Z_i\mid
+Z_{(r) i}\right]^{\top}\right).\)</span> The key is to compute <span class="math inline">\({E}_{\theta^{(t-1)}}\left[Z_i\mid Z_{(r)
+i}\right]\)</span> and <span class="math inline">\({E}_{\theta^{(t-1)}}\left[Z_i Z_i^{\top}\mid
+Z_{(r) i}\right]\)</span>, and these are expected sufficient statistics
+and can be computed using conditional formula for multivariate Gaussian
+distribution.</p>
+<p>In the above calculation, gathering all observations for all missing
+patterns, the solution in the M-step then is given by the MLE solution
+using the expected sufficient statistics: <span class="math display">\[\begin{align*}
+{\mu}^{(t)} &amp; =\frac{1}{n}\sum_{i=1}^n \sum_r
+I(R_i=r){E}_{\theta^{(t-1)}}\left[Z_i\mid Z_{(r) i}\right] \\
+{\Sigma}^{(t)} &amp; =\frac{1}{n} \sum_{i=1}^n \sum_r
+I(R_i=r){E}_{\theta^{(t-1)}}\left[Z_i Z_i^{\top}\mid Z_{(r)
+i}\right]-{\mu}^{(t)}\left({\mu}^{(t)}\right)^{\top}.
 \end{align*}\]</span></p>
 <!------------->
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2023-09-27 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2023-10-03 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 </div>
 </div>
