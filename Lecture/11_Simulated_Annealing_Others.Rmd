@@ -121,7 +121,7 @@ $$\theta^{(t+1)}=
 
 3. reduce temperature $T_{t+1} \leftarrow T_t$. For example, one can let $T_t = 1/log(1+t)$ or $(1/1.2)^t.$
 
-## Remarks:
+**Remarks**:
 
 1. If the perturbation increases $h$ (i.e., $\triangle h\geq 0$), the new proposal is automatically accepted. If $\triangle h<0$, then still accept it with certain probability  $\rho(<1)$.
 
