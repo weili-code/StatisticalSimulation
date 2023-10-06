@@ -1,17 +1,17 @@
 ---
 title: "MAT 653: Statistical Simulation"
-author:
-  - Instructor$:$ Dr. Wei Li
-  - Scribe$:$   Jianchen Wei
-date: Nov 30th, 2021
+author: Instructor$:$ Dr. Wei Li
+date: "`r Sys.Date()`"
 geometry: left=2cm, right=2cm, top=2cm, bottom=2cm
 linestretch: 1.3
 output:
+  html_document:
+    df_print: paged
+    mathjax_config:
+      - TeX-AMS-MML_HTMLorMML   
   pdf_document: 
       include:
         in_header: preamble_rmd.tex
-  html_document:
-    df_print: paged
   html_notebook: default
 fontsize: 14pt
 header-includes:
@@ -27,17 +27,74 @@ header-includes:
 - \newcommand\op[1]{\operatorname{#1}}
 - \newcommand\mbb[1]{\mathbb{#1}}
 - \usepackage{caption}
+- \usepackage{mathtools}
 - \captionsetup[figure]{labelformat=empty}
 - \newcommand{\wei}[1]{\textcolor{orange}{(Wei:#1)}}
 ---
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE,eval=T)
-```
+
+
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
   TeX: { equationNumbers: { autoNumber: "AMS" } }
 });
 </script>
+
+
+<span style="background-color: #f5f5f5; padding: 5px; display: block;">
+    <span style="width: 25%; display: inline-block; text-align: left;">
+        [Back](javascript:window.history.back())
+    </span>
+    <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
+        **Updated:** `r Sys.Date()`
+    </span>
+    <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+        Statistical Simulation, Wei Li
+    </span>
+</span>
+
+<!------------->
+
+
+# Metropolis-Hasting algorithm (blockwise)
+
+**Target density:** $f(x,y)$, which could be unnormalized.
+
+We use two candidate transition densities $q_{X} (x \vert x_c, y_c)$ and $q_{Y} (y \vert  x_c, y_c)$, where $x_c$, $y_c$ stand for current values.
+
+**Algorithm:**
+
+1. Update $X$   
+   (a) sample $X^* \sim q_X(\cdot \vert  X^{(s)}, Y^{(s)})$   
+   (b) compute $\gamma_X (X^* \vert  X^{(s)}, Y^{(s)})=\displaystyle \frac{f(X^{*}, Y^{(s)})}{f(X^{(s)}, Y^{(s)})} \cdot \frac{q_X(X^{(s)}\vert  X^{*}, Y^{(s)})}{q_X(X^{*} \vert  X^{(s)}, Y^{(s)})}$
+   (c) set $X^{(s+1)}$ to $X^*$ with probability $\min (1, \gamma_X)$; set $X^{(s+1)}$ to $X^{(s)}$ otherwise.
+   
+2. Update $Y$   
+   (a) sample $Y^* \sim q_Y(\cdot \vert  X^{(s+1)}, Y^{(s)})$   
+   (b) compute $\gamma_Y (Y^* \vert  X^{(s+1)}, Y^{(s)})=\displaystyle \frac{f(X^{(s+1)}, Y^{*})}{f(X^{(s+1)}, Y^{(s)})} \cdot \frac{q_Y(Y^{(s)}\vert  X^{(s+1)}, Y^{*})}{q_Y(Y^{*} \vert  X^{(s+1)}, Y^{(s)})}$
+   (c) set $Y^{(s+1)}$ to $Y^*$ with probability $\min (1, \gamma_Y)$; set $Y^{(s+1)}$ to $Y^{(s)}$ otherwise.
+   
+**Remark:** $\displaystyle p \big( (x,y) \to (x^*,y^*) \big) f(x,y) = p \big( (x^*,y^*) \to (x,y) \big) f(x^*,y^*)$ does not hold for this algorithm in general.   
+   
+\begin{mdframed}
+Proof: 
+\end{mdframed}
+
+
+**Extra: Multivariate Normal (for R code example in class)**
+
+The multivariate normal distribution of a $d-$dimensional random vector $\mathbf{X}=(X_1, \cdots, X_d)^{\top}\in\mathbb{R}^d$ can be written in the notation $\mathbf{X} \sim \mathcal{N}(\boldsymbol\mu, \mathbf{\Sigma})$.
+
+When the symmetric covariance matrix $\mathbf{\Sigma}$ is positive definite, then the multivariate normal distribution is non-degenerate, and the distribution has density function
+\begin{align*}
+f_{\mathbf{X}}(\mathbf{x} \vert  \boldsymbol\mu, \mathbf{\Sigma}) &= \frac{1}{(2 \pi)^{\frac{d}{2}}} \big( \det(\mathbf{\Sigma}) \big)^{-\frac{1}{2}} \exp \big(-\frac{1}{2} (\mathbf{x}-\boldsymbol\mu)^{\top} \mathbf{\Sigma}^{-1} (\mathbf{x}-\boldsymbol\mu)  \big)\\
+&\overset{\mathbf{x}} \propto \exp(-\frac{1}{2} \mathbf{x}^{\top} \mathbf{\Sigma}^{-1} \mathbf{x} + \mathbf{x}^{\top} \mathbf{\Sigma}^{-1} \boldsymbol\mu)
+\end{align*}
+where $\mathbf{x}=(x_1, \cdots, x_d)^{\top}$.
+
+For comparison, the density function of (univariate) normal distribution $X\sim N(\mu, \sigma^2)$
+$$
+f_X(x \vert  \mu, \sigma^2)=\frac{1}{\sqrt{2\pi}\sigma} \exp \big(-\frac{1}{2\sigma^2}(x-\mu)^2 \big) \overset{x} \propto \exp\big(-\frac{1}{2\sigma^2}(x^2-2x\mu+\mu^2)\big) \overset{x} \propto \exp\big(-\frac{1}{2} x^2 (\sigma^2)^{-1}+ x(\sigma^2)^{-1}\mu\big)
+$$
 
 
 # Gibbs Sampling
@@ -129,3 +186,17 @@ $$\displaystyle (X,Y)\sim N \left(\begin{pmatrix}\mu_X\\ \mu_Y\end{pmatrix},\beg
 Let $\rho=\frac{\sigma_{XY}}{\sigma_{X}\sigma_Y}$ be the correlation. It is a fact that
 \[f_{X|Y}(x|y)\sim N(\mu_X+\rho\frac{\sigma_X}{\sigma_Y}(y-\mu_Y), \sigma_X^2(1-\rho^2))\]
 \[f_{Y|X}(y|x)\sim N(\mu_Y+\rho\frac{\sigma_Y}{\sigma_X}(x-\mu_X), \sigma_Y^2(1-\rho^2))\]
+
+<!------------->
+<span style="background-color: #f5f5f5; padding: 5px; display: block;">
+    <span style="width: 25%; display: inline-block; text-align: left;">
+        [Back](javascript:window.history.back())
+    </span>
+    <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
+        **Updated:** `r Sys.Date()`
+    </span>
+    <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+        Statistical Simulation, Wei Li
+    </span>
+</span>
+ 
