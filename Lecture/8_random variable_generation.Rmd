@@ -154,7 +154,10 @@ We can show that each of the kept $Y \sim f$. Thus the whole collection selected
 **Intuitive argument**:  The **first step** of the corollary creates a uniform distribution on $E = \{(y,u):0<u<Mg(y)\}\subseteq \mathbb{R}^{d+1}$ (can prove it). Further, the uniform distribution on $E$ gives another uniform distribution when restricted onto a subset of $E$ (intuitively correct, but why?). Note that $\{(x,u):0<u<f(x) \}$ is a subset of $E$. The **second step** of the corollary practically enforces this restriction of $E$ onto $\{(x,u):0<u<f(x) \}$, thus retaining samples that are essentially uniform draws on $\{(x,u):0<u<f(x) \}$. Finally, invoking the Fundamental Theorem of Simulation, the uniform drawing on the restricted set $\{(x,u):0<u<f(x) \}$ has a marginal pdf for $x$ which is the target pdf $f$, giving the conclusion of the corollary.
 A formal proof is given in the class.
 
-**Remark**: The above corollary is equivalent to the Accept-reject method. The algorithm also works for $x \propto \tilde{f}$ where $\tilde{f}$ is the kernel function of some pdf $f$.
+**Remark**: 
+
+- The above corollary is equivalent to the Accept-reject method. The algorithm also works for $x \propto \tilde{f}$ where $\tilde{f}$ is the kernel function of some pdf $f$.
+- As we shall see later on, sampling based on the conditional distribution of $U$ give $X$ and the conditional distribution of $X$ give $U$ turns out to be a valid strategy which falls under a class of sampling method called 'Gibbs sampling'.
 
 
 <!------------->

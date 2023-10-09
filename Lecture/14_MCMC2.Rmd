@@ -80,33 +80,15 @@ Proof:
 \end{mdframed}
 
 
-**Extra: Multivariate Normal (for R code example in class)**
-
-The multivariate normal distribution of a $d-$dimensional random vector $\mathbf{X}=(X_1, \cdots, X_d)^{\top}\in\mathbb{R}^d$ can be written in the notation $\mathbf{X} \sim \mathcal{N}(\boldsymbol\mu, \mathbf{\Sigma})$.
-
-When the symmetric covariance matrix $\mathbf{\Sigma}$ is positive definite, then the multivariate normal distribution is non-degenerate, and the distribution has density function
-\begin{align*}
-f_{\mathbf{X}}(\mathbf{x} \vert  \boldsymbol\mu, \mathbf{\Sigma}) &= \frac{1}{(2 \pi)^{\frac{d}{2}}} \big( \det(\mathbf{\Sigma}) \big)^{-\frac{1}{2}} \exp \big(-\frac{1}{2} (\mathbf{x}-\boldsymbol\mu)^{\top} \mathbf{\Sigma}^{-1} (\mathbf{x}-\boldsymbol\mu)  \big)\\
-&\overset{\mathbf{x}} \propto \exp(-\frac{1}{2} \mathbf{x}^{\top} \mathbf{\Sigma}^{-1} \mathbf{x} + \mathbf{x}^{\top} \mathbf{\Sigma}^{-1} \boldsymbol\mu)
-\end{align*}
-where $\mathbf{x}=(x_1, \cdots, x_d)^{\top}$.
-
-For comparison, the density function of (univariate) normal distribution $X\sim N(\mu, \sigma^2)$
-$$
-f_X(x \vert  \mu, \sigma^2)=\frac{1}{\sqrt{2\pi}\sigma} \exp \big(-\frac{1}{2\sigma^2}(x-\mu)^2 \big) \overset{x} \propto \exp\big(-\frac{1}{2\sigma^2}(x^2-2x\mu+\mu^2)\big) \overset{x} \propto \exp\big(-\frac{1}{2} x^2 (\sigma^2)^{-1}+ x(\sigma^2)^{-1}\mu\big)
-$$
-
 
 # Gibbs Sampling
 
 
-**Recall:** the block-wise Metropolis-Hastings. 
-To sample from $f(X,Y)$. We used two candidates: $q_X(x|X,Y), q_Y(y|X,Y)$.
+Recall the block-wise Metropolis-Hastings: to sample from $f(X,Y)$, we used two candidates: $q_X(x|X,Y), q_Y(y|X,Y)$.
 
 1. Update $X$:
 \begin{align*}
-\gamma_X(X^*|X^{(s)},Y^{(s)})&=\frac{f(X^*,Y^{(s)})}{f(X^{(s)},Y^{(s)})}\cdot\frac{q_X(X^{(s)}|X^{(s)},Y^{(s)})}{q_X(X^*|X^{(s)},Y^{(s)})}\\
-&=\frac{f_{X|Y}(X^*|Y^{(s)})}{f_{X|Y}(X^{(s)}|Y^{(s)})}\cdot\frac{q_X(X^{(s)}|X^{(s)},Y^{(s)})}{q_X(X^*|X^{(s)},Y^{(s)})}
+\gamma_X(X^*|X^{(s)},Y^{(s)})&=\frac{f(X^*,Y^{(s)})}{f(X^{(s)},Y^{(s)})}\cdot\frac{q_X(X^{(s)}|X^{(s)},Y^{(s)})}{q_X(X^*|X^{(s)},Y^{(s)})}.
 \end{align*}
 
 Suppose we take $q_X(x|X^{(s)}, Y^{(s)})$ to be full condition distribution $f_{X|Y}(x|Y^{(s)})$, take $q_Y(y|X^{(s)},Y^{(s)})$ to be full condition distribution $f_{Y|X}(y|X^{(s)})$, then
@@ -134,7 +116,7 @@ Take $x^{(0)}$. For $s=1,2,\cdots$, generate
 
 **Algorithm: Multi-stage Gibbs sampling**
 
-\textbf{Target:} $f(X_1,X_2,\cdots,X_d)$
+\textbf{Target:} $f(X_1,X_2,\cdots,X_d)$, possibly unnormalized
 
 Starting Values: $X^{(0)}=(X^{(0)}_1,X^{(0)}_2,\cdots,X^{(0)}_d)$. Let $f_{j}(X_j|X_{-j})$ denote the conditional density of $X_j$ given all the rest components $X_{-j}:=\{X_i: i\neq j\}$. 
 
@@ -153,7 +135,7 @@ $\textbf{Advantage:}$ For high-dim problem, all the situation can be univariate 
 
 **Remark**:
 
-- The Gibbs sampler is a composition of MH moves with accept probability = 1. Each move is reversible, but the composition itself is not.
+- The Gibbs sampler is a composition of MH moves with accept probability = 1. The move in each stage is reversible, but the composition itself is not.
 - Both (Blockwise) MH and Gibbs sampling have the target distribution as the invariant distribution (steady-state distribution).
 
 **Example: Two-stage Gibbs sampling**
@@ -164,28 +146,79 @@ Note that: $\displaystyle \frac{1}{1+(z_i-x)^2}=\int_0^\infty e^{-w_i(1+(z_i-x)^
 \[f(x,w_1,w_2)\propto e^{-x^2/20}\prod_{i=1}^2 e^{-w_i(1+(z_i-x)^2)}\]
 so $f(x)$ is just the marginal pdf of $f(x,w_1,w_2)$.
 
-Gibbs sampling: $\vec{w}=(w_1, w_2)$
+Gibbs sampling: ${w}=(w_1, w_2)$
 
-- $X^{(s)}\sim f_{X|\vec{w}}(\cdot|\vec{w}^{(s-1)})$
-- $\vec{w}\sim f_{\vec{w}|X}(\cdot|X^{(s)})$
+- $X^{(s)}\sim f_{X|W}(\cdot|{W}^{(s-1)})$
+- $W^{(s)}\sim f_{W|X}(\cdot|X^{(s)})$
 
 
 Here
-\[f_{X|\vec{w}}(x|w_1,w_2) \overset{x} \propto e^{-\big(\sum w_i\big)x^2+2x\sum w_iz_i}\cdot e^{-x^2/20}\sim N \Big(\frac{\sum w_iz_i}{\sum w_i+1/20},\frac{1}{2\big(\sum w_i+1/20\big)} \Big)\]
-\[f_{\vec w|X}(w_1,w_2|x)  \overset{\vec{w}} \propto e^{-w_1(1+(z_1-x)^2)}\cdot e^{-w_2(1+(z_2-x)^2)}\]
+\[f_{X|W}(x|w_1,w_2) \overset{x} \propto e^{-\big(\sum w_i\big)x^2+2x\sum w_iz_i}\cdot e^{-x^2/20}\sim N \Big(\frac{\sum w_iz_i}{\sum w_i+1/20},\frac{1}{2\big(\sum w_i+1/20\big)} \Big)\]
+\[f_{W|X}(w_1,w_2|x)  \overset{W} \propto e^{-w_1(1+(z_1-x)^2)}\cdot e^{-w_2(1+(z_2-x)^2)}\]
 Note from the factorization above, $w_1,w_2$ are independent given $x$, therefore,
 \begin{align*}
-f(w_1|X^{(s)}) & \overset{w_1} \propto \mbox{exponential}(1+(z_1-X^{(s)})^2)\\
- f(w_2|X^{(s)})  & \overset{w_2} \propto \mbox{exponential}(1+(z_2-X^{(s)})^2)
+f(W_1|X^{(s)}) & \overset{W_1} \propto \mbox{exponential}(1+(z_1-X^{(s)})^2)\\
+ f(W_2|X^{(s)})  & \overset{W_2} \propto \mbox{exponential}(1+(z_2-X^{(s)})^2).
 \end{align*}
 
 **Multivariate Normal**
+
+The multivariate normal distribution of a $d-$dimensional random vector $\mathbf{X}=(X_1, \cdots, X_d)^{\top}\in\mathbb{R}^d$ can be written in the notation $\mathbf{X} \sim \mathcal{N}(\boldsymbol\mu, \mathbf{\Sigma}).$ When the symmetric covariance matrix $\mathbf{\Sigma}$ is positive definite, then the multivariate normal distribution is non-degenerate, and the distribution has density function
+\begin{align*}
+f_{\mathbf{X}}(\mathbf{x} \vert  \boldsymbol\mu, \mathbf{\Sigma}) &= \frac{1}{(2 \pi)^{\frac{d}{2}}} \big( \det(\mathbf{\Sigma}) \big)^{-\frac{1}{2}} \exp \big(-\frac{1}{2} (\mathbf{x}-\boldsymbol\mu)^{\top} \mathbf{\Sigma}^{-1} (\mathbf{x}-\boldsymbol\mu)  \big)\\
+&\overset{\mathbf{x}} \propto \exp(-\frac{1}{2} \mathbf{x}^{\top} \mathbf{\Sigma}^{-1} \mathbf{x} + \mathbf{x}^{\top} \mathbf{\Sigma}^{-1} \boldsymbol\mu)
+\end{align*}
+where $\mathbf{x}=(x_1, \cdots, x_d)^{\top}$.
+
+For comparison, the density function of (univariate) normal distribution $X\sim N(\mu, \sigma^2)$
+$$
+f_X(x \vert  \mu, \sigma^2)=\frac{1}{\sqrt{2\pi}\sigma} \exp \big(-\frac{1}{2\sigma^2}(x-\mu)^2 \big) \overset{x} \propto \exp\big(-\frac{1}{2\sigma^2}(x^2-2x\mu+\mu^2)\big) \overset{x} \propto \exp\big(-\frac{1}{2} x^2 (\sigma^2)^{-1}+ x(\sigma^2)^{-1}\mu\big).
+$$
+
 
 Bivariate normal 
 $$\displaystyle (X,Y)\sim N \left(\begin{pmatrix}\mu_X\\ \mu_Y\end{pmatrix},\begin{pmatrix}\sigma_X^2 & \sigma_{XY}\\ \sigma_{XY}&\sigma_Y^2\end{pmatrix} \right),$$ 
 Let $\rho=\frac{\sigma_{XY}}{\sigma_{X}\sigma_Y}$ be the correlation. It is a fact that
 \[f_{X|Y}(x|y)\sim N(\mu_X+\rho\frac{\sigma_X}{\sigma_Y}(y-\mu_Y), \sigma_X^2(1-\rho^2))\]
-\[f_{Y|X}(y|x)\sim N(\mu_Y+\rho\frac{\sigma_Y}{\sigma_X}(x-\mu_X), \sigma_Y^2(1-\rho^2))\]
+\[f_{Y|X}(y|x)\sim N(\mu_Y+\rho\frac{\sigma_Y}{\sigma_X}(x-\mu_X), \sigma_Y^2(1-\rho^2)).\]
+
+# Slice Sampling
+
+The slice sampling is a technique based on the idea of the Fundamental Theorem of Simulation and Gibbs sampling.
+
+- Sample from $f(x)$ some p.d.f supported on $\mathcal{X} \subset \mathbb{R}^d$.
+
+Recall from the Fundamental Theorem of Simulation,
+$$
+f(x)=\int_{0}^{f(x)}1du.
+$$
+So $f(x)$ is a marginal density (in $X$) of the joint uniform distribution on the set
+$$
+\{(x, u): 0<u<f(x), x\in\mathcal{X},\}
+$$
+with the p.d.f. $f(x, u)=1_{\{(x, u): 0<u<f(x)\}}(x, u).$
+
+To obtain a sample of $(X ,U)$ from this distribution, we can sample from a M.C. that has the target stationary distribution which can be done using Gibbs sampling, noting that
+\begin{align*}
+&f_{X|U}(x|u) \sim \op{unif}\{x: u< f(x) \} \\
+&f_{U|X}(u|x) \sim \op{unif}\{u: 0< u< f(x) \}
+\end{align*}
+
+**Slice sampling**:
+
+At iteration $s$, simulate
+
+1. $U^{(s+1)} \sim \op{unif}(0, f(X^{(s)}))$
+2. $X^{(s+1)} \sim \op{unif}(A^{(s+1)}),$ where $A^{(s+1)}:=\{x: f(x)>U^{(s+1)} \}.$
+
+
+**Remark 1**: A major difficulty in the algorithm is to evaluate the set $A^{(s+1)}$. For a univaraite distribution, an iterative expansion is applied--called **stepping out**: star with some $L>0, R>0$ and consider the candidate interval $x \in (X^{(s)}-L, X^{(s)}+R)$, then we extend the interval until the endpoints fall outside the slice, that is, eventually we settle for some interval 
+$$
+\tilde{A}^{(s+1)}=\{x\in (X^{(s)}-L, X^{(s)}+R): f(x)>U^{(s+1)} \} \subset A^{(s+1)}=\{x: f(x)>U^{(s+1)}\}.
+$$
+Then we draw $X^*$ from $\tilde{A}^{(s+1)}$ using accept/reject method, i.e., we draw $X^*$ until $f(X^*)>U^{(s+1)}$ and set $X^{(s+1)} \leftarrow X^*$; otherwise, we adjust the interval by shrinking it, specifically, if $X^*>X^{(s)}$, set $R \leftarrow X^*-X^{(s)}$; if $X^*<X^{(s)}$, set $L \leftarrow X^{(s)}-X^*.$
+
+**Remark 2**: The algorithm remains valid if we use $\tilde{f}$ the kernel of the p.d.f. in the algorithm.
 
 <!------------->
 <span style="background-color: #f5f5f5; padding: 5px; display: block;">

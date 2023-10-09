@@ -56,68 +56,70 @@ MathJax.Hub.Config({
 
 
 # Markov Chain with continuous state space 
-We consider Markov chains in the continuous state space, that is, S = uncountable set.
+We consider Markov chains in the continuous state space, that is, $S$ = uncountable set.
 
 Transition probability from each possible state $x$ to each possible set of states $A$:
 \begin{align*}
 &P(x_0,A):=P(X^{(n+1)} \in A | X^{(n)}=x_0)\\
 \text{CDF}:\ &F(v|x_0):=P(X^{(n+1)} \leq v | X^{(n)}=x_0)\\
-\text{Transition density function}:\ &p(v|x_0): = \frac{\partial F(v|x_0)}{\partial v}= P(X^{(n+1)}=v|X^{(n)}=x_0)\\
+\text{One-step transition density function}:\ &f(x_0, v):= \frac{\partial F(v|x_0)}{\partial v}= P(X^{(n+1)}=v|X^{(n)}=x_0)\\
 \end{align*}
 
-## Transition density 
+### Transition density 
 
 Define one-step transition density:
 
-$f^{[1]}(x_n,x_{n+1}):=p(x_{n+1}|x_n)=P(X^{(n+1)}=x_{n+1}|X^{(n)}=x_n)$
+$f^{[1]}(x_n,x_{n+1}):=p(x_{n+1}|x_n)=P(X^{(n+1)}=x_{n+1}|X^{(n)}=x_n).$
 
 Two-step transition density:
 
-$f^{[2]}(x_n,x_{n+2}):=P(X^{(n+2)}=x_{n+2}|X^{(n)}=x_n)$
 \begin{align*}
-f^{[2]}(x_n,x_{n+2}) &= \int P(X^{(n+2)}=x_{n+2}|X^{(n+1)}=x_{n+1},X^{(n)}=x_n) \cdot P(X^{(n+1)}=x_{n+1}|X^n=x_n)d x_{n+1}\\
-&=\int P(X^{(n+2)}=x_{n+2}|X^{(n+1)}=x_{n+1}) \cdot P(X^{(n+1)}=x_{n+1}|X^{(n)}=x_n)d x_{n+1}\\
-&=f^{[1]}(x_{n+1},x_{n+2}) \cdot f^{[1]}(x_n,x_{n+1})d x_{n+1}
+f^{[2]}(x_n,x_{n+2}):=P(X^{(n+2)}=x_{n+2}|X^{(n)}=x_n)&= \int P(X^{(n+2)}=x_{n+2}|X^{(n+1)}=x_{n+1},X^{(n)}=x_n)  P(X^{(n+1)}=x_{n+1}|X^n=x_n)d x_{n+1}\\
+&=\int P(X^{(n+2)}=x_{n+2}|X^{(n+1)}=x_{n+1}) P(X^{(n+1)}=x_{n+1}|X^{(n)}=x_n)d x_{n+1}\\
+&=\int f^{[1]}(x_n,x_{n+1}) f^{[1]}(x_{n+1},x_{n+2})d x_{n+1}
 \end{align*}
 
 Three-step transition density:
 
-$f^{[3]}(x_n,x_{n+3}):=P(X^{(n+3)}=x_{n+3}|X^{(n)}=x_n)$
 \begin{align*}
-f^{[3]}(x_n,x_{n+3}) &= \int P(X^{(n+3)}=x_{n+3}|X^{(n+2)}=x_{n+2}) \cdot P(X^{(n+2)}=x_{n+2}|X^{(n)}=x_n)d x_{n+2}\\
-&=\int f^{[1]}(x_{n+2},x_{n+3}) \cdot f^{[2]}(x_n,x_{n+2})d x_{n+2}\\
-&=\int \int f^{[1]}(x_{n+2},x_{n+3}) \cdot f^{[1]}(x_{n+1},x_{n+2}) \cdot f^{[1]}(x_n,x_{n+1})d x_{n+1} d x_{n+2}\\
+f^{[3]}(x_n,x_{n+3}):=P(X^{(n+3)}=x_{n+3}|X^{(n)}=x_n) &= \int P(X^{(n+3)}=x_{n+3}|X^{(n+2)}=x_{n+2}) \cdot P(X^{(n+2)}=x_{n+2}|X^{(n)}=x_n)d x_{n+2}\\
+&=\int f^{[1]}(x_{n+2},x_{n+3}) f^{[2]}(x_n,x_{n+2})d x_{n+2}\\
+&=\int \int f^{[1]}(x_{n+2},x_{n+3})  f^{[1]}(x_{n+1},x_{n+2})  f^{[1]}(x_n,x_{n+1})d x_{n+1} d x_{n+2}.\\
 \end{align*}
 
 Arguing as above, we can obtain the  m-step transition density:
 
-$f^{[m]}(x_n,x_{n+m})= \int \cdots \int \prod_{k=n+1}^{n+m}f^{[1]}(x_{k-1},x_k)dx_{n+1} \cdots dx_{n+m-1}$
+$f^{[m]}(x_n,x_{n+m})= \int \cdots \int \prod_{k=n+1}^{n+m}f^{[1]}(x_{k-1},x_k)dx_{n+1} \cdots dx_{n+m-1}.$
 
-The corrresponding m-step transition probability can be written as 
-$P(X^{(n+m)} \in A| X^{(n)}=x_n)= \int_A f^{[m]}(x_n,x_{n+m})dx_{n+m}$
+The corresponding m-step transition probability can be written as 
+$P(X^{(n+m)} \in A| X^{(n)}=x_n)= \int_A f^{[m]}(x_n,x_{n+m})dx_{n+m}.$ By similar argument, we have the **Chapman-Kolmogorov equation**:
+$$
+f^{[n+m]}(x_0, x_{n+m})=\int f^{[m]}(x_0, x_{m})f^{[n]}(x_m, x_{n+m})dx_{m}.
+$$
 
-## Some important properties
+
+### Some important properties
 
 If the M.C. possesses a limiting transition density independent of the initial state, that is 
 $$\lim_{n \to \infty}f^{[n]}(x,v)=g(v)$$
-then $g(v)$ is called "steady-state density" (long-term probability density) of M.C. and it is a solution to steady-state equation:
+then $g(v)$ is called "stationary/steady-state density" (long-term probability density) of M.C. and it is a solution to steady-state equation:
 
 $$g(v)=\int_{-\infty}^{+\infty}g(w)f(w,v)dw \qquad (*)$$
-$$(\text{discrete space}: \pi_j=\sum_{i=1}^{k} \pi_i p_{i,j} \qquad \forall j=1,2,\cdots ,k)$$
-where $g(w)$ is the start distribution and $f(w,v)$ is the transition density function.
+$$(\text{recall discrete space}: \pi_j=\sum_{i=1}^{K} \pi_i p_{ij} \qquad \forall j=1,2,\cdots ,K)$$
+where $g(w)$ is viewed as the start distribution and $f(w,v)$ is the transition density function.
 Note that an equivalent expression to $(*)$ is
-$$\int_A g(v) dv=\int_{-\infty}^{+\infty}g(w)P(w,A)dw \text{, for all set } A$$
+$$\int_A g(v) dv=\int_{-\infty}^{+\infty}g(w)P(w,A)dw \text{, for all set } A.$$
 
 
 Let $g(x)$ be the steady-state density and $f(x,v)$ be the density function of one-step transition, "**detailed balance condition**" is given by
-$$g(x)f(x,v)=g(v)f(x,v) \qquad \forall x,v \qquad (**)$$
+$$g(x)f(x,v)=g(v)f(v,x) \qquad \forall x,v \qquad (**)$$
 As in the discrete case, it can be shown that any Markov chain satisfying the "detailed balance condition" $(**)$ will have $g$ as the steady state density, i.e. $(*)$ holds.
 
 \begin{mdframed}
 Proof:
 \end{mdframed}
 
-## Ergodic Theorem
+### Ergodic Theorem
 
 If $(X^{(1)},X^{(2)},\cdots)$ is an ergodic M.C. whose steady-state density is given by $g$, then for $n \to \infty$, 
 $$P(X^{(n)} \in A) \to P(X^{(\infty)} \in A) = \int_A g(x)dx.$$
@@ -130,10 +132,10 @@ We consider a continuous state space, from which we would like to sample a targe
 
 If we can find such a $p$, then the long run distribution of the ergodic markov chain with transition distribution $p(\cdot | \cdot)$ is $f(\cdot)$.
 
-# Method
+### Method
 Choose an arbitrary transition density $q(\cdot | \cdot)$, without requring that the detailed balance conditions hold. Then use an acceptance probability on proposed samples as $$\alpha(x^*|x) = \min \Big(1, \frac{q(x|x^*)f(x^*)}{q(x^*|x)f(x)} \Big).$$ 
 
-The goal of this is to regulate the flow of probabilities between the current state and the proposed state. So given that our current state is x  then the probability of a particular state being proposed and accepted is $\alpha (x^*|x) q(x^*|x)$. Similarly, we can calculate the probability that any proposal is accepted as $a(x) :=\int \alpha (x^*|x) p(x^*|x)dx^*$. A move is not accepted with probability $r(x) := 1- a(x)$, in which case we set $x^* = x$. The (effective) transition density is then 
+The goal of this is to regulate the flow of probabilities between the current state and the proposed state. So given that our current state is $x$  then the probability of a particular state being proposed and accepted is $\alpha (x^*|x) q(x^*|x)$. Similarly, we can calculate the probability that any proposal is accepted as $a(x) :=\int \alpha (x^*|x) p(x^*|x)dx^*$. A move is not accepted with probability $r(x) := 1- a(x)$, in which case we set $x^* = x$. The (effective) transition density is then 
 
 $$p(x^*|x) =  \alpha (x^*|x) q(x^*|x) + r(x)\delta_x(x^*)$$
 
@@ -150,7 +152,7 @@ Proof:
 \end{mdframed}
 
 
-# Algorithm 
+### Algorithm 
 
 1. Given a target $f(\cdot)$ and a chosen $q(\cdot|\cdot)$, generate $x^*$ from $q(\cdot| x^{(s)})$
 2. Compute $\alpha(x^*|x^{(s)}) = \min (1, \frac{q(x^{(s)}|x^*)f(x^*)}{q(x^*|x^{(s)})f(x^{(s)})})$
@@ -158,11 +160,12 @@ Proof:
     i. if $u\leq \alpha(x^*|x^{(s)})$, set $x^{(s+1)} = x^*$
     ii. if $u> \alpha(x^*|x^{(s)})$, set $x^{(s+1)} = x^{(s)}$
   
-# Remark
+**Remark**:
+
 A necessary condition for the algorithm to work is $\mbox{supp}(f)\subseteq \mbox{supp}(q(\cdot|x))$ for all $x\in \mbox{supp}(f)$.
 A minimal necessary condition would be $\mbox{supp}(f)\subseteq \cup_{x\in \mbox{supp}(f)}[\mbox{supp}(q(\cdot|x))]$
 
-# Choice of Transition Density
+### Choice of Transition Density
 
 1. Classical Choice (Random Walk): Choose $q(x^*|x) = \tilde q (x^*-x)$ where $\tilde q$ is symmetric about 0.
 For example  $x^* = x^{(s)}+\epsilon^{(s)}$, where $\epsilon^{(s)}\sim \mbox{unif}(-1,1)$ or $\epsilon^{(s)}\sim N(0,\tau^2)$.
@@ -170,7 +173,7 @@ Then we would have $x^*\sim \mbox{unif}(x^{(s)}-1,x^{(s)}+1)$, or $x^*\sim N(x^{
 
 2. Independent Metropolis Hastings: Choose $x^*\sim q(\cdot)=q(\cdot|x)$ independent of the current value $x^{(s)}$. For example $q\sim N(0,1)$ throughout.
 
-# Practicalities
+### Practicalities
 
 1. **Burn-in** 
     i.   Run algorithm until some iteration B for which Markov Chain appears to reach stationarity.
@@ -179,14 +182,15 @@ Then we would have $x^*\sim \mbox{unif}(x^{(s)}-1,x^{(s)}+1)$, or $x^*\sim N(x^{
             
 2. **Thinning**: After burning to discard first B observations, then thin the chain by including every kth draw.
 
-3. **Trace Plot**: The plot of the values generated from the metropolis algorithm against the iteration number. Want to check:
+3. **Trace Plot**: The plot of the values generated from the metropolis algorithm against the iteration number. Check:
     a. The chain doesn't get stuck in a certain area of space.
-    b. The chain can move relatively fast. Between 30%-60% acceptance rate is ideal.
-    c. The chain moves at an appropriate speed. Proposals are not too bold (standard deviation of $p$ is too high), however they are large enough to be consequential (standard deviation of $p$ is not too small)
+    b. The chain can move relatively fast. 
     
-4. **"ACF" Autocorrelation Function**: Calculate the "lag j sample covariance" as 
+Proposals should not be too bold (standard deviation not too high), however should be large enough to be consequential (standard deviation not too small).  Between $30\%-60\%$ acceptance rate is ideal.
+    
+4. **"ACF" Autocorrelation Function**: Calculate the "lag-$j$ sample covariance" as 
 $$\hat\gamma_j = \frac{1}{T}\sum_{t=j+1}^T(x^{(t)}-\bar x)(x^{(t-j)}-\bar x)$$
-and the "lag j sample autocorrelation"  as $\hat{\rho}_j = \frac{\hat\gamma_j}{\hat\gamma_0}$. Then plotting autocorrelation $\hat{\rho}_j$ v.s. the lag index (j), relatively high values would indicate a high degree of correlation between draws and therefore, slow mixing.
+and the "lag-$j$ sample autocorrelation"  as $\hat{\rho}_j = \hat\gamma_j/\hat\gamma_0$. Then plotting autocorrelation $\hat{\rho}_j$ v.s. the lag index ($j$), relatively high values would indicate a high degree of correlation between draws and therefore, slow mixing.
 
 <!------------->
 <span style="background-color: #f5f5f5; padding: 5px; display: block;">
