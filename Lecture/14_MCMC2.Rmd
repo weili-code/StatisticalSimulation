@@ -214,11 +214,39 @@ At iteration $s$, simulate
 
 **Remark 1**: A major difficulty in the algorithm is to evaluate the set $A^{(s+1)}$. For a univaraite distribution, an iterative expansion is applied--called **stepping out**: star with some $L>0, R>0$ and consider the candidate interval $x \in (X^{(s)}-L, X^{(s)}+R)$, then we extend the interval until the endpoints fall outside the slice, that is, eventually we settle for some interval 
 $$
-\tilde{A}^{(s+1)}=\{x\in (X^{(s)}-L, X^{(s)}+R): f(x)>U^{(s+1)} \} \subset A^{(s+1)}=\{x: f(x)>U^{(s+1)}\}.
+\tilde{A}^{(s+1)}=\{x\in (X^{(s)}-L, X^{(s)}+R): f(x)>U^{(s+1)} \}
 $$
 Then we draw $X^*$ from $\tilde{A}^{(s+1)}$ using accept/reject method, i.e., we draw $X^*$ until $f(X^*)>U^{(s+1)}$ and set $X^{(s+1)} \leftarrow X^*$; otherwise, we adjust the interval by shrinking it, specifically, if $X^*>X^{(s)}$, set $R \leftarrow X^*-X^{(s)}$; if $X^*<X^{(s)}$, set $L \leftarrow X^{(s)}-X^*.$
 
 **Remark 2**: The algorithm remains valid if we use $\tilde{f}$ the kernel of the p.d.f. in the algorithm.
+
+
+**General form**:
+
+Suppose $f(x) \propto \prod_{i=1}^k f_i(x)$, where $f_i(x)>0$ not necessarily density. Note that 
+$f_i(x) = \int 1\{x: 0 \leq w_i \leq f_i(x) \}dw_i$. Thus $f$ is the marginal distribution of the joint distribution
+$$
+(x, w_1, \ldots, w_k) \overset{x, w_1, \ldots, w_k}{\propto} \prod_{i=1}^k 1\{w_i : 0\leq w_i \leq f_i(x) \},
+$$
+noting 
+$$
+f(x) \overset{x}{\propto} \int \cdots \int \prod_{i=1}^k 1\{w_i: 0 \leq w_i \leq f_i(x)\}dw_{1}\cdots dw_{k}= \prod_{i}f_i(x).
+$$
+
+**Slice sampling**:
+
+At iteration $s$, simulate
+
+1. $W_1^{(s+1)} \sim \op{unif}(0, f_1(X^{(s)}))$, 
+
+   $W_2^{(s+1)} \sim \op{unif}(0, f_2(X^{(s)}))$, 
+   
+   $\vdots$
+   
+   $W_{k}^{(s+1)} \sim \op{unif}(0, f_k(X^{(s)}))$, 
+
+2. $X^{(s+1)} \sim \op{unif}(A^{(s+1)})$, where $A^{(s+1)}:=\{x: f_i(x) \geq W_i^{(s+1)}, \forall i=1, \ldots, k\}.$
+
 
 <!------------->
 <span style="background-color: #f5f5f5; padding: 5px; display: block;">

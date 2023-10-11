@@ -107,7 +107,7 @@ It turns out for any candidate $\theta^{'}$ for next iterate,
 
 To see this,that is, for any $\theta^{'}$: 
 \begin{align*}
-  E_{\theta^{(m)}}(\log f(\bs{z}|\bs{x},{\theta}^{'})|\bs{x}) \le E_{\theta^{((m))}}(\log f(\bs{z}|\bs{x},\theta^{(m)})|\bs{x})= \int \log f(\bs{z}| \bs{x},\theta^{(m)})f(\bs{z}|x,\theta^{(m)}) d\bs{z}. 
+  E_{\theta^{(m)}}(\log f(\bs{z}|\bs{x},{\theta}^{'})|\bs{x}) \le E_{\theta^{(m)}}(\log f(\bs{z}|\bs{x},\theta^{(m)})|\bs{x})= \int \log f(\bs{z}| \bs{x},\theta^{(m)})f(\bs{z}|x,\theta^{(m)}) d\bs{z}. 
 \end{align*}
 
 Call $g(\bs{z}) = f(\bs{z}|\bs{x},\theta^{'})$, $h(\bs{z}) = f(\bs{z}|\bs{x},\theta^{(m)})$. It  suffices to show 
@@ -176,7 +176,7 @@ $\theta^{(m+1)}\gets\mathop{\arg\max}\limits_{\theta}\ \ Q(\theta\mid\theta^{(m)
 
 ### Two component mixture of normals
 
-Suppose $X_i\overset{iid}{\sim}\frac{1}{4}N(\mu_1,1)+\frac{3}{4}N(\mu_2,1)$, $\theta=(\mu_1,\mu_2).$  
+Suppose $X_i\overset{i.i.d.}{\sim}\frac{1}{4}N(\mu_1,1)+\frac{3}{4}N(\mu_2,1)$, $\theta=(\mu_1,\mu_2).$  
 log-likelihood function:
 $$\log L(\theta\mid {X})=\sum\limits_{i=1}^{n}\log\big(\frac{1}{4}f(X_i\mid\mu_1)+\frac{3}{4}f(X_i\mid\mu_2)\big)$$ 
 where $L(\theta\mid {X})=\prod\limits_{i=1}^{n}f(X_i\mid\mu_1,\mu_2).$  
@@ -196,7 +196,7 @@ Complete data likelihood function $({X}, {Z})$:
 $$
 \begin{aligned}
 L^c( \theta|{X}, {Z})&=\prod\limits_{i=1}^{n}P(X_i,Z_i)\\
-&=\prod\limits_{i=1}^{n}\big[P(X_i\mid Z_i=1)P(Z_i=1)Z\big]^{Z_i}\big[P(X_i\mid Z_i=0)P(Z_i=0)\big]^{1-Z_i}
+&=\prod\limits_{i=1}^{n}\big[P(X_i\mid Z_i=1)P(Z_i=1)\big]^{Z_i}\big[P(X_i\mid Z_i=0)P(Z_i=0)\big]^{1-Z_i}
 \end{aligned}
 $$
 
@@ -209,7 +209,7 @@ $$
 \begin{aligned}
 Q(\theta\mid\theta^{(0)}, {X})&=E_{\theta^{(0)}}\big[\log L^c(\theta\mid {X}, {Z})\mid {X}\big]\\
 &=-\sum\limits_{i=1}^{n}\Big\{\frac{1}{2}E_{\theta^{(0)}}[Z_i(X_i-\mu_1)^2\mid X_i]+\frac{1}{2}E_{\theta^{(0)}}\big[(1-Z_i)(X_i-\mu_2)^2\mid X_i\big]\Big\}\\
-&\ \ \ \ \ +\sum\limits_{i=1}^{n}\Big\{\big(\log(\frac{1}{4})\big) E_{\theta^{(0)}}(Z_i\mid X_i)-\big( \log(\frac{3}{4}) \big) E_{\theta^{(0)}}(1-Z_i\mid X_i)\Big\}+C
+&\ \ \ \ \ +\sum\limits_{i=1}^{n}\Big\{\log(\frac{1}{4}) E_{\theta^{(0)}}(Z_i\mid X_i)- \log(\frac{3}{4}) E_{\theta^{(0)}}(1-Z_i\mid X_i)\Big\}+C
 \end{aligned}
 $$
 
@@ -260,7 +260,8 @@ $$
 $$
 
 ### Right censored data (R.C example 5.13 and 5.14)
-Let $X_i\overset{iid}{\sim}f(x-\theta)$, where $f$ is density function of $N(0,1)$, $F$ be the CDF of $N(0,1)$, so $X_i\sim N(\theta,1)$  
+
+Let $X_i\overset{i.i.d.}{\sim}f(x-\theta)$, where $f$ is density function of $N(0,1)$, $F$ be the CDF of $N(0,1)$, so $X_i\sim N(\theta,1)$  
 The Goal is to estimate $\theta$. However, $X_i$ are not fully observed. They are right censored. 
 
 (1) The actual observation are $Y_i$.
@@ -272,7 +273,7 @@ X_i \ \ \ if \ X_i\le a
 \end{cases}
 $$
 where $a$ is some fixed constant. That is $Y_i=\min(X_i,a)$.  
-(2) $\delta_i=I(X_i\le a)$ be the indicator for non-censoring, or equivalently, for observing the actual $X_i$;  
+(2) $\delta_i=I(X_i\le a)$ be the indicator for non-censoring, or equivalently, for observing the actual $X_i$.
 (3) $n$ be sample size.  
   
 Assume 
@@ -304,13 +305,13 @@ $Q(\theta\mid\theta^{(0)}, {X})$ can be expressed:
 $$
 \begin{aligned}
 Q(\theta\mid\theta^{(0)};Y_1, \dots, Y_n, \delta_1, \dots, \delta_n)&=E_{\theta^{(0)}}\big[\log L^c(\theta\mid X_1, \dots, X_n)\mid Y_1, \dots, Y_n, \delta_1, \dots, \delta_n\big]\\
-&=-\frac{1}{2}\sum\limits_{i=1}^{m}(Y_i-\theta)^2-\frac{1}{2}\sum\limits_{i=m+1}^{n}E_{\theta^{(0)}}\big[(Z_i-\theta)^2\mid Y_1, \dots, Y_n, \delta_1, \dots, \delta_n\big]
+&=-\frac{1}{2}\sum\limits_{i=1}^{m}(Y_i-\theta)^2-\frac{1}{2}\sum\limits_{i=m+1}^{n}E_{\theta^{(0)}}\big[(X_i-\theta)^2\mid Y_1, \dots, Y_n, \delta_1, \dots, \delta_n\big]
 \end{aligned}
 $$
 
 For those $i=m+1, \dots, n$, $\delta_i=0$, So  
 $$
-E_{\theta^{(0)}}\big[(Z_i-\theta)^2\mid Y_i, \delta_i\big]=E_{\theta^{(0)}}\big[(X_i-\theta)^2\mid X_i\ge a \big]
+E_{\theta^{(0)}}\big[(X_i-\theta)^2\mid Y_i=a, \delta_i=0\big]=E_{\theta^{(0)}}\big[(X_i-\theta)^2\mid X_i\ge a \big]
 $$
 
 
@@ -319,7 +320,7 @@ $$
 \frac{\partial Q(\theta\mid\theta^{(0)};Y_1, \dots, Y_n, \delta_1, \dots, \delta_n)}{\partial\theta}\overset{set}{=}0
 $$
 
-Which can be expressed:
+which can be expressed as:
 $$
 \sum\limits_{i=1}^{m}(Y_i-\theta)+\sum\limits_{i=m+1}^{n}E_{\theta^{(0)}}\big[(X_i-\theta)\mid X_i\ge a\big]\overset{set}{=}0  \\
 $$
@@ -359,13 +360,13 @@ $$
 
 ### Missing Data
 
-- $Z$ full data: $Z=\left(Z_1, \cdots, Z_p\right)$.
+- $Z$ full data: $Z=\left(Z_1, \cdots, Z_p\right)$; the components are subject to missing.
 - $R$ observation indicator $R=\left(R_1, \cdots, R_p\right) \in \{0,1\}^p$ such that
 \begin{align*}
 R_k= \begin{cases}1 & \text { if } Z_k \text { is observed } \\ 0 & \text { if } Z_k \text { is missing }\end{cases}
 \end{align*}
 For a specific $r=\left(r_1, \ldots, r_p\right) \in\{0,1\}^p$, $Z_{(r)}$ is the subset of components that are observed; $Z_{(\bar{r})}$ subset of components that are missing.
-- Let $Z_{(R)}=\sum_r Z_{(r)} I(R=r)$. Similarly, $Z_{(\bar{R})}=\sum_{r} Z_{(r)} I(R \neq r)$. 
+- Let $Z_{(R)}=\sum_r Z_{(r)} I(R=r)$. Similarly, $Z_{(\bar{R})}=Z \backslash Z_{(R)}$. 
 - The ideal full data is $(R, Z)$. The observed data is $\left(R, Z_{(R)}\right)$. 
   - A random sample of observed data is $\left(R_i, Z_{(R_i)i}\right)_{i=1}^n.$
 
@@ -374,7 +375,7 @@ For a specific $r=\left(r_1, \ldots, r_p\right) \in\{0,1\}^p$, $Z_{(r)}$ is the 
 P(R=r \mid Z)=P(R=r \mid Z_{(r)})
 \end{align*}
 
-**Selection model factorization**:
+**Selection model factorization**: suppose a joint model $P(z, r ; \psi, \theta)$ for the density of $(R, Z)$ can be factorized as
 
 \begin{align*}
 \begin{aligned}
