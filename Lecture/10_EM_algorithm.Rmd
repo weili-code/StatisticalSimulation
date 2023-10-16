@@ -367,7 +367,7 @@ R_k= \begin{cases}1 & \text { if } Z_k \text { is observed } \\ 0 & \text { if }
 \end{align*}
 For a specific $r=\left(r_1, \ldots, r_p\right) \in\{0,1\}^p$, $Z_{(r)}$ is the subset of components that are observed; $Z_{(\bar{r})}$ subset of components that are missing.
 - Let $Z_{(R)}=\sum_r Z_{(r)} I(R=r)$. Similarly, $Z_{(\bar{R})}=Z \backslash Z_{(R)}$. 
-- The ideal full data is $(R, Z)$. The observed data is $\left(R, Z_{(R)}\right)$. 
+- The ideal full data (complete data) is $(R, Z)$. The observed data is $\left(R, Z_{(R)}\right)$. 
   - A random sample of observed data is $\left(R_i, Z_{(R_i)i}\right)_{i=1}^n.$
 
 **MAR** (missing at random) assumption:
@@ -393,7 +393,7 @@ P\left(R=r, Z_{(R)}\right. & \left.=z_{(r)} ; \psi, \theta\right)=\int P(z ; r ;
 & =P\left(R=r \mid Z_{(r)}=z_{(r)} ; \psi\right) P\left(Z_{(r)}=z_{(r)} ; \theta\right)
 \end{align*}
 
-The likelihood based on $\left.\left(R_i=r_i, Z_{\left(R_i\right)i}=z_{\left(r_i\right)}\right)\right)_{i=1}^n$ is given by
+The likelihood based on $\left(R_i=r_i, Z_{\left(R_i\right)i}=z_{\left(r_i\right)}\right)_{i=1}^n$ is given by
 
 \begin{align*}
 & \prod_i \prod_r P\left(R_i=r ; Z_{(r) i}=z_{(r)} ; \psi, \theta\right)^{I\left(R_i=r\right)} \\
@@ -401,21 +401,28 @@ The likelihood based on $\left.\left(R_i=r_i, Z_{\left(R_i\right)i}=z_{\left(r_i
 \end{align*}
 It suffices to maximize the following objective function over $\theta$:
 \begin{align*}
-&\sum_{r=1}^n \sum_r I\left(R_i=r\right) \log P\left(Z_{(r)i}=z_{(r)}; \theta\right) \\
-=&\sum_{i=1}^n \sum_r \left[I\left(R_i=r\right) \log \left( \int P\left(z_{(r)i}, z_{(\bar{r})i}; \theta\right) d{z_{(\bar{r}})}\right)\right].
+&\sum_{i=1}^n \sum_r I\left(R_i=r\right) \log P\left(Z_{(r)i}=z_{(r)}; \theta\right) \\
+=&\sum_{i=1}^n \sum_r \left[I\left(R_i=r\right) \log \left( \int P\left(z_{(r)i}, z_{(\bar{r})i}; \theta\right) d{z_{(\bar{r})}}\right)\right].
 \end{align*}
+
+The ideal full (complete) data likelihood is given by
+$$
+\prod_{i} \prod_{r} P(R_i, Z_{(R_i)i},  Z_{(\bar{R}_i)i}; \psi, \theta)^{I\{R_i=r\}}.
+$$
+By the MAR and separability, it suffices to consider the full data likelihood.
+$$
+\prod_{i} \prod_{r} P(Z_{(R_i)i},  Z_{(\bar{R}_i)i}; \theta)^{I\{R_i=r\}}
+$$
 
 In the same spirit of EM discussed previously, the E-step is
 \begin{align*}
-Q\left(\theta, \theta^{(t-1)}\right)=\sum_{i=1}^n E_{\theta^{(t-1)}}(\log P(Z_i;\theta)|R_i, Z_{(R_i)i})= \sum_{i=1}^n \sum_{r}I\left(R_i=r\right) E_{\theta^{(t-1)}}\left(\log P\left(Z_i; \theta\right) \mid Z_{(r) i}\right)
+Q\left(\theta, \theta^{(t-1)}\right)=\sum_{i=1}^n E_{\theta^{(t-1)}}(\log \prod_{r}P(Z_i;\theta)^{I(R_i=r)}|R_i, Z_{(R_i)i})= \sum_{i=1}^n \sum_{r}I\left(R_i=r\right) E_{\theta^{(t-1)}}\left(\log P\left(Z_i; \theta\right) \mid Z_{(r) i}\right)
 \end{align*}
-here the expectation is conditional on $(R_i, Z_{(R_i)i})$ with parameter $\theta^{(t-1)}$. The second equality holds because
+here the expectation is conditional on the observables $(R_i, Z_{(R_i)i})_{i=1}^n$ with parameter $\theta^{(t-1)}$. The second equality holds because
 \begin{align*}
-& \left.E_{\theta'}\left(\log P\left(Z_i; \theta\right) \mid R_i, Z_{(R_i)i}\right)\right) \\
-= & \sum_{r}I\left(R_i=r\right) E_{\theta^{\prime}}\left(\log P\left(Z_i; \theta\right) \mid R_i=r, Z_{(r)i}\right) \\
-= &  \sum_{r}I\left(R_i=r\right) E_{\theta^{\prime}}\left(\log P\left(Z_i; \theta\right) \mid Z_{(r) i}\right)
+\sum_{r}I\left(R_i=r\right) E_{\theta^{\prime}}\left(\log P\left(Z_i; \theta\right) \mid R_i=r, Z_{(r)i}\right) =\sum_{r}I\left(R_i=r\right) E_{\theta^{\prime}}\left(\log P\left(Z_i; \theta\right) \mid Z_{(r) i}\right)
 \end{align*}
-here the expectation is conditional on $(R_i, Z_{(r)i})$ with parameter $\theta'$. The last equality holds because of MAR.
+here the expectation is conditional on $(R_i=r, Z_{(r)i})$ with parameter $\theta'$. The equality holds because of MAR.
 
 The M-step:
 
