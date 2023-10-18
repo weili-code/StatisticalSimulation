@@ -66,15 +66,16 @@ w_{t+1} \leftarrow w_t -\alpha_t \nabla L(w_t), \quad \alpha_t>0.
 $$
 The general idea for stochastic gradient descent (local search) is that we move $w_t$ to $w_{t+1}$ in a random direction, say $w_{t+1} \leftarrow w_t + \epsilon_t$, for some random $\epsilon_t$. The expectation $E(\epsilon_t)$ should be a good approximation to $E(\nabla L(w_t))$. Consider the finite-difference approximation
 $$
-\nabla L(w_t) \approx \frac{L(w_t+\beta_t \eta_t)- L(w_t-\beta_t \eta_t)}{2 \beta_t} \eta_t:=\frac{\Delta L(w_t, \beta_t \eta_t)}{2\beta_t}\eta_t,
+\tilde{\nabla} L(w_t) = \frac{L(w_t+\beta_t \eta_t)- L(w_t-\beta_t \eta_t)}{2 \beta_t} \eta_t:=\frac{\Delta L(w_t, \beta_t \eta_t)}{2\beta_t}\eta_t,
 $$
 
-- $\{\beta_t\}$ decreases to $0$
+We set $\{\beta_t\}$ decreasing to $0$. Note that $\lim_{\beta_t\to0} (\Delta L(w_t, \beta_t \eta_t)/2\beta_t)=\nabla_{\eta_t}L(w_t)=\inner{\nabla L(w_t)}{\eta_t}$ the directional derivative of $L$ along the direction $\eta_t.$
+
 - $\eta_t$ uniformly distributed over the unit sphere $\|\eta\|=1$, say on $\mathbb{R}^2$, take $w_1 \sim N(0,1), w_2\sim N(0,1)$ and define $\eta_1=w_1/\sqrt{w_1^2+w_2^2}, \eta_2=w_2/\sqrt{w_1^2+w_2^2}.$
 
 The update is 
 $$
-w_{t+1} \leftarrow w_t-\alpha_j \frac{\Delta L(w_t, \beta_t \eta_t)}{2\beta_t}\eta_t.
+w_{t+1} \leftarrow w_t-\alpha_t \tilde{\nabla} L(w_t)\eta_t.
 $$
 
 When the value of $\beta_t$ is large, the process doesn't follow the steepest descent in $w_t$ but instead takes a more random path. This random exploration in the early phases helps avoiding getting trapped in some potential local minima. As $\beta_t$ approaches 0, the motion becomes more aligned with the steepest descent.
