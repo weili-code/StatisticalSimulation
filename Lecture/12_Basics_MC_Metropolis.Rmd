@@ -65,13 +65,13 @@ Consider a sequence of random variables $\{ X^{(n)}: n=0, 1, \ldots,  \}$, each 
 That is the probability distribution of $X^{(n)}$ given the past variables depends only on $X^{(n-1)}$. This is called first-order Markov Chain.
 
 Define the one-step transition kernel
-$$p^{[ n-1,n ]}_{i,j} := P(X^{(n)}=j| X^{(n-1)}=i) \qquad \text{transition kernel}$$ 
-We'll restrict ourselves to the time-invariant M.C.,that is, $p^{[n-1, n]}_{i,j}$ does not depend on the time reference point, but only depend on how far apart the two time points are. So we write $p_{i,j}^{[1]}:=p^{[n, n+1]}_{i,j}=p^{[n-1, n]}_{i,j}=\cdots=p^{[0, 1]}_{i,j}$ etc.
+$$p^{[ n-1,n ]}_{ij} := P(X^{(n)}=j| X^{(n-1)}=i) \qquad \text{transition kernel}$$ 
+We'll restrict ourselves to the time-invariant M.C.,that is, $p^{[n-1, n]}_{ij}$ does not depend on the time reference point, but only depend on how far apart the two time points are. So we write $p_{ij}^{[1]}:=p^{[n, n+1]}_{ij}=p^{[n-1, n]}_{ij}=\cdots=p^{[0, 1]}_{ij}$ etc.
 
 **one-step transition kernel**
 
 - transition probability
-$$p_{i,j}:=p^{[1]}_{i,j}= P(X^{(n+1)}=j| X^{(n)}=i),$$
+$$p_{ij}:=p^{[1]}_{ij}= P(X^{(n+1)}=j| X^{(n)}=i),$$
 
 - Transition matrix
 $$P := \begin{bmatrix}
@@ -81,12 +81,12 @@ p_{21} & p_{22} & \cdots & p_{2K}\\
 p_{K1} & p_{K2} & \cdots & p_{KK}\\
 \end{bmatrix}.$$
 
-$$p_{i,j} \geq 0, \  \forall i=1,\cdots, K; \  \sum_{j=1}^K p_{i,j} = 1.$$
+$$p_{ij} \geq 0, \  \forall i=1,\cdots, K; \  \sum_{j=1}^K p_{ij} = 1.$$
 
 **m-step transition kernel**
 
 - transition probability
-$$p^{[m]}_{i,j} := P(X^{(n+m)}=j| X^{(n)}=i)$$
+$$p^{[m]}_{ij} := P(X^{(n+m)}=j| X^{(n)}=i)$$
 
 - Transition matrix
 $$P^{[m]} := \begin{bmatrix}
@@ -99,10 +99,10 @@ p_{K1}^{[m]} & p_{K2}^{[m]} & \cdots & p_{KK}^{[m]}\\
 Let's consider some state distribution (occupation prob dist): 
 
 **Time 0**:
-$$\alpha^{(0)} = (\alpha_1^{(0)}, \cdots,\alpha_k^{(0)}), \text{ where } \ P(X^{(0)}=i)=\alpha_i^{(0)}.$$
+$$\alpha^{(0)} = (\alpha_1^{(0)}, \cdots,\alpha_K^{(0)}), \text{ where } \ P(X^{(0)}=i)=\alpha_i^{(0)}.$$
 
 **Time 1**:
-$$\alpha^{(1)} = (\alpha_1^{(1)}, \cdots,\alpha_k^{(1)})= \alpha^{(0)}P$$
+$$\alpha^{(1)} = (\alpha_1^{(1)}, \cdots,\alpha_K^{(1)})= \alpha^{(0)}P$$
 One can show that the state distribution at time $m$ is given by $\alpha^{(m)}=\alpha^{(0)}P^m$. By definition, $\alpha^{(m)}=\alpha^{(0)} P^{[m]}$. 
 
 Therefore, 
@@ -137,13 +137,13 @@ which states that the probability of moving from $i$ to $j$ in $m+n$ steps is ju
 $$\pi P = \pi.$$
 Then $\pi$ is called a "steady state distribution" (stationary distribution). Note that it is the same as
 \begin{align*}
-\pi_j = \sum_{i=1}^k\pi_ip_{ij}, \ \forall \ j = 1,2,\cdots , K
+\pi_j = \sum_{i=1}^K\pi_ip_{ij}, \ \forall \ j = 1,2,\cdots , K
 \end{align*}
-The LHS $\pi_j$ is steady state prob for the state $j$. The RHS $\sum_{i=1}^k\pi_ip_{i,j}$ is total probability flowing into state $j$ from any states. An expression is the **global balance equations**:
+The LHS $\pi_j$ is steady state prob for the state $j$. The RHS $\sum_{i=1}^K\pi_ip_{ij}$ is total probability flowing into state $j$ from any states. An expression is the **global balance equations**:
 \begin{align*}
-\pi_j \sum_{i: i \neq j} p_{ji}= \sum_{i: i\neq j}\pi_i p_{ij}, \ \forall \ j = 1,2,\cdots , K.
+\pi_j \sum_{i: i \neq j} p_{ji}= \sum_{i: i\neq j}\pi_i p_{ij}, \ \forall \ j = 1,2,\cdots , K,
 \end{align*}
-which states that the probability of being in state $j$ times the net total flow out of state $j$ is equal to the probability of being in each other state $i$ times the net flow from that state into $j$.
+which states that the probability of being in state $j$ times the net total flow out of state $j$ is equal to the sum of the probability of being in every other state $i$ times the net flow from that state into $j$.
 
 
 To see the meaning of the steady state distribution, consider a scenario that at some step n, we reached the steady state distribution,
@@ -156,9 +156,9 @@ Therefore, once we reached the steady state distribution, the state distribution
 **Find the steady state distribution**:
 For a given transition matrix $P$, note that
 $$P^T\pi^T = 1\pi^T$$
-So $\pi^T$ is eigenvalue of $P^T$ that corresponds to eigenvalue 1.
+So $\pi^T$ is eigenvalue of $P^T$ that corresponds to eigenvalue 1. The found eigenvector then needs to be normalized. A limitation is that it is not guaranteed the found eigenvector is real-valued.
 
-A more general approach that allows zero entries in $P$ is to solve the following sysmtem of equations:
+A more general approach is to solve the following system of equations:
 $$M^T\pi^T = r^T,$$
 where $M$ is a $K \times K$ matrix that removes the last column of $I-P$ in $[I-P, 1]$, and $r$ is a $1 \times K$ vector $(0, 0, \ldots, 0, 1)$.
 
@@ -173,30 +173,31 @@ exits and the distribution is independent of the starting state. This basically 
 
 Most of the M.C. encountered in MCMC settings enjoy some nice properties. In particular, we're interested in M.C.s that satisfy the following three properties.
 
-#### irreducible
+##### irreducible
   The chain has a positive probability of eventually reaching any state, i.e.
   $$\forall i,j, \ p_{ij}^{[n_0]} > 0 \text{ for some } \ n_0.$$
 
-#### aperiodic
+##### aperiodic
 
 - A state $i$ has period $v \in \mathbb{N}$ if $p_{ii}^{[m]}>0$ *only* holds for $m$ that is a multiple of $v>1$
 - A state is aperiodic if  $p_{ii}^{[m]}>0$ for all $m$ sufficiently large that is no multiple of any $v>1$. 
 - A chain is called "aperiodic" if all states are aperiodic.
 
-**Theorem**: Every irreducible, aperiodic fintie state Markov Chain has a limiting distribution which is equal to its unique stationary distribution.
+**Theorem**: Every irreducible, aperiodic finite state Markov Chain has a limiting distribution which is equal to its *unique* stationary distribution.
 
-#### (positive) recurrent
+##### recurrent
+
+- A state $i$ is said to be (positive) recurrent, if when we run the M.C. from $i$ continuously, we are guaranteed to return to state $i$ infinitely often and the first return happens within a finite numbers of steps on average.  
+- A chain is called recurrent if all state are.
 
 As a matter of fact, every irreducible finite state Markov Chain is also *positive recurrent* as defined above. 
 
-- A state $i$ is said to be recurrent, if when we run the M.C. from $i$ continuously, we are guaranteed to return to state $i$ infinitely often and the first return happens within a finite numbers of steps on average.  
-- A chain is called recurrent if all state are.
 
-#### Ergoci M.C.
+#### Ergodic M.C.
 
 Henceforth, we restrict ourselves to "time inveriant" M.C. (possibly in continuous state space) that are irreducible, aperiodic and (positive) recurrent. We call these M.C. "ergodic M.C.".
 
-**Theorem**: Any ergodic M.C. has a unique stationary distribution $\pi$, i.e., $\pi P = \pi$, it is equal to the long-run distribution:
+**Theorem**: Any ergodic M.C. has a unique stationary distribution $\pi$, i.e., $\pi P = \pi$, and it is equal to the long-run distribution:
 $$\pi_j = \lim_{n \to \infty} p_{ij}^{[n]},  \qquad \text{for all} \ i.$$
 
 
@@ -267,9 +268,9 @@ Given a stationary $\pi$, how to find a M.C. that has $\pi$ as its stationary di
 
 **Goal**: to find the M.C. with the right transition kernel $P_{ij}.$
 
-**Idea**: Consider a M.C. that is "time reversible", that is there exists some distribution $\pi$, it holds that (**detailed balance condition**)
+**Idea**: Consider a M.C. that is "time reversible"--that is there exists some distribution $\pi$, it holds that (**detailed balance condition**)
 $$
-\pi_jP_{ji}=\pi_iP_{ij}, \quad \forall i,j.
+\pi_jP_{ji}=\pi_iP_{ij}, \quad \forall i,j,
 $$
 implying that the flows of probabilities between two states $i, j$ balance each other when weighted by the outgoing state probabilities:
 $$
@@ -302,7 +303,9 @@ Whenever a move is proposed, we want to weight it using some acceptance probabil
 
 Formally, Metropolis' idea works as follows. Given some $\pi$--the stationary distribution (target distribution), choose some candidate transition kernel $P_{ij}$. For all $i$, 
 
-(1) Define acceptance probability $\alpha_{ij}=\min[\frac{\pi_jP_{ji}}{\pi_iP_{ij}},1]$ for each $i$ and $j\neq i$
+(1) Define acceptance probability 
+$$\alpha_{ij}=\min\Big(\frac{\pi_jP_{ji}}{\pi_iP_{ij}},1\Big)$$ 
+for each $i$ and $j\neq i$.
 (2) Let 
 $$
 \tilde{P}_{ij}=\alpha_{ij}P_{ij},  j \neq i
