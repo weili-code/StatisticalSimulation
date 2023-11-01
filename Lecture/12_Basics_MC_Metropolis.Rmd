@@ -143,7 +143,7 @@ The LHS $\pi_j$ is steady state prob for the state $j$. The RHS $\sum_{i=1}^K\pi
 \begin{align*}
 \pi_j \sum_{i: i \neq j} p_{ji}= \sum_{i: i\neq j}\pi_i p_{ij}, \ \forall \ j = 1,2,\cdots , K,
 \end{align*}
-which states that the probability of being in state $j$ times the net total flow out of state $j$ is equal to the sum of the probability of being in every other state $i$ times the net flow from that state into $j$.
+which states that the probability of being in state $j$ times the net total probability of flowing out of state $j$ is equal to the sum of the probability of being in every state $i$ (except $j$) times the probability of flowing from that state into $j$.
 
 
 To see the meaning of the steady state distribution, consider a scenario that at some step n, we reached the steady state distribution,
@@ -320,7 +320,7 @@ Then $\pi$ is the stationary distribution from M.C. with transition probability 
 Proof: 
 \end{mdframed}
 
-**Note**: $\tilde{P}_{ii}=1-\sum_{j:j\neq i}\tilde{P}_{ij}$ is the probability that we reject any proposal that moves from $i$ to any other state $j\neq i$, that is, it is the probability of moving from $i$ to $i$ itself (remaining in $i$). We can prove that our $\tilde{P}_{ij}$ is a well-defined transition kernel.
+**Note**: $\tilde{P}_{ii}=1-\sum_{j:j\neq i}\tilde{P}_{ij}$ is the probability that we reject any proposal that moves from $i$ to any other state $j\neq i$, that is, it is the probability of moving from $i$ to $i$ itself (remaining in $i$). We can prove that our $[\tilde{P}_{ij}: i, j]$ is a well-defined transition kernel.
 \begin{mdframed}
 Check: $1\geq \tilde{P}_{ij}\geq0$, $\sum_j\tilde{P}_{ij}=\sum_j\tilde{P}_{ij}=\tilde{P}_{ii}+\sum_{j:j\neq i}\tilde{P}_{ij}=1-\sum_{j:j\neq i}\tilde{P}_{ij}+\sum_{j:j\neq i}\tilde{P}_{ij}=1$
 \end{mdframed}

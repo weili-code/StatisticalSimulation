@@ -11,7 +11,7 @@
 
 <meta name="author" content="Instructor: Dr. Wei Li" />
 
-<meta name="date" content="2023-10-09" />
+<meta name="date" content="2023-11-01" />
 
 <title>MAT 653: Statistical Simulation</title>
 
@@ -1751,7 +1751,7 @@ display: none;
 <h1 class="title toc-ignore">MAT 653: Statistical Simulation</h1>
 <h4 class="author">Instructor<span class="math inline">\(:\)</span>
 Dr. Wei Li</h4>
-<h4 class="date">2023-10-09</h4>
+<h4 class="date">2023-11-01</h4>
 
 </div>
 
@@ -1763,7 +1763,7 @@ MathJax.Hub.Config({
 });
 </script>
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2023-10-09 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2023-11-01 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 <!------------->
 <div id="markov-chain-with-continuous-state-space" class="section level1">
@@ -1772,28 +1772,28 @@ Statistical Simulation, Wei Li </span> </span></p>
 <span class="math inline">\(S\)</span> = uncountable set.</p>
 <p>Transition probability from each possible state <span class="math inline">\(x\)</span> to each possible set of states <span class="math inline">\(A\)</span>: <span class="math display">\[\begin{align*}
 &amp;P(x_0,A):=P(X^{(n+1)} \in A | X^{(n)}=x_0)\\
-\text{CDF}:\ &amp;F(v|x_0):=P(X^{(n+1)} \leq v | X^{(n)}=x_0)\\
-\text{One-step transition density function}:\ &amp;f(x_0, v):=
-\frac{\partial F(v|x_0)}{\partial v}= P(X^{(n+1)}=v|X^{(n)}=x_0)\\
+\text{CDF}:\ &amp;F(x_1|x_0):=P(X^{(n+1)} \leq x_1 | X^{(n)}=x_0)\\
+\text{One-step transition density function}:\ &amp;f(x_0, x_1):=
+\frac{\partial F(x_1|x_0)}{\partial x_1}= p(X^{(n+1)}=x_1|X^{(n)}=x_0)\\
 \end{align*}\]</span></p>
 <div id="transition-density" class="section level3">
 <h3>Transition density</h3>
 <p>Define one-step transition density:</p>
-<p><span class="math inline">\(f^{[1]}(x_n,x_{n+1}):=p(x_{n+1}|x_n)=P(X^{(n+1)}=x_{n+1}|X^{(n)}=x_n).\)</span></p>
+<p><span class="math inline">\(f^{[1]}(x_n,x_{n+1}):=p(x_{n+1}|x_n)=p(X^{(n+1)}=x_{n+1}|X^{(n)}=x_n).\)</span></p>
 <p>Two-step transition density:</p>
 <p><span class="math display">\[\begin{align*}
-f^{[2]}(x_n,x_{n+2}):=P(X^{(n+2)}=x_{n+2}|X^{(n)}=x_n)&amp;= \int
-P(X^{(n+2)}=x_{n+2}|X^{(n+1)}=x_{n+1},X^{(n)}=x_n)  P(X^{(n+1)}=x_{n+1}|X^n=x_n)d
+f^{[2]}(x_n,x_{n+2}):=p(X^{(n+2)}=x_{n+2}|X^{(n)}=x_n)&amp;= \int
+p(X^{(n+2)}=x_{n+2}|X^{(n+1)}=x_{n+1},X^{(n)}=x_n)  p(X^{(n+1)}=x_{n+1}|X^n=x_n)d
 x_{n+1}\\
-&amp;=\int P(X^{(n+2)}=x_{n+2}|X^{(n+1)}=x_{n+1})
-P(X^{(n+1)}=x_{n+1}|X^{(n)}=x_n)d x_{n+1}\\
+&amp;=\int p(X^{(n+2)}=x_{n+2}|X^{(n+1)}=x_{n+1})
+p(X^{(n+1)}=x_{n+1}|X^{(n)}=x_n)d x_{n+1}\\
 &amp;=\int f^{[1]}(x_n,x_{n+1}) f^{[1]}(x_{n+1},x_{n+2})d x_{n+1}
 \end{align*}\]</span></p>
 <p>Three-step transition density:</p>
 <p><span class="math display">\[\begin{align*}
-f^{[3]}(x_n,x_{n+3}):=P(X^{(n+3)}=x_{n+3}|X^{(n)}=x_n) &amp;= \int
-P(X^{(n+3)}=x_{n+3}|X^{(n+2)}=x_{n+2}) \cdot
-P(X^{(n+2)}=x_{n+2}|X^{(n)}=x_n)d x_{n+2}\\
+f^{[3]}(x_n,x_{n+3}):=p(X^{(n+3)}=x_{n+3}|X^{(n)}=x_n) &amp;= \int
+p(X^{(n+3)}=x_{n+3}|X^{(n+2)}=x_{n+2}) \cdot
+p(X^{(n+2)}=x_{n+2}|X^{(n)}=x_n)d x_{n+2}\\
 &amp;=\int f^{[1]}(x_{n+2},x_{n+3}) f^{[2]}(x_n,x_{n+2})d x_{n+2}\\
 &amp;=\int \int
 f^{[1]}(x_{n+2},x_{n+3})  f^{[1]}(x_{n+1},x_{n+2})  f^{[1]}(x_n,x_{n+1})d
@@ -1805,7 +1805,7 @@ x_{n+1} d x_{n+2}.\\
 dx_{n+m-1}.\)</span></p>
 <p>The corresponding m-step transition probability can be written as
 <span class="math inline">\(P(X^{(n+m)} \in A| X^{(n)}=x_n)= \int_A
-f^{[m]}(x_n,x_{n+m})dx_{n+m}.\)</span> By similar argument, we have the
+f^{[m]}(x_n,x_{n+m})dx_{n+m}.\)</span> More generally, we have the
 <strong>Chapman-Kolmogorov equation</strong>: <span class="math display">\[
 f^{[n+m]}(x_0, x_{n+m})=\int f^{[m]}(x_0, x_{m})f^{[n]}(x_m,
 x_{n+m})dx_{m}.
@@ -1813,25 +1813,28 @@ x_{n+m})dx_{m}.
 </div>
 <div id="some-important-properties" class="section level3">
 <h3>Some important properties</h3>
-<p>If the M.C. possesses a limiting transition density independent of
-the initial state, that is <span class="math display">\[\lim_{n \to
-\infty}f^{[n]}(x,v)=g(v)\]</span> then <span class="math inline">\(g(v)\)</span> is called “stationary/steady-state
-density” (long-term probability density) of M.C. and it is a solution to
-steady-state equation:</p>
+<p>If some regular (ergodic) M.C. possesses a limiting transition
+density independent of the initial state, that is <span class="math display">\[\lim_{n \to \infty}f^{[n]}(x,v)=g(v)\]</span>
+then <span class="math inline">\(g(v)\)</span> is called
+“stationary/steady-state density” (long-term probability density) of
+M.C. and it is a solution to steady-state equation:</p>
 <p><span class="math display">\[g(v)=\int_{-\infty}^{+\infty}g(w)f(w,v)dw \qquad
 (*)\]</span> <span class="math display">\[(\text{recall discrete space}:
 \pi_j=\sum_{i=1}^{K} \pi_i p_{ij} \qquad \forall j=1,2,\cdots
-,K)\]</span> where <span class="math inline">\(g(w)\)</span> is viewed
-as the start distribution and <span class="math inline">\(f(w,v)\)</span> is the transition density
+,K)\]</span> where <span class="math inline">\(g(w)\)</span> may be
+viewed as the start distribution and <span class="math inline">\(f(w,v)\)</span> is the transition density
 function. Note that an equivalent expression to <span class="math inline">\((*)\)</span> is <span class="math display">\[\int_A g(v)
-dv=\int_{-\infty}^{+\infty}g(w)P(w,A)dw \text{, for all set }
-A.\]</span></p>
-<p>Let <span class="math inline">\(g(x)\)</span> be the steady-state
-density and <span class="math inline">\(f(x,v)\)</span> be the density
-function of one-step transition, “<strong>detailed balance
-condition</strong>” is given by <span class="math display">\[g(x)f(x,v)=g(v)f(v,x) \qquad \forall x,v \qquad
-(**)\]</span> As in the discrete case, it can be shown that any Markov
-chain satisfying the “detailed balance condition” <span class="math inline">\((**)\)</span> will have <span class="math inline">\(g\)</span> as the steady state density, i.e. <span class="math inline">\((*)\)</span> holds.</p>
+dv=\int_{-\infty}^{+\infty}g(w)P(w,A)dw \text{, for all set } A, \text{
+where } P(w, A):=P(X^{(n+1)} \in A|X^{(n)}=w).\]</span></p>
+<p>A sufficient condition for <span class="math inline">\(g(x)\)</span>
+to be a steady-state density is the “<strong>detailed balance
+condition</strong>” given by <span class="math display">\[g(x)f(x,v)=g(v)f(v,x) \qquad \forall x,v \qquad
+(**),\]</span> here <span class="math inline">\(f(x,v)\)</span> be the
+density function of one-step transition of the M.C. As in the discrete
+case, it can be shown that any Markov chain satisfying the “detailed
+balance condition” <span class="math inline">\((**)\)</span> will have
+<span class="math inline">\(g\)</span> as the steady state density,
+i.e. <span class="math inline">\((*)\)</span> holds.</p>
 </div>
 <div id="ergodic-theorem" class="section level3">
 <h3>Ergodic Theorem</h3>
@@ -1866,8 +1869,8 @@ current state and the proposed state. So given that our current state is
 <span class="math inline">\(x\)</span> then the probability of a
 particular state being proposed and accepted is <span class="math inline">\(\alpha (x^*|x) q(x^*|x)\)</span>. Similarly, we
 can calculate the probability that any proposal is accepted as <span class="math inline">\(a(x) :=\int \alpha (x^*|x) p(x^*|x)dx^*\)</span>.
-A move is not accepted with probability <span class="math inline">\(r(x)
-:= 1- a(x)\)</span>, in which case we set <span class="math inline">\(x^* = x\)</span>. The (effective) transition
+A proposal is not accepted with probability <span class="math inline">\(r(x) := 1- a(x)\)</span>, in which case we set
+<span class="math inline">\(x^* = x\)</span>. The (effective) transition
 density is then</p>
 <p><span class="math display">\[p(x^*|x) =  \alpha (x^*|x) q(x^*|x) +
 r(x)\delta_x(x^*)\]</span></p>
@@ -1876,23 +1879,24 @@ in continuous state space, this can be generalized to</p>
 <p><span class="math display">\[\int_A p(x^*|x)dx^* = p(A|x) =
 \int_A\alpha (x^*|x) q(x^*|x)dx^* + r(x)\delta_A(x)\]</span></p>
 <p>where <span class="math inline">\(\delta_A(x) = 1\)</span> if <span class="math inline">\(x\in A\)</span> and 0 otherwise.</p>
-<p>We can show that the (effective) transition density indeed satisfy
+<p>We can show that the (effective) transition density indeed satisfies
 the detailed balance condition.</p>
 </div>
-<div id="algorithm" class="section level3">
-<h3>Algorithm</h3>
+<div id="metropolis-hastings-algorithm" class="section level3">
+<h3>Metropolis-Hastings algorithm</h3>
 <ol style="list-style-type: decimal">
 <li>Given a target <span class="math inline">\(f(\cdot)\)</span> and a
 chosen <span class="math inline">\(q(\cdot|\cdot)\)</span>, generate
-<span class="math inline">\(x^*\)</span> from <span class="math inline">\(q(\cdot| x^{(s)})\)</span></li>
-<li>Compute <span class="math inline">\(\alpha(x^*|x^{(s)}) = \min (1,
-\frac{q(x^{(s)}|x^*)f(x^*)}{q(x^*|x^{(s)})f(x^{(s)})})\)</span></li>
+<span class="math inline">\(x^*\)</span> from <span class="math inline">\(q(\cdot| x^{(s)})\)</span>.</li>
+<li>Compute <span class="math inline">\(\alpha(x^*|x^{(s)}) = \min
+\big(1, \frac{q(x^{(s)}|x^*)f(x^*)}{q(x^*|x^{(s)})f(x^{(s)})}
+\big)\)</span>.</li>
 <li>Generate <span class="math inline">\(u\sim \mbox{unif}(0,1)\)</span>
 <ol style="list-style-type: lower-roman">
 <li>if <span class="math inline">\(u\leq \alpha(x^*|x^{(s)})\)</span>,
-set <span class="math inline">\(x^{(s+1)} = x^*\)</span></li>
+set <span class="math inline">\(x^{(s+1)} = x^*\)</span>;</li>
 <li>if <span class="math inline">\(u&gt; \alpha(x^*|x^{(s)})\)</span>,
-set <span class="math inline">\(x^{(s+1)} = x^{(s)}\)</span></li>
+set <span class="math inline">\(x^{(s+1)} = x^{(s)}\)</span>.</li>
 </ol></li>
 </ol>
 <p><strong>Remark</strong>:</p>
@@ -1921,11 +1925,15 @@ throughout.</p></li>
 </div>
 <div id="practicalities" class="section level3">
 <h3>Practicalities</h3>
+<p>Proposals should not be too bold (standard deviation not too high),
+however should be large enough to be consequential (standard deviation
+not too small). Between <span class="math inline">\(30\%-60\%\)</span>
+acceptance rate is ideal.</p>
 <ol style="list-style-type: decimal">
 <li><p><strong>Burn-in</strong></p>
 <ol style="list-style-type: lower-roman">
-<li>Run algorithm until some iteration B for which Markov Chain appears
-to reach stationarity.</li>
+<li>Run algorithm until some iteration <span class="math inline">\(B\)</span> for which Markov Chain appears to reach
+stationarity.</li>
 <li>Run algorithm <span class="math inline">\(B&#39;\)</span> more times
 and keep <span class="math inline">\(\{x^{B+1},\ldots,x^{B+B&#39;}
 \}\)</span></li>
@@ -1940,30 +1948,24 @@ from the metropolis algorithm against the iteration number. Check:</p>
 <li>The chain doesn’t get stuck in a certain area of space.</li>
 <li>The chain can move relatively fast.</li>
 </ol></li>
-</ol>
-<p>Proposals should not be too bold (standard deviation not too high),
-however should be large enough to be consequential (standard deviation
-not too small). Between <span class="math inline">\(30\%-60\%\)</span>
-acceptance rate is ideal.</p>
-<ol start="4" style="list-style-type: decimal">
-<li><strong>“ACF” Autocorrelation Function</strong>: Calculate the
+<li><p><strong>“ACF” Autocorrelation Function</strong>: Calculate the
 “lag-<span class="math inline">\(j\)</span> sample covariance” as <span class="math display">\[\hat\gamma_j =
 \frac{1}{T}\sum_{t=j+1}^T(x^{(t)}-\bar x)(x^{(t-j)}-\bar x)\]</span> and
 the “lag-<span class="math inline">\(j\)</span> sample autocorrelation”
 as <span class="math inline">\(\hat{\rho}_j =
 \hat\gamma_j/\hat\gamma_0\)</span>. Then plotting autocorrelation <span class="math inline">\(\hat{\rho}_j\)</span> v.s. the lag index (<span class="math inline">\(j\)</span>), relatively high values would indicate
 a high degree of correlation between draws and therefore, slow
-mixing.</li>
+mixing.</p></li>
 </ol>
 <!------------->
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2023-10-09 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2023-11-01 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 <!-- rnb-text-end -->
 </div>
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiTUFUIDY1MzogU3RhdGlzdGljYWwgU2ltdWxhdGlvbiIKYXV0aG9yOiBJbnN0cnVjdG9yJDokIERyLiBXZWkgTGkKZGF0ZTogImByIFN5cy5EYXRlKClgIgpnZW9tZXRyeTogbGVmdD0yY20sIHJpZ2h0PTJjbSwgdG9wPTJjbSwgYm90dG9tPTJjbQpsaW5lc3RyZXRjaDogMS4zCm91dHB1dDoKICBodG1sX2RvY3VtZW50OgogICAgZGZfcHJpbnQ6IHBhZ2VkCiAgICBtYXRoamF4X2NvbmZpZzoKICAgICAgLSBUZVgtQU1TLU1NTF9IVE1Mb3JNTUwgICAKICBwZGZfZG9jdW1lbnQ6IAogICAgICBpbmNsdWRlOgogICAgICAgIGluX2hlYWRlcjogcHJlYW1ibGVfcm1kLnRleAogIGh0bWxfbm90ZWJvb2s6IGRlZmF1bHQKZm9udHNpemU6IDE0cHQKaGVhZGVyLWluY2x1ZGVzOgotIFx1c2VwYWNrYWdle2Ftc21hdGh9Ci0gXHVzZXBhY2thZ2VbbGluZXdpZHRoPTFwdF17bWRmcmFtZWR9Ci0gXG5ld2NvbW1hbmRcaW5uZXJbMl17XGxlZnRcbGFuZ2xlIzEsIzJccmlnaHRccmFuZ2xlfQotIFxuZXdjb21tYW5kXGZsb29yWzFde1xsZmxvb3IjMVxyZmxvb3J9Ci0gXG5ld2NvbW1hbmRcY2VpbFsxXXtcbGNlaWwjMVxyY2VpbH0KLSBcbmV3Y29tbWFuZFxtYlsxXXtcbWF0aGJmeyMxfX0KLSBcbmV3Y29tbWFuZFxic1sxXXtcYm9sZHN5bWJvbHsjMX19Ci0gXG5ld2NvbW1hbmRcbXJbMV17XG1hdGhybXsjMX19Ci0gXG5ld2NvbW1hbmRcd2hbMV17XHdpZGVoYXR7IzF9fQotIFxuZXdjb21tYW5kXG9wWzFde1xvcGVyYXRvcm5hbWV7IzF9fQotIFxuZXdjb21tYW5kXG1iYlsxXXtcbWF0aGJieyMxfX0KLSBcdXNlcGFja2FnZXtjYXB0aW9ufQotIFx1c2VwYWNrYWdle21hdGh0b29sc30KLSBcY2FwdGlvbnNldHVwW2ZpZ3VyZV17bGFiZWxmb3JtYXQ9ZW1wdHl9Ci0gXG5ld2NvbW1hbmR7XHdlaX1bMV17XHRleHRjb2xvcntvcmFuZ2V9eyhXZWk6IzEpfX0KLS0tCgoKPHNjcmlwdCB0eXBlPSJ0ZXh0L3gtbWF0aGpheC1jb25maWciPgpNYXRoSmF4Lkh1Yi5Db25maWcoewogIFRlWDogeyBlcXVhdGlvbk51bWJlcnM6IHsgYXV0b051bWJlcjogIkFNUyIgfSB9Cn0pOwo8L3NjcmlwdD4KCgo8c3BhbiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjogI2Y1ZjVmNTsgcGFkZGluZzogNXB4OyBkaXNwbGF5OiBibG9jazsiPgogICAgPHNwYW4gc3R5bGU9IndpZHRoOiAyNSU7IGRpc3BsYXk6IGlubGluZS1ibG9jazsgdGV4dC1hbGlnbjogbGVmdDsiPgogICAgICAgIFtCYWNrXShqYXZhc2NyaXB0OndpbmRvdy5oaXN0b3J5LmJhY2soKSkKICAgIDwvc3Bhbj4KICAgIDxzcGFuIHN0eWxlPSJ3aWR0aDogMzAlOyBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7IHRleHQtYWxpZ246IGNlbnRlcjsgY29sb3I6IGdyZXk7Ij4KICAgICAgICAqKlVwZGF0ZWQ6KiogYHIgU3lzLkRhdGUoKWAKICAgIDwvc3Bhbj4KICAgIDxzcGFuIHN0eWxlPSJ3aWR0aDogMzUlOyBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7IHRleHQtYWxpZ246IHJpZ2h0OyBjb2xvcjogZ3JleTsiPgogICAgICAgIFN0YXRpc3RpY2FsIFNpbXVsYXRpb24sIFdlaSBMaQogICAgPC9zcGFuPgo8L3NwYW4+Cgo8IS0tLS0tLS0tLS0tLS0+CgoKIyBNYXJrb3YgQ2hhaW4gd2l0aCBjb250aW51b3VzIHN0YXRlIHNwYWNlIApXZSBjb25zaWRlciBNYXJrb3YgY2hhaW5zIGluIHRoZSBjb250aW51b3VzIHN0YXRlIHNwYWNlLCB0aGF0IGlzLCAkUyQgPSB1bmNvdW50YWJsZSBzZXQuCgpUcmFuc2l0aW9uIHByb2JhYmlsaXR5IGZyb20gZWFjaCBwb3NzaWJsZSBzdGF0ZSAkeCQgdG8gZWFjaCBwb3NzaWJsZSBzZXQgb2Ygc3RhdGVzICRBJDoKXGJlZ2lue2FsaWduKn0KJlAoeF8wLEEpOj1QKFheeyhuKzEpfSBcaW4gQSB8IFheeyhuKX09eF8wKVxcClx0ZXh0e0NERn06XCAmRih2fHhfMCk6PVAoWF57KG4rMSl9IFxsZXEgdiB8IFheeyhuKX09eF8wKVxcClx0ZXh0e09uZS1zdGVwIHRyYW5zaXRpb24gZGVuc2l0eSBmdW5jdGlvbn06XCAmZih4XzAsIHYpOj0gXGZyYWN7XHBhcnRpYWwgRih2fHhfMCl9e1xwYXJ0aWFsIHZ9PSBQKFheeyhuKzEpfT12fFheeyhuKX09eF8wKVxcClxlbmR7YWxpZ24qfQoKIyMjIFRyYW5zaXRpb24gZGVuc2l0eSAKCkRlZmluZSBvbmUtc3RlcCB0cmFuc2l0aW9uIGRlbnNpdHk6CgokZl57WzFdfSh4X24seF97bisxfSk6PXAoeF97bisxfXx4X24pPVAoWF57KG4rMSl9PXhfe24rMX18WF57KG4pfT14X24pLiQKClR3by1zdGVwIHRyYW5zaXRpb24gZGVuc2l0eToKClxiZWdpbnthbGlnbip9CmZee1syXX0oeF9uLHhfe24rMn0pOj1QKFheeyhuKzIpfT14X3tuKzJ9fFheeyhuKX09eF9uKSY9IFxpbnQgUChYXnsobisyKX09eF97bisyfXxYXnsobisxKX09eF97bisxfSxYXnsobil9PXhfbikgIFAoWF57KG4rMSl9PXhfe24rMX18WF5uPXhfbilkIHhfe24rMX1cXAomPVxpbnQgUChYXnsobisyKX09eF97bisyfXxYXnsobisxKX09eF97bisxfSkgUChYXnsobisxKX09eF97bisxfXxYXnsobil9PXhfbilkIHhfe24rMX1cXAomPVxpbnQgZl57WzFdfSh4X24seF97bisxfSkgZl57WzFdfSh4X3tuKzF9LHhfe24rMn0pZCB4X3tuKzF9ClxlbmR7YWxpZ24qfQoKVGhyZWUtc3RlcCB0cmFuc2l0aW9uIGRlbnNpdHk6CgpcYmVnaW57YWxpZ24qfQpmXntbM119KHhfbix4X3tuKzN9KTo9UChYXnsobiszKX09eF97biszfXxYXnsobil9PXhfbikgJj0gXGludCBQKFheeyhuKzMpfT14X3tuKzN9fFheeyhuKzIpfT14X3tuKzJ9KSBcY2RvdCBQKFheeyhuKzIpfT14X3tuKzJ9fFheeyhuKX09eF9uKWQgeF97bisyfVxcCiY9XGludCBmXntbMV19KHhfe24rMn0seF97biszfSkgZl57WzJdfSh4X24seF97bisyfSlkIHhfe24rMn1cXAomPVxpbnQgXGludCBmXntbMV19KHhfe24rMn0seF97biszfSkgIGZee1sxXX0oeF97bisxfSx4X3tuKzJ9KSAgZl57WzFdfSh4X24seF97bisxfSlkIHhfe24rMX0gZCB4X3tuKzJ9LlxcClxlbmR7YWxpZ24qfQoKQXJndWluZyBhcyBhYm92ZSwgd2UgY2FuIG9idGFpbiB0aGUgIG0tc3RlcCB0cmFuc2l0aW9uIGRlbnNpdHk6CgokZl57W21dfSh4X24seF97bittfSk9IFxpbnQgXGNkb3RzIFxpbnQgXHByb2Rfe2s9bisxfV57bittfWZee1sxXX0oeF97ay0xfSx4X2spZHhfe24rMX0gXGNkb3RzIGR4X3tuK20tMX0uJAoKVGhlIGNvcnJlc3BvbmRpbmcgbS1zdGVwIHRyYW5zaXRpb24gcHJvYmFiaWxpdHkgY2FuIGJlIHdyaXR0ZW4gYXMgCiRQKFheeyhuK20pfSBcaW4gQXwgWF57KG4pfT14X24pPSBcaW50X0EgZl57W21dfSh4X24seF97bittfSlkeF97bittfS4kIEJ5IHNpbWlsYXIgYXJndW1lbnQsIHdlIGhhdmUgdGhlICoqQ2hhcG1hbi1Lb2xtb2dvcm92IGVxdWF0aW9uKio6CiQkCmZee1tuK21dfSh4XzAsIHhfe24rbX0pPVxpbnQgZl57W21dfSh4XzAsIHhfe219KWZee1tuXX0oeF9tLCB4X3tuK219KWR4X3ttfS4KJCQKCgojIyMgU29tZSBpbXBvcnRhbnQgcHJvcGVydGllcwoKSWYgdGhlIE0uQy4gcG9zc2Vzc2VzIGEgbGltaXRpbmcgdHJhbnNpdGlvbiBkZW5zaXR5IGluZGVwZW5kZW50IG9mIHRoZSBpbml0aWFsIHN0YXRlLCB0aGF0IGlzIAokJFxsaW1fe24gXHRvIFxpbmZ0eX1mXntbbl19KHgsdik9Zyh2KSQkCnRoZW4gJGcodikkIGlzIGNhbGxlZCAic3RhdGlvbmFyeS9zdGVhZHktc3RhdGUgZGVuc2l0eSIgKGxvbmctdGVybSBwcm9iYWJpbGl0eSBkZW5zaXR5KSBvZiBNLkMuIGFuZCBpdCBpcyBhIHNvbHV0aW9uIHRvIHN0ZWFkeS1zdGF0ZSBlcXVhdGlvbjoKCiQkZyh2KT1caW50X3stXGluZnR5fV57K1xpbmZ0eX1nKHcpZih3LHYpZHcgXHFxdWFkICgqKSQkCiQkKFx0ZXh0e3JlY2FsbCBkaXNjcmV0ZSBzcGFjZX06IFxwaV9qPVxzdW1fe2k9MX1ee0t9IFxwaV9pIHBfe2lqfSBccXF1YWQgXGZvcmFsbCBqPTEsMixcY2RvdHMgLEspJCQKd2hlcmUgJGcodykkIGlzIHZpZXdlZCBhcyB0aGUgc3RhcnQgZGlzdHJpYnV0aW9uIGFuZCAkZih3LHYpJCBpcyB0aGUgdHJhbnNpdGlvbiBkZW5zaXR5IGZ1bmN0aW9uLgpOb3RlIHRoYXQgYW4gZXF1aXZhbGVudCBleHByZXNzaW9uIHRvICQoKikkIGlzCiQkXGludF9BIGcodikgZHY9XGludF97LVxpbmZ0eX1eeytcaW5mdHl9Zyh3KVAodyxBKWR3IFx0ZXh0eywgZm9yIGFsbCBzZXQgfSBBLiQkCgoKTGV0ICRnKHgpJCBiZSB0aGUgc3RlYWR5LXN0YXRlIGRlbnNpdHkgYW5kICRmKHgsdikkIGJlIHRoZSBkZW5zaXR5IGZ1bmN0aW9uIG9mIG9uZS1zdGVwIHRyYW5zaXRpb24sICIqKmRldGFpbGVkIGJhbGFuY2UgY29uZGl0aW9uKioiIGlzIGdpdmVuIGJ5CiQkZyh4KWYoeCx2KT1nKHYpZih2LHgpIFxxcXVhZCBcZm9yYWxsIHgsdiBccXF1YWQgKCoqKSQkCkFzIGluIHRoZSBkaXNjcmV0ZSBjYXNlLCBpdCBjYW4gYmUgc2hvd24gdGhhdCBhbnkgTWFya292IGNoYWluIHNhdGlzZnlpbmcgdGhlICJkZXRhaWxlZCBiYWxhbmNlIGNvbmRpdGlvbiIgJCgqKikkIHdpbGwgaGF2ZSAkZyQgYXMgdGhlIHN0ZWFkeSBzdGF0ZSBkZW5zaXR5LCBpLmUuICQoKikkIGhvbGRzLgoKXGJlZ2lue21kZnJhbWVkfQpQcm9vZjoKXGVuZHttZGZyYW1lZH0KCiMjIyBFcmdvZGljIFRoZW9yZW0KCklmICQoWF57KDEpfSxYXnsoMil9LFxjZG90cykkIGlzIGFuIGVyZ29kaWMgTS5DLiB3aG9zZSBzdGVhZHktc3RhdGUgZGVuc2l0eSBpcyBnaXZlbiBieSAkZyQsIHRoZW4gZm9yICRuIFx0byBcaW5mdHkkLCAKJCRQKFheeyhuKX0gXGluIEEpIFx0byBQKFheeyhcaW5mdHkpfSBcaW4gQSkgPSBcaW50X0EgZyh4KWR4LiQkCkluIGFkZGl0aW9uLCAKJCRcZnJhY3sxfXtUfVxzdW1fe249MX1ee1R9aChYXnsobil9KSBcdG8gRVtoKFheeyhcaW5mdHkpfSldPVxpbnQgaCh4KWcoeClkeCwgXHRleHR7IGZvciB9IFRcdG8gXGluZnR5LiQkCgoKIyBNZXRyb3BvbGlzIEFsZ29yaXRobSBpbiBDb250aW51b3VzIFNwYWNlCldlIGNvbnNpZGVyIGEgY29udGludW91cyBzdGF0ZSBzcGFjZSwgZnJvbSB3aGljaCB3ZSB3b3VsZCBsaWtlIHRvIHNhbXBsZSBhIHRhcmdldCBkZW5zaXR5ICRmKFxjZG90KSQgb3IgYSBrZXJuZWwgJFx0aWxkZSBmJC4gT3VyIGdvYWwgaXMgdG8gZmluZCBhIHRyYW5zaXRpb24gZnVuY3Rpb24gJHAoXGNkb3QgfFxjZG90KSQgdG8gc2F0aXNmeSB0aGUgJ2RldGFpbGVkIGJhbGFuY2UgY29uZGl0aW9ucycsIGkuZTogZm9yIGEgcHJvcG9zZWQgJHheKiQsICQkIHAoeF4qIHx4KWYoeCkgPXAoeHx4XiopZih4XiopLiQkCgpJZiB3ZSBjYW4gZmluZCBzdWNoIGEgJHAkLCB0aGVuIHRoZSBsb25nIHJ1biBkaXN0cmlidXRpb24gb2YgdGhlIGVyZ29kaWMgbWFya292IGNoYWluIHdpdGggdHJhbnNpdGlvbiBkaXN0cmlidXRpb24gJHAoXGNkb3QgfCBcY2RvdCkkIGlzICRmKFxjZG90KSQuCgojIyMgTWV0aG9kCkNob29zZSBhbiBhcmJpdHJhcnkgdHJhbnNpdGlvbiBkZW5zaXR5ICRxKFxjZG90IHwgXGNkb3QpJCwgd2l0aG91dCByZXF1cmluZyB0aGF0IHRoZSBkZXRhaWxlZCBiYWxhbmNlIGNvbmRpdGlvbnMgaG9sZC4gVGhlbiB1c2UgYW4gYWNjZXB0YW5jZSBwcm9iYWJpbGl0eSBvbiBwcm9wb3NlZCBzYW1wbGVzIGFzICQkXGFscGhhKHheKnx4KSA9IFxtaW4gXEJpZygxLCBcZnJhY3txKHh8eF4qKWYoeF4qKX17cSh4Xip8eClmKHgpfSBcQmlnKS4kJCAKClRoZSBnb2FsIG9mIHRoaXMgaXMgdG8gcmVndWxhdGUgdGhlIGZsb3cgb2YgcHJvYmFiaWxpdGllcyBiZXR3ZWVuIHRoZSBjdXJyZW50IHN0YXRlIGFuZCB0aGUgcHJvcG9zZWQgc3RhdGUuIFNvIGdpdmVuIHRoYXQgb3VyIGN1cnJlbnQgc3RhdGUgaXMgJHgkICB0aGVuIHRoZSBwcm9iYWJpbGl0eSBvZiBhIHBhcnRpY3VsYXIgc3RhdGUgYmVpbmcgcHJvcG9zZWQgYW5kIGFjY2VwdGVkIGlzICRcYWxwaGEgKHheKnx4KSBxKHheKnx4KSQuIFNpbWlsYXJseSwgd2UgY2FuIGNhbGN1bGF0ZSB0aGUgcHJvYmFiaWxpdHkgdGhhdCBhbnkgcHJvcG9zYWwgaXMgYWNjZXB0ZWQgYXMgJGEoeCkgOj1caW50IFxhbHBoYSAoeF4qfHgpIHAoeF4qfHgpZHheKiQuIEEgbW92ZSBpcyBub3QgYWNjZXB0ZWQgd2l0aCBwcm9iYWJpbGl0eSAkcih4KSA6PSAxLSBhKHgpJCwgaW4gd2hpY2ggY2FzZSB3ZSBzZXQgJHheKiA9IHgkLiBUaGUgKGVmZmVjdGl2ZSkgdHJhbnNpdGlvbiBkZW5zaXR5IGlzIHRoZW4gCgokJHAoeF4qfHgpID0gIFxhbHBoYSAoeF4qfHgpIHEoeF4qfHgpICsgcih4KVxkZWx0YV94KHheKikkJAoKd2hlcmUgJFxkZWx0YV94KHheKikgPSAxJCBpZiAkeF4qPXgkIGFuZCAwIG90aGVyd2lzZS4gVGhlbiBzaW5jZSB3ZSBhcmUgaW4gY29udGludW91cyBzdGF0ZSBzcGFjZSwgdGhpcyBjYW4gYmUgZ2VuZXJhbGl6ZWQgdG8gCgokJFxpbnRfQSBwKHheKnx4KWR4XiogPSBwKEF8eCkgPSBcaW50X0FcYWxwaGEgKHheKnx4KSBxKHheKnx4KWR4XiogKyByKHgpXGRlbHRhX0EoeCkkJAoKd2hlcmUgJFxkZWx0YV9BKHgpID0gMSQgaWYgJHhcaW4gQSQgYW5kIDAgb3RoZXJ3aXNlLgoKV2UgY2FuIHNob3cgdGhhdCB0aGUgKGVmZmVjdGl2ZSkgdHJhbnNpdGlvbiBkZW5zaXR5IGluZGVlZCBzYXRpc2Z5IHRoZSBkZXRhaWxlZCBiYWxhbmNlIGNvbmRpdGlvbi4KClxiZWdpbnttZGZyYW1lZH0KUHJvb2Y6IApcZW5ke21kZnJhbWVkfQoKCiMjIyBBbGdvcml0aG0gCgoxLiBHaXZlbiBhIHRhcmdldCAkZihcY2RvdCkkIGFuZCBhIGNob3NlbiAkcShcY2RvdHxcY2RvdCkkLCBnZW5lcmF0ZSAkeF4qJCBmcm9tICRxKFxjZG90fCB4Xnsocyl9KSQKMi4gQ29tcHV0ZSAkXGFscGhhKHheKnx4Xnsocyl9KSA9IFxtaW4gKDEsIFxmcmFje3EoeF57KHMpfXx4XiopZih4XiopfXtxKHheKnx4Xnsocyl9KWYoeF57KHMpfSl9KSQKMy4gR2VuZXJhdGUgJHVcc2ltIFxtYm94e3VuaWZ9KDAsMSkkCiAgICBpLiBpZiAkdVxsZXEgXGFscGhhKHheKnx4Xnsocyl9KSQsIHNldCAkeF57KHMrMSl9ID0geF4qJAogICAgaWkuIGlmICR1PiBcYWxwaGEoeF4qfHheeyhzKX0pJCwgc2V0ICR4XnsocysxKX0gPSB4Xnsocyl9JAogIAoqKlJlbWFyayoqOgoKQSBuZWNlc3NhcnkgY29uZGl0aW9uIGZvciB0aGUgYWxnb3JpdGhtIHRvIHdvcmsgaXMgJFxtYm94e3N1cHB9KGYpXHN1YnNldGVxIFxtYm94e3N1cHB9KHEoXGNkb3R8eCkpJCBmb3IgYWxsICR4XGluIFxtYm94e3N1cHB9KGYpJC4KQSBtaW5pbWFsIG5lY2Vzc2FyeSBjb25kaXRpb24gd291bGQgYmUgJFxtYm94e3N1cHB9KGYpXHN1YnNldGVxIFxjdXBfe3hcaW4gXG1ib3h7c3VwcH0oZil9W1xtYm94e3N1cHB9KHEoXGNkb3R8eCkpXSQKCiMjIyBDaG9pY2Ugb2YgVHJhbnNpdGlvbiBEZW5zaXR5CgoxLiBDbGFzc2ljYWwgQ2hvaWNlIChSYW5kb20gV2Fsayk6IENob29zZSAkcSh4Xip8eCkgPSBcdGlsZGUgcSAoeF4qLXgpJCB3aGVyZSAkXHRpbGRlIHEkIGlzIHN5bW1ldHJpYyBhYm91dCAwLgpGb3IgZXhhbXBsZSAgJHheKiA9IHheeyhzKX0rXGVwc2lsb25eeyhzKX0kLCB3aGVyZSAkXGVwc2lsb25eeyhzKX1cc2ltIFxtYm94e3VuaWZ9KC0xLDEpJCBvciAkXGVwc2lsb25eeyhzKX1cc2ltIE4oMCxcdGF1XjIpJC4KVGhlbiB3ZSB3b3VsZCBoYXZlICR4Xipcc2ltIFxtYm94e3VuaWZ9KHheeyhzKX0tMSx4Xnsocyl9KzEpJCwgb3IgJHheKlxzaW0gTih4Xnsocyl9LFx0YXVeMikkIHJlc3BlY3RpdmVseS4gVGhlbiBkdWUgdG8gdGhlIHN5bW1ldHJ5IGFib3V0IDAsICRxKHheKnx4KSA9cSh4fHheKikkLCBzbyB0aGUgYWNjZXB0YW5jZSBwcm9iYWJpbGl0eSBzaW1wbGlmaWVzIHRvICAkXGFscGhhKHheKnx4KSA9IFxtaW4gKDEsIFxmcmFje2YoeF4qKX17Zih4KX0pJC4KCjIuIEluZGVwZW5kZW50IE1ldHJvcG9saXMgSGFzdGluZ3M6IENob29zZSAkeF4qXHNpbSBxKFxjZG90KT1xKFxjZG90fHgpJCBpbmRlcGVuZGVudCBvZiB0aGUgY3VycmVudCB2YWx1ZSAkeF57KHMpfSQuIEZvciBleGFtcGxlICRxXHNpbSBOKDAsMSkkIHRocm91Z2hvdXQuCgojIyMgUHJhY3RpY2FsaXRpZXMKCjEuICoqQnVybi1pbioqIAogICAgaS4gICBSdW4gYWxnb3JpdGhtIHVudGlsIHNvbWUgaXRlcmF0aW9uIEIgZm9yIHdoaWNoIE1hcmtvdiBDaGFpbiBhcHBlYXJzIHRvIHJlYWNoIHN0YXRpb25hcml0eS4KICAgIGlpLiBSdW4gYWxnb3JpdGhtICRCJyQgbW9yZSB0aW1lcyBhbmQga2VlcCAkXHt4XntCKzF9LFxsZG90cyx4XntCK0InfSBcfSQKICAgIGlpaS4gVXNlIGVtcGlyaWNhbCBkaXN0cmlidXRpb24gb2YgJFx7eF57QisxfSxcbGRvdHMseF57QitCJ30gXH0kIHRvIGFwcHJveGltYXRlIHRoZSBkZW5zaXR5ICRmJC4KICAgICAgICAgICAgCjIuICoqVGhpbm5pbmcqKjogQWZ0ZXIgYnVybmluZyB0byBkaXNjYXJkIGZpcnN0IEIgb2JzZXJ2YXRpb25zLCB0aGVuIHRoaW4gdGhlIGNoYWluIGJ5IGluY2x1ZGluZyBldmVyeSBrdGggZHJhdy4KCjMuICoqVHJhY2UgUGxvdCoqOiBUaGUgcGxvdCBvZiB0aGUgdmFsdWVzIGdlbmVyYXRlZCBmcm9tIHRoZSBtZXRyb3BvbGlzIGFsZ29yaXRobSBhZ2FpbnN0IHRoZSBpdGVyYXRpb24gbnVtYmVyLiBDaGVjazoKICAgIGEuIFRoZSBjaGFpbiBkb2Vzbid0IGdldCBzdHVjayBpbiBhIGNlcnRhaW4gYXJlYSBvZiBzcGFjZS4KICAgIGIuIFRoZSBjaGFpbiBjYW4gbW92ZSByZWxhdGl2ZWx5IGZhc3QuIAogICAgClByb3Bvc2FscyBzaG91bGQgbm90IGJlIHRvbyBib2xkIChzdGFuZGFyZCBkZXZpYXRpb24gbm90IHRvbyBoaWdoKSwgaG93ZXZlciBzaG91bGQgYmUgbGFyZ2UgZW5vdWdoIHRvIGJlIGNvbnNlcXVlbnRpYWwgKHN0YW5kYXJkIGRldmlhdGlvbiBub3QgdG9vIHNtYWxsKS4gIEJldHdlZW4gJDMwXCUtNjBcJSQgYWNjZXB0YW5jZSByYXRlIGlzIGlkZWFsLgogICAgCjQuICoqIkFDRiIgQXV0b2NvcnJlbGF0aW9uIEZ1bmN0aW9uKio6IENhbGN1bGF0ZSB0aGUgImxhZy0kaiQgc2FtcGxlIGNvdmFyaWFuY2UiIGFzIAokJFxoYXRcZ2FtbWFfaiA9IFxmcmFjezF9e1R9XHN1bV97dD1qKzF9XlQoeF57KHQpfS1cYmFyIHgpKHheeyh0LWopfS1cYmFyIHgpJCQKYW5kIHRoZSAibGFnLSRqJCBzYW1wbGUgYXV0b2NvcnJlbGF0aW9uIiAgYXMgJFxoYXR7XHJob31faiA9IFxoYXRcZ2FtbWFfai9caGF0XGdhbW1hXzAkLiBUaGVuIHBsb3R0aW5nIGF1dG9jb3JyZWxhdGlvbiAkXGhhdHtccmhvfV9qJCB2LnMuIHRoZSBsYWcgaW5kZXggKCRqJCksIHJlbGF0aXZlbHkgaGlnaCB2YWx1ZXMgd291bGQgaW5kaWNhdGUgYSBoaWdoIGRlZ3JlZSBvZiBjb3JyZWxhdGlvbiBiZXR3ZWVuIGRyYXdzIGFuZCB0aGVyZWZvcmUsIHNsb3cgbWl4aW5nLgoKPCEtLS0tLS0tLS0tLS0tPgo8c3BhbiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjogI2Y1ZjVmNTsgcGFkZGluZzogNXB4OyBkaXNwbGF5OiBibG9jazsiPgogICAgPHNwYW4gc3R5bGU9IndpZHRoOiAyNSU7IGRpc3BsYXk6IGlubGluZS1ibG9jazsgdGV4dC1hbGlnbjogbGVmdDsiPgogICAgICAgIFtCYWNrXShqYXZhc2NyaXB0OndpbmRvdy5oaXN0b3J5LmJhY2soKSkKICAgIDwvc3Bhbj4KICAgIDxzcGFuIHN0eWxlPSJ3aWR0aDogMzAlOyBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7IHRleHQtYWxpZ246IGNlbnRlcjsgY29sb3I6IGdyZXk7Ij4KICAgICAgICAqKlVwZGF0ZWQ6KiogYHIgU3lzLkRhdGUoKWAKICAgIDwvc3Bhbj4KICAgIDxzcGFuIHN0eWxlPSJ3aWR0aDogMzUlOyBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7IHRleHQtYWxpZ246IHJpZ2h0OyBjb2xvcjogZ3JleTsiPgogICAgICAgIFN0YXRpc3RpY2FsIFNpbXVsYXRpb24sIFdlaSBMaQogICAgPC9zcGFuPgo8L3NwYW4+CiA=</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiTUFUIDY1MzogU3RhdGlzdGljYWwgU2ltdWxhdGlvbiIKYXV0aG9yOiBJbnN0cnVjdG9yJDokIERyLiBXZWkgTGkKZGF0ZTogImByIFN5cy5EYXRlKClgIgpnZW9tZXRyeTogbGVmdD0yY20sIHJpZ2h0PTJjbSwgdG9wPTJjbSwgYm90dG9tPTJjbQpsaW5lc3RyZXRjaDogMS4zCm91dHB1dDoKICBodG1sX2RvY3VtZW50OgogICAgZGZfcHJpbnQ6IHBhZ2VkCiAgICBtYXRoamF4X2NvbmZpZzoKICAgICAgLSBUZVgtQU1TLU1NTF9IVE1Mb3JNTUwgICAKICBwZGZfZG9jdW1lbnQ6IAogICAgICBpbmNsdWRlOgogICAgICAgIGluX2hlYWRlcjogcHJlYW1ibGVfcm1kLnRleAogIGh0bWxfbm90ZWJvb2s6IGRlZmF1bHQKZm9udHNpemU6IDE0cHQKaGVhZGVyLWluY2x1ZGVzOgotIFx1c2VwYWNrYWdle2Ftc21hdGh9Ci0gXHVzZXBhY2thZ2VbbGluZXdpZHRoPTFwdF17bWRmcmFtZWR9Ci0gXG5ld2NvbW1hbmRcaW5uZXJbMl17XGxlZnRcbGFuZ2xlIzEsIzJccmlnaHRccmFuZ2xlfQotIFxuZXdjb21tYW5kXGZsb29yWzFde1xsZmxvb3IjMVxyZmxvb3J9Ci0gXG5ld2NvbW1hbmRcY2VpbFsxXXtcbGNlaWwjMVxyY2VpbH0KLSBcbmV3Y29tbWFuZFxtYlsxXXtcbWF0aGJmeyMxfX0KLSBcbmV3Y29tbWFuZFxic1sxXXtcYm9sZHN5bWJvbHsjMX19Ci0gXG5ld2NvbW1hbmRcbXJbMV17XG1hdGhybXsjMX19Ci0gXG5ld2NvbW1hbmRcd2hbMV17XHdpZGVoYXR7IzF9fQotIFxuZXdjb21tYW5kXG9wWzFde1xvcGVyYXRvcm5hbWV7IzF9fQotIFxuZXdjb21tYW5kXG1iYlsxXXtcbWF0aGJieyMxfX0KLSBcdXNlcGFja2FnZXtjYXB0aW9ufQotIFx1c2VwYWNrYWdle21hdGh0b29sc30KLSBcY2FwdGlvbnNldHVwW2ZpZ3VyZV17bGFiZWxmb3JtYXQ9ZW1wdHl9Ci0gXG5ld2NvbW1hbmR7XHdlaX1bMV17XHRleHRjb2xvcntvcmFuZ2V9eyhXZWk6IzEpfX0KLS0tCgoKPHNjcmlwdCB0eXBlPSJ0ZXh0L3gtbWF0aGpheC1jb25maWciPgpNYXRoSmF4Lkh1Yi5Db25maWcoewogIFRlWDogeyBlcXVhdGlvbk51bWJlcnM6IHsgYXV0b051bWJlcjogIkFNUyIgfSB9Cn0pOwo8L3NjcmlwdD4KCgo8c3BhbiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjogI2Y1ZjVmNTsgcGFkZGluZzogNXB4OyBkaXNwbGF5OiBibG9jazsiPgogICAgPHNwYW4gc3R5bGU9IndpZHRoOiAyNSU7IGRpc3BsYXk6IGlubGluZS1ibG9jazsgdGV4dC1hbGlnbjogbGVmdDsiPgogICAgICAgIFtCYWNrXShqYXZhc2NyaXB0OndpbmRvdy5oaXN0b3J5LmJhY2soKSkKICAgIDwvc3Bhbj4KICAgIDxzcGFuIHN0eWxlPSJ3aWR0aDogMzAlOyBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7IHRleHQtYWxpZ246IGNlbnRlcjsgY29sb3I6IGdyZXk7Ij4KICAgICAgICAqKlVwZGF0ZWQ6KiogYHIgU3lzLkRhdGUoKWAKICAgIDwvc3Bhbj4KICAgIDxzcGFuIHN0eWxlPSJ3aWR0aDogMzUlOyBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7IHRleHQtYWxpZ246IHJpZ2h0OyBjb2xvcjogZ3JleTsiPgogICAgICAgIFN0YXRpc3RpY2FsIFNpbXVsYXRpb24sIFdlaSBMaQogICAgPC9zcGFuPgo8L3NwYW4+Cgo8IS0tLS0tLS0tLS0tLS0+CgoKIyBNYXJrb3YgQ2hhaW4gd2l0aCBjb250aW51b3VzIHN0YXRlIHNwYWNlIApXZSBjb25zaWRlciBNYXJrb3YgY2hhaW5zIGluIHRoZSBjb250aW51b3VzIHN0YXRlIHNwYWNlLCB0aGF0IGlzLCAkUyQgPSB1bmNvdW50YWJsZSBzZXQuCgpUcmFuc2l0aW9uIHByb2JhYmlsaXR5IGZyb20gZWFjaCBwb3NzaWJsZSBzdGF0ZSAkeCQgdG8gZWFjaCBwb3NzaWJsZSBzZXQgb2Ygc3RhdGVzICRBJDoKXGJlZ2lue2FsaWduKn0KJlAoeF8wLEEpOj1QKFheeyhuKzEpfSBcaW4gQSB8IFheeyhuKX09eF8wKVxcClx0ZXh0e0NERn06XCAmRih4XzF8eF8wKTo9UChYXnsobisxKX0gXGxlcSB4XzEgfCBYXnsobil9PXhfMClcXApcdGV4dHtPbmUtc3RlcCB0cmFuc2l0aW9uIGRlbnNpdHkgZnVuY3Rpb259OlwgJmYoeF8wLCB4XzEpOj0gXGZyYWN7XHBhcnRpYWwgRih4XzF8eF8wKX17XHBhcnRpYWwgeF8xfT0gcChYXnsobisxKX09eF8xfFheeyhuKX09eF8wKVxcClxlbmR7YWxpZ24qfQoKIyMjIFRyYW5zaXRpb24gZGVuc2l0eSAKCkRlZmluZSBvbmUtc3RlcCB0cmFuc2l0aW9uIGRlbnNpdHk6CgokZl57WzFdfSh4X24seF97bisxfSk6PXAoeF97bisxfXx4X24pPXAoWF57KG4rMSl9PXhfe24rMX18WF57KG4pfT14X24pLiQKClR3by1zdGVwIHRyYW5zaXRpb24gZGVuc2l0eToKClxiZWdpbnthbGlnbip9CmZee1syXX0oeF9uLHhfe24rMn0pOj1wKFheeyhuKzIpfT14X3tuKzJ9fFheeyhuKX09eF9uKSY9IFxpbnQgcChYXnsobisyKX09eF97bisyfXxYXnsobisxKX09eF97bisxfSxYXnsobil9PXhfbikgIHAoWF57KG4rMSl9PXhfe24rMX18WF5uPXhfbilkIHhfe24rMX1cXAomPVxpbnQgcChYXnsobisyKX09eF97bisyfXxYXnsobisxKX09eF97bisxfSkgcChYXnsobisxKX09eF97bisxfXxYXnsobil9PXhfbilkIHhfe24rMX1cXAomPVxpbnQgZl57WzFdfSh4X24seF97bisxfSkgZl57WzFdfSh4X3tuKzF9LHhfe24rMn0pZCB4X3tuKzF9ClxlbmR7YWxpZ24qfQoKVGhyZWUtc3RlcCB0cmFuc2l0aW9uIGRlbnNpdHk6CgpcYmVnaW57YWxpZ24qfQpmXntbM119KHhfbix4X3tuKzN9KTo9cChYXnsobiszKX09eF97biszfXxYXnsobil9PXhfbikgJj0gXGludCBwKFheeyhuKzMpfT14X3tuKzN9fFheeyhuKzIpfT14X3tuKzJ9KSBcY2RvdCBwKFheeyhuKzIpfT14X3tuKzJ9fFheeyhuKX09eF9uKWQgeF97bisyfVxcCiY9XGludCBmXntbMV19KHhfe24rMn0seF97biszfSkgZl57WzJdfSh4X24seF97bisyfSlkIHhfe24rMn1cXAomPVxpbnQgXGludCBmXntbMV19KHhfe24rMn0seF97biszfSkgIGZee1sxXX0oeF97bisxfSx4X3tuKzJ9KSAgZl57WzFdfSh4X24seF97bisxfSlkIHhfe24rMX0gZCB4X3tuKzJ9LlxcClxlbmR7YWxpZ24qfQoKQXJndWluZyBhcyBhYm92ZSwgd2UgY2FuIG9idGFpbiB0aGUgIG0tc3RlcCB0cmFuc2l0aW9uIGRlbnNpdHk6CgokZl57W21dfSh4X24seF97bittfSk9IFxpbnQgXGNkb3RzIFxpbnQgXHByb2Rfe2s9bisxfV57bittfWZee1sxXX0oeF97ay0xfSx4X2spZHhfe24rMX0gXGNkb3RzIGR4X3tuK20tMX0uJAoKVGhlIGNvcnJlc3BvbmRpbmcgbS1zdGVwIHRyYW5zaXRpb24gcHJvYmFiaWxpdHkgY2FuIGJlIHdyaXR0ZW4gYXMgCiRQKFheeyhuK20pfSBcaW4gQXwgWF57KG4pfT14X24pPSBcaW50X0EgZl57W21dfSh4X24seF97bittfSlkeF97bittfS4kIE1vcmUgZ2VuZXJhbGx5LCB3ZSBoYXZlIHRoZSAqKkNoYXBtYW4tS29sbW9nb3JvdiBlcXVhdGlvbioqOgokJApmXntbbittXX0oeF8wLCB4X3tuK219KT1caW50IGZee1ttXX0oeF8wLCB4X3ttfSlmXntbbl19KHhfbSwgeF97bittfSlkeF97bX0uCiQkCgoKIyMjIFNvbWUgaW1wb3J0YW50IHByb3BlcnRpZXMKCklmIHNvbWUgcmVndWxhciAoZXJnb2RpYykgTS5DLiBwb3NzZXNzZXMgYSBsaW1pdGluZyB0cmFuc2l0aW9uIGRlbnNpdHkgaW5kZXBlbmRlbnQgb2YgdGhlIGluaXRpYWwgc3RhdGUsIHRoYXQgaXMgCiQkXGxpbV97biBcdG8gXGluZnR5fWZee1tuXX0oeCx2KT1nKHYpJCQKdGhlbiAkZyh2KSQgaXMgY2FsbGVkICJzdGF0aW9uYXJ5L3N0ZWFkeS1zdGF0ZSBkZW5zaXR5IiAobG9uZy10ZXJtIHByb2JhYmlsaXR5IGRlbnNpdHkpIG9mIE0uQy4gYW5kIGl0IGlzIGEgc29sdXRpb24gdG8gc3RlYWR5LXN0YXRlIGVxdWF0aW9uOgoKJCRnKHYpPVxpbnRfey1caW5mdHl9XnsrXGluZnR5fWcodylmKHcsdilkdyBccXF1YWQgKCopJCQKJCQoXHRleHR7cmVjYWxsIGRpc2NyZXRlIHNwYWNlfTogXHBpX2o9XHN1bV97aT0xfV57S30gXHBpX2kgcF97aWp9IFxxcXVhZCBcZm9yYWxsIGo9MSwyLFxjZG90cyAsSykkJAp3aGVyZSAkZyh3KSQgbWF5IGJlIHZpZXdlZCBhcyB0aGUgc3RhcnQgZGlzdHJpYnV0aW9uIGFuZCAkZih3LHYpJCBpcyB0aGUgdHJhbnNpdGlvbiBkZW5zaXR5IGZ1bmN0aW9uLgpOb3RlIHRoYXQgYW4gZXF1aXZhbGVudCBleHByZXNzaW9uIHRvICQoKikkIGlzCiQkXGludF9BIGcodikgZHY9XGludF97LVxpbmZ0eX1eeytcaW5mdHl9Zyh3KVAodyxBKWR3IFx0ZXh0eywgZm9yIGFsbCBzZXQgfSBBLCBcdGV4dHsgd2hlcmUgfSBQKHcsIEEpOj1QKFheeyhuKzEpfSBcaW4gQXxYXnsobil9PXcpLiQkCgoKQSBzdWZmaWNpZW50IGNvbmRpdGlvbiBmb3IgJGcoeCkkIHRvIGJlIGEgc3RlYWR5LXN0YXRlIGRlbnNpdHkgaXMgdGhlICIqKmRldGFpbGVkIGJhbGFuY2UgY29uZGl0aW9uKioiIGdpdmVuIGJ5CiQkZyh4KWYoeCx2KT1nKHYpZih2LHgpIFxxcXVhZCBcZm9yYWxsIHgsdiBccXF1YWQgKCoqKSwkJApoZXJlICRmKHgsdikkIGJlIHRoZSBkZW5zaXR5IGZ1bmN0aW9uIG9mIG9uZS1zdGVwIHRyYW5zaXRpb24gb2YgdGhlIE0uQy4gQXMgaW4gdGhlIGRpc2NyZXRlIGNhc2UsIGl0IGNhbiBiZSBzaG93biB0aGF0IGFueSBNYXJrb3YgY2hhaW4gc2F0aXNmeWluZyB0aGUgImRldGFpbGVkIGJhbGFuY2UgY29uZGl0aW9uIiAkKCoqKSQgd2lsbCBoYXZlICRnJCBhcyB0aGUgc3RlYWR5IHN0YXRlIGRlbnNpdHksIGkuZS4gJCgqKSQgaG9sZHMuCgpcYmVnaW57bWRmcmFtZWR9ClByb29mOgpcZW5ke21kZnJhbWVkfQoKIyMjIEVyZ29kaWMgVGhlb3JlbQoKSWYgJChYXnsoMSl9LFheeygyKX0sXGNkb3RzKSQgaXMgYW4gZXJnb2RpYyBNLkMuIHdob3NlIHN0ZWFkeS1zdGF0ZSBkZW5zaXR5IGlzIGdpdmVuIGJ5ICRnJCwgdGhlbiBmb3IgJG4gXHRvIFxpbmZ0eSQsIAokJFAoWF57KG4pfSBcaW4gQSkgXHRvIFAoWF57KFxpbmZ0eSl9IFxpbiBBKSA9IFxpbnRfQSBnKHgpZHguJCQKSW4gYWRkaXRpb24sIAokJFxmcmFjezF9e1R9XHN1bV97bj0xfV57VH1oKFheeyhuKX0pIFx0byBFW2goWF57KFxpbmZ0eSl9KV09XGludCBoKHgpZyh4KWR4LCBcdGV4dHsgZm9yIH0gVFx0byBcaW5mdHkuJCQKCgojIE1ldHJvcG9saXMgQWxnb3JpdGhtIGluIENvbnRpbnVvdXMgU3BhY2UKV2UgY29uc2lkZXIgYSBjb250aW51b3VzIHN0YXRlIHNwYWNlLCBmcm9tIHdoaWNoIHdlIHdvdWxkIGxpa2UgdG8gc2FtcGxlIGEgdGFyZ2V0IGRlbnNpdHkgJGYoXGNkb3QpJCBvciBhIGtlcm5lbCAkXHRpbGRlIGYkLiBPdXIgZ29hbCBpcyB0byBmaW5kIGEgdHJhbnNpdGlvbiBmdW5jdGlvbiAkcChcY2RvdCB8XGNkb3QpJCB0byBzYXRpc2Z5IHRoZSAnZGV0YWlsZWQgYmFsYW5jZSBjb25kaXRpb25zJywgaS5lOiBmb3IgYSBwcm9wb3NlZCAkeF4qJCwgJCQgcCh4XiogfHgpZih4KSA9cCh4fHheKilmKHheKikuJCQKCklmIHdlIGNhbiBmaW5kIHN1Y2ggYSAkcCQsIHRoZW4gdGhlIGxvbmcgcnVuIGRpc3RyaWJ1dGlvbiBvZiB0aGUgZXJnb2RpYyBtYXJrb3YgY2hhaW4gd2l0aCB0cmFuc2l0aW9uIGRpc3RyaWJ1dGlvbiAkcChcY2RvdCB8IFxjZG90KSQgaXMgJGYoXGNkb3QpJC4KCiMjIyBNZXRob2QKQ2hvb3NlIGFuIGFyYml0cmFyeSB0cmFuc2l0aW9uIGRlbnNpdHkgJHEoXGNkb3QgfCBcY2RvdCkkLCB3aXRob3V0IHJlcXVyaW5nIHRoYXQgdGhlIGRldGFpbGVkIGJhbGFuY2UgY29uZGl0aW9ucyBob2xkLiBUaGVuIHVzZSBhbiBhY2NlcHRhbmNlIHByb2JhYmlsaXR5IG9uIHByb3Bvc2VkIHNhbXBsZXMgYXMgJCRcYWxwaGEoeF4qfHgpID0gXG1pbiBcQmlnKDEsIFxmcmFje3EoeHx4XiopZih4XiopfXtxKHheKnx4KWYoeCl9IFxCaWcpLiQkIAoKVGhlIGdvYWwgb2YgdGhpcyBpcyB0byByZWd1bGF0ZSB0aGUgZmxvdyBvZiBwcm9iYWJpbGl0aWVzIGJldHdlZW4gdGhlIGN1cnJlbnQgc3RhdGUgYW5kIHRoZSBwcm9wb3NlZCBzdGF0ZS4gU28gZ2l2ZW4gdGhhdCBvdXIgY3VycmVudCBzdGF0ZSBpcyAkeCQgIHRoZW4gdGhlIHByb2JhYmlsaXR5IG9mIGEgcGFydGljdWxhciBzdGF0ZSBiZWluZyBwcm9wb3NlZCBhbmQgYWNjZXB0ZWQgaXMgJFxhbHBoYSAoeF4qfHgpIHEoeF4qfHgpJC4gU2ltaWxhcmx5LCB3ZSBjYW4gY2FsY3VsYXRlIHRoZSBwcm9iYWJpbGl0eSB0aGF0IGFueSBwcm9wb3NhbCBpcyBhY2NlcHRlZCBhcyAkYSh4KSA6PVxpbnQgXGFscGhhICh4Xip8eCkgcCh4Xip8eClkeF4qJC4gQSBwcm9wb3NhbCBpcyBub3QgYWNjZXB0ZWQgd2l0aCBwcm9iYWJpbGl0eSAkcih4KSA6PSAxLSBhKHgpJCwgaW4gd2hpY2ggY2FzZSB3ZSBzZXQgJHheKiA9IHgkLiBUaGUgKGVmZmVjdGl2ZSkgdHJhbnNpdGlvbiBkZW5zaXR5IGlzIHRoZW4gCgokJHAoeF4qfHgpID0gIFxhbHBoYSAoeF4qfHgpIHEoeF4qfHgpICsgcih4KVxkZWx0YV94KHheKikkJAoKd2hlcmUgJFxkZWx0YV94KHheKikgPSAxJCBpZiAkeF4qPXgkIGFuZCAwIG90aGVyd2lzZS4gVGhlbiBzaW5jZSB3ZSBhcmUgaW4gY29udGludW91cyBzdGF0ZSBzcGFjZSwgdGhpcyBjYW4gYmUgZ2VuZXJhbGl6ZWQgdG8gCgokJFxpbnRfQSBwKHheKnx4KWR4XiogPSBwKEF8eCkgPSBcaW50X0FcYWxwaGEgKHheKnx4KSBxKHheKnx4KWR4XiogKyByKHgpXGRlbHRhX0EoeCkkJAoKd2hlcmUgJFxkZWx0YV9BKHgpID0gMSQgaWYgJHhcaW4gQSQgYW5kIDAgb3RoZXJ3aXNlLgoKV2UgY2FuIHNob3cgdGhhdCB0aGUgKGVmZmVjdGl2ZSkgdHJhbnNpdGlvbiBkZW5zaXR5IGluZGVlZCBzYXRpc2ZpZXMgdGhlIGRldGFpbGVkIGJhbGFuY2UgY29uZGl0aW9uLgoKXGJlZ2lue21kZnJhbWVkfQpQcm9vZjogClxlbmR7bWRmcmFtZWR9CgoKIyMjIE1ldHJvcG9saXMtSGFzdGluZ3MgYWxnb3JpdGhtCgoxLiBHaXZlbiBhIHRhcmdldCAkZihcY2RvdCkkIGFuZCBhIGNob3NlbiAkcShcY2RvdHxcY2RvdCkkLCBnZW5lcmF0ZSAkeF4qJCBmcm9tICRxKFxjZG90fCB4Xnsocyl9KSQuCjIuIENvbXB1dGUgJFxhbHBoYSh4Xip8eF57KHMpfSkgPSBcbWluIFxiaWcoMSwgXGZyYWN7cSh4Xnsocyl9fHheKilmKHheKil9e3EoeF4qfHheeyhzKX0pZih4Xnsocyl9KX0gXGJpZykkLgozLiBHZW5lcmF0ZSAkdVxzaW0gXG1ib3h7dW5pZn0oMCwxKSQKICAgIGkuIGlmICR1XGxlcSBcYWxwaGEoeF4qfHheeyhzKX0pJCwgc2V0ICR4XnsocysxKX0gPSB4XiokOwogICAgaWkuIGlmICR1PiBcYWxwaGEoeF4qfHheeyhzKX0pJCwgc2V0ICR4XnsocysxKX0gPSB4Xnsocyl9JC4KICAKKipSZW1hcmsqKjoKCkEgbmVjZXNzYXJ5IGNvbmRpdGlvbiBmb3IgdGhlIGFsZ29yaXRobSB0byB3b3JrIGlzICRcbWJveHtzdXBwfShmKVxzdWJzZXRlcSBcbWJveHtzdXBwfShxKFxjZG90fHgpKSQgZm9yIGFsbCAkeFxpbiBcbWJveHtzdXBwfShmKSQuCkEgbWluaW1hbCBuZWNlc3NhcnkgY29uZGl0aW9uIHdvdWxkIGJlICRcbWJveHtzdXBwfShmKVxzdWJzZXRlcSBcY3VwX3t4XGluIFxtYm94e3N1cHB9KGYpfVtcbWJveHtzdXBwfShxKFxjZG90fHgpKV0kCgojIyMgQ2hvaWNlIG9mIFRyYW5zaXRpb24gRGVuc2l0eQoKMS4gQ2xhc3NpY2FsIENob2ljZSAoUmFuZG9tIFdhbGspOiBDaG9vc2UgJHEoeF4qfHgpID0gXHRpbGRlIHEgKHheKi14KSQgd2hlcmUgJFx0aWxkZSBxJCBpcyBzeW1tZXRyaWMgYWJvdXQgMC4KRm9yIGV4YW1wbGUgICR4XiogPSB4Xnsocyl9K1xlcHNpbG9uXnsocyl9JCwgd2hlcmUgJFxlcHNpbG9uXnsocyl9XHNpbSBcbWJveHt1bmlmfSgtMSwxKSQgb3IgJFxlcHNpbG9uXnsocyl9XHNpbSBOKDAsXHRhdV4yKSQuClRoZW4gd2Ugd291bGQgaGF2ZSAkeF4qXHNpbSBcbWJveHt1bmlmfSh4Xnsocyl9LTEseF57KHMpfSsxKSQsIG9yICR4Xipcc2ltIE4oeF57KHMpfSxcdGF1XjIpJCByZXNwZWN0aXZlbHkuIFRoZW4gZHVlIHRvIHRoZSBzeW1tZXRyeSBhYm91dCAwLCAkcSh4Xip8eCkgPXEoeHx4XiopJCwgc28gdGhlIGFjY2VwdGFuY2UgcHJvYmFiaWxpdHkgc2ltcGxpZmllcyB0byAgJFxhbHBoYSh4Xip8eCkgPSBcbWluICgxLCBcZnJhY3tmKHheKil9e2YoeCl9KSQuCgoyLiBJbmRlcGVuZGVudCBNZXRyb3BvbGlzIEhhc3RpbmdzOiBDaG9vc2UgJHheKlxzaW0gcShcY2RvdCk9cShcY2RvdHx4KSQgaW5kZXBlbmRlbnQgb2YgdGhlIGN1cnJlbnQgdmFsdWUgJHheeyhzKX0kLiBGb3IgZXhhbXBsZSAkcVxzaW0gTigwLDEpJCB0aHJvdWdob3V0LgoKIyMjIFByYWN0aWNhbGl0aWVzCgpQcm9wb3NhbHMgc2hvdWxkIG5vdCBiZSB0b28gYm9sZCAoc3RhbmRhcmQgZGV2aWF0aW9uIG5vdCB0b28gaGlnaCksIGhvd2V2ZXIgc2hvdWxkIGJlIGxhcmdlIGVub3VnaCB0byBiZSBjb25zZXF1ZW50aWFsIChzdGFuZGFyZCBkZXZpYXRpb24gbm90IHRvbyBzbWFsbCkuICBCZXR3ZWVuICQzMFwlLTYwXCUkIGFjY2VwdGFuY2UgcmF0ZSBpcyBpZGVhbC4KCjEuICoqQnVybi1pbioqIAogICAgaS4gICBSdW4gYWxnb3JpdGhtIHVudGlsIHNvbWUgaXRlcmF0aW9uICRCJCBmb3Igd2hpY2ggTWFya292IENoYWluIGFwcGVhcnMgdG8gcmVhY2ggc3RhdGlvbmFyaXR5LgogICAgaWkuIFJ1biBhbGdvcml0aG0gJEInJCBtb3JlIHRpbWVzIGFuZCBrZWVwICRce3hee0IrMX0sXGxkb3RzLHhee0IrQid9IFx9JAogICAgaWlpLiBVc2UgZW1waXJpY2FsIGRpc3RyaWJ1dGlvbiBvZiAkXHt4XntCKzF9LFxsZG90cyx4XntCK0InfSBcfSQgdG8gYXBwcm94aW1hdGUgdGhlIGRlbnNpdHkgJGYkLgogICAgICAgICAgICAKMi4gKipUaGlubmluZyoqOiBBZnRlciBidXJuaW5nIHRvIGRpc2NhcmQgZmlyc3QgQiBvYnNlcnZhdGlvbnMsIHRoZW4gdGhpbiB0aGUgY2hhaW4gYnkgaW5jbHVkaW5nIGV2ZXJ5IGt0aCBkcmF3LgoKMy4gKipUcmFjZSBQbG90Kio6IFRoZSBwbG90IG9mIHRoZSB2YWx1ZXMgZ2VuZXJhdGVkIGZyb20gdGhlIG1ldHJvcG9saXMgYWxnb3JpdGhtIGFnYWluc3QgdGhlIGl0ZXJhdGlvbiBudW1iZXIuIENoZWNrOgogICAgYS4gVGhlIGNoYWluIGRvZXNuJ3QgZ2V0IHN0dWNrIGluIGEgY2VydGFpbiBhcmVhIG9mIHNwYWNlLgogICAgYi4gVGhlIGNoYWluIGNhbiBtb3ZlIHJlbGF0aXZlbHkgZmFzdC4gCgo0LiAqKiJBQ0YiIEF1dG9jb3JyZWxhdGlvbiBGdW5jdGlvbioqOiBDYWxjdWxhdGUgdGhlICJsYWctJGokIHNhbXBsZSBjb3ZhcmlhbmNlIiBhcyAKJCRcaGF0XGdhbW1hX2ogPSBcZnJhY3sxfXtUfVxzdW1fe3Q9aisxfV5UKHheeyh0KX0tXGJhciB4KSh4XnsodC1qKX0tXGJhciB4KSQkCmFuZCB0aGUgImxhZy0kaiQgc2FtcGxlIGF1dG9jb3JyZWxhdGlvbiIgIGFzICRcaGF0e1xyaG99X2ogPSBcaGF0XGdhbW1hX2ovXGhhdFxnYW1tYV8wJC4gVGhlbiBwbG90dGluZyBhdXRvY29ycmVsYXRpb24gJFxoYXR7XHJob31faiQgdi5zLiB0aGUgbGFnIGluZGV4ICgkaiQpLCByZWxhdGl2ZWx5IGhpZ2ggdmFsdWVzIHdvdWxkIGluZGljYXRlIGEgaGlnaCBkZWdyZWUgb2YgY29ycmVsYXRpb24gYmV0d2VlbiBkcmF3cyBhbmQgdGhlcmVmb3JlLCBzbG93IG1peGluZy4KCjwhLS0tLS0tLS0tLS0tLT4KPHNwYW4gc3R5bGU9ImJhY2tncm91bmQtY29sb3I6ICNmNWY1ZjU7IHBhZGRpbmc6IDVweDsgZGlzcGxheTogYmxvY2s7Ij4KICAgIDxzcGFuIHN0eWxlPSJ3aWR0aDogMjUlOyBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7IHRleHQtYWxpZ246IGxlZnQ7Ij4KICAgICAgICBbQmFja10oamF2YXNjcmlwdDp3aW5kb3cuaGlzdG9yeS5iYWNrKCkpCiAgICA8L3NwYW4+CiAgICA8c3BhbiBzdHlsZT0id2lkdGg6IDMwJTsgZGlzcGxheTogaW5saW5lLWJsb2NrOyB0ZXh0LWFsaWduOiBjZW50ZXI7IGNvbG9yOiBncmV5OyI+CiAgICAgICAgKipVcGRhdGVkOioqIGByIFN5cy5EYXRlKClgCiAgICA8L3NwYW4+CiAgICA8c3BhbiBzdHlsZT0id2lkdGg6IDM1JTsgZGlzcGxheTogaW5saW5lLWJsb2NrOyB0ZXh0LWFsaWduOiByaWdodDsgY29sb3I6IGdyZXk7Ij4KICAgICAgICBTdGF0aXN0aWNhbCBTaW11bGF0aW9uLCBXZWkgTGkKICAgIDwvc3Bhbj4KPC9zcGFuPgog</div>
 
 
 
