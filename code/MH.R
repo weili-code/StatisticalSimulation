@@ -123,8 +123,8 @@ Sigma <- matrix(Sigma, 2, 2)
 N <- 10000 # draws
 x.current <- c(0, 0) # x_0
 X<- matrix(0, N, 2) # to hold sampled values
-d1<-1
-d2<-1
+d1<-0.5
+d2<-0.5
 
 for (i in 1:N){
   #update first component x1
