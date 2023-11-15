@@ -73,7 +73,7 @@ We use two candidate transition densities $q_{X} (x \vert x_c, y_c)$ and $q_{Y} 
    (b) compute $\gamma_Y (Y^* \vert  X^{(s+1)}, Y^{(s)})=\displaystyle \frac{f(X^{(s+1)}, Y^{*})}{f(X^{(s+1)}, Y^{(s)})} \cdot \frac{q_Y(Y^{(s)}\vert  X^{(s+1)}, Y^{*})}{q_Y(Y^{*} \vert  X^{(s+1)}, Y^{(s)})}$
    (c) set $Y^{(s+1)}$ to $Y^*$ with probability $\min (1, \gamma_Y)$; set $Y^{(s+1)}$ to $Y^{(s)}$ otherwise.
    
-**Remark:** $\displaystyle p \big( (x,y) \to (x^*,y^*) \big) f(x,y) = p \big( (x^*,y^*) \to (x,y) \big) f(x^*,y^*)$ does not hold for this algorithm in general.   
+**Remark:** The detailed balance condition holds within each update component; however it does not hold for the composition, that is, $\displaystyle p \big( (x,y) \to (x^*,y^*) \big) f(x,y) = p \big( (x^*,y^*) \to (x,y) \big) f(x^*,y^*)$ does not hold for this algorithm in general.   
    
 \begin{mdframed}
 Proof: 
