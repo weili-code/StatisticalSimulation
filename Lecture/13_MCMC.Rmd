@@ -135,13 +135,13 @@ If we can find such a $p$, then the long run distribution of the ergodic markov 
 ### Method
 Choose an arbitrary transition density $q(\cdot | \cdot)$, without requring that the detailed balance conditions hold. Then use an acceptance probability on proposed samples as $$\alpha(x^*|x) = \min \Big(1, \frac{q(x|x^*)f(x^*)}{q(x^*|x)f(x)} \Big).$$ 
 
-The goal of this is to regulate the flow of probabilities between the current state and the proposed state. So given that our current state is $x$  then the probability of a particular state being proposed and accepted is $\alpha (x^*|x) q(x^*|x)$. Similarly, we can calculate the probability that any proposal is accepted as $a(x) :=\int \alpha (x^*|x) p(x^*|x)dx^*$. A proposal is not accepted with probability $r(x) := 1- a(x)$, in which case we set $x^* = x$. The (effective) transition density is then 
+The goal of this is to regulate the flow of probabilities between the current state and the proposed state. So given that our current state is $x$  then the probability of a particular state being proposed and accepted is $\alpha (x^*|x) q(x^*|x)$. Similarly, we can calculate the probability that any proposal is accepted as $a(x) :=\int \alpha (x^*|x) q(x^*|x)dx^*$. A proposal is not accepted with probability $r(x) := 1- a(x)$, in which case we set $x^* = x$. The (effective) transition density is then 
 
 $$p(x^*|x) =  \alpha (x^*|x) q(x^*|x) + r(x)\delta_x(x^*)$$
 
 where $\delta_x(x^*) = 1$ if $x^*=x$ and 0 otherwise. Then since we are in continuous state space, this can be generalized to 
 
-$$\int_A p(x^*|x)dx^* = p(A|x) = \int_A\alpha (x^*|x) q(x^*|x)dx^* + r(x)\delta_A(x)$$
+$$P(x, A)=\int_A p(x^*|x)dx^* = \int_A\alpha (x^*|x) q(x^*|x)dx^* + r(x)\delta_A(x)$$
 
 where $\delta_A(x) = 1$ if $x\in A$ and 0 otherwise.
 

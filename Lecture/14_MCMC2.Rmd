@@ -65,13 +65,13 @@ We use two candidate transition densities $q_{X} (x \vert x_c, y_c)$ and $q_{Y} 
 
 1. Update $X$   
    (a) sample $X^* \sim q_X(\cdot \vert  X^{(s)}, Y^{(s)})$   
-   (b) compute $\gamma_X (X^* \vert  X^{(s)}, Y^{(s)})=\displaystyle \frac{f(X^{*}, Y^{(s)})}{f(X^{(s)}, Y^{(s)})} \cdot \frac{q_X(X^{(s)}\vert  X^{*}, Y^{(s)})}{q_X(X^{*} \vert  X^{(s)}, Y^{(s)})}$
-   (c) set $X^{(s+1)}$ to $X^*$ with probability $\min (1, \gamma_X)$; set $X^{(s+1)}$ to $X^{(s)}$ otherwise.
+   (b) compute $\alpha_X (X^* \vert  X^{(s)}, Y^{(s)})=\displaystyle \frac{f(X^{*}, Y^{(s)})}{f(X^{(s)}, Y^{(s)})} \cdot \frac{q_X(X^{(s)}\vert  X^{*}, Y^{(s)})}{q_X(X^{*} \vert  X^{(s)}, Y^{(s)})}$
+   (c) set $X^{(s+1)}$ to $X^*$ with probability $\min (1, \alpha_X)$; set $X^{(s+1)}$ to $X^{(s)}$ otherwise.
    
 2. Update $Y$   
    (a) sample $Y^* \sim q_Y(\cdot \vert  X^{(s+1)}, Y^{(s)})$   
-   (b) compute $\gamma_Y (Y^* \vert  X^{(s+1)}, Y^{(s)})=\displaystyle \frac{f(X^{(s+1)}, Y^{*})}{f(X^{(s+1)}, Y^{(s)})} \cdot \frac{q_Y(Y^{(s)}\vert  X^{(s+1)}, Y^{*})}{q_Y(Y^{*} \vert  X^{(s+1)}, Y^{(s)})}$
-   (c) set $Y^{(s+1)}$ to $Y^*$ with probability $\min (1, \gamma_Y)$; set $Y^{(s+1)}$ to $Y^{(s)}$ otherwise.
+   (b) compute $\alpha_Y (Y^* \vert  X^{(s+1)}, Y^{(s)})=\displaystyle \frac{f(X^{(s+1)}, Y^{*})}{f(X^{(s+1)}, Y^{(s)})} \cdot \frac{q_Y(Y^{(s)}\vert  X^{(s+1)}, Y^{*})}{q_Y(Y^{*} \vert  X^{(s+1)}, Y^{(s)})}$
+   (c) set $Y^{(s+1)}$ to $Y^*$ with probability $\min (1, \alpha_Y)$; set $Y^{(s+1)}$ to $Y^{(s)}$ otherwise.
    
 **Remark:** The detailed balance condition holds within each update component; however it does not hold for the composition, that is, $\displaystyle p \big( (x,y) \to (x^*,y^*) \big) f(x,y) = p \big( (x^*,y^*) \to (x,y) \big) f(x^*,y^*)$ does not hold for this algorithm in general.   
    
@@ -88,13 +88,13 @@ Recall the block-wise Metropolis-Hastings: to sample from $f(X,Y)$, we used two 
 
 1. Update $X$:
 \begin{align*}
-\gamma_X(X^*|X^{(s)},Y^{(s)})&=\frac{f(X^*,Y^{(s)})}{f(X^{(s)},Y^{(s)})}\cdot\frac{q_X(X^{(s)}|X^{(s)},Y^{(s)})}{q_X(X^*|X^{(s)},Y^{(s)})}.
+\alpha_X(X^*|X^{(s)},Y^{(s)})&=\frac{f(X^*,Y^{(s)})}{f(X^{(s)},Y^{(s)})}\cdot\frac{q_X(X^{(s)}|X^{(s)},Y^{(s)})}{q_X(X^*|X^{(s)},Y^{(s)})}.
 \end{align*}
 
 Suppose we take $q_X(x|X^{(s)}, Y^{(s)})$ to be full condition distribution $f_{X|Y}(x|Y^{(s)})$, take $q_Y(y|X^{(s)},Y^{(s)})$ to be full condition distribution $f_{Y|X}(y|X^{(s)})$, then
 
 \begin{align*}
-\gamma_X(X^*|X^{(s)},Y^{(s)})&=\frac{f(X^*,Y^{(s)})}{f(X^{(s)},Y^{(s)})}\cdot\frac{q_X(X^{(s)}|X^{(s)},Y^{(s)})}{q_X(X^*|X^{(s)},Y^{(s)})}\\
+\alpha_X(X^*|X^{(s)},Y^{(s)})&=\frac{f(X^*,Y^{(s)})}{f(X^{(s)},Y^{(s)})}\cdot\frac{q_X(X^{(s)}|X^{(s)},Y^{(s)})}{q_X(X^*|X^{(s)},Y^{(s)})}\\
 &=\frac{f_{X|Y}(X^*|Y^{(s)})}{f_{X|Y}(X^{(s)}|Y^{(s)})}\cdot\frac{f_{X|Y}(X^{(s)}|Y^{(s)})}{f_{X|Y}(X^*|Y^{(s)})}\\
 &=1
 \end{align*}
@@ -102,7 +102,7 @@ Suppose we take $q_X(x|X^{(s)}, Y^{(s)})$ to be full condition distribution $f_{
 2. Update $Y$. Similar argument goes through if we use the full conditional distributions as our candidate transition densities.
 
 **Definition:**
-Gibbs sampling is a special case of (blockwise) MH that take $q_X(x|X_c, Y_c)$ to be  $f_{X|Y}(x|Y_c)$, and take $q_Y(y|X_c,Y_c)$ to be  $f_{Y|X}(y|X_c)$, which then yield $\gamma_X=\gamma_Y=1$. So following this sampling scheme, all proposals are automatically accepted.
+Gibbs sampling is a special case of (blockwise) MH that take $q_X(x|X_c, Y_c)$ to be  $f_{X|Y}(x|Y_c)$, and take $q_Y(y|X_c,Y_c)$ to be  $f_{Y|X}(y|X_c)$, which then yield $\alpha_X=\alpha_Y=1$. So following this sampling scheme, all proposals are automatically accepted.
 
 
 **Algorithm: Two stages Gibbs sampling**

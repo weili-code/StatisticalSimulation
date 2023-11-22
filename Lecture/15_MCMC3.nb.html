@@ -1766,206 +1766,102 @@ MathJax.Hub.Config({
 <strong>Updated:</strong> 2023-11-21 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 <!------------->
-<div id="markov-chain-with-continuous-state-space" class="section level1">
-<h1>Markov Chain with continuous state space</h1>
-<p>We consider Markov chains in the continuous state space, that is,
-<span class="math inline">\(S\)</span> = uncountable set.</p>
-<p>Transition probability from each possible state <span class="math inline">\(x\)</span> to each possible set of states <span class="math inline">\(A\)</span>: <span class="math display">\[\begin{align*}
-&amp;P(x_0,A):=P(X^{(n+1)} \in A | X^{(n)}=x_0)\\
-\text{CDF}:\ &amp;F(x_1|x_0):=P(X^{(n+1)} \leq x_1 | X^{(n)}=x_0)\\
-\text{One-step transition density function}:\ &amp;f(x_0, x_1):=
-\frac{\partial F(x_1|x_0)}{\partial x_1}= p(X^{(n+1)}=x_1|X^{(n)}=x_0)\\
-\end{align*}\]</span></p>
-<div id="transition-density" class="section level3">
-<h3>Transition density</h3>
-<p>Define one-step transition density:</p>
-<p><span class="math inline">\(f^{[1]}(x_n,x_{n+1}):=p(x_{n+1}|x_n)=p(X^{(n+1)}=x_{n+1}|X^{(n)}=x_n).\)</span></p>
-<p>Two-step transition density:</p>
-<p><span class="math display">\[\begin{align*}
-f^{[2]}(x_n,x_{n+2}):=p(X^{(n+2)}=x_{n+2}|X^{(n)}=x_n)&amp;= \int
-p(X^{(n+2)}=x_{n+2}|X^{(n+1)}=x_{n+1},X^{(n)}=x_n)  p(X^{(n+1)}=x_{n+1}|X^n=x_n)d
-x_{n+1}\\
-&amp;=\int p(X^{(n+2)}=x_{n+2}|X^{(n+1)}=x_{n+1})
-p(X^{(n+1)}=x_{n+1}|X^{(n)}=x_n)d x_{n+1}\\
-&amp;=\int f^{[1]}(x_n,x_{n+1}) f^{[1]}(x_{n+1},x_{n+2})d x_{n+1}
-\end{align*}\]</span></p>
-<p>Three-step transition density:</p>
-<p><span class="math display">\[\begin{align*}
-f^{[3]}(x_n,x_{n+3}):=p(X^{(n+3)}=x_{n+3}|X^{(n)}=x_n) &amp;= \int
-p(X^{(n+3)}=x_{n+3}|X^{(n+2)}=x_{n+2}) \cdot
-p(X^{(n+2)}=x_{n+2}|X^{(n)}=x_n)d x_{n+2}\\
-&amp;=\int f^{[1]}(x_{n+2},x_{n+3}) f^{[2]}(x_n,x_{n+2})d x_{n+2}\\
-&amp;=\int \int
-f^{[1]}(x_{n+2},x_{n+3})  f^{[1]}(x_{n+1},x_{n+2})  f^{[1]}(x_n,x_{n+1})d
-x_{n+1} d x_{n+2}.\\
-\end{align*}\]</span></p>
-<p>Arguing as above, we can obtain the m-step transition density:</p>
-<p><span class="math inline">\(f^{[m]}(x_n,x_{n+m})= \int \cdots \int
-\prod_{k=n+1}^{n+m}f^{[1]}(x_{k-1},x_k)dx_{n+1} \cdots
-dx_{n+m-1}.\)</span></p>
-<p>The corresponding m-step transition probability can be written as
-<span class="math inline">\(P(X^{(n+m)} \in A| X^{(n)}=x_n)= \int_A
-f^{[m]}(x_n,x_{n+m})dx_{n+m}.\)</span> More generally, we have the
-<strong>Chapman-Kolmogorov equation</strong>: <span class="math display">\[
-f^{[n+m]}(x_0, x_{n+m})=\int f^{[m]}(x_0, x_{m})f^{[n]}(x_m,
-x_{n+m})dx_{m}.
-\]</span></p>
-</div>
-<div id="some-important-properties" class="section level3">
-<h3>Some important properties</h3>
-<p>If some regular (ergodic) M.C. possesses a limiting transition
-density independent of the initial state, that is <span class="math display">\[\lim_{n \to \infty}f^{[n]}(x,v)=g(v)\]</span>
-then <span class="math inline">\(g(v)\)</span> is called
-“stationary/steady-state density” (long-term probability density) of
-M.C. and it is a solution to steady-state equation:</p>
-<p><span class="math display">\[g(v)=\int_{-\infty}^{+\infty}g(w)f(w,v)dw \qquad
-(*)\]</span> <span class="math display">\[(\text{recall discrete space}:
-\pi_j=\sum_{i=1}^{K} \pi_i p_{ij} \qquad \forall j=1,2,\cdots
-,K)\]</span> where <span class="math inline">\(g(w)\)</span> may be
-viewed as the start distribution and <span class="math inline">\(f(w,v)\)</span> is the transition density
-function. Note that an equivalent expression to <span class="math inline">\((*)\)</span> is <span class="math display">\[\int_A g(v)
-dv=\int_{-\infty}^{+\infty}g(w)P(w,A)dw \text{, for all set } A, \text{
-where } P(w, A):=P(X^{(n+1)} \in A|X^{(n)}=w).\]</span></p>
-<p>A sufficient condition for <span class="math inline">\(g(x)\)</span>
-to be a steady-state density is the “<strong>detailed balance
-condition</strong>” given by <span class="math display">\[g(x)f(x,v)=g(v)f(v,x) \qquad \forall x,v \qquad
-(**),\]</span> here <span class="math inline">\(f(x,v)\)</span> be the
-density function of one-step transition of the M.C. As in the discrete
-case, it can be shown that any Markov chain satisfying the “detailed
-balance condition” <span class="math inline">\((**)\)</span> will have
-<span class="math inline">\(g\)</span> as the steady state density,
-i.e. <span class="math inline">\((*)\)</span> holds.</p>
-</div>
-<div id="ergodic-theorem" class="section level3">
-<h3>Ergodic Theorem</h3>
-<p>If <span class="math inline">\((X^{(1)},X^{(2)},\cdots)\)</span> is
-an ergodic M.C. whose steady-state density is given by <span class="math inline">\(g\)</span>, then for <span class="math inline">\(n
-\to \infty\)</span>, <span class="math display">\[P(X^{(n)} \in A) \to
-P(X^{(\infty)} \in A) = \int_A g(x)dx.\]</span> In addition, <span class="math display">\[\frac{1}{T}\sum_{n=1}^{T}h(X^{(n)}) \to
-E[h(X^{(\infty)})]=\int h(x)g(x)dx, \text{ for } T\to
-\infty.\]</span></p>
-</div>
-</div>
-<div id="metropolis-algorithm-in-continuous-space" class="section level1">
-<h1>Metropolis Algorithm in Continuous Space</h1>
-<p>We consider a continuous state space, from which we would like to
-sample a target density <span class="math inline">\(f(\cdot)\)</span> or
-a kernel <span class="math inline">\(\tilde f\)</span>. Our goal is to
-find a transition function <span class="math inline">\(p(\cdot
-|\cdot)\)</span> to satisfy the ‘detailed balance conditions’, i.e: for
-a proposed <span class="math inline">\(x^*\)</span>, <span class="math display">\[ p(x^* |x)f(x) =p(x|x^*)f(x^*).\]</span></p>
-<p>If we can find such a <span class="math inline">\(p\)</span>, then
-the long run distribution of the ergodic markov chain with transition
-distribution <span class="math inline">\(p(\cdot | \cdot)\)</span> is
-<span class="math inline">\(f(\cdot)\)</span>.</p>
-<div id="method" class="section level3">
-<h3>Method</h3>
-<p>Choose an arbitrary transition density <span class="math inline">\(q(\cdot | \cdot)\)</span>, without requring that
-the detailed balance conditions hold. Then use an acceptance probability
-on proposed samples as <span class="math display">\[\alpha(x^*|x) = \min
-\Big(1, \frac{q(x|x^*)f(x^*)}{q(x^*|x)f(x)} \Big).\]</span></p>
-<p>The goal of this is to regulate the flow of probabilities between the
-current state and the proposed state. So given that our current state is
-<span class="math inline">\(x\)</span> then the probability of a
-particular state being proposed and accepted is <span class="math inline">\(\alpha (x^*|x) q(x^*|x)\)</span>. Similarly, we
-can calculate the probability that any proposal is accepted as <span class="math inline">\(a(x) :=\int \alpha (x^*|x) q(x^*|x)dx^*\)</span>.
-A proposal is not accepted with probability <span class="math inline">\(r(x) := 1- a(x)\)</span>, in which case we set
-<span class="math inline">\(x^* = x\)</span>. The (effective) transition
-density is then</p>
-<p><span class="math display">\[p(x^*|x) =  \alpha (x^*|x) q(x^*|x) +
-r(x)\delta_x(x^*)\]</span></p>
-<p>where <span class="math inline">\(\delta_x(x^*) = 1\)</span> if <span class="math inline">\(x^*=x\)</span> and 0 otherwise. Then since we are
-in continuous state space, this can be generalized to</p>
-<p><span class="math display">\[P(x, A)=\int_A p(x^*|x)dx^* =
-\int_A\alpha (x^*|x) q(x^*|x)dx^* + r(x)\delta_A(x)\]</span></p>
-<p>where <span class="math inline">\(\delta_A(x) = 1\)</span> if <span class="math inline">\(x\in A\)</span> and 0 otherwise.</p>
-<p>We can show that the (effective) transition density indeed satisfies
-the detailed balance condition.</p>
-</div>
-<div id="metropolis-hastings-algorithm" class="section level3">
-<h3>Metropolis-Hastings algorithm</h3>
+<div id="metropolis-hasting-algorithm-with-different-move-types" class="section level2">
+<h2>Metropolis-Hasting algorithm with different move types</h2>
+<p>We consider MH algorithms with different move types; which gives a
+more general framework for MH algorithms.</p>
+<ul>
+<li><span class="math inline">\(X \in \mathbb{R}^{d}\)</span></li>
+<li>Let <span class="math inline">\(M\)</span> denote a finite or
+countable set of move types, e.g., <span class="math inline">\(M=\{1, 2,
+\ldots, K\}\)</span>.</li>
+<li><span class="math inline">\(\gamma_m(x)\)</span> denote probability
+of choosing move <span class="math inline">\(m\)</span> when the current
+value <span class="math inline">\(X^{(s)}=x\)</span>, <span class="math inline">\(\sum_{m} \gamma_m(x)=1\)</span>.</li>
+</ul>
+<p>We first randomly choose a move type <span class="math inline">\(m\in
+M\)</span> and then generate <span class="math inline">\(X^*\)</span>
+with a move-dependent transition density <span class="math inline">\(q_m(\cdot|X^{(s)})\)</span>, where <span class="math inline">\(q_m(\cdot|\cdot): \mathbb{R}^d \times \mathbb{R}^d
+\to \mathbb{R}\)</span>.</p>
+<p><strong>MH algorithm with different move types</strong>:</p>
+<p>Let <span class="math inline">\(s=0\)</span>.</p>
 <ol style="list-style-type: decimal">
-<li>Given a target <span class="math inline">\(f(\cdot)\)</span> and a
-chosen <span class="math inline">\(q(\cdot|\cdot)\)</span>, generate
-<span class="math inline">\(x^*\)</span> from <span class="math inline">\(q(\cdot| x^{(s)})\)</span>.</li>
-<li>Compute <span class="math inline">\(\alpha(x^*|x^{(s)}) = \min
-\big(1, \frac{q(x^{(s)}|x^*)f(x^*)}{q(x^*|x^{(s)})f(x^{(s)})}
-\big)\)</span>.</li>
-<li>Generate <span class="math inline">\(u\sim \mbox{unif}(0,1)\)</span>
+<li>Generate <span class="math inline">\(m^{(s+1)}\in M\)</span> with
+probability <span class="math inline">\(P(m^{(s+1)}=m)=\gamma_m(X^{(s)})\)</span>;</li>
+<li>Generate <span class="math inline">\(X^* \sim
+q_{m^{(s+1)}}(\cdot|X^{(s)})\)</span>;</li>
+<li>Let acceptance probablity be <span class="math display">\[
+\alpha_{m^{(s+1)}}(X^{*}|X^{(s)})=\min \left\{
+\frac{f(X^{*})\gamma_{m^{(s+1)}}(X^{*})q_{m^{(s+1)}}(X^{(s)}|X^{*})}{f(X^{(s)})\gamma_{m^{(s+1)}}(X^{(s)})q_{m^{(s+1)}}(X^{*}|X^{(s)})},
+1  \right\}
+\]</span></li>
+<li>Generate <span class="math inline">\(U\sim \mbox{unif}(0,1)\)</span>
 <ol style="list-style-type: lower-roman">
-<li>if <span class="math inline">\(u\leq \alpha(x^*|x^{(s)})\)</span>,
-set <span class="math inline">\(x^{(s+1)} = x^*\)</span>;</li>
-<li>if <span class="math inline">\(u&gt; \alpha(x^*|x^{(s)})\)</span>,
-set <span class="math inline">\(x^{(s+1)} = x^{(s)}\)</span>.</li>
+<li>if <span class="math inline">\(U\leq
+\alpha_{m^{(s+1)}}(X^{*}|X^{(s)})\)</span>, set <span class="math inline">\(X^{(s+1)} = X^*\)</span>;</li>
+<li>if <span class="math inline">\(U&gt;
+\alpha_{m^{(s+1)}}(X^{*}|X^{(s)})\)</span>, set <span class="math inline">\(X^{(s+1)} = X^{(s)}\)</span>.</li>
 </ol></li>
+<li><span class="math inline">\(s\leftarrow s+1.\)</span></li>
+</ol>
+<p><strong>Remark</strong></p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(\gamma_m(x)\)</span> can depend on time
+as well. In the simplest case, for example, <span class="math inline">\(M=\{1, 2,\ldots, K\}\)</span>, we can choose <span class="math inline">\(m\)</span> to be <span class="math inline">\((s
+\text{ mod } K)+1\)</span>, this will cylce through all move types.</li>
+<li>Every move type can be shown to satisfy detailed balance condition,
+but the composition needs not.</li>
+<li>Note that <span class="math inline">\(q_m(\cdot|\cdot): \mathbb{R}^d
+\times \mathbb{R}^d \to \mathbb{R}\)</span>, this transition density may
+not be well-defined if we just want to update a single/part of the whole
+vector of <span class="math inline">\(X \in \mathbb{R}^d\)</span>, so
+<span class="math inline">\(X^*\)</span> falls on a lower dimensional
+space of <span class="math inline">\(X \in \mathbb{R}^d\)</span>.</li>
+</ol>
+<p><strong>A modification</strong>:</p>
+<p>To address the above issue (3), we have a more general update rule
+for the acceptance probability. We need to assume two things for
+this.</p>
+<ol style="list-style-type: decimal">
+<li>Assume for <em>each</em> move <span class="math inline">\(m\in
+M\)</span>, there is a set <span class="math inline">\(C_m \subset
+\mathbb{R}^d \times \mathbb{R}^d\)</span> such that <span class="math display">\[
+(x, x&#39;) \in C_m \Longleftrightarrow  (x&#39;, x) \in C_m , \quad
+\forall x, x&#39;
+\]</span></li>
+<li>and there is a density <span class="math inline">\(\psi_m: C_m \to
+[0, \infty]\)</span> such that the proposed <span class="math inline">\(X^*\)</span> transitioning from <span class="math inline">\(X^{(s)} \sim f\)</span> satisfies <span class="math display">\[
+P(X^*\in B, X^{(s)}\in A) =\int_{C_m} 1_A(x)1_B(x&#39;)\psi_m(x,
+x&#39;)dx&#39;dx
+\]</span> for all <span class="math inline">\(A, B\)</span>. The
+(modified) acceptance probability is <span class="math display">\[
+\alpha_m(X^*|X^{(s)})=\min \left\{  \frac{\gamma_m(X^{^*}) \psi_m(X^{*},
+X^{(s)})}{\gamma_m(X^{(s)}) \psi_m(X^{(s)}, X^{*})}, 1 \right\}
+\]</span></li>
 </ol>
 <p><strong>Remark</strong>:</p>
-<p>A necessary condition for the algorithm to work is <span class="math inline">\(\mbox{supp}(f)\subseteq
-\mbox{supp}(q(\cdot|x))\)</span> for all <span class="math inline">\(x\in \mbox{supp}(f)\)</span>. A minimal necessary
-condition would be <span class="math inline">\(\mbox{supp}(f)\subseteq
-\cup_{x\in \mbox{supp}(f)}[\mbox{supp}(q(\cdot|x))]\)</span></p>
-</div>
-<div id="choice-of-transition-density" class="section level3">
-<h3>Choice of Transition Density</h3>
 <ol style="list-style-type: decimal">
-<li><p>Classical Choice (Random Walk): Choose <span class="math inline">\(q(x^*|x) = \tilde q (x^*-x)\)</span> where <span class="math inline">\(\tilde q\)</span> is symmetric about 0. For
-example <span class="math inline">\(x^* =
-x^{(s)}+\epsilon^{(s)}\)</span>, where <span class="math inline">\(\epsilon^{(s)}\sim \mbox{unif}(-1,1)\)</span> or
-<span class="math inline">\(\epsilon^{(s)}\sim N(0,\tau^2)\)</span>.
-Then we would have <span class="math inline">\(x^*\sim
-\mbox{unif}(x^{(s)}-1,x^{(s)}+1)\)</span>, or <span class="math inline">\(x^*\sim N(x^{(s)},\tau^2)\)</span> respectively.
-Then due to the symmetry about 0, <span class="math inline">\(q(x^*|x)
-=q(x|x^*)\)</span>, so the acceptance probability simplifies to <span class="math inline">\(\alpha(x^*|x) = \min (1,
-\frac{f(x^*)}{f(x)})\)</span>.</p></li>
-<li><p>Independent Metropolis Hastings: Choose <span class="math inline">\(x^*\sim q(\cdot)=q(\cdot|x)\)</span> independent
-of the current value <span class="math inline">\(x^{(s)}\)</span>. For
-example <span class="math inline">\(q\sim N(0,1)\)</span>
-throughout.</p></li>
+<li>If the transition density <span class="math inline">\(q_m\)</span>
+from <span class="math inline">\(X^{(s)}\)</span> to <span class="math inline">\(X^*\)</span> exists (or well-defined density),
+then <span class="math inline">\(\psi_m(x,
+x&#39;)=f(x)q_m(x&#39;|x)\)</span>, giving the previous algorithm. More
+generally, however, in this modified algorithm, is that we allow <span class="math inline">\(C_m\)</span> to be a lower dimensional space of
+<span class="math inline">\(\mathbb{R}^d \times
+\mathbb{R}^d\)</span>.</li>
+<li>This modified algorithm generalizes the blockwise MH algorithm and
+the Gibbs sampling.</li>
 </ol>
 </div>
-<div id="practicalities" class="section level3">
-<h3>Practicalities</h3>
-<p>Proposals should not be too bold (standard deviation not too high),
-however should be large enough to be consequential (standard deviation
-not too small). Between <span class="math inline">\(30\%-60\%\)</span>
-acceptance rate is ideal.</p>
-<ol style="list-style-type: decimal">
-<li><p><strong>Burn-in</strong></p>
-<ol style="list-style-type: lower-roman">
-<li>Run algorithm until some iteration <span class="math inline">\(B\)</span> for which Markov Chain appears to reach
-stationarity.</li>
-<li>Run algorithm <span class="math inline">\(B&#39;\)</span> more times
-and keep <span class="math inline">\(\{x^{B+1},\ldots,x^{B+B&#39;}
-\}\)</span></li>
-<li>Use empirical distribution of <span class="math inline">\(\{x^{B+1},\ldots,x^{B+B&#39;} \}\)</span> to
-approximate the density <span class="math inline">\(f\)</span>.</li>
-</ol></li>
-<li><p><strong>Thinning</strong>: After burning to discard first B
-observations, then thin the chain by including every kth draw.</p></li>
-<li><p><strong>Trace Plot</strong>: The plot of the values generated
-from the metropolis algorithm against the iteration number. Check:</p>
-<ol style="list-style-type: lower-alpha">
-<li>The chain doesn’t get stuck in a certain area of space.</li>
-<li>The chain can move relatively fast.</li>
-</ol></li>
-<li><p><strong>“ACF” Autocorrelation Function</strong>: Calculate the
-“lag-<span class="math inline">\(j\)</span> sample covariance” as <span class="math display">\[\hat\gamma_j =
-\frac{1}{T}\sum_{t=j+1}^T(x^{(t)}-\bar x)(x^{(t-j)}-\bar x)\]</span> and
-the “lag-<span class="math inline">\(j\)</span> sample autocorrelation”
-as <span class="math inline">\(\hat{\rho}_j =
-\hat\gamma_j/\hat\gamma_0\)</span>. Then plotting autocorrelation <span class="math inline">\(\hat{\rho}_j\)</span> v.s. the lag index (<span class="math inline">\(j\)</span>), relatively high values would indicate
-a high degree of correlation between draws and therefore, slow
-mixing.</p></li>
-</ol>
+<div id="reversible-jump-markov-chain-monte-carlo" class="section level2">
+<h2>Reversible Jump Markov Chain Monte Carlo</h2>
 <!------------->
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
 <strong>Updated:</strong> 2023-11-21 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 <!-- rnb-text-end -->
 </div>
-</div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiTUFUIDY1MzogU3RhdGlzdGljYWwgU2ltdWxhdGlvbiIKYXV0aG9yOiBJbnN0cnVjdG9yJDokIERyLiBXZWkgTGkKZGF0ZTogImByIFN5cy5EYXRlKClgIgpnZW9tZXRyeTogbGVmdD0yY20sIHJpZ2h0PTJjbSwgdG9wPTJjbSwgYm90dG9tPTJjbQpsaW5lc3RyZXRjaDogMS4zCm91dHB1dDoKICBodG1sX2RvY3VtZW50OgogICAgZGZfcHJpbnQ6IHBhZ2VkCiAgICBtYXRoamF4X2NvbmZpZzoKICAgICAgLSBUZVgtQU1TLU1NTF9IVE1Mb3JNTUwgICAKICBwZGZfZG9jdW1lbnQ6IAogICAgICBpbmNsdWRlOgogICAgICAgIGluX2hlYWRlcjogcHJlYW1ibGVfcm1kLnRleAogIGh0bWxfbm90ZWJvb2s6IGRlZmF1bHQKZm9udHNpemU6IDE0cHQKaGVhZGVyLWluY2x1ZGVzOgotIFx1c2VwYWNrYWdle2Ftc21hdGh9Ci0gXHVzZXBhY2thZ2VbbGluZXdpZHRoPTFwdF17bWRmcmFtZWR9Ci0gXG5ld2NvbW1hbmRcaW5uZXJbMl17XGxlZnRcbGFuZ2xlIzEsIzJccmlnaHRccmFuZ2xlfQotIFxuZXdjb21tYW5kXGZsb29yWzFde1xsZmxvb3IjMVxyZmxvb3J9Ci0gXG5ld2NvbW1hbmRcY2VpbFsxXXtcbGNlaWwjMVxyY2VpbH0KLSBcbmV3Y29tbWFuZFxtYlsxXXtcbWF0aGJmeyMxfX0KLSBcbmV3Y29tbWFuZFxic1sxXXtcYm9sZHN5bWJvbHsjMX19Ci0gXG5ld2NvbW1hbmRcbXJbMV17XG1hdGhybXsjMX19Ci0gXG5ld2NvbW1hbmRcd2hbMV17XHdpZGVoYXR7IzF9fQotIFxuZXdjb21tYW5kXG9wWzFde1xvcGVyYXRvcm5hbWV7IzF9fQotIFxuZXdjb21tYW5kXG1iYlsxXXtcbWF0aGJieyMxfX0KLSBcdXNlcGFja2FnZXtjYXB0aW9ufQotIFx1c2VwYWNrYWdle21hdGh0b29sc30KLSBcY2FwdGlvbnNldHVwW2ZpZ3VyZV17bGFiZWxmb3JtYXQ9ZW1wdHl9Ci0gXG5ld2NvbW1hbmR7XHdlaX1bMV17XHRleHRjb2xvcntvcmFuZ2V9eyhXZWk6IzEpfX0KLS0tCgoKPHNjcmlwdCB0eXBlPSJ0ZXh0L3gtbWF0aGpheC1jb25maWciPgpNYXRoSmF4Lkh1Yi5Db25maWcoewogIFRlWDogeyBlcXVhdGlvbk51bWJlcnM6IHsgYXV0b051bWJlcjogIkFNUyIgfSB9Cn0pOwo8L3NjcmlwdD4KCgo8c3BhbiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjogI2Y1ZjVmNTsgcGFkZGluZzogNXB4OyBkaXNwbGF5OiBibG9jazsiPgogICAgPHNwYW4gc3R5bGU9IndpZHRoOiAyNSU7IGRpc3BsYXk6IGlubGluZS1ibG9jazsgdGV4dC1hbGlnbjogbGVmdDsiPgogICAgICAgIFtCYWNrXShqYXZhc2NyaXB0OndpbmRvdy5oaXN0b3J5LmJhY2soKSkKICAgIDwvc3Bhbj4KICAgIDxzcGFuIHN0eWxlPSJ3aWR0aDogMzAlOyBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7IHRleHQtYWxpZ246IGNlbnRlcjsgY29sb3I6IGdyZXk7Ij4KICAgICAgICAqKlVwZGF0ZWQ6KiogYHIgU3lzLkRhdGUoKWAKICAgIDwvc3Bhbj4KICAgIDxzcGFuIHN0eWxlPSJ3aWR0aDogMzUlOyBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7IHRleHQtYWxpZ246IHJpZ2h0OyBjb2xvcjogZ3JleTsiPgogICAgICAgIFN0YXRpc3RpY2FsIFNpbXVsYXRpb24sIFdlaSBMaQogICAgPC9zcGFuPgo8L3NwYW4+Cgo8IS0tLS0tLS0tLS0tLS0+CgoKIyBNYXJrb3YgQ2hhaW4gd2l0aCBjb250aW51b3VzIHN0YXRlIHNwYWNlIApXZSBjb25zaWRlciBNYXJrb3YgY2hhaW5zIGluIHRoZSBjb250aW51b3VzIHN0YXRlIHNwYWNlLCB0aGF0IGlzLCAkUyQgPSB1bmNvdW50YWJsZSBzZXQuCgpUcmFuc2l0aW9uIHByb2JhYmlsaXR5IGZyb20gZWFjaCBwb3NzaWJsZSBzdGF0ZSAkeCQgdG8gZWFjaCBwb3NzaWJsZSBzZXQgb2Ygc3RhdGVzICRBJDoKXGJlZ2lue2FsaWduKn0KJlAoeF8wLEEpOj1QKFheeyhuKzEpfSBcaW4gQSB8IFheeyhuKX09eF8wKVxcClx0ZXh0e0NERn06XCAmRih4XzF8eF8wKTo9UChYXnsobisxKX0gXGxlcSB4XzEgfCBYXnsobil9PXhfMClcXApcdGV4dHtPbmUtc3RlcCB0cmFuc2l0aW9uIGRlbnNpdHkgZnVuY3Rpb259OlwgJmYoeF8wLCB4XzEpOj0gXGZyYWN7XHBhcnRpYWwgRih4XzF8eF8wKX17XHBhcnRpYWwgeF8xfT0gcChYXnsobisxKX09eF8xfFheeyhuKX09eF8wKVxcClxlbmR7YWxpZ24qfQoKIyMjIFRyYW5zaXRpb24gZGVuc2l0eSAKCkRlZmluZSBvbmUtc3RlcCB0cmFuc2l0aW9uIGRlbnNpdHk6CgokZl57WzFdfSh4X24seF97bisxfSk6PXAoeF97bisxfXx4X24pPXAoWF57KG4rMSl9PXhfe24rMX18WF57KG4pfT14X24pLiQKClR3by1zdGVwIHRyYW5zaXRpb24gZGVuc2l0eToKClxiZWdpbnthbGlnbip9CmZee1syXX0oeF9uLHhfe24rMn0pOj1wKFheeyhuKzIpfT14X3tuKzJ9fFheeyhuKX09eF9uKSY9IFxpbnQgcChYXnsobisyKX09eF97bisyfXxYXnsobisxKX09eF97bisxfSxYXnsobil9PXhfbikgIHAoWF57KG4rMSl9PXhfe24rMX18WF5uPXhfbilkIHhfe24rMX1cXAomPVxpbnQgcChYXnsobisyKX09eF97bisyfXxYXnsobisxKX09eF97bisxfSkgcChYXnsobisxKX09eF97bisxfXxYXnsobil9PXhfbilkIHhfe24rMX1cXAomPVxpbnQgZl57WzFdfSh4X24seF97bisxfSkgZl57WzFdfSh4X3tuKzF9LHhfe24rMn0pZCB4X3tuKzF9ClxlbmR7YWxpZ24qfQoKVGhyZWUtc3RlcCB0cmFuc2l0aW9uIGRlbnNpdHk6CgpcYmVnaW57YWxpZ24qfQpmXntbM119KHhfbix4X3tuKzN9KTo9cChYXnsobiszKX09eF97biszfXxYXnsobil9PXhfbikgJj0gXGludCBwKFheeyhuKzMpfT14X3tuKzN9fFheeyhuKzIpfT14X3tuKzJ9KSBcY2RvdCBwKFheeyhuKzIpfT14X3tuKzJ9fFheeyhuKX09eF9uKWQgeF97bisyfVxcCiY9XGludCBmXntbMV19KHhfe24rMn0seF97biszfSkgZl57WzJdfSh4X24seF97bisyfSlkIHhfe24rMn1cXAomPVxpbnQgXGludCBmXntbMV19KHhfe24rMn0seF97biszfSkgIGZee1sxXX0oeF97bisxfSx4X3tuKzJ9KSAgZl57WzFdfSh4X24seF97bisxfSlkIHhfe24rMX0gZCB4X3tuKzJ9LlxcClxlbmR7YWxpZ24qfQoKQXJndWluZyBhcyBhYm92ZSwgd2UgY2FuIG9idGFpbiB0aGUgIG0tc3RlcCB0cmFuc2l0aW9uIGRlbnNpdHk6CgokZl57W21dfSh4X24seF97bittfSk9IFxpbnQgXGNkb3RzIFxpbnQgXHByb2Rfe2s9bisxfV57bittfWZee1sxXX0oeF97ay0xfSx4X2spZHhfe24rMX0gXGNkb3RzIGR4X3tuK20tMX0uJAoKVGhlIGNvcnJlc3BvbmRpbmcgbS1zdGVwIHRyYW5zaXRpb24gcHJvYmFiaWxpdHkgY2FuIGJlIHdyaXR0ZW4gYXMgCiRQKFheeyhuK20pfSBcaW4gQXwgWF57KG4pfT14X24pPSBcaW50X0EgZl57W21dfSh4X24seF97bittfSlkeF97bittfS4kIE1vcmUgZ2VuZXJhbGx5LCB3ZSBoYXZlIHRoZSAqKkNoYXBtYW4tS29sbW9nb3JvdiBlcXVhdGlvbioqOgokJApmXntbbittXX0oeF8wLCB4X3tuK219KT1caW50IGZee1ttXX0oeF8wLCB4X3ttfSlmXntbbl19KHhfbSwgeF97bittfSlkeF97bX0uCiQkCgoKIyMjIFNvbWUgaW1wb3J0YW50IHByb3BlcnRpZXMKCklmIHNvbWUgcmVndWxhciAoZXJnb2RpYykgTS5DLiBwb3NzZXNzZXMgYSBsaW1pdGluZyB0cmFuc2l0aW9uIGRlbnNpdHkgaW5kZXBlbmRlbnQgb2YgdGhlIGluaXRpYWwgc3RhdGUsIHRoYXQgaXMgCiQkXGxpbV97biBcdG8gXGluZnR5fWZee1tuXX0oeCx2KT1nKHYpJCQKdGhlbiAkZyh2KSQgaXMgY2FsbGVkICJzdGF0aW9uYXJ5L3N0ZWFkeS1zdGF0ZSBkZW5zaXR5IiAobG9uZy10ZXJtIHByb2JhYmlsaXR5IGRlbnNpdHkpIG9mIE0uQy4gYW5kIGl0IGlzIGEgc29sdXRpb24gdG8gc3RlYWR5LXN0YXRlIGVxdWF0aW9uOgoKJCRnKHYpPVxpbnRfey1caW5mdHl9XnsrXGluZnR5fWcodylmKHcsdilkdyBccXF1YWQgKCopJCQKJCQoXHRleHR7cmVjYWxsIGRpc2NyZXRlIHNwYWNlfTogXHBpX2o9XHN1bV97aT0xfV57S30gXHBpX2kgcF97aWp9IFxxcXVhZCBcZm9yYWxsIGo9MSwyLFxjZG90cyAsSykkJAp3aGVyZSAkZyh3KSQgbWF5IGJlIHZpZXdlZCBhcyB0aGUgc3RhcnQgZGlzdHJpYnV0aW9uIGFuZCAkZih3LHYpJCBpcyB0aGUgdHJhbnNpdGlvbiBkZW5zaXR5IGZ1bmN0aW9uLgpOb3RlIHRoYXQgYW4gZXF1aXZhbGVudCBleHByZXNzaW9uIHRvICQoKikkIGlzCiQkXGludF9BIGcodikgZHY9XGludF97LVxpbmZ0eX1eeytcaW5mdHl9Zyh3KVAodyxBKWR3IFx0ZXh0eywgZm9yIGFsbCBzZXQgfSBBLCBcdGV4dHsgd2hlcmUgfSBQKHcsIEEpOj1QKFheeyhuKzEpfSBcaW4gQXxYXnsobil9PXcpLiQkCgoKQSBzdWZmaWNpZW50IGNvbmRpdGlvbiBmb3IgJGcoeCkkIHRvIGJlIGEgc3RlYWR5LXN0YXRlIGRlbnNpdHkgaXMgdGhlICIqKmRldGFpbGVkIGJhbGFuY2UgY29uZGl0aW9uKioiIGdpdmVuIGJ5CiQkZyh4KWYoeCx2KT1nKHYpZih2LHgpIFxxcXVhZCBcZm9yYWxsIHgsdiBccXF1YWQgKCoqKSwkJApoZXJlICRmKHgsdikkIGJlIHRoZSBkZW5zaXR5IGZ1bmN0aW9uIG9mIG9uZS1zdGVwIHRyYW5zaXRpb24gb2YgdGhlIE0uQy4gQXMgaW4gdGhlIGRpc2NyZXRlIGNhc2UsIGl0IGNhbiBiZSBzaG93biB0aGF0IGFueSBNYXJrb3YgY2hhaW4gc2F0aXNmeWluZyB0aGUgImRldGFpbGVkIGJhbGFuY2UgY29uZGl0aW9uIiAkKCoqKSQgd2lsbCBoYXZlICRnJCBhcyB0aGUgc3RlYWR5IHN0YXRlIGRlbnNpdHksIGkuZS4gJCgqKSQgaG9sZHMuCgpcYmVnaW57bWRmcmFtZWR9ClByb29mOgpcZW5ke21kZnJhbWVkfQoKIyMjIEVyZ29kaWMgVGhlb3JlbQoKSWYgJChYXnsoMSl9LFheeygyKX0sXGNkb3RzKSQgaXMgYW4gZXJnb2RpYyBNLkMuIHdob3NlIHN0ZWFkeS1zdGF0ZSBkZW5zaXR5IGlzIGdpdmVuIGJ5ICRnJCwgdGhlbiBmb3IgJG4gXHRvIFxpbmZ0eSQsIAokJFAoWF57KG4pfSBcaW4gQSkgXHRvIFAoWF57KFxpbmZ0eSl9IFxpbiBBKSA9IFxpbnRfQSBnKHgpZHguJCQKSW4gYWRkaXRpb24sIAokJFxmcmFjezF9e1R9XHN1bV97bj0xfV57VH1oKFheeyhuKX0pIFx0byBFW2goWF57KFxpbmZ0eSl9KV09XGludCBoKHgpZyh4KWR4LCBcdGV4dHsgZm9yIH0gVFx0byBcaW5mdHkuJCQKCgojIE1ldHJvcG9saXMgQWxnb3JpdGhtIGluIENvbnRpbnVvdXMgU3BhY2UKV2UgY29uc2lkZXIgYSBjb250aW51b3VzIHN0YXRlIHNwYWNlLCBmcm9tIHdoaWNoIHdlIHdvdWxkIGxpa2UgdG8gc2FtcGxlIGEgdGFyZ2V0IGRlbnNpdHkgJGYoXGNkb3QpJCBvciBhIGtlcm5lbCAkXHRpbGRlIGYkLiBPdXIgZ29hbCBpcyB0byBmaW5kIGEgdHJhbnNpdGlvbiBmdW5jdGlvbiAkcChcY2RvdCB8XGNkb3QpJCB0byBzYXRpc2Z5IHRoZSAnZGV0YWlsZWQgYmFsYW5jZSBjb25kaXRpb25zJywgaS5lOiBmb3IgYSBwcm9wb3NlZCAkeF4qJCwgJCQgcCh4XiogfHgpZih4KSA9cCh4fHheKilmKHheKikuJCQKCklmIHdlIGNhbiBmaW5kIHN1Y2ggYSAkcCQsIHRoZW4gdGhlIGxvbmcgcnVuIGRpc3RyaWJ1dGlvbiBvZiB0aGUgZXJnb2RpYyBtYXJrb3YgY2hhaW4gd2l0aCB0cmFuc2l0aW9uIGRpc3RyaWJ1dGlvbiAkcChcY2RvdCB8IFxjZG90KSQgaXMgJGYoXGNkb3QpJC4KCiMjIyBNZXRob2QKQ2hvb3NlIGFuIGFyYml0cmFyeSB0cmFuc2l0aW9uIGRlbnNpdHkgJHEoXGNkb3QgfCBcY2RvdCkkLCB3aXRob3V0IHJlcXVyaW5nIHRoYXQgdGhlIGRldGFpbGVkIGJhbGFuY2UgY29uZGl0aW9ucyBob2xkLiBUaGVuIHVzZSBhbiBhY2NlcHRhbmNlIHByb2JhYmlsaXR5IG9uIHByb3Bvc2VkIHNhbXBsZXMgYXMgJCRcYWxwaGEoeF4qfHgpID0gXG1pbiBcQmlnKDEsIFxmcmFje3EoeHx4XiopZih4XiopfXtxKHheKnx4KWYoeCl9IFxCaWcpLiQkIAoKVGhlIGdvYWwgb2YgdGhpcyBpcyB0byByZWd1bGF0ZSB0aGUgZmxvdyBvZiBwcm9iYWJpbGl0aWVzIGJldHdlZW4gdGhlIGN1cnJlbnQgc3RhdGUgYW5kIHRoZSBwcm9wb3NlZCBzdGF0ZS4gU28gZ2l2ZW4gdGhhdCBvdXIgY3VycmVudCBzdGF0ZSBpcyAkeCQgIHRoZW4gdGhlIHByb2JhYmlsaXR5IG9mIGEgcGFydGljdWxhciBzdGF0ZSBiZWluZyBwcm9wb3NlZCBhbmQgYWNjZXB0ZWQgaXMgJFxhbHBoYSAoeF4qfHgpIHEoeF4qfHgpJC4gU2ltaWxhcmx5LCB3ZSBjYW4gY2FsY3VsYXRlIHRoZSBwcm9iYWJpbGl0eSB0aGF0IGFueSBwcm9wb3NhbCBpcyBhY2NlcHRlZCBhcyAkYSh4KSA6PVxpbnQgXGFscGhhICh4Xip8eCkgcSh4Xip8eClkeF4qJC4gQSBwcm9wb3NhbCBpcyBub3QgYWNjZXB0ZWQgd2l0aCBwcm9iYWJpbGl0eSAkcih4KSA6PSAxLSBhKHgpJCwgaW4gd2hpY2ggY2FzZSB3ZSBzZXQgJHheKiA9IHgkLiBUaGUgKGVmZmVjdGl2ZSkgdHJhbnNpdGlvbiBkZW5zaXR5IGlzIHRoZW4gCgokJHAoeF4qfHgpID0gIFxhbHBoYSAoeF4qfHgpIHEoeF4qfHgpICsgcih4KVxkZWx0YV94KHheKikkJAoKd2hlcmUgJFxkZWx0YV94KHheKikgPSAxJCBpZiAkeF4qPXgkIGFuZCAwIG90aGVyd2lzZS4gVGhlbiBzaW5jZSB3ZSBhcmUgaW4gY29udGludW91cyBzdGF0ZSBzcGFjZSwgdGhpcyBjYW4gYmUgZ2VuZXJhbGl6ZWQgdG8gCgokJFAoeCwgQSk9XGludF9BIHAoeF4qfHgpZHheKiA9IFxpbnRfQVxhbHBoYSAoeF4qfHgpIHEoeF4qfHgpZHheKiArIHIoeClcZGVsdGFfQSh4KSQkCgp3aGVyZSAkXGRlbHRhX0EoeCkgPSAxJCBpZiAkeFxpbiBBJCBhbmQgMCBvdGhlcndpc2UuCgpXZSBjYW4gc2hvdyB0aGF0IHRoZSAoZWZmZWN0aXZlKSB0cmFuc2l0aW9uIGRlbnNpdHkgaW5kZWVkIHNhdGlzZmllcyB0aGUgZGV0YWlsZWQgYmFsYW5jZSBjb25kaXRpb24uCgpcYmVnaW57bWRmcmFtZWR9ClByb29mOiAKXGVuZHttZGZyYW1lZH0KCgojIyMgTWV0cm9wb2xpcy1IYXN0aW5ncyBhbGdvcml0aG0KCjEuIEdpdmVuIGEgdGFyZ2V0ICRmKFxjZG90KSQgYW5kIGEgY2hvc2VuICRxKFxjZG90fFxjZG90KSQsIGdlbmVyYXRlICR4XiokIGZyb20gJHEoXGNkb3R8IHheeyhzKX0pJC4KMi4gQ29tcHV0ZSAkXGFscGhhKHheKnx4Xnsocyl9KSA9IFxtaW4gXGJpZygxLCBcZnJhY3txKHheeyhzKX18eF4qKWYoeF4qKX17cSh4Xip8eF57KHMpfSlmKHheeyhzKX0pfSBcYmlnKSQuCjMuIEdlbmVyYXRlICR1XHNpbSBcbWJveHt1bmlmfSgwLDEpJAogICAgaS4gaWYgJHVcbGVxIFxhbHBoYSh4Xip8eF57KHMpfSkkLCBzZXQgJHheeyhzKzEpfSA9IHheKiQ7CiAgICBpaS4gaWYgJHU+IFxhbHBoYSh4Xip8eF57KHMpfSkkLCBzZXQgJHheeyhzKzEpfSA9IHheeyhzKX0kLgogIAoqKlJlbWFyayoqOgoKQSBuZWNlc3NhcnkgY29uZGl0aW9uIGZvciB0aGUgYWxnb3JpdGhtIHRvIHdvcmsgaXMgJFxtYm94e3N1cHB9KGYpXHN1YnNldGVxIFxtYm94e3N1cHB9KHEoXGNkb3R8eCkpJCBmb3IgYWxsICR4XGluIFxtYm94e3N1cHB9KGYpJC4KQSBtaW5pbWFsIG5lY2Vzc2FyeSBjb25kaXRpb24gd291bGQgYmUgJFxtYm94e3N1cHB9KGYpXHN1YnNldGVxIFxjdXBfe3hcaW4gXG1ib3h7c3VwcH0oZil9W1xtYm94e3N1cHB9KHEoXGNkb3R8eCkpXSQKCiMjIyBDaG9pY2Ugb2YgVHJhbnNpdGlvbiBEZW5zaXR5CgoxLiBDbGFzc2ljYWwgQ2hvaWNlIChSYW5kb20gV2Fsayk6IENob29zZSAkcSh4Xip8eCkgPSBcdGlsZGUgcSAoeF4qLXgpJCB3aGVyZSAkXHRpbGRlIHEkIGlzIHN5bW1ldHJpYyBhYm91dCAwLgpGb3IgZXhhbXBsZSAgJHheKiA9IHheeyhzKX0rXGVwc2lsb25eeyhzKX0kLCB3aGVyZSAkXGVwc2lsb25eeyhzKX1cc2ltIFxtYm94e3VuaWZ9KC0xLDEpJCBvciAkXGVwc2lsb25eeyhzKX1cc2ltIE4oMCxcdGF1XjIpJC4KVGhlbiB3ZSB3b3VsZCBoYXZlICR4Xipcc2ltIFxtYm94e3VuaWZ9KHheeyhzKX0tMSx4Xnsocyl9KzEpJCwgb3IgJHheKlxzaW0gTih4Xnsocyl9LFx0YXVeMikkIHJlc3BlY3RpdmVseS4gVGhlbiBkdWUgdG8gdGhlIHN5bW1ldHJ5IGFib3V0IDAsICRxKHheKnx4KSA9cSh4fHheKikkLCBzbyB0aGUgYWNjZXB0YW5jZSBwcm9iYWJpbGl0eSBzaW1wbGlmaWVzIHRvICAkXGFscGhhKHheKnx4KSA9IFxtaW4gKDEsIFxmcmFje2YoeF4qKX17Zih4KX0pJC4KCjIuIEluZGVwZW5kZW50IE1ldHJvcG9saXMgSGFzdGluZ3M6IENob29zZSAkeF4qXHNpbSBxKFxjZG90KT1xKFxjZG90fHgpJCBpbmRlcGVuZGVudCBvZiB0aGUgY3VycmVudCB2YWx1ZSAkeF57KHMpfSQuIEZvciBleGFtcGxlICRxXHNpbSBOKDAsMSkkIHRocm91Z2hvdXQuCgojIyMgUHJhY3RpY2FsaXRpZXMKClByb3Bvc2FscyBzaG91bGQgbm90IGJlIHRvbyBib2xkIChzdGFuZGFyZCBkZXZpYXRpb24gbm90IHRvbyBoaWdoKSwgaG93ZXZlciBzaG91bGQgYmUgbGFyZ2UgZW5vdWdoIHRvIGJlIGNvbnNlcXVlbnRpYWwgKHN0YW5kYXJkIGRldmlhdGlvbiBub3QgdG9vIHNtYWxsKS4gIEJldHdlZW4gJDMwXCUtNjBcJSQgYWNjZXB0YW5jZSByYXRlIGlzIGlkZWFsLgoKMS4gKipCdXJuLWluKiogCiAgICBpLiAgIFJ1biBhbGdvcml0aG0gdW50aWwgc29tZSBpdGVyYXRpb24gJEIkIGZvciB3aGljaCBNYXJrb3YgQ2hhaW4gYXBwZWFycyB0byByZWFjaCBzdGF0aW9uYXJpdHkuCiAgICBpaS4gUnVuIGFsZ29yaXRobSAkQickIG1vcmUgdGltZXMgYW5kIGtlZXAgJFx7eF57QisxfSxcbGRvdHMseF57QitCJ30gXH0kCiAgICBpaWkuIFVzZSBlbXBpcmljYWwgZGlzdHJpYnV0aW9uIG9mICRce3hee0IrMX0sXGxkb3RzLHhee0IrQid9IFx9JCB0byBhcHByb3hpbWF0ZSB0aGUgZGVuc2l0eSAkZiQuCiAgICAgICAgICAgIAoyLiAqKlRoaW5uaW5nKio6IEFmdGVyIGJ1cm5pbmcgdG8gZGlzY2FyZCBmaXJzdCBCIG9ic2VydmF0aW9ucywgdGhlbiB0aGluIHRoZSBjaGFpbiBieSBpbmNsdWRpbmcgZXZlcnkga3RoIGRyYXcuCgozLiAqKlRyYWNlIFBsb3QqKjogVGhlIHBsb3Qgb2YgdGhlIHZhbHVlcyBnZW5lcmF0ZWQgZnJvbSB0aGUgbWV0cm9wb2xpcyBhbGdvcml0aG0gYWdhaW5zdCB0aGUgaXRlcmF0aW9uIG51bWJlci4gQ2hlY2s6CiAgICBhLiBUaGUgY2hhaW4gZG9lc24ndCBnZXQgc3R1Y2sgaW4gYSBjZXJ0YWluIGFyZWEgb2Ygc3BhY2UuCiAgICBiLiBUaGUgY2hhaW4gY2FuIG1vdmUgcmVsYXRpdmVseSBmYXN0LiAKCjQuICoqIkFDRiIgQXV0b2NvcnJlbGF0aW9uIEZ1bmN0aW9uKio6IENhbGN1bGF0ZSB0aGUgImxhZy0kaiQgc2FtcGxlIGNvdmFyaWFuY2UiIGFzIAokJFxoYXRcZ2FtbWFfaiA9IFxmcmFjezF9e1R9XHN1bV97dD1qKzF9XlQoeF57KHQpfS1cYmFyIHgpKHheeyh0LWopfS1cYmFyIHgpJCQKYW5kIHRoZSAibGFnLSRqJCBzYW1wbGUgYXV0b2NvcnJlbGF0aW9uIiAgYXMgJFxoYXR7XHJob31faiA9IFxoYXRcZ2FtbWFfai9caGF0XGdhbW1hXzAkLiBUaGVuIHBsb3R0aW5nIGF1dG9jb3JyZWxhdGlvbiAkXGhhdHtccmhvfV9qJCB2LnMuIHRoZSBsYWcgaW5kZXggKCRqJCksIHJlbGF0aXZlbHkgaGlnaCB2YWx1ZXMgd291bGQgaW5kaWNhdGUgYSBoaWdoIGRlZ3JlZSBvZiBjb3JyZWxhdGlvbiBiZXR3ZWVuIGRyYXdzIGFuZCB0aGVyZWZvcmUsIHNsb3cgbWl4aW5nLgoKPCEtLS0tLS0tLS0tLS0tPgo8c3BhbiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjogI2Y1ZjVmNTsgcGFkZGluZzogNXB4OyBkaXNwbGF5OiBibG9jazsiPgogICAgPHNwYW4gc3R5bGU9IndpZHRoOiAyNSU7IGRpc3BsYXk6IGlubGluZS1ibG9jazsgdGV4dC1hbGlnbjogbGVmdDsiPgogICAgICAgIFtCYWNrXShqYXZhc2NyaXB0OndpbmRvdy5oaXN0b3J5LmJhY2soKSkKICAgIDwvc3Bhbj4KICAgIDxzcGFuIHN0eWxlPSJ3aWR0aDogMzAlOyBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7IHRleHQtYWxpZ246IGNlbnRlcjsgY29sb3I6IGdyZXk7Ij4KICAgICAgICAqKlVwZGF0ZWQ6KiogYHIgU3lzLkRhdGUoKWAKICAgIDwvc3Bhbj4KICAgIDxzcGFuIHN0eWxlPSJ3aWR0aDogMzUlOyBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7IHRleHQtYWxpZ246IHJpZ2h0OyBjb2xvcjogZ3JleTsiPgogICAgICAgIFN0YXRpc3RpY2FsIFNpbXVsYXRpb24sIFdlaSBMaQogICAgPC9zcGFuPgo8L3NwYW4+CiA=</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiTUFUIDY1MzogU3RhdGlzdGljYWwgU2ltdWxhdGlvbiIKYXV0aG9yOiBJbnN0cnVjdG9yJDokIERyLiBXZWkgTGkKZGF0ZTogImByIFN5cy5EYXRlKClgIgpnZW9tZXRyeTogbGVmdD0yY20sIHJpZ2h0PTJjbSwgdG9wPTJjbSwgYm90dG9tPTJjbQpsaW5lc3RyZXRjaDogMS4zCm91dHB1dDoKICBodG1sX2RvY3VtZW50OgogICAgZGZfcHJpbnQ6IHBhZ2VkCiAgICBtYXRoamF4X2NvbmZpZzoKICAgICAgLSBUZVgtQU1TLU1NTF9IVE1Mb3JNTUwgICAKICBwZGZfZG9jdW1lbnQ6IAogICAgICBpbmNsdWRlOgogICAgICAgIGluX2hlYWRlcjogcHJlYW1ibGVfcm1kLnRleAogIGh0bWxfbm90ZWJvb2s6IGRlZmF1bHQKZm9udHNpemU6IDE0cHQKaGVhZGVyLWluY2x1ZGVzOgotIFx1c2VwYWNrYWdle2Ftc21hdGh9Ci0gXHVzZXBhY2thZ2VbbGluZXdpZHRoPTFwdF17bWRmcmFtZWR9Ci0gXG5ld2NvbW1hbmRcaW5uZXJbMl17XGxlZnRcbGFuZ2xlIzEsIzJccmlnaHRccmFuZ2xlfQotIFxuZXdjb21tYW5kXGZsb29yWzFde1xsZmxvb3IjMVxyZmxvb3J9Ci0gXG5ld2NvbW1hbmRcY2VpbFsxXXtcbGNlaWwjMVxyY2VpbH0KLSBcbmV3Y29tbWFuZFxtYlsxXXtcbWF0aGJmeyMxfX0KLSBcbmV3Y29tbWFuZFxic1sxXXtcYm9sZHN5bWJvbHsjMX19Ci0gXG5ld2NvbW1hbmRcbXJbMV17XG1hdGhybXsjMX19Ci0gXG5ld2NvbW1hbmRcd2hbMV17XHdpZGVoYXR7IzF9fQotIFxuZXdjb21tYW5kXG9wWzFde1xvcGVyYXRvcm5hbWV7IzF9fQotIFxuZXdjb21tYW5kXG1iYlsxXXtcbWF0aGJieyMxfX0KLSBcdXNlcGFja2FnZXtjYXB0aW9ufQotIFx1c2VwYWNrYWdle21hdGh0b29sc30KLSBcY2FwdGlvbnNldHVwW2ZpZ3VyZV17bGFiZWxmb3JtYXQ9ZW1wdHl9Ci0gXG5ld2NvbW1hbmR7XHdlaX1bMV17XHRleHRjb2xvcntvcmFuZ2V9eyhXZWk6IzEpfX0KLS0tCgoKPHNjcmlwdCB0eXBlPSJ0ZXh0L3gtbWF0aGpheC1jb25maWciPgpNYXRoSmF4Lkh1Yi5Db25maWcoewogIFRlWDogeyBlcXVhdGlvbk51bWJlcnM6IHsgYXV0b051bWJlcjogIkFNUyIgfSB9Cn0pOwo8L3NjcmlwdD4KCgo8c3BhbiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjogI2Y1ZjVmNTsgcGFkZGluZzogNXB4OyBkaXNwbGF5OiBibG9jazsiPgogICAgPHNwYW4gc3R5bGU9IndpZHRoOiAyNSU7IGRpc3BsYXk6IGlubGluZS1ibG9jazsgdGV4dC1hbGlnbjogbGVmdDsiPgogICAgICAgIFtCYWNrXShqYXZhc2NyaXB0OndpbmRvdy5oaXN0b3J5LmJhY2soKSkKICAgIDwvc3Bhbj4KICAgIDxzcGFuIHN0eWxlPSJ3aWR0aDogMzAlOyBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7IHRleHQtYWxpZ246IGNlbnRlcjsgY29sb3I6IGdyZXk7Ij4KICAgICAgICAqKlVwZGF0ZWQ6KiogYHIgU3lzLkRhdGUoKWAKICAgIDwvc3Bhbj4KICAgIDxzcGFuIHN0eWxlPSJ3aWR0aDogMzUlOyBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7IHRleHQtYWxpZ246IHJpZ2h0OyBjb2xvcjogZ3JleTsiPgogICAgICAgIFN0YXRpc3RpY2FsIFNpbXVsYXRpb24sIFdlaSBMaQogICAgPC9zcGFuPgo8L3NwYW4+Cgo8IS0tLS0tLS0tLS0tLS0+CgoKIyMgTWV0cm9wb2xpcy1IYXN0aW5nIGFsZ29yaXRobSB3aXRoIGRpZmZlcmVudCBtb3ZlIHR5cGVzCgpXZSBjb25zaWRlciBNSCBhbGdvcml0aG1zIHdpdGggZGlmZmVyZW50IG1vdmUgdHlwZXM7IHdoaWNoIGdpdmVzIGEgbW9yZSBnZW5lcmFsIGZyYW1ld29yayBmb3IgTUggYWxnb3JpdGhtcy4KCi0gJFggXGluIFxtYXRoYmJ7Un1ee2R9JAotIExldCAkTSQgZGVub3RlIGEgZmluaXRlIG9yIGNvdW50YWJsZSBzZXQgb2YgbW92ZSB0eXBlcywgZS5nLiwgJE09XHsxLCAyLCBcbGRvdHMsIEtcfSQuCi0gJFxnYW1tYV9tKHgpJCBkZW5vdGUgcHJvYmFiaWxpdHkgb2YgY2hvb3NpbmcgbW92ZSAkbSQgd2hlbiB0aGUgY3VycmVudCB2YWx1ZSAkWF57KHMpfT14JCwgJFxzdW1fe219IFxnYW1tYV9tKHgpPTEkLgoKV2UgZmlyc3QgcmFuZG9tbHkgY2hvb3NlIGEgbW92ZSB0eXBlICRtXGluIE0kIGFuZCB0aGVuIGdlbmVyYXRlICRYXiokIHdpdGggYSBtb3ZlLWRlcGVuZGVudCB0cmFuc2l0aW9uIGRlbnNpdHkgJHFfbShcY2RvdHxYXnsocyl9KSQsIHdoZXJlICRxX20oXGNkb3R8XGNkb3QpOiBcbWF0aGJie1J9XmQgXHRpbWVzIFxtYXRoYmJ7Un1eZCBcdG8gXG1hdGhiYntSfSQuIAoKKipNSCBhbGdvcml0aG0gd2l0aCBkaWZmZXJlbnQgbW92ZSB0eXBlcyoqOgoKTGV0ICRzPTAkLgoKMS4gR2VuZXJhdGUgJG1eeyhzKzEpfVxpbiBNJCB3aXRoIHByb2JhYmlsaXR5ICRQKG1eeyhzKzEpfT1tKT1cZ2FtbWFfbShYXnsocyl9KSQ7CjIuIEdlbmVyYXRlICRYXiogXHNpbSBxX3ttXnsocysxKX19KFxjZG90fFheeyhzKX0pJDsKMy4gTGV0IGFjY2VwdGFuY2UgcHJvYmFibGl0eSBiZQokJApcYWxwaGFfe21eeyhzKzEpfX0oWF57Kn18WF57KHMpfSk9XG1pbiBcbGVmdFx7IFxmcmFje2YoWF57Kn0pXGdhbW1hX3ttXnsocysxKX19KFheeyp9KXFfe21eeyhzKzEpfX0oWF57KHMpfXxYXnsqfSl9e2YoWF57KHMpfSlcZ2FtbWFfe21eeyhzKzEpfX0oWF57KHMpfSlxX3ttXnsocysxKX19KFheeyp9fFheeyhzKX0pfSwgMSAgXHJpZ2h0XH0KJCQKNC4gR2VuZXJhdGUgJFVcc2ltIFxtYm94e3VuaWZ9KDAsMSkkCiAgICBpLiBpZiAkVVxsZXEgXGFscGhhX3ttXnsocysxKX19KFheeyp9fFheeyhzKX0pJCwgc2V0ICRYXnsocysxKX0gPSBYXiokOwogICAgaWkuIGlmICRVPiBcYWxwaGFfe21eeyhzKzEpfX0oWF57Kn18WF57KHMpfSkkLCBzZXQgJFheeyhzKzEpfSA9IFheeyhzKX0kLgo1LiAkc1xsZWZ0YXJyb3cgcysxLiQKCioqUmVtYXJrKioKCigxKSAkXGdhbW1hX20oeCkkIGNhbiBkZXBlbmQgb24gdGltZSBhcyB3ZWxsLiBJbiB0aGUgc2ltcGxlc3QgY2FzZSwgZm9yIGV4YW1wbGUsICRNPVx7MSwgMixcbGRvdHMsIEtcfSQsIHdlIGNhbiBjaG9vc2UgJG0kIHRvIGJlICQocyBcdGV4dHsgbW9kIH0gSykrMSQsIHRoaXMgd2lsbCBjeWxjZSB0aHJvdWdoIGFsbCBtb3ZlIHR5cGVzLgooMikgRXZlcnkgbW92ZSB0eXBlIGNhbiBiZSBzaG93biB0byBzYXRpc2Z5IGRldGFpbGVkIGJhbGFuY2UgY29uZGl0aW9uLCBidXQgdGhlIGNvbXBvc2l0aW9uIG5lZWRzIG5vdC4KKDMpIE5vdGUgdGhhdCAkcV9tKFxjZG90fFxjZG90KTogXG1hdGhiYntSfV5kIFx0aW1lcyBcbWF0aGJie1J9XmQgXHRvIFxtYXRoYmJ7Un0kLCB0aGlzIHRyYW5zaXRpb24gZGVuc2l0eSBtYXkgbm90IGJlIHdlbGwtZGVmaW5lZCBpZiB3ZSBqdXN0IHdhbnQgdG8gdXBkYXRlIGEgc2luZ2xlL3BhcnQgb2YgdGhlIHdob2xlIHZlY3RvciBvZiAkWCBcaW4gXG1hdGhiYntSfV5kJCwgc28gJFheKiQgZmFsbHMgb24gYSBsb3dlciBkaW1lbnNpb25hbCBzcGFjZSBvZiAkWCBcaW4gXG1hdGhiYntSfV5kJC4KCioqQSBtb2RpZmljYXRpb24qKjoKClRvIGFkZHJlc3MgdGhlIGFib3ZlIGlzc3VlICgzKSwgd2UgaGF2ZSBhIG1vcmUgZ2VuZXJhbCB1cGRhdGUgcnVsZSBmb3IgdGhlIGFjY2VwdGFuY2UgcHJvYmFiaWxpdHkuIFdlIG5lZWQgdG8gYXNzdW1lIHR3byB0aGluZ3MgZm9yIHRoaXMuCgoxLiBBc3N1bWUgZm9yICplYWNoKiBtb3ZlICRtXGluIE0kLCB0aGVyZSBpcyBhIHNldCAkQ19tIFxzdWJzZXQgXG1hdGhiYntSfV5kIFx0aW1lcyBcbWF0aGJie1J9XmQkIHN1Y2ggdGhhdAokJAooeCwgeCcpIFxpbiBDX20gXExvbmdsZWZ0cmlnaHRhcnJvdyAgKHgnLCB4KSBcaW4gQ19tICwgXHF1YWQgXGZvcmFsbCB4LCB4JwokJAoyLiBhbmQgdGhlcmUgaXMgYSBkZW5zaXR5ICRccHNpX206IENfbSBcdG8gWzAsIFxpbmZ0eV0kIHN1Y2ggdGhhdCB0aGUgcHJvcG9zZWQgJFheKiQgdHJhbnNpdGlvbmluZyBmcm9tICRYXnsocyl9IFxzaW0gZiQgc2F0aXNmaWVzIAokJApQKFheKlxpbiBCLCBYXnsocyl9XGluIEEpID1caW50X3tDX219IDFfQSh4KTFfQih4JylccHNpX20oeCwgeCcpZHgnZHgKJCQKZm9yIGFsbCAkQSwgQiQuClRoZSAobW9kaWZpZWQpIGFjY2VwdGFuY2UgcHJvYmFiaWxpdHkgaXMgCiQkClxhbHBoYV9tKFheKnxYXnsocyl9KT1cbWluIFxsZWZ0XHsgIFxmcmFje1xnYW1tYV9tKFhee14qfSkgXHBzaV9tKFheeyp9LCBYXnsocyl9KX17XGdhbW1hX20oWF57KHMpfSkgXHBzaV9tKFheeyhzKX0sIFheeyp9KX0sIDEgXHJpZ2h0XH0KJCQKCioqUmVtYXJrKio6CgooMSkgSWYgdGhlIHRyYW5zaXRpb24gZGVuc2l0eSAkcV9tJCBmcm9tICRYXnsocyl9JCB0byAkWF4qJCBleGlzdHMgKG9yIHdlbGwtZGVmaW5lZCBkZW5zaXR5KSwgdGhlbiAkXHBzaV9tKHgsIHgnKT1mKHgpcV9tKHgnfHgpJCwgZ2l2aW5nIHRoZSBwcmV2aW91cyBhbGdvcml0aG0uIE1vcmUgZ2VuZXJhbGx5LCBob3dldmVyLCBpbiB0aGlzIG1vZGlmaWVkIGFsZ29yaXRobSwgaXMgdGhhdCB3ZSBhbGxvdyAkQ19tJCB0byBiZSBhIGxvd2VyIGRpbWVuc2lvbmFsIHNwYWNlIG9mICRcbWF0aGJie1J9XmQgXHRpbWVzIFxtYXRoYmJ7Un1eZCQuCigyKSBUaGlzIG1vZGlmaWVkIGFsZ29yaXRobSBnZW5lcmFsaXplcyB0aGUgYmxvY2t3aXNlIE1IIGFsZ29yaXRobSBhbmQgdGhlIEdpYmJzIHNhbXBsaW5nLiAKCgojIyBSZXZlcnNpYmxlIEp1bXAgTWFya292IENoYWluIE1vbnRlIENhcmxvCgoKPCEtLS0tLS0tLS0tLS0tPgo8c3BhbiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjogI2Y1ZjVmNTsgcGFkZGluZzogNXB4OyBkaXNwbGF5OiBibG9jazsiPgogICAgPHNwYW4gc3R5bGU9IndpZHRoOiAyNSU7IGRpc3BsYXk6IGlubGluZS1ibG9jazsgdGV4dC1hbGlnbjogbGVmdDsiPgogICAgICAgIFtCYWNrXShqYXZhc2NyaXB0OndpbmRvdy5oaXN0b3J5LmJhY2soKSkKICAgIDwvc3Bhbj4KICAgIDxzcGFuIHN0eWxlPSJ3aWR0aDogMzAlOyBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7IHRleHQtYWxpZ246IGNlbnRlcjsgY29sb3I6IGdyZXk7Ij4KICAgICAgICAqKlVwZGF0ZWQ6KiogYHIgU3lzLkRhdGUoKWAKICAgIDwvc3Bhbj4KICAgIDxzcGFuIHN0eWxlPSJ3aWR0aDogMzUlOyBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7IHRleHQtYWxpZ246IHJpZ2h0OyBjb2xvcjogZ3JleTsiPgogICAgICAgIFN0YXRpc3RpY2FsIFNpbXVsYXRpb24sIFdlaSBMaQogICAgPC9zcGFuPgo8L3NwYW4+CiA=</div>
 
 
 
@@ -2012,7 +1908,7 @@ $(document).ready(function () {
 <!-- code folding -->
 <script>
 $(document).ready(function () {
-  window.initializeSourceEmbed("13_MCMC.Rmd");
+  window.initializeSourceEmbed("15_MCMC3.Rmd");
   window.initializeCodeFolding("show" === "show");
 });
 </script>
