@@ -109,10 +109,10 @@ Gibbs sampling is a special case of (blockwise) MH that take $q_X(x|X_c, Y_c)$ t
 
 \textbf{Target:} $f(X,Y)$, possibly unnormalized
 
-Take $x^{(0)}$. For $s=1,2,\cdots$, generate
+Take some $x^{(0)}$. For $s=0,1,\cdots$, generate
 
-- $Y^{(s)}\sim f_{Y|X}(\cdot|X^{(s-1)})$
-- $X^{(s)}\sim f_{X|Y}(\cdot|Y^{(s)})$
+- $Y^{(s+1)}\sim f_{Y|X}(\cdot|X^{(s)})$
+- $X^{(s+1)}\sim f_{X|Y}(\cdot|Y^{(s+1)})$
 
 **Algorithm: Multi-stage Gibbs sampling**
 
@@ -120,13 +120,13 @@ Take $x^{(0)}$. For $s=1,2,\cdots$, generate
 
 Starting Values: $X^{(0)}=(X^{(0)}_1,X^{(0)}_2,\cdots,X^{(0)}_d)$. Let $f_{j}(X_j|X_{-j})$ denote the conditional density of $X_j$ given all the rest components $X_{-j}:=\{X_i: i\neq j\}$. 
 
-The algorithm generates $X^{(s)}$ from $X^{(s-1)}$ as follows:
+The algorithm generates $X^{(s+1)}$ from $X^{(s)}$ as follows:
 
 \begin{align*}
-(1)&\quad X^{(s)}_1 \sim f_1(\cdot | X^{(s-1)}_2, \cdots,X^{(s-1)}_d)\\
-(2)&\quad X^{(s)}_2 \sim f_2(\cdot | X^{(s)}_1, X^{(s-1)}_3, \cdots,X^{(s-1)}_d)\\
+(1)&\quad X^{(s+1)}_1 \sim f_1(\cdot | X^{(s)}_2, \cdots,X^{(s)}_d)\\
+(2)&\quad X^{(s+1)}_2 \sim f_2(\cdot | X^{(s+1)}_1, X^{(s)}_3, \cdots,X^{(s)}_d)\\
 & \vdots \\
-(d)&\quad X^{(s)}_d \sim f_d(\cdot | X^{(s)}_1, \cdots,X^{(s)}_{d-1})
+(d)&\quad X^{(s+1)}_d \sim f_d(\cdot | X^{(s+1)}_1, \cdots,X^{(s+1)}_{d-1})
 \end{align*}
 
 Repeat $s \leftarrow s+1$.
@@ -148,8 +148,8 @@ so $f(x)$ is just the marginal pdf of $f(x,w_1,w_2)$.
 
 Gibbs sampling: ${w}=(w_1, w_2)$
 
-- $X^{(s)}\sim f_{X|W}(\cdot|{W}^{(s-1)})$
-- $W^{(s)}\sim f_{W|X}(\cdot|X^{(s)})$
+- $X^{(s+1)}\sim f_{X|W}(\cdot|{W}^{(s)})$
+- $W^{(s+1)}\sim f_{W|X}(\cdot|X^{(s+1)})$
 
 
 Here

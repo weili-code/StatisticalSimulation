@@ -155,7 +155,8 @@ Proof:
 ### Metropolis-Hastings algorithm
 
 1. Given a target $f(\cdot)$ and a chosen $q(\cdot|\cdot)$, generate $x^*$ from $q(\cdot| x^{(s)})$.
-2. Compute $\alpha(x^*|x^{(s)}) = \min \big(1, \frac{q(x^{(s)}|x^*)f(x^*)}{q(x^*|x^{(s)})f(x^{(s)})} \big)$.
+2. Compute 
+$$\alpha(x^*|x^{(s)}) = \min \left(1, \frac{q(x^{(s)}|x^*)f(x^*)}{q(x^*|x^{(s)})f(x^{(s)})} \right).$$
 3. Generate $u\sim \mbox{unif}(0,1)$
     i. if $u\leq \alpha(x^*|x^{(s)})$, set $x^{(s+1)} = x^*$;
     ii. if $u> \alpha(x^*|x^{(s)})$, set $x^{(s+1)} = x^{(s)}$.
@@ -186,7 +187,7 @@ Proposals should not be too bold (standard deviation not too high), however shou
 
 3. **Trace Plot**: The plot of the values generated from the metropolis algorithm against the iteration number. Check:
     a. The chain doesn't get stuck in a certain area of space.
-    b. The chain can move relatively fast. 
+    b. The chain can move relatively fast (across the support). 
 
 4. **"ACF" Autocorrelation Function**: Calculate the "lag-$j$ sample covariance" as 
 $$\hat\gamma_j = \frac{1}{T}\sum_{t=j+1}^T(x^{(t)}-\bar x)(x^{(t-j)}-\bar x)$$
