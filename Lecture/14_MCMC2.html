@@ -11,7 +11,7 @@
 
 <meta name="author" content="Instructor: Dr. Wei Li" />
 
-<meta name="date" content="2023-11-22" />
+<meta name="date" content="2023-11-25" />
 
 <title>MAT 653: Statistical Simulation</title>
 
@@ -1624,7 +1624,7 @@ display: none;
 <h1 class="title toc-ignore">MAT 653: Statistical Simulation</h1>
 <h4 class="author">Instructor<span class="math inline">\(:\)</span>
 Dr. Wei Li</h4>
-<h4 class="date">2023-11-22</h4>
+<h4 class="date">2023-11-25</h4>
 
 </div>
 
@@ -1635,7 +1635,7 @@ MathJax.Hub.Config({
 });
 </script>
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2023-11-22 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2023-11-25 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 <!------------->
 <div id="metropolis-hasting-algorithm-blockwise" class="section level1">
@@ -1739,7 +1739,8 @@ composition itself is not.</li>
 <li>Both (Blockwise) MH and Gibbs sampling have the target distribution
 as the invariant distribution (steady-state distribution).</li>
 </ul>
-<p><strong>Example: Two-stage Gibbs sampling</strong></p>
+<div id="example-two-stage-gibbs-sampling" class="section level4">
+<h4>Example: Two-stage Gibbs sampling</h4>
 <p><span class="math display">\[f(x)\propto\frac{e^{-x^2/20}}{(1+(z_1-x)^2)(1+(z_2-x)^2)},\quad
 z_1=-4.3, z_2=5.2\]</span></p>
 <p>Note that: <span class="math inline">\(\displaystyle
@@ -1767,7 +1768,9 @@ f(W_1|X^{(s)}) &amp; \overset{W_1} \propto
 f(W_2|X^{(s)})  &amp; \overset{W_2} \propto
 \mbox{exponential}(1+(z_2-X^{(s)})^2).
 \end{align*}\]</span></p>
-<p><strong>Multivariate Normal</strong></p>
+</div>
+<div id="multivariate-normal" class="section level4">
+<h4>Multivariate Normal</h4>
 <p>The multivariate normal distribution of a <span class="math inline">\(d-\)</span>dimensional random vector <span class="math inline">\(\mathbf{X}=(X_1, \cdots,
 X_d)^{\top}\in\mathbb{R}^d\)</span> can be written in the notation <span class="math inline">\(\mathbf{X} \sim \mathcal{N}(\boldsymbol\mu,
 \mathbf{\Sigma}).\)</span> When the symmetric covariance matrix <span class="math inline">\(\mathbf{\Sigma}\)</span> is positive definite,
@@ -1800,6 +1803,85 @@ N(\mu_X+\rho\frac{\sigma_X}{\sigma_Y}(y-\mu_Y),
 \sigma_X^2(1-\rho^2))\]</span> <span class="math display">\[f_{Y|X}(y|x)\sim
 N(\mu_Y+\rho\frac{\sigma_Y}{\sigma_X}(x-\mu_X),
 \sigma_Y^2(1-\rho^2)).\]</span></p>
+</div>
+<div id="d-ising-model" class="section level4">
+<h4>2D Ising model</h4>
+<p>The Ising model is a mathematical model of ferromagnetism in
+statistical mechanics. It comprises a lattice of spins, where each spin
+can be either up (+1) or down (-1). These spins represent magnetic
+dipole moments of atomic “spins”. The key interest in the Ising model is
+understanding how these spins interact under varying temperatures and
+how these interactions lead to macroscopic phenomena like phase
+transitions.</p>
+<p>In image processing, a 2D lattice can represent an image where each
+lattice site corresponds to a pixel. <span class="math display">\[\begin{align*}
+I=\{1,2, \ldots, L\} \times\{1,2, \ldots, L\}
+\end{align*}\]</span> The value at each site (spin) can denote various
+image properties, like color or intensity. Here we consider binary
+images, where the state space is given by <span class="math inline">\(\mathcal{X}=\{-1, 1\}^{I}\)</span>.</p>
+<p>The Ising model describes the energy of a system using an energy
+function:</p>
+<p><span class="math display">\[\begin{equation*}
+H(x) = -J \sum_{i \sim j} x_i x_j - h\sum_{i} x_i,  \text{ where }x \in
+\mathcal{X}
+\end{equation*}\]</span></p>
+<p>where <span class="math inline">\(i \sim j\)</span> indicates that
+<span class="math inline">\(x_i\)</span> and <span class="math inline">\(x_j\)</span> are the spins of adjacent lattice
+sites, for simplicity, we consider only nearest neighbors, so for a
+pixel <span class="math inline">\(i=\left(i_1, i_2\right)\)</span> in
+the interior of the grid there are four neighbours <span class="math inline">\(\left(i_1+1, i_2\right),\left(i_1,
+i_2+1\right),\left(i_1-1, i_2\right)\)</span> and <span class="math inline">\(\left(i_1, i_2-1\right)\)</span>. For a pixel on
+the edges of the grid (but not corners) three neighbours, for a corner
+pixel two neighbours.</p>
+<ul>
+<li>Spin (or color) <span class="math inline">\(x_i\)</span>: represents
+the state of each pixel in image processing contexts, <span class="math inline">\(+1\)</span> is black, <span class="math inline">\(-1\)</span> is white.</li>
+<li>Interaction Energy <span class="math inline">\(J\)</span>: the
+<strong>inverse temperature</strong>, dictating how strongly neighboring
+pixels influence each other.
+<ul>
+<li>Positive <span class="math inline">\(J\)</span>: the energy of the
+system is lower when neighboring spins are aligned. This scenario
+promotes homogeneity in the system.</li>
+<li>Negative <span class="math inline">\(J\)</span>: the system has
+lower energy when neighboring spins are opposite. This situation
+encourages heterogeneity and contrast.</li>
+</ul></li>
+<li>External Field <span class="math inline">\(h\)</span>: represents an
+external field (which can be thought of as a bias or an external
+influence on the system). In image processing, this can be used to model
+external factors or a priori information about the image. For
+simplicity, we assume <span class="math inline">\(h=0\)</span> for the
+moment.</li>
+</ul>
+<p>The probability measure for the system on <span class="math inline">\(\mathcal{X}\)</span> can be written as <span class="math display">\[\begin{align*}
+\pi(x)=\frac{1}{Z} \exp (-H(x)),
+\end{align*}\]</span> where <span class="math inline">\(Z\)</span> is
+the normalizing constant.</p>
+<p>It can be shown that <span class="math display">\[\begin{align*}
+P\left(X_i=+1 \mid X_{-i}=\boldsymbol{x}_{-i}\right) = \frac{1}{1+\exp
+\left(-2J \eta_i\right)},
+\end{align*}\]</span> where <span class="math inline">\(\eta_i :=
+\sum_{j \sim i} x_j\)</span>.</p>
+<p><strong>Bayesian binary denoising</strong></p>
+<p>Assume that a collection of original binary images has a distribution
+that is described by the Ising model <span class="math inline">\(\pi(x)\)</span> above. We further assume that the
+observed images are noisy versions of the original images.</p>
+<p>To be concrete, we assume for each pixel <span class="math inline">\(X_i\)</span>, we actually observe <span class="math inline">\(Y_i=X_i+\epsilon_i\)</span> where <span class="math inline">\(\epsilon_i\)</span> are indendently distributed
+<span class="math inline">\(N(0, \sigma^2).\)</span></p>
+<p>Using Bayes’ rule, <span class="math display">\[\begin{align*}
+p_{X \mid Y}(x \mid y)=\frac{p_{Y \mid X}(y \mid x)
+p_X(x)}{p_Y(y)}=\frac{1}{Z_y} \exp \left(-H_y(x)\right)
+\end{align*}\]</span> where <span class="math display">\[\begin{align*}
+H_y(x)=-\frac{1}{\sigma^2} \sum_{i \in I} y_i
+x_i+H(x)=-\frac{1}{\sigma^2} \sum_{i \in I} y_i x_i+\beta
+\sum_{\substack{i \sim j}} x_i x_j.
+\end{align*}\]</span> The full conditional distribution of <span class="math inline">\(X_i\)</span> can be similarly derived <span class="math display">\[\begin{align*}
+P\left(X_i=+1 \mid X_{-i}=\boldsymbol{x}_{-i}, Y=\boldsymbol{y} \right)
+= \frac{1}{1+\exp \left(-2(J \eta_i+ y_i/\sigma^2)\right)},
+\end{align*}\]</span> where <span class="math inline">\(\eta_i :=
+\sum_{j \sim i} x_j\)</span>.</p>
+</div>
 </div>
 <div id="slice-sampling" class="section level1">
 <h1>Slice Sampling</h1>
@@ -1878,7 +1960,7 @@ i=1, \ldots, k\}.\)</span></p></li>
 </ol>
 <!------------->
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2023-11-22 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2023-11-25 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 </div>
 

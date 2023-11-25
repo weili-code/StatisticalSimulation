@@ -138,7 +138,7 @@ $\textbf{Advantage:}$ For high-dim problem, all the situation can be univariate 
 - The Gibbs sampler is a composition of MH moves with accept probability = 1. The move in each stage is reversible, but the composition itself is not.
 - Both (Blockwise) MH and Gibbs sampling have the target distribution as the invariant distribution (steady-state distribution).
 
-**Example: Two-stage Gibbs sampling**
+#### Example: Two-stage Gibbs sampling
 
 \[f(x)\propto\frac{e^{-x^2/20}}{(1+(z_1-x)^2)(1+(z_2-x)^2)},\quad z_1=-4.3, z_2=5.2\]
 
@@ -161,7 +161,7 @@ f(W_1|X^{(s)}) & \overset{W_1} \propto \mbox{exponential}(1+(z_1-X^{(s)})^2)\\
  f(W_2|X^{(s)})  & \overset{W_2} \propto \mbox{exponential}(1+(z_2-X^{(s)})^2).
 \end{align*}
 
-**Multivariate Normal**
+#### Multivariate Normal
 
 The multivariate normal distribution of a $d-$dimensional random vector $\mathbf{X}=(X_1, \cdots, X_d)^{\top}\in\mathbb{R}^d$ can be written in the notation $\mathbf{X} \sim \mathcal{N}(\boldsymbol\mu, \mathbf{\Sigma}).$ When the symmetric covariance matrix $\mathbf{\Sigma}$ is positive definite, then the multivariate normal distribution is non-degenerate, and the distribution has density function
 \begin{align*}
@@ -181,6 +181,63 @@ $$\displaystyle (X,Y)\sim N \left(\begin{pmatrix}\mu_X\\ \mu_Y\end{pmatrix},\beg
 Let $\rho=\frac{\sigma_{XY}}{\sigma_{X}\sigma_Y}$ be the correlation. It is a fact that
 \[f_{X|Y}(x|y)\sim N(\mu_X+\rho\frac{\sigma_X}{\sigma_Y}(y-\mu_Y), \sigma_X^2(1-\rho^2))\]
 \[f_{Y|X}(y|x)\sim N(\mu_Y+\rho\frac{\sigma_Y}{\sigma_X}(x-\mu_X), \sigma_Y^2(1-\rho^2)).\]
+
+
+#### 2D Ising model
+
+The Ising model is a mathematical model of ferromagnetism in statistical mechanics. It comprises a lattice of spins, where each spin can be either up (+1) or down (-1). These spins represent magnetic dipole moments of atomic "spins". The key interest in the Ising model is understanding how these spins interact under varying temperatures and how these interactions lead to macroscopic phenomena like phase transitions.
+
+In image processing, a 2D lattice can represent an image where each lattice site corresponds to a pixel. 
+\begin{align*}
+I=\{1,2, \ldots, L\} \times\{1,2, \ldots, L\}
+\end{align*}
+The value at each site (spin) can denote various image properties, like color or intensity. Here we consider binary images, where the state space is given by $\mathcal{X}=\{-1,  1\}^{I}$.
+
+The Ising model describes the energy of a system using an energy function:
+
+\begin{equation*}
+H(x) = -J \sum_{i \sim j} x_i x_j - h\sum_{i} x_i,  \text{ where }x \in \mathcal{X}
+\end{equation*}
+
+where $i \sim j$ indicates that $x_i$ and \( x_j \) are the spins of adjacent lattice sites, for simplicity, we consider only nearest neighbors, so for a pixel $i=\left(i_1, i_2\right)$ in the interior of the grid there are four neighbours $\left(i_1+1, i_2\right),\left(i_1, i_2+1\right),\left(i_1-1, i_2\right)$ and $\left(i_1, i_2-1\right)$. For a pixel on the edges of the grid (but not corners) three neighbours, for a corner pixel two neighbours. 
+
+- Spin (or color) \( x_i \): represents the state of each pixel in image processing contexts, $+1$ is black, $-1$ is white.
+- Interaction Energy \( J \): the **inverse temperature**, dictating how strongly neighboring pixels influence each other. 
+  - Positive \( J \): the energy of the system is lower when neighboring spins are aligned. This scenario promotes homogeneity in the system. 
+  - Negative \( J \): the system has lower energy when neighboring spins are opposite. This situation encourages heterogeneity and contrast.
+- External Field \( h \): represents an external field (which can be thought of as a bias or an external influence on the system). In image processing, this can be used to model external factors or a priori information about the image. For simplicity, we assume $h=0$ for the moment.
+
+The probability measure for the system on $\mathcal{X}$ can be written as 
+\begin{align*}
+\pi(x)=\frac{1}{Z} \exp (-H(x)),
+\end{align*}
+where $Z$ is the normalizing constant.
+
+It can be shown that
+\begin{align*}
+P\left(X_i=+1 \mid X_{-i}=\boldsymbol{x}_{-i}\right) = \frac{1}{1+\exp \left(-2J \eta_i\right)},
+\end{align*}
+where $\eta_i := \sum_{j \sim i} x_j$.
+
+**Bayesian binary denoising**
+
+Assume that a collection of original binary images has a distribution that is described by the Ising model $\pi(x)$ above. We further assume that the observed images are noisy versions of the original images.
+
+To be concrete, we assume for each pixel $X_i$, we actually observe $Y_i=X_i+\epsilon_i$ where $\epsilon_i$ are indendently distributed $N(0, \sigma^2).$
+
+Using Bayes' rule, 
+\begin{align*}
+p_{X \mid Y}(x \mid y)=\frac{p_{Y \mid X}(y \mid x) p_X(x)}{p_Y(y)}=\frac{1}{Z_y} \exp \left(-H_y(x)\right)
+\end{align*}
+where 
+\begin{align*}
+H_y(x)=-\frac{1}{\sigma^2} \sum_{i \in I} y_i x_i+H(x)=-\frac{1}{\sigma^2} \sum_{i \in I} y_i x_i+\beta \sum_{\substack{i \sim j}} x_i x_j.
+\end{align*}
+The full conditional distribution of $X_i$ can be similarly derived
+\begin{align*}
+P\left(X_i=+1 \mid X_{-i}=\boldsymbol{x}_{-i}, Y=\boldsymbol{y} \right) = \frac{1}{1+\exp \left(-2(J \eta_i+ y_i/\sigma^2)\right)},
+\end{align*}
+where $\eta_i := \sum_{j \sim i} x_j$.
 
 # Slice Sampling
 
