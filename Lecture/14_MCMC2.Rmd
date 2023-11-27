@@ -154,11 +154,11 @@ Gibbs sampling: ${w}=(w_1, w_2)$
 
 Here
 \[f_{X|W}(x|w_1,w_2) \overset{x} \propto e^{-\big(\sum w_i\big)x^2+2x\sum w_iz_i}\cdot e^{-x^2/20}\sim N \Big(\frac{\sum w_iz_i}{\sum w_i+1/20},\frac{1}{2\big(\sum w_i+1/20\big)} \Big)\]
-\[f_{W|X}(w_1,w_2|x)  \overset{W} \propto e^{-w_1(1+(z_1-x)^2)}\cdot e^{-w_2(1+(z_2-x)^2)}\]
+\[f_{W|X}(w_1,w_2|x)  \overset{w} \propto e^{-w_1(1+(z_1-x)^2)}\cdot e^{-w_2(1+(z_2-x)^2)}\]
 Note from the factorization above, $w_1,w_2$ are independent given $x$, therefore,
 \begin{align*}
-f(W_1|X^{(s)}) & \overset{W_1} \propto \mbox{exponential}(1+(z_1-X^{(s)})^2)\\
- f(W_2|X^{(s)})  & \overset{W_2} \propto \mbox{exponential}(1+(z_2-X^{(s)})^2).
+W_1|X &\sim \mbox{exponential}(1+(z_1-X^2).\\
+W_2|X  & \sim \mbox{exponential}(1+(z_2-X)^2).
 \end{align*}
 
 #### Multivariate Normal
@@ -187,7 +187,7 @@ Let $\rho=\frac{\sigma_{XY}}{\sigma_{X}\sigma_Y}$ be the correlation. It is a fa
 
 The Ising model is a mathematical model of ferromagnetism in statistical mechanics. It comprises a lattice of spins, where each spin can be either up (+1) or down (-1). These spins represent magnetic dipole moments of atomic "spins". The key interest in the Ising model is understanding how these spins interact under varying temperatures and how these interactions lead to macroscopic phenomena like phase transitions.
 
-In image processing, a 2D lattice can represent an image where each lattice site corresponds to a pixel. 
+In image processing, a 2D lattice can represent an image where each lattice site corresponds to a pixel:
 \begin{align*}
 I=\{1,2, \ldots, L\} \times\{1,2, \ldots, L\}
 \end{align*}
@@ -196,7 +196,7 @@ The value at each site (spin) can denote various image properties, like color or
 The Ising model describes the energy of a system using an energy function:
 
 \begin{equation*}
-H(x) = -J \sum_{i \sim j} x_i x_j - h\sum_{i} x_i,  \text{ where }x \in \mathcal{X}
+H(x) = -J \sum_{i \sim j\\ i, j \in I} x_i x_j - h\sum_{i} x_i, \quad x \in \mathcal{X},
 \end{equation*}
 
 where $i \sim j$ indicates that $x_i$ and \( x_j \) are the spins of adjacent lattice sites, for simplicity, we consider only nearest neighbors, so for a pixel $i=\left(i_1, i_2\right)$ in the interior of the grid there are four neighbours $\left(i_1+1, i_2\right),\left(i_1, i_2+1\right),\left(i_1-1, i_2\right)$ and $\left(i_1, i_2-1\right)$. For a pixel on the edges of the grid (but not corners) three neighbours, for a corner pixel two neighbours. 
@@ -227,11 +227,11 @@ To be concrete, we assume for each pixel $X_i$, we actually observe $Y_i=X_i+\ep
 
 Using Bayes' rule, 
 \begin{align*}
-p_{X \mid Y}(x \mid y)=\frac{p_{Y \mid X}(y \mid x) p_X(x)}{p_Y(y)}=\frac{1}{Z_y} \exp \left(-H_y(x)\right)
+p_{X \mid Y}(x \mid y)=\frac{p_{Y \mid X}(y \mid x) p_X(x)}{p_Y(y)}=\frac{1}{Z_y} \exp \left(-H(y, x)\right)
 \end{align*}
 where 
 \begin{align*}
-H_y(x)=-\frac{1}{\sigma^2} \sum_{i \in I} y_i x_i+H(x)=-\frac{1}{\sigma^2} \sum_{i \in I} y_i x_i+\beta \sum_{\substack{i \sim j}} x_i x_j.
+H(y, x)=-\frac{1}{\sigma^2} \sum_{i \in I} y_i x_i+H(x)=-\frac{1}{\sigma^2} \sum_{i \in I} y_i x_i+\beta \sum_{\substack{i \sim j}} x_i x_j.
 \end{align*}
 The full conditional distribution of $X_i$ can be similarly derived
 \begin{align*}
