@@ -53,7 +53,7 @@ T=5000
 f=function(x){
   1/2*exp(-sqrt(x))}
 
-X=c(runif(1)) ;U=c(runif(1))
+X=c(runif(1)); U=c(runif(1))
 for (t in 1:T){
   U=c(U,runif(1,0,f(X[t])))
   X=c(X,runif(1,0,(log(2*U[t+1]))^2))

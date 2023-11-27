@@ -80,7 +80,7 @@ $$
     ii. if $U> \alpha_{m^{(s+1)}}(X^{*}|X^{(s)})$, set $X^{(s+1)} = X^{(s)}$.
 5. $s\leftarrow s+1.$
 
-**Remark**
+**Remarks**
 
 (1) $\gamma_m(x)$ can depend on time as well. In the simplest case, for example, $M=\{1, 2,\ldots, K\}$, we can choose $m$ to be $(s \text{ mod } K)+1$, this will cylce through all move types.
 (2) Every move type can be shown to satisfy detailed balance condition, but the composition needs not.
@@ -140,9 +140,9 @@ We then obtain a useful equation that characterizes the feature of the detailed 
 
 Suppose we like to move between two spaces $\mathcal{X}_1 \subset \mathbb{R}^{n_1}$ and $\mathcal{X}_2 \subset \mathbb{R}^{n_2}$, $n_1 \neq n_2$, where the whole space is $\mathcal{X}=\mathcal{X}_1 \cup \mathcal{X}_2.$ Let $M=\{1, 2\}$ denote the model type or space type. 
 
-We first need to have some probability according to which to move from one space to another space, for example, $j_{1\to 2} (x)$ is the probability of moving from $\mathcal{X}_1$ to $\mathcal{X}_2$ when the current value is $x\in \mathcal{X}_1.$ More generally, let $j_{m \to m'}$ denote the probability of moving from space $m$ to space $m'$.
+We first need to have some probability according to which to move from one space to another space, for example, $j_{1\to 2} (x)$ is the probability of moving from $\mathcal{X}_1$ to $\mathcal{X}_2$ when the current value is $x\in \mathcal{X}_1.$ More generally, let $j_{k \to k'}$ denote the probability of moving from space $k$ to space $k'$.
 
-After we determine the space type, we'll have to determine the rule for (tentative) transition density  and the acceptance probability. If we remain in the same space, the classical proposal for transition and the acceptance probability would work. The key is when the move has been determined that it moves between spaces $m$ and $m'$ where $\mathcal{X}_m \neq \mathcal{X}_{m'}.$ 
+After we determine the space type, we'll have to determine the rule for (tentative) transition density  and the acceptance probability. If we remain in the same space, the classical proposal for transition and the acceptance probability would work. The key is when the move has been determined that it moves between spaces $k$ and $k'$ where $\mathcal{X}_k \neq \mathcal{X}_{k'}.$ 
 
 So we'll focus for example, on the transition and acceptance rule moving from $1$ to $2$. 
 
@@ -186,26 +186,33 @@ h_{1\to2}: \mathbb{R}^{n_1+d_1} \longrightarrow \mathbb{R}^{n_2+d_2} & h_{2\to1}
 
 
 **Reversible Jump MCMC algorithm**:
+Let the parameter space be 
+$$
+\Theta:=\cup_{k}(\{k\} \times \mathcal{X}_k).
+$$
 
-With starting value $m^{(0)} \in M$, $X^{(0)} \in \mathcal{X}_{m^{(0)}}$. For $s=0, 1, 2, \cdots$:
+With starting value $k^{(0)} \in K$, $X^{(0)} \in \mathcal{X}_{k^{(0)}}$. For $s=0, 1, 2, \cdots$:
 
-1. Choose $m^{*}$ with probability $j_{m^{(s)} \to m^{*}}(X^{(s)})$. If $m^{*}=m^{(s)}$, perform the usual MH update, that is $X^{*} \sim q_{m^{(s)}}(\cdot|X^{(s)})$ (some usual proposal transition density for the type $m^{(s)}$), and compute 
-$$\alpha(X^*|X^{(s)}) = \min \left(1, \frac{q_{m^{(s)}}(X^{(s)}|X^*)\pi(X^*)}{q_{m^{(s)}}(X^*|X^{(s)})\pi(X^{(s)})} \right);$$
+1. Choose $k^{*}$ with probability $j_{k^{(s)} \to k^{*}}(k^{(s)},X^{(s)})$. If $k^{*}=k^{(s)}$, perform the usual MH update, that is $X^{*} \sim q_{k^{(s)}}(\cdot|k^{(s)}, X^{(s)})$ (some usual proposal transition density in the space $\mathcal{X}_{k^{(s)}}$), and compute 
+$$\alpha(X^*|X^{(s)}) = \min \left(1, \frac{j_{k^{*}\to k^{(s)}}(k^{*}, X^*)q_{k^{(s)}}(X^{(s)}|k^{(*)},X^*)\pi(k^{*},X^*)}{j_{k^{(s)}\to k^{*}}(k^{(s)}, X^{(s)})q_{k^{(s)}}(X^*|k^{(s)},X^{(s)})\pi(k^{(s)},X^{(s)})} \right);$$
 then skip to the step 5.
-2. If $m^{*} \neq m^{(s)}$, we continue by generating some $W^{(s)} \sim g_{m^{(s)} \to m^{*}}$.
-3. Set $(X^{*}, W^{*})= h_{m^{(s)}\to m^{*}}(X^{(s)}, W^{(s)})$
+2. If $k^{*} \neq k^{(s)}$, we continue by generating some $W^{(s)} \sim g_{k^{(s)} \to k^{*}}(\cdot|k^{(s)}, X^{(s)})$.
+3. Set $(X^{*}, W^{*})= h_{k^{(s)}\to k^{*}}(X^{(s)}, W^{(s)})$
 4. Compute
 \begin{align*}
-\alpha\left(X^* \mid {X}^{(s)}\right)=\min \left\{1, \frac{j_{m^{*}\to m^{(s)}}(X^*)  \pi\left({X}^{*}\right) g_{m^{*} \to m^{(s)}}\left(W^{(*)}\right)}{j_{m^{(s)}\to m^{*}}({X}^{(s)})  \pi\left(X^{(s)}\right) g_{m^{(s)} \to m^{*}}\left(W^{(s)}\right)}\left|\frac{\partial {h}_{m^{(s)}\to m^{*}}\left(X^{(s)}, W^{(s)}\right)}{\partial\left(X^{(s)}, W^{(s)}\right)}\right|\right\},
+\alpha\left(X^* \mid {X}^{(s)}\right)=\min \left\{1, \frac{j_{k^{*}\to k^{(s)}}(k^{*}, X^*)  \pi\left(k^{*}, {X}^{*}\right) g_{k^{*} \to k^{(s)}}\left(W^{(*)}|k^{*}, X^{*}\right)}{j_{k^{(s)}\to k^{*}}(k^{(s)}, {X}^{(s)})  \pi\left(k^{(s)}, X^{(s)}\right) g_{k^{(s)} \to k^{*}}\left(W^{(s)}|k^{(s)}, X^{(s)}\right)}\left|\frac{\partial {h}_{k^{(s)}\to k^{*}}\left(X^{(s)}, W^{(s)}\right)}{\partial\left(X^{(s)}, W^{(s)}\right)}\right|\right\},
 \end{align*}
-5. Generate $U \sim \mathrm{U}(0,1)$, if $U \leq \alpha(X^*|X^{(s)})$, set $m^{(s+1)} \leftarrow m^{*}$, $X^{(s+1)} \leftarrow X^*$; otherwise set $m^{(s+1)} \leftarrow m^{(s)}$, $X^{(s+1)} \leftarrow X^{(s)}$. 
+5. Generate $U \sim \mathrm{U}(0,1)$, if $U \leq \alpha(X^*|X^{(s)})$, set $k^{(s+1)} \leftarrow k^{*}$, $X^{(s+1)} \leftarrow X^*$; otherwise set $k^{(s+1)} \leftarrow k^{(s)}$, $X^{(s+1)} \leftarrow X^{(s)}$. 
 
-**Remark**:
+**Remarks**:
 
-(1) It requires that $\sum_{m'}j_{m \to m'}=1$. It also requires that if $j_{m \to m'}=0$, then $j_{m' \to m}=0$--otherwise the acceptance probability is not well defined.
-(2) For any $m, m'$ such that $j_{m \to m'} \neq 0$, it requires that $h_{m \to m'}$ to be a diffeomorphism.
-(3) It is allowed that either $W^*$ or $W^{(s)}$ is zero dimensional (null), as long as the dimensions matching is maintained.
+(1) Here we allow the state space transition probability $j_{k^{(s)} \to k^{*}}(k^{(s)},X^{(s)})$ depends on $(k^{(s)},X^{(s)})$, for simpler design model, it could be pure deterministic rule.
+(2) It requires that $\sum_{m'}j_{m \to m'}=1$. It also requires that if $j_{m \to m'}=0$, then $j_{m' \to m}=0$--otherwise the acceptance probability is not well defined.
+(3) For any $m, m'$ such that $j_{m \to m'} \neq 0$, it requires that $h_{m \to m'}$ to be a diffeomorphism.
 (4) It is a common practice that the type transition probability is set so $j_{m \to m'}=0$ if the corresponding $m$ and $m'$ (or the models represented thereof) are not "adjacent". 
+(5) It is allowed that either $W^*$ or $W^{(s)}$ is zero dimensional (null), as long as the dimensions matching is maintained.
+(6) Here we allow the proposal density $g_{k^{(s)} \to k^{*}}(\cdot)$ dependent on the current state, i.e., $g_{k^{(s)} \to k^{*}}(\cdot|k^{(s)}, X^{(s)})$, for simpler design model, this needs not be so.
+(7) This is possible to extend the above algorithm by allowing drawing a different move type $m\in M$ and all subsequent functions $j, q, h$ and $g$ may be made dependent on $m$, with acceptance probability adjusted by a ratio of the type move probabilities.
 
 
 <!------------->

@@ -11,7 +11,7 @@
 
 <meta name="author" content="Instructor: Dr. Wei Li" />
 
-<meta name="date" content="2023-11-25" />
+<meta name="date" content="2023-11-26" />
 
 <title>MAT 653: Statistical Simulation</title>
 
@@ -1624,7 +1624,7 @@ display: none;
 <h1 class="title toc-ignore">MAT 653: Statistical Simulation</h1>
 <h4 class="author">Instructor<span class="math inline">\(:\)</span>
 Dr. Wei Li</h4>
-<h4 class="date">2023-11-25</h4>
+<h4 class="date">2023-11-26</h4>
 
 </div>
 
@@ -1635,7 +1635,7 @@ MathJax.Hub.Config({
 });
 </script>
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2023-11-25 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2023-11-26 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 <!------------->
 <div id="metropolis-hasting-algorithm-with-different-move-types" class="section level2">
@@ -1676,7 +1676,7 @@ q_{m^{(s+1)}}(\cdot|X^{(s)})\)</span>;</li>
 </ol></li>
 <li><span class="math inline">\(s\leftarrow s+1.\)</span></li>
 </ol>
-<p><strong>Remark</strong></p>
+<p><strong>Remarks</strong></p>
 <ol style="list-style-type: decimal">
 <li><span class="math inline">\(\gamma_m(x)\)</span> can depend on time
 as well. In the simplest case, for example, <span class="math inline">\(M=\{1, 2,\ldots, K\}\)</span>, we can choose <span class="math inline">\(m\)</span> to be <span class="math inline">\((s
@@ -1769,15 +1769,15 @@ n_2\)</span>, where the whole space is <span class="math inline">\(\mathcal{X}=\
 from one space to another space, for example, <span class="math inline">\(j_{1\to 2} (x)\)</span> is the probability of
 moving from <span class="math inline">\(\mathcal{X}_1\)</span> to <span class="math inline">\(\mathcal{X}_2\)</span> when the current value is
 <span class="math inline">\(x\in \mathcal{X}_1.\)</span> More generally,
-let <span class="math inline">\(j_{m \to m&#39;}\)</span> denote the
-probability of moving from space <span class="math inline">\(m\)</span>
-to space <span class="math inline">\(m&#39;\)</span>.</p>
+let <span class="math inline">\(j_{k \to k&#39;}\)</span> denote the
+probability of moving from space <span class="math inline">\(k\)</span>
+to space <span class="math inline">\(k&#39;\)</span>.</p>
 <p>After we determine the space type, we’ll have to determine the rule
 for (tentative) transition density and the acceptance probability. If we
 remain in the same space, the classical proposal for transition and the
 acceptance probability would work. The key is when the move has been
-determined that it moves between spaces <span class="math inline">\(m\)</span> and <span class="math inline">\(m&#39;\)</span> where <span class="math inline">\(\mathcal{X}_m \neq
-\mathcal{X}_{m&#39;}.\)</span></p>
+determined that it moves between spaces <span class="math inline">\(k\)</span> and <span class="math inline">\(k&#39;\)</span> where <span class="math inline">\(\mathcal{X}_k \neq
+\mathcal{X}_{k&#39;}.\)</span></p>
 <p>So we’ll focus for example, on the transition and acceptance rule
 moving from <span class="math inline">\(1\)</span> to <span class="math inline">\(2\)</span>.</p>
 <ul>
@@ -1834,43 +1834,51 @@ h_{1\to2}: \mathbb{R}^{n_1+d_1} \longrightarrow \mathbb{R}^{n_2+d_2}
 \end{array}
 \end{align*}\]</span></li>
 </ol>
-<p><strong>Reversible Jump MCMC algorithm</strong>:</p>
-<p>With starting value <span class="math inline">\(m^{(0)} \in
-M\)</span>, <span class="math inline">\(X^{(0)} \in
-\mathcal{X}_{m^{(0)}}\)</span>. For <span class="math inline">\(s=0, 1,
+<p><strong>Reversible Jump MCMC algorithm</strong>: Let the parameter
+space be <span class="math display">\[
+\Theta:=\cup_{k}(\{k\} \times \mathcal{X}_k).
+\]</span></p>
+<p>With starting value <span class="math inline">\(k^{(0)} \in
+K\)</span>, <span class="math inline">\(X^{(0)} \in
+\mathcal{X}_{k^{(0)}}\)</span>. For <span class="math inline">\(s=0, 1,
 2, \cdots\)</span>:</p>
 <ol style="list-style-type: decimal">
-<li>Choose <span class="math inline">\(m^{*}\)</span> with probability
-<span class="math inline">\(j_{m^{(s)} \to m^{*}}(X^{(s)})\)</span>. If
-<span class="math inline">\(m^{*}=m^{(s)}\)</span>, perform the usual MH
+<li>Choose <span class="math inline">\(k^{*}\)</span> with probability
+<span class="math inline">\(j_{k^{(s)} \to
+k^{*}}(k^{(s)},X^{(s)})\)</span>. If <span class="math inline">\(k^{*}=k^{(s)}\)</span>, perform the usual MH
 update, that is <span class="math inline">\(X^{*} \sim
-q_{m^{(s)}}(\cdot|X^{(s)})\)</span> (some usual proposal transition
-density for the type <span class="math inline">\(m^{(s)}\)</span>), and
-compute <span class="math display">\[\alpha(X^*|X^{(s)}) = \min \left(1,
-\frac{q_{m^{(s)}}(X^{(s)}|X^*)\pi(X^*)}{q_{m^{(s)}}(X^*|X^{(s)})\pi(X^{(s)})}
+q_{k^{(s)}}(\cdot|k^{(s)}, X^{(s)})\)</span> (some usual proposal
+transition density in the space <span class="math inline">\(\mathcal{X}_{k^{(s)}}\)</span>), and compute <span class="math display">\[\alpha(X^*|X^{(s)}) = \min \left(1,
+\frac{j_{k^{*}\to k^{(s)}}(k^{*},
+X^*)q_{k^{(s)}}(X^{(s)}|k^{(*)},X^*)\pi(k^{*},X^*)}{j_{k^{(s)}\to
+k^{*}}(k^{(s)},
+X^{(s)})q_{k^{(s)}}(X^*|k^{(s)},X^{(s)})\pi(k^{(s)},X^{(s)})}
 \right);\]</span> then skip to the step 5.</li>
-<li>If <span class="math inline">\(m^{*} \neq m^{(s)}\)</span>, we
+<li>If <span class="math inline">\(k^{*} \neq k^{(s)}\)</span>, we
 continue by generating some <span class="math inline">\(W^{(s)} \sim
-g_{m^{(s)} \to m^{*}}\)</span>.</li>
-<li>Set <span class="math inline">\((X^{*}, W^{*})= h_{m^{(s)}\to
-m^{*}}(X^{(s)}, W^{(s)})\)</span></li>
+g_{k^{(s)} \to k^{*}}(\cdot|k^{(s)}, X^{(s)})\)</span>.</li>
+<li>Set <span class="math inline">\((X^{*}, W^{*})= h_{k^{(s)}\to
+k^{*}}(X^{(s)}, W^{(s)})\)</span></li>
 <li>Compute <span class="math display">\[\begin{align*}
-\alpha\left(X^* \mid {X}^{(s)}\right)=\min \left\{1, \frac{j_{m^{*}\to
-m^{(s)}}(X^*)  \pi\left({X}^{*}\right) g_{m^{*} \to
-m^{(s)}}\left(W^{(*)}\right)}{j_{m^{(s)}\to
-m^{*}}({X}^{(s)})  \pi\left(X^{(s)}\right) g_{m^{(s)} \to
-m^{*}}\left(W^{(s)}\right)}\left|\frac{\partial {h}_{m^{(s)}\to
-m^{*}}\left(X^{(s)}, W^{(s)}\right)}{\partial\left(X^{(s)},
-W^{(s)}\right)}\right|\right\},
+\alpha\left(X^* \mid {X}^{(s)}\right)=\min \left\{1, \frac{j_{k^{*}\to
+k^{(s)}}(k^{*}, X^*)  \pi\left(k^{*}, {X}^{*}\right) g_{k^{*} \to
+k^{(s)}}\left(W^{(*)}|k^{*}, X^{*}\right)}{j_{k^{(s)}\to k^{*}}(k^{(s)},
+{X}^{(s)})  \pi\left(k^{(s)}, X^{(s)}\right) g_{k^{(s)} \to
+k^{*}}\left(W^{(s)}|k^{(s)}, X^{(s)}\right)}\left|\frac{\partial
+{h}_{k^{(s)}\to k^{*}}\left(X^{(s)},
+W^{(s)}\right)}{\partial\left(X^{(s)}, W^{(s)}\right)}\right|\right\},
 \end{align*}\]</span></li>
 <li>Generate <span class="math inline">\(U \sim
 \mathrm{U}(0,1)\)</span>, if <span class="math inline">\(U \leq
-\alpha(X^*|X^{(s)})\)</span>, set <span class="math inline">\(m^{(s+1)}
-\leftarrow m^{*}\)</span>, <span class="math inline">\(X^{(s+1)}
-\leftarrow X^*\)</span>; otherwise set <span class="math inline">\(m^{(s+1)} \leftarrow m^{(s)}\)</span>, <span class="math inline">\(X^{(s+1)} \leftarrow X^{(s)}\)</span>.</li>
+\alpha(X^*|X^{(s)})\)</span>, set <span class="math inline">\(k^{(s+1)}
+\leftarrow k^{*}\)</span>, <span class="math inline">\(X^{(s+1)}
+\leftarrow X^*\)</span>; otherwise set <span class="math inline">\(k^{(s+1)} \leftarrow k^{(s)}\)</span>, <span class="math inline">\(X^{(s+1)} \leftarrow X^{(s)}\)</span>.</li>
 </ol>
-<p><strong>Remark</strong>:</p>
+<p><strong>Remarks</strong>:</p>
 <ol style="list-style-type: decimal">
+<li>Here we allow the state space transition probability <span class="math inline">\(j_{k^{(s)} \to k^{*}}(k^{(s)},X^{(s)})\)</span>
+depends on <span class="math inline">\((k^{(s)},X^{(s)})\)</span>, for
+simpler design model, it could be pure deterministic rule.</li>
 <li>It requires that <span class="math inline">\(\sum_{m&#39;}j_{m \to
 m&#39;}=1\)</span>. It also requires that if <span class="math inline">\(j_{m \to m&#39;}=0\)</span>, then <span class="math inline">\(j_{m&#39; \to m}=0\)</span>–otherwise the
 acceptance probability is not well defined.</li>
@@ -1878,17 +1886,26 @@ acceptance probability is not well defined.</li>
 <span class="math inline">\(j_{m \to m&#39;} \neq 0\)</span>, it
 requires that <span class="math inline">\(h_{m \to m&#39;}\)</span> to
 be a diffeomorphism.</li>
-<li>It is allowed that either <span class="math inline">\(W^*\)</span>
-or <span class="math inline">\(W^{(s)}\)</span> is zero dimensional
-(null), as long as the dimensions matching is maintained.</li>
 <li>It is a common practice that the type transition probability is set
 so <span class="math inline">\(j_{m \to m&#39;}=0\)</span> if the
 corresponding <span class="math inline">\(m\)</span> and <span class="math inline">\(m&#39;\)</span> (or the models represented
 thereof) are not “adjacent”.</li>
+<li>It is allowed that either <span class="math inline">\(W^*\)</span>
+or <span class="math inline">\(W^{(s)}\)</span> is zero dimensional
+(null), as long as the dimensions matching is maintained.</li>
+<li>Here we allow the proposal density <span class="math inline">\(g_{k^{(s)} \to k^{*}}(\cdot)\)</span> dependent on
+the current state, i.e., <span class="math inline">\(g_{k^{(s)} \to
+k^{*}}(\cdot|k^{(s)}, X^{(s)})\)</span>, for simpler design model, this
+needs not be so.</li>
+<li>This is possible to extend the above algorithm by allowing drawing a
+different move type <span class="math inline">\(m\in M\)</span> and all
+subsequent functions <span class="math inline">\(j, q, h\)</span> and
+<span class="math inline">\(g\)</span> may be made dependent on <span class="math inline">\(m\)</span>, with acceptance probability adjusted
+by a ratio of the type move probabilities.</li>
 </ol>
 <!------------->
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2023-11-25 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2023-11-26 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 </div>
 
