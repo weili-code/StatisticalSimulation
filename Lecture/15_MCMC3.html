@@ -1644,22 +1644,22 @@ Statistical Simulation, Wei Li </span> </span></p>
 more general framework for MH algorithms.</p>
 <ul>
 <li><span class="math inline">\(X \in \mathbb{R}^{d}\)</span></li>
-<li>Let <span class="math inline">\(M\)</span> denote a finite or
-countable set of move types, e.g., <span class="math inline">\(M=\{1, 2,
-\ldots, K\}\)</span>.</li>
+<li>Let <span class="math inline">\(\mathcal{M}\)</span> denote a finite
+or countable set of move types, e.g., <span class="math inline">\(\mathcal{M}=\{1, 2, \ldots, M\}\)</span>.</li>
 <li><span class="math inline">\(\gamma_m(x)\)</span> denote probability
 of choosing move <span class="math inline">\(m\)</span> when the current
 value <span class="math inline">\(X^{(s)}=x\)</span>, <span class="math inline">\(\sum_{m} \gamma_m(x)=1\)</span>.</li>
 </ul>
 <p>We first randomly choose a move type <span class="math inline">\(m\in
-M\)</span> and then generate <span class="math inline">\(X^*\)</span>
-with a move-dependent transition density <span class="math inline">\(q_m(\cdot|X^{(s)})\)</span>, where <span class="math inline">\(q_m(\cdot|\cdot): \mathbb{R}^d \times \mathbb{R}^d
-\to \mathbb{R}\)</span>.</p>
+\mathcal{M}\)</span> and then generate <span class="math inline">\(X^*\)</span> with a move-dependent transition
+density <span class="math inline">\(q_m(\cdot|X^{(s)})\)</span>, where
+<span class="math inline">\(q_m(\cdot|\cdot): \mathbb{R}^d \times
+\mathbb{R}^d \to \mathbb{R}\)</span>.</p>
 <p><strong>MH algorithm with different move types</strong>:</p>
 <p>Let <span class="math inline">\(s=0\)</span>.</p>
 <ol style="list-style-type: decimal">
-<li>Generate <span class="math inline">\(m^{(s+1)}\in M\)</span> with
-probability <span class="math inline">\(P(m^{(s+1)}=m)=\gamma_m(X^{(s)})\)</span>;</li>
+<li>Generate <span class="math inline">\(m^{(s+1)}\in
+\mathcal{M}\)</span> with probability <span class="math inline">\(P(m^{(s+1)}=m)=\gamma_m(X^{(s)})\)</span>;</li>
 <li>Generate <span class="math inline">\(X^* \sim
 q_{m^{(s+1)}}(\cdot|X^{(s)})\)</span>;</li>
 <li>Let acceptance probablity be <span class="math display">\[
@@ -1679,8 +1679,9 @@ q_{m^{(s+1)}}(\cdot|X^{(s)})\)</span>;</li>
 <p><strong>Remarks</strong></p>
 <ol style="list-style-type: decimal">
 <li><span class="math inline">\(\gamma_m(x)\)</span> can depend on time
-as well. In the simplest case, for example, <span class="math inline">\(M=\{1, 2,\ldots, K\}\)</span>, we can choose <span class="math inline">\(m\)</span> to be <span class="math inline">\((s
-\text{ mod } K)+1\)</span>, this will cylce through all move types.</li>
+as well. In the simplest case, for example, <span class="math inline">\(\mathcal{M}=\{1, 2,\ldots, M\}\)</span>, we can
+choose <span class="math inline">\(m\)</span> to be <span class="math inline">\((s \text{ mod } M)+1\)</span>, this will cylce
+through all move types.</li>
 <li>Every move type can be shown to satisfy detailed balance condition,
 but the composition needs not.</li>
 <li>Note that <span class="math inline">\(q_m(\cdot|\cdot): \mathbb{R}^d
@@ -1695,8 +1696,8 @@ space of <span class="math inline">\(X \in \mathbb{R}^d\)</span>.</li>
 for the acceptance probability. We need to assume two things for
 this.</p>
 <p>Assume for <em>each</em> move <span class="math inline">\(m\in
-M\)</span>, (1) there is a set <span class="math inline">\(C_m \subset
-\mathbb{R}^d \times \mathbb{R}^d\)</span> such that <span class="math display">\[
+\mathcal{M}\)</span>, (1) there is a set <span class="math inline">\(C_m
+\subset \mathbb{R}^d \times \mathbb{R}^d\)</span> such that <span class="math display">\[
 (x, x&#39;) \in C_m \Longleftrightarrow  (x&#39;, x) \in C_m , \quad
 \forall x, x&#39;
 \]</span> and; (2) there is a density <span class="math inline">\(\psi_m: C_m \to [0, \infty]\)</span> such that the
@@ -1839,9 +1840,8 @@ space be <span class="math display">\[
 \Theta:=\cup_{k}(\{k\} \times \mathcal{X}_k).
 \]</span></p>
 <p>With starting value <span class="math inline">\(k^{(0)} \in
-K\)</span>, <span class="math inline">\(X^{(0)} \in
-\mathcal{X}_{k^{(0)}}\)</span>. For <span class="math inline">\(s=0, 1,
-2, \cdots\)</span>:</p>
+\mathcal{K}\)</span> some finite or countable set, <span class="math inline">\(X^{(0)} \in \mathcal{X}_{k^{(0)}}\)</span>. For
+<span class="math inline">\(s=0, 1, 2, \cdots\)</span>:</p>
 <ol style="list-style-type: decimal">
 <li>Choose <span class="math inline">\(k^{*}\)</span> with probability
 <span class="math inline">\(j_{k^{(s)} \to
