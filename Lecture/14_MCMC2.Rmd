@@ -88,18 +88,18 @@ Recall the block-wise Metropolis-Hastings: to sample from $f(X,Y)$, we used two 
 
 1. Update $X$:
 \begin{align*}
-\alpha_X(X^*|X^{(s)},Y^{(s)})&=\frac{f(X^*,Y^{(s)})}{f(X^{(s)},Y^{(s)})}\cdot\frac{q_X(X^{(s)}|X^{(s)},Y^{(s)})}{q_X(X^*|X^{(s)},Y^{(s)})}.
+\alpha_X(X^*|X^{(s)},Y^{(s)})&=\frac{f(X^*,Y^{(s)})}{f(X^{(s)},Y^{(s)})}\cdot\frac{q_X(X^{(s)}|X^{*},Y^{(s)})}{q_X(X^*|X^{(s)},Y^{(s)})}.
 \end{align*}
 
-Suppose we take $q_X(x|X^{(s)}, Y^{(s)})$ to be full condition distribution $f_{X|Y}(x|Y^{(s)})$, take $q_Y(y|X^{(s)},Y^{(s)})$ to be full condition distribution $f_{Y|X}(y|X^{(s)})$, then
+Suppose we take $q_X(x|X^{(s)}, Y^{(s)})$ to be full conditional distribution $f_{X|Y}(x|Y^{(s)})$,  then
 
 \begin{align*}
-\alpha_X(X^*|X^{(s)},Y^{(s)})&=\frac{f(X^*,Y^{(s)})}{f(X^{(s)},Y^{(s)})}\cdot\frac{q_X(X^{(s)}|X^{(s)},Y^{(s)})}{q_X(X^*|X^{(s)},Y^{(s)})}\\
+\alpha_X(X^*|X^{(s)},Y^{(s)})&=\frac{f(X^*,Y^{(s)})}{f(X^{(s)},Y^{(s)})}\cdot\frac{q_X(X^{(s)}|X^{*},Y^{(s)})}{q_X(X^*|X^{(s)},Y^{(s)})}\\
 &=\frac{f_{X|Y}(X^*|Y^{(s)})}{f_{X|Y}(X^{(s)}|Y^{(s)})}\cdot\frac{f_{X|Y}(X^{(s)}|Y^{(s)})}{f_{X|Y}(X^*|Y^{(s)})}\\
 &=1
 \end{align*}
 
-2. Update $Y$. Similar argument goes through if we use the full conditional distributions as our candidate transition densities.
+2. Update $Y$: Similar argument goes through if we use the full conditional distributions as our candidate transition densities, i.e., taking $q_Y(y|X^{(s+1)},Y^{(s)})$ to be full condition distribution $f_{Y|X}(y|X^{(s+1)})$,
 
 **Definition:**
 Gibbs sampling is a special case of (blockwise) MH that take $q_X(x|X_c, Y_c)$ to be  $f_{X|Y}(x|Y_c)$, and take $q_Y(y|X_c,Y_c)$ to be  $f_{Y|X}(y|X_c)$, which then yield $\alpha_X=\alpha_Y=1$. So following this sampling scheme, all proposals are automatically accepted.

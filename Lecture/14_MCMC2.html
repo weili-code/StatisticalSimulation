@@ -1678,21 +1678,21 @@ f(x^*,y^*)\)</span> does not hold for this algorithm in general.</p>
 <p>Recall the block-wise Metropolis-Hastings: to sample from <span class="math inline">\(f(X,Y)\)</span>, we used two candidates: <span class="math inline">\(q_X(x|X,Y), q_Y(y|X,Y)\)</span>.</p>
 <ol style="list-style-type: decimal">
 <li>Update <span class="math inline">\(X\)</span>: <span class="math display">\[\begin{align*}
-\alpha_X(X^*|X^{(s)},Y^{(s)})&amp;=\frac{f(X^*,Y^{(s)})}{f(X^{(s)},Y^{(s)})}\cdot\frac{q_X(X^{(s)}|X^{(s)},Y^{(s)})}{q_X(X^*|X^{(s)},Y^{(s)})}.
+\alpha_X(X^*|X^{(s)},Y^{(s)})&amp;=\frac{f(X^*,Y^{(s)})}{f(X^{(s)},Y^{(s)})}\cdot\frac{q_X(X^{(s)}|X^{*},Y^{(s)})}{q_X(X^*|X^{(s)},Y^{(s)})}.
 \end{align*}\]</span></li>
 </ol>
 <p>Suppose we take <span class="math inline">\(q_X(x|X^{(s)},
-Y^{(s)})\)</span> to be full condition distribution <span class="math inline">\(f_{X|Y}(x|Y^{(s)})\)</span>, take <span class="math inline">\(q_Y(y|X^{(s)},Y^{(s)})\)</span> to be full
-condition distribution <span class="math inline">\(f_{Y|X}(y|X^{(s)})\)</span>, then</p>
+Y^{(s)})\)</span> to be full conditional distribution <span class="math inline">\(f_{X|Y}(x|Y^{(s)})\)</span>, then</p>
 <p><span class="math display">\[\begin{align*}
-\alpha_X(X^*|X^{(s)},Y^{(s)})&amp;=\frac{f(X^*,Y^{(s)})}{f(X^{(s)},Y^{(s)})}\cdot\frac{q_X(X^{(s)}|X^{(s)},Y^{(s)})}{q_X(X^*|X^{(s)},Y^{(s)})}\\
+\alpha_X(X^*|X^{(s)},Y^{(s)})&amp;=\frac{f(X^*,Y^{(s)})}{f(X^{(s)},Y^{(s)})}\cdot\frac{q_X(X^{(s)}|X^{*},Y^{(s)})}{q_X(X^*|X^{(s)},Y^{(s)})}\\
 &amp;=\frac{f_{X|Y}(X^*|Y^{(s)})}{f_{X|Y}(X^{(s)}|Y^{(s)})}\cdot\frac{f_{X|Y}(X^{(s)}|Y^{(s)})}{f_{X|Y}(X^*|Y^{(s)})}\\
 &amp;=1
 \end{align*}\]</span></p>
 <ol start="2" style="list-style-type: decimal">
-<li>Update <span class="math inline">\(Y\)</span>. Similar argument goes
+<li>Update <span class="math inline">\(Y\)</span>: Similar argument goes
 through if we use the full conditional distributions as our candidate
-transition densities.</li>
+transition densities, i.e., taking <span class="math inline">\(q_Y(y|X^{(s+1)},Y^{(s)})\)</span> to be full
+condition distribution <span class="math inline">\(f_{Y|X}(y|X^{(s+1)})\)</span>,</li>
 </ol>
 <p><strong>Definition:</strong> Gibbs sampling is a special case of
 (blockwise) MH that take <span class="math inline">\(q_X(x|X_c,
