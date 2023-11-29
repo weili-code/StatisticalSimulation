@@ -1760,10 +1760,10 @@ the detailed balance condition using <span class="math display">\[\begin{align}
 \pi\left(x^{\prime}\right) \int_{A^{\prime}}  q\left(x^{\prime},
 x\right) \alpha\left(x^{\prime}, x\right) d x^{\prime} d x \tag{***}
 \end{align}\]</span></p>
-<p>Suppose we like to move between two spaces <span class="math inline">\(\mathcal{X}_1 \subset \mathbb{R}^{n_1}\)</span>
+<p>Suppose we like to move between two spaces <span class="math inline">\(\mathcal{X}_1 \subset \mathbb{R}^{d_1}\)</span>
 and <span class="math inline">\(\mathcal{X}_2 \subset
-\mathbb{R}^{n_2}\)</span>, <span class="math inline">\(n_1 \neq
-n_2\)</span>, where the whole space is <span class="math inline">\(\mathcal{X}=\mathcal{X}_1 \cup
+\mathbb{R}^{d_2}\)</span>, <span class="math inline">\(d_1 \neq
+d_2\)</span>, where the whole space is <span class="math inline">\(\mathcal{X}=\mathcal{X}_1 \cup
 \mathcal{X}_2.\)</span> Let <span class="math inline">\(M=\{1,
 2\}\)</span> denote the model type or space type.</p>
 <p>We first need to have some probability according to which to move
@@ -1782,34 +1782,34 @@ determined that it moves between spaces <span class="math inline">\(k\)</span> a
 <p>So we’ll focus for example, on the transition and acceptance rule
 moving from <span class="math inline">\(1\)</span> to <span class="math inline">\(2\)</span>.</p>
 <ul>
-<li>generate some <span class="math inline">\(w\in \mathbb{R}^{d_1} \sim
-g_{1\to2}\)</span> according to some density function <span class="math inline">\(g_{1\to2}\)</span></li>
+<li>generate some <span class="math inline">\(w\in
+\mathbb{R}^{n_1}\)</span> according to some density function <span class="math inline">\(g_{1\to2}(\cdot)\)</span></li>
 <li>use some deterministic bijective mapping: <span class="math display">\[
-h_{1\to2}: (x, w) \mapsto (x&#39; ,w&#39;) \quad \mathbb{R}^{n_1+d_1}
+h_{1\to2}: (x, w) \mapsto (x&#39; ,w&#39;) \quad \mathbb{R}^{d_1+n_1}
 \to
-\mathbb{R}^{n_2+d_2}
-\]</span> which is <em>dimensions matching</em> (<span class="math inline">\(n_1+ d_1= n_2+ d_2\)</span>) to obtain <span class="math inline">\(x&#39; \in \mathcal{X}_2\)</span>.</li>
+\mathbb{R}^{d_2+n_2}
+\]</span> which is <em>dimensions matching</em> (<span class="math inline">\(d_1+ n_1= d_2+ n_2\)</span>) to obtain <span class="math inline">\(x&#39; \in \mathcal{X}_2\)</span>.</li>
 <li>the map <span class="math inline">\(h_{1\to2}\)</span> is assumed to
 be a diffeomophism (continuously differentiable and so is its
 inverse).</li>
 <li>when moving backward from <span class="math inline">\(x&#39;\in
 \mathcal{X}_2\)</span> to <span class="math inline">\(x \in
-\mathcal{X}_1\)</span>, we sample some <span class="math inline">\(w&#39; \sim g_{2\to1}\)</span>, and move under the
+\mathcal{X}_1\)</span>, we <em>may</em> sample some <span class="math inline">\(w&#39;\)</span> according to some density <span class="math inline">\(g_{2\to1}(\cdot)\)</span>, and move under the
 deterministic bijective mapping <span class="math inline">\(h_{2\to1}:=h_{1\to2}^{-1}\)</span> where <span class="math display">\[
-h_{2 \to 1}: (x&#39;, w&#39;) \mapsto (x, w) \quad \mathbb{R}^{n_2+d_2}
+h_{2 \to 1}: (x&#39;, w&#39;) \mapsto (x, w) \quad \mathbb{R}^{d_2+n_2}
 \to
-\mathbb{R}^{n_1+d_2}
+\mathbb{R}^{d_1+n_1}
 \]</span> That is <span class="math display">\[\begin{align*}
 \begin{array}{ll}
 h_{1\to2}: (x, w) \longmapsto (x&#39;, w&#39;) &amp; h_{2\to1}: (x&#39;,
 w&#39;) \longmapsto (x, w) \\
-h_{1\to2}: \mathbb{R}^{n_1+d_1} \longrightarrow \mathbb{R}^{n_2+d_2}
-&amp; h_{2\to1}: \mathbb{R}^{n_2+d_2} \longrightarrow
-\mathbb{R}^{n_1+d_1}
+h_{1\to2}: \mathbb{R}^{d_1+n_1} \longrightarrow \mathbb{R}^{d_2+n_2}
+&amp; h_{2\to1}: \mathbb{R}^{d_2+n_2} \longrightarrow
+\mathbb{R}^{d_1+n_1}
 \end{array}
 \end{align*}\]</span></li>
 <li>The acceptance probability is given by <span class="math display">\[\begin{align*}
-\alpha_{1\to 2}\left(x&#39; \mid x\right)=\min \left\{1,
+\alpha_{1\to 2}\left((x&#39;, w&#39;) \mid (x, w) \right)=\min \left\{1,
 \frac{\pi\left(x&#39;\right) g_{2 \rightarrow
 1}\left(w&#39;\right)}{\pi\left(x\right) g_{1 \rightarrow 2}\left(w
 \right)}\left|\frac{\partial {h}_{1 \rightarrow 2}\left(x, w
@@ -1820,18 +1820,18 @@ value of the determinant of the Jacobian matrix.</li>
 </ul>
 <p><strong>Remark</strong>:</p>
 <ol style="list-style-type: lower-roman">
-<li>It may be that either <span class="math inline">\(d_1=0\)</span> or
-<span class="math inline">\(d_2=0\)</span> as long as the dimensions are
-matched <span class="math inline">\(n_1+d_1=n_2+d_2.\)</span></li>
+<li>It may be that either <span class="math inline">\(n_1=0\)</span> or
+<span class="math inline">\(n_2=0\)</span> as long as the dimensions are
+matched <span class="math inline">\(d_1+n_1=d_2+n_2.\)</span></li>
 <li>One common rule for <span class="math inline">\(h_{1\to 2}\)</span>
 is for some function <span class="math inline">\(\phi_{x&#39;}\)</span>
 that maps from <span class="math inline">\((x, w)\)</span> to <span class="math inline">\(x&#39;\)</span>, and some function <span class="math inline">\(\phi_{x}\)</span> that maps from <span class="math inline">\((x&#39;, w&#39;)\)</span> to <span class="math inline">\(x\)</span> <span class="math display">\[\begin{align*}
 \begin{array}{ll}
 h_{1\to2}: (x, w) \longmapsto (\phi_{x&#39;}(x, w), w&#39;) &amp;
 h_{2\to1}: (x&#39;, w&#39;) \longmapsto (\phi_x(x&#39;, w&#39;), w) \\
-h_{1\to2}: \mathbb{R}^{n_1+d_1} \longrightarrow \mathbb{R}^{n_2+d_2}
-&amp; h_{2\to1}: \mathbb{R}^{n_2+d_2} \longrightarrow
-\mathbb{R}^{n_1+d_1}
+h_{1\to2}: \mathbb{R}^{d_1+n_1} \longrightarrow \mathbb{R}^{d_2+n_2}
+&amp; h_{2\to1}: \mathbb{R}^{d_2+n_2} \longrightarrow
+\mathbb{R}^{d_1+n_1}
 \end{array}
 \end{align*}\]</span></li>
 </ol>
@@ -1848,7 +1848,7 @@ space be <span class="math display">\[
 k^{*}}(k^{(s)},X^{(s)})\)</span>. If <span class="math inline">\(k^{*}=k^{(s)}\)</span>, perform the usual MH
 update, that is <span class="math inline">\(X^{*} \sim
 q_{k^{(s)}}(\cdot|k^{(s)}, X^{(s)})\)</span> (some usual proposal
-transition density in the space <span class="math inline">\(\mathcal{X}_{k^{(s)}}\)</span>), and compute <span class="math display">\[\alpha(X^*|X^{(s)}) = \min \left(1,
+transition density in the space <span class="math inline">\(\mathcal{X}_{k^{(s)}}\)</span>), and compute <span class="math inline">\(\alpha\)</span> as <span class="math display">\[\alpha(X^*|X^{(s)}) = \min \left(1,
 \frac{j_{k^{*}\to k^{(s)}}(k^{*},
 X^*)q_{k^{(s)}}(X^{(s)}|k^{(*)},X^*)\pi(k^{*},X^*)}{j_{k^{(s)}\to
 k^{*}}(k^{(s)},
@@ -1856,13 +1856,13 @@ X^{(s)})q_{k^{(s)}}(X^*|k^{(s)},X^{(s)})\pi(k^{(s)},X^{(s)})}
 \right);\]</span> then skip to the step 5.</li>
 <li>If <span class="math inline">\(k^{*} \neq k^{(s)}\)</span>, we
 continue by generating some <span class="math inline">\(W^{(s)} \sim
-g_{k^{(s)} \to k^{*}}(\cdot|k^{(s)}, X^{(s)})\)</span>.</li>
-<li>Set <span class="math inline">\((X^{*}, W^{*})= h_{k^{(s)}\to
-k^{*}}(X^{(s)}, W^{(s)})\)</span></li>
-<li>Compute <span class="math display">\[\begin{align*}
-\alpha\left(X^* \mid {X}^{(s)}\right)=\min \left\{1, \frac{j_{k^{*}\to
-k^{(s)}}(k^{*}, X^*)  \pi\left(k^{*}, {X}^{*}\right) g_{k^{*} \to
-k^{(s)}}\left(W^{(*)}|k^{*}, X^{*}\right)}{j_{k^{(s)}\to k^{*}}(k^{(s)},
+g_{k^{(s)} \to k^{*}}(\cdot|k^{(s)}, X^{(s)})\)</span>; then set <span class="math inline">\((X^{*}, W^{*})= h_{k^{(s)}\to k^{*}}(X^{(s)},
+W^{(s)})\)</span></li>
+<li>Compute <span class="math inline">\(\alpha\)</span> as <span class="math display">\[\begin{align*}
+\alpha\left(k^{*}, X^*, W^* \mid k^{(s)}, {X}^{(s)}, W^{(s)}\right)=\min
+\left\{1, \frac{j_{k^{*}\to k^{(s)}}(k^{*}, X^*)  \pi\left(k^{*},
+{X}^{*}\right) g_{k^{*} \to k^{(s)}}\left(W^{(*)}|k^{*},
+X^{*}\right)}{j_{k^{(s)}\to k^{*}}(k^{(s)},
 {X}^{(s)})  \pi\left(k^{(s)}, X^{(s)}\right) g_{k^{(s)} \to
 k^{*}}\left(W^{(s)}|k^{(s)}, X^{(s)}\right)}\left|\frac{\partial
 {h}_{k^{(s)}\to k^{*}}\left(X^{(s)},
@@ -1870,9 +1870,11 @@ W^{(s)}\right)}{\partial\left(X^{(s)}, W^{(s)}\right)}\right|\right\},
 \end{align*}\]</span></li>
 <li>Generate <span class="math inline">\(U \sim
 \mathrm{U}(0,1)\)</span>, if <span class="math inline">\(U \leq
-\alpha(X^*|X^{(s)})\)</span>, set <span class="math inline">\(k^{(s+1)}
-\leftarrow k^{*}\)</span>, <span class="math inline">\(X^{(s+1)}
-\leftarrow X^*\)</span>; otherwise set <span class="math inline">\(k^{(s+1)} \leftarrow k^{(s)}\)</span>, <span class="math inline">\(X^{(s+1)} \leftarrow X^{(s)}\)</span>.</li>
+\alpha\)</span>, set <span class="math inline">\(k^{(s+1)} \leftarrow
+k^{*}\)</span>, <span class="math inline">\(X^{(s+1)} \leftarrow
+X^*\)</span>; otherwise set <span class="math inline">\(k^{(s+1)}
+\leftarrow k^{(s)}\)</span>, <span class="math inline">\(X^{(s+1)}
+\leftarrow X^{(s)}\)</span>.</li>
 </ol>
 <p><strong>Remarks</strong>:</p>
 <ol style="list-style-type: decimal">
@@ -1896,11 +1898,13 @@ or <span class="math inline">\(W^{(s)}\)</span> is zero dimensional
 <li>Here we allow the proposal density <span class="math inline">\(g_{k^{(s)} \to k^{*}}(\cdot)\)</span> dependent on
 the current state, i.e., <span class="math inline">\(g_{k^{(s)} \to
 k^{*}}(\cdot|k^{(s)}, X^{(s)})\)</span>, for simpler design model, this
-needs not be so.</li>
+needs not be so. Also, for some transition <span class="math inline">\(k
+\to k&#39;\)</span>, we may not need to sample an auxiliary variable at
+all, that is, <span class="math inline">\(g_{k \to k&#39;}\)</span> can
+be set to <span class="math inline">\(1\)</span>.</li>
 <li>This is possible to extend the above algorithm by allowing drawing a
-different move type <span class="math inline">\(m\in M\)</span> and all
-subsequent functions <span class="math inline">\(j, q, h\)</span> and
-<span class="math inline">\(g\)</span> may be made dependent on <span class="math inline">\(m\)</span>, with acceptance probability adjusted
+different move type <span class="math inline">\(m\in
+\mathcal{M}\)</span> and all subsequent functions <span class="math inline">\(j, q, h\)</span> and <span class="math inline">\(g\)</span> then be made dependent on <span class="math inline">\(m\)</span>, with acceptance probability adjusted
 by a ratio of the type move probabilities.</li>
 </ol>
 <!------------->

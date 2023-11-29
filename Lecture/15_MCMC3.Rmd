@@ -138,7 +138,7 @@ We then obtain a useful equation that characterizes the feature of the detailed 
 \int_A \pi(x) \int_{A^{\prime}}  q\left(x, x^{\prime}\right) \alpha\left(x, x^{\prime}\right) d x^{\prime} d x=\int_A \pi\left(x^{\prime}\right) \int_{A^{\prime}}  q\left(x^{\prime}, x\right) \alpha\left(x^{\prime}, x\right) d x^{\prime} d x \tag{***}
 \end{align}
 
-Suppose we like to move between two spaces $\mathcal{X}_1 \subset \mathbb{R}^{n_1}$ and $\mathcal{X}_2 \subset \mathbb{R}^{n_2}$, $n_1 \neq n_2$, where the whole space is $\mathcal{X}=\mathcal{X}_1 \cup \mathcal{X}_2.$ Let $M=\{1, 2\}$ denote the model type or space type. 
+Suppose we like to move between two spaces $\mathcal{X}_1 \subset \mathbb{R}^{d_1}$ and $\mathcal{X}_2 \subset \mathbb{R}^{d_2}$, $d_1 \neq d_2$, where the whole space is $\mathcal{X}=\mathcal{X}_1 \cup \mathcal{X}_2.$ Let $M=\{1, 2\}$ denote the model type or space type. 
 
 We first need to have some probability according to which to move from one space to another space, for example, $j_{1\to 2} (x)$ is the probability of moving from $\mathcal{X}_1$ to $\mathcal{X}_2$ when the current value is $x\in \mathcal{X}_1.$ More generally, let $j_{k \to k'}$ denote the probability of moving from space $k$ to space $k'$.
 
@@ -146,41 +146,41 @@ After we determine the space type, we'll have to determine the rule for (tentati
 
 So we'll focus for example, on the transition and acceptance rule moving from $1$ to $2$. 
 
-- generate some $w\in \mathbb{R}^{d_1} \sim g_{1\to2}$ according to some density function $g_{1\to2}$
+- generate some $w\in \mathbb{R}^{n_1}$ according to some density function $g_{1\to2}(\cdot)$
 - use some deterministic bijective mapping:
 $$
-h_{1\to2}: (x, w) \mapsto (x' ,w') \quad \mathbb{R}^{n_1+d_1} \to 
-\mathbb{R}^{n_2+d_2}
+h_{1\to2}: (x, w) \mapsto (x' ,w') \quad \mathbb{R}^{d_1+n_1} \to 
+\mathbb{R}^{d_2+n_2}
 $$
-which is *dimensions matching* ($n_1+ d_1= n_2+ d_2$) to obtain $x' \in \mathcal{X}_2$.
+which is *dimensions matching* ($d_1+ n_1= d_2+ n_2$) to obtain $x' \in \mathcal{X}_2$.
 - the map $h_{1\to2}$ is assumed to be a diffeomophism (continuously differentiable and so is its inverse).
-- when moving backward from $x'\in \mathcal{X}_2$ to $x \in \mathcal{X}_1$, we sample some $w' \sim g_{2\to1}$, and move under the deterministic bijective mapping $h_{2\to1}:=h_{1\to2}^{-1}$ where
+- when moving backward from $x'\in \mathcal{X}_2$ to $x \in \mathcal{X}_1$, we *may* sample some $w'$ according to some density $g_{2\to1}(\cdot)$, and move under the deterministic bijective mapping $h_{2\to1}:=h_{1\to2}^{-1}$ where
 $$
-h_{2 \to 1}: (x', w') \mapsto (x, w) \quad \mathbb{R}^{n_2+d_2} \to 
-\mathbb{R}^{n_1+d_2}
+h_{2 \to 1}: (x', w') \mapsto (x, w) \quad \mathbb{R}^{d_2+n_2} \to 
+\mathbb{R}^{d_1+n_1}
 $$
 That is
 \begin{align*}
 \begin{array}{ll}
 h_{1\to2}: (x, w) \longmapsto (x', w') & h_{2\to1}: (x', w') \longmapsto (x, w) \\
-h_{1\to2}: \mathbb{R}^{n_1+d_1} \longrightarrow \mathbb{R}^{n_2+d_2} & h_{2\to1}: \mathbb{R}^{n_2+d_2} \longrightarrow \mathbb{R}^{n_1+d_1}
+h_{1\to2}: \mathbb{R}^{d_1+n_1} \longrightarrow \mathbb{R}^{d_2+n_2} & h_{2\to1}: \mathbb{R}^{d_2+n_2} \longrightarrow \mathbb{R}^{d_1+n_1}
 \end{array}
 \end{align*}
 - The acceptance probability is given by 
 \begin{align*}
-\alpha_{1\to 2}\left(x' \mid x\right)=\min \left\{1, \frac{\pi\left(x'\right) g_{2 \rightarrow 1}\left(w'\right)}{\pi\left(x\right) g_{1 \rightarrow 2}\left(w \right)}\left|\frac{\partial {h}_{1 \rightarrow 2}\left(x, w \right)}{\partial\left(x, w\right)}\right|\right\},
+\alpha_{1\to 2}\left((x', w') \mid (x, w) \right)=\min \left\{1, \frac{\pi\left(x'\right) g_{2 \rightarrow 1}\left(w'\right)}{\pi\left(x\right) g_{1 \rightarrow 2}\left(w \right)}\left|\frac{\partial {h}_{1 \rightarrow 2}\left(x, w \right)}{\partial\left(x, w\right)}\right|\right\},
 \end{align*}
 where the $|\partial {h}_{1 \rightarrow 2}(x, w)/\partial(x, w)|$ is the absolute value of the determinant of the Jacobian matrix.
 
 
 **Remark**:
 
-(i) It may be that either $d_1=0$ or $d_2=0$ as long as the dimensions are matched $n_1+d_1=n_2+d_2.$
+(i) It may be that either $n_1=0$ or $n_2=0$ as long as the dimensions are matched $d_1+n_1=d_2+n_2.$
 (ii) One common rule for $h_{1\to 2}$ is for some function $\phi_{x'}$ that maps from $(x, w)$ to $x'$, and some function $\phi_{x}$ that maps from $(x', w')$ to $x$ 
 \begin{align*}
 \begin{array}{ll}
 h_{1\to2}: (x, w) \longmapsto (\phi_{x'}(x, w), w') & h_{2\to1}: (x', w') \longmapsto (\phi_x(x', w'), w) \\
-h_{1\to2}: \mathbb{R}^{n_1+d_1} \longrightarrow \mathbb{R}^{n_2+d_2} & h_{2\to1}: \mathbb{R}^{n_2+d_2} \longrightarrow \mathbb{R}^{n_1+d_1}
+h_{1\to2}: \mathbb{R}^{d_1+n_1} \longrightarrow \mathbb{R}^{d_2+n_2} & h_{2\to1}: \mathbb{R}^{d_2+n_2} \longrightarrow \mathbb{R}^{d_1+n_1}
 \end{array}
 \end{align*}
 
@@ -193,16 +193,15 @@ $$
 
 With starting value $k^{(0)} \in \mathcal{K}$ some finite or countable set, $X^{(0)} \in \mathcal{X}_{k^{(0)}}$. For $s=0, 1, 2, \cdots$:
 
-1. Choose $k^{*}$ with probability $j_{k^{(s)} \to k^{*}}(k^{(s)},X^{(s)})$. If $k^{*}=k^{(s)}$, perform the usual MH update, that is $X^{*} \sim q_{k^{(s)}}(\cdot|k^{(s)}, X^{(s)})$ (some usual proposal transition density in the space $\mathcal{X}_{k^{(s)}}$), and compute 
+1. Choose $k^{*}$ with probability $j_{k^{(s)} \to k^{*}}(k^{(s)},X^{(s)})$. If $k^{*}=k^{(s)}$, perform the usual MH update, that is $X^{*} \sim q_{k^{(s)}}(\cdot|k^{(s)}, X^{(s)})$ (some usual proposal transition density in the space $\mathcal{X}_{k^{(s)}}$), and compute $\alpha$ as
 $$\alpha(X^*|X^{(s)}) = \min \left(1, \frac{j_{k^{*}\to k^{(s)}}(k^{*}, X^*)q_{k^{(s)}}(X^{(s)}|k^{(*)},X^*)\pi(k^{*},X^*)}{j_{k^{(s)}\to k^{*}}(k^{(s)}, X^{(s)})q_{k^{(s)}}(X^*|k^{(s)},X^{(s)})\pi(k^{(s)},X^{(s)})} \right);$$
 then skip to the step 5.
-2. If $k^{*} \neq k^{(s)}$, we continue by generating some $W^{(s)} \sim g_{k^{(s)} \to k^{*}}(\cdot|k^{(s)}, X^{(s)})$.
-3. Set $(X^{*}, W^{*})= h_{k^{(s)}\to k^{*}}(X^{(s)}, W^{(s)})$
-4. Compute
+2. If $k^{*} \neq k^{(s)}$, we continue by generating some $W^{(s)} \sim g_{k^{(s)} \to k^{*}}(\cdot|k^{(s)}, X^{(s)})$; then set $(X^{*}, W^{*})= h_{k^{(s)}\to k^{*}}(X^{(s)}, W^{(s)})$
+3. Compute $\alpha$ as
 \begin{align*}
-\alpha\left(X^* \mid {X}^{(s)}\right)=\min \left\{1, \frac{j_{k^{*}\to k^{(s)}}(k^{*}, X^*)  \pi\left(k^{*}, {X}^{*}\right) g_{k^{*} \to k^{(s)}}\left(W^{(*)}|k^{*}, X^{*}\right)}{j_{k^{(s)}\to k^{*}}(k^{(s)}, {X}^{(s)})  \pi\left(k^{(s)}, X^{(s)}\right) g_{k^{(s)} \to k^{*}}\left(W^{(s)}|k^{(s)}, X^{(s)}\right)}\left|\frac{\partial {h}_{k^{(s)}\to k^{*}}\left(X^{(s)}, W^{(s)}\right)}{\partial\left(X^{(s)}, W^{(s)}\right)}\right|\right\},
+\alpha\left(k^{*}, X^*, W^* \mid k^{(s)}, {X}^{(s)}, W^{(s)}\right)=\min \left\{1, \frac{j_{k^{*}\to k^{(s)}}(k^{*}, X^*)  \pi\left(k^{*}, {X}^{*}\right) g_{k^{*} \to k^{(s)}}\left(W^{(*)}|k^{*}, X^{*}\right)}{j_{k^{(s)}\to k^{*}}(k^{(s)}, {X}^{(s)})  \pi\left(k^{(s)}, X^{(s)}\right) g_{k^{(s)} \to k^{*}}\left(W^{(s)}|k^{(s)}, X^{(s)}\right)}\left|\frac{\partial {h}_{k^{(s)}\to k^{*}}\left(X^{(s)}, W^{(s)}\right)}{\partial\left(X^{(s)}, W^{(s)}\right)}\right|\right\},
 \end{align*}
-5. Generate $U \sim \mathrm{U}(0,1)$, if $U \leq \alpha(X^*|X^{(s)})$, set $k^{(s+1)} \leftarrow k^{*}$, $X^{(s+1)} \leftarrow X^*$; otherwise set $k^{(s+1)} \leftarrow k^{(s)}$, $X^{(s+1)} \leftarrow X^{(s)}$. 
+4. Generate $U \sim \mathrm{U}(0,1)$, if $U \leq \alpha$, set $k^{(s+1)} \leftarrow k^{*}$, $X^{(s+1)} \leftarrow X^*$; otherwise set $k^{(s+1)} \leftarrow k^{(s)}$, $X^{(s+1)} \leftarrow X^{(s)}$. 
 
 **Remarks**:
 
@@ -211,8 +210,8 @@ then skip to the step 5.
 (3) For any $m, m'$ such that $j_{m \to m'} \neq 0$, it requires that $h_{m \to m'}$ to be a diffeomorphism.
 (4) It is a common practice that the type transition probability is set so $j_{m \to m'}=0$ if the corresponding $m$ and $m'$ (or the models represented thereof) are not "adjacent". 
 (5) It is allowed that either $W^*$ or $W^{(s)}$ is zero dimensional (null), as long as the dimensions matching is maintained.
-(6) Here we allow the proposal density $g_{k^{(s)} \to k^{*}}(\cdot)$ dependent on the current state, i.e., $g_{k^{(s)} \to k^{*}}(\cdot|k^{(s)}, X^{(s)})$, for simpler design model, this needs not be so.
-(7) This is possible to extend the above algorithm by allowing drawing a different move type $m\in M$ and all subsequent functions $j, q, h$ and $g$ may be made dependent on $m$, with acceptance probability adjusted by a ratio of the type move probabilities.
+(6) Here we allow the proposal density $g_{k^{(s)} \to k^{*}}(\cdot)$ dependent on the current state, i.e., $g_{k^{(s)} \to k^{*}}(\cdot|k^{(s)}, X^{(s)})$, for simpler design model, this needs not be so. Also, for some transition $k \to k'$, we may not need to sample an auxiliary variable at all, that is, $g_{k \to k'}$ can be set to $1$.
+(7) This is possible to extend the above algorithm by allowing drawing a different move type $m\in \mathcal{M}$ and all subsequent functions $j, q, h$ and $g$ then be made dependent on $m$, with acceptance probability adjusted by a ratio of the type move probabilities.
 
 
 <!------------->
