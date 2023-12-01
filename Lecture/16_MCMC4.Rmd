@@ -147,7 +147,7 @@ $$
 
    (3). Perform a full step update for location: $x_L^{\prime}=x_{L-1}^{\prime}+\epsilon \nabla K(w_{L-1 / 2}^{\prime})$; set $x^* = x_L^{\prime}$.
    
-   (4). Perform a half step update for momentum: $w_L^{\prime}=w_{L-1 / 2}^{\prime}-\frac{\epsilon}{2} \nabla U\left(x_L^{\prime}\right)$;  set $w^* = w_L^{\prime}$.
+   (4). Perform a half step update for momentum: $w_L^{\prime}=w_{L-1 / 2}^{\prime}-\frac{\epsilon}{2} \nabla U\left(x_L^{\prime}\right)$;  set $w^* = - w_L^{\prime}$.
    
 3. Compute 
 $$\alpha=\min \left(1, \exp \left(-{H}\left(x^*, w^*\right)+{H}\left(x_{t}, w_{t}\right)\right)\right).$$
@@ -158,6 +158,7 @@ $$\alpha=\min \left(1, \exp \left(-{H}\left(x^*, w^*\right)+{H}\left(x_{t}, w_{t
 **Remarks**
 
 - If $K(w)=\frac{1}{2} w^{\top} \Sigma^{-1} w$, then $\nabla K(w) = \Sigma^{-1}w.$
+- In step 2 (4), if $K(w)=K(-w)$, we can just set $w^* = w_L^{\prime}$.
 - Step length $\epsilon$ may be heuristically chosen by fixing $L=1$ and $\Sigma=I$ and experimenting different magnitudes of $\epsilon$ until the acceptance rate can settle between some acceptable range. It is also possible to use some scheduler to moderate the step length.
 - One can choose $\Sigma$ by first running the chain for a burn-in period, then estimate $\Sigma$ by using sample covariance matrix of $x$.
 - The number of leapfrog steps $L$ may be chosen using the so-called **no-U-turn sampler (NUTS)**.

@@ -1776,7 +1776,7 @@ x_L^{\prime}\)</span>.</p>
 <p>(4). Perform a half step update for momentum: <span class="math inline">\(w_L^{\prime}=w_{L-1 /
 2}^{\prime}-\frac{\epsilon}{2} \nabla
 U\left(x_L^{\prime}\right)\)</span>; set <span class="math inline">\(w^*
-= w_L^{\prime}\)</span>.</p></li>
+= - w_L^{\prime}\)</span>.</p></li>
 <li><p>Compute <span class="math display">\[\alpha=\min \left(1, \exp
 \left(-{H}\left(x^*, w^*\right)+{H}\left(x_{t},
 w_{t}\right)\right)\right).\]</span></p></li>
@@ -1790,6 +1790,9 @@ probability <span class="math inline">\(\alpha\)</span>, otherwise set
 <li>If <span class="math inline">\(K(w)=\frac{1}{2} w^{\top} \Sigma^{-1}
 w\)</span>, then <span class="math inline">\(\nabla K(w) =
 \Sigma^{-1}w.\)</span></li>
+<li>In step 2 (4), if <span class="math inline">\(K(w)=K(-w)\)</span>,
+we can just set <span class="math inline">\(w^* =
+w_L^{\prime}\)</span>.</li>
 <li>Step length <span class="math inline">\(\epsilon\)</span> may be
 heuristically chosen by fixing <span class="math inline">\(L=1\)</span>
 and <span class="math inline">\(\Sigma=I\)</span> and experimenting
