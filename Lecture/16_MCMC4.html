@@ -1638,8 +1638,195 @@ MathJax.Hub.Config({
 <strong>Updated:</strong> 2023-12-01 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 <!------------->
-<div id="hamiltoniam-and-langevin-monte-carlo" class="section level2">
-<h2>Hamiltoniam and Langevin Monte Carlo</h2>
+<div id="hamiltonian-monte-carlo" class="section level2">
+<h2>Hamiltonian Monte Carlo</h2>
+<p>Hamiltonian Monte Carlo (HMC) is another powerful technique to sample
+from a probability distribution. It’s especially effective for
+high-dimensional distributions. The main requirement for implementing
+HMC is the target density function being differentiable.</p>
+<p>The basic idea behind Hamiltonian Monte Carlo is to use the concepts
+from Hamiltonian dynamics in physics to efficiently explore the target
+distribution. The system is described by a <strong>Hamiltonian
+function</strong> <span class="math inline">\(H\)</span>, which is a sum
+of potential energy <span class="math inline">\(U\)</span> and kinetic
+energy <span class="math inline">\(K\)</span> :</p>
+<p><span class="math display">\[
+H(x, w) = U(x) + K(w)
+\]</span> Here, <span class="math inline">\(x \in \mathbb{R}^d\)</span>
+represents the position (parameters of interest in the distribution we
+want to sample from), and <span class="math inline">\(w \in
+\mathbb{R}^d\)</span> represents the momentum (auxiliary variables) of
+the same dimension of <span class="math inline">\(x\)</span>.</p>
+<p>The potential energy <span class="math inline">\(U(x)\)</span> is
+typically the negative log of the target probability density (up to a
+constant), which is defined through the target density <span class="math inline">\(p\)</span> by <span class="math display">\[
+p(x)=\frac{1}{Z} \exp (-U(x))
+\]</span> where <span class="math inline">\(Z\)</span> is some
+normalizing constant.</p>
+<p>The kinetic energy <span class="math inline">\(K(w)\)</span> is often
+chosen to be a quadratic function of <span class="math inline">\(w\)</span>, resembling the kinetic energy in
+physics, so <span class="math inline">\(K(w)=K(-w)\)</span>. A common
+choice is that <span class="math display">\[
+K(w)=\frac{1}{2} w^{\top} \Sigma^{-1} w
+\]</span> for some p.d. <span class="math inline">\(\Sigma\)</span>.
+This just means the momentum follows a multivariate normal distribution.
+A simple example is <span class="math inline">\(\Sigma=\operatorname{diag}(\sigma^2_1, \ldots,
+\sigma^2_d)\)</span>, so <span class="math inline">\(K(w)=\sum_{i=1}^d
+(w_i^2/2 \sigma_i^2)\)</span>.</p>
+<p>Effectively, we can think of the problem as sampling from the joint
+distribution of <span class="math inline">\((x, w)\)</span> from <span class="math display">\[
+p(x, w) \propto \exp (-H(x, w))=\exp \left(-U(x)-\frac{1}{2} w^{\top}
+\Sigma^{-1} w\right)
+\]</span> and the samples of <span class="math inline">\(x\)</span> then
+is from the marginal distribution of <span class="math inline">\(x\)</span>.</p>
+<p><strong>Hamiltonian dynamics</strong></p>
+<p><strong>Hamilton’s equations</strong> describe how the state of the
+system <span class="math inline">\((x, w)=(x(t), w(t))\)</span> changes
+over time. These equations are given by: <span class="math display">\[
+\frac{dx}{dt} = \frac{\partial H}{\partial x}=\frac{\partial K}{\partial
+w}, \qquad \frac{dw}{dt} = -\frac{\partial H}{\partial
+x}=-\frac{\partial U}{\partial x}.
+\]</span> These equations describe the rate of change of the position
+coordinates <span class="math inline">\((x)\)</span> as determined by
+the partial derivative of the Hamiltonian with respect to the momentum
+coordinates <span class="math inline">\((w)\)</span>, and the rate of
+change of the momentum determined by the negative partial derivative of
+the Hamiltonian with respect to the position coordinates.</p>
+<p>Let <span class="math inline">\(g: (x, w) \to (x^*, w^*)\)</span>
+denote the transition under the Hamiltonian dynamics for a
+<em>fixed</em> period of time. Clearly, <span class="math inline">\(g\)</span> is deterministic.</p>
+<p>Hamiltonian dynamics have several key properties that are crucial for
+HMC:</p>
+<ul>
+<li><strong>Conservation of the Hamiltonian</strong>: The value of <span class="math inline">\(H\)</span> remains constant along any trajectory.
+<span class="math display">\[
+\frac{d H}{d t}=\sum_{i=1}^d\left[\frac{d x_i}{d t} \frac{\partial
+H}{\partial x_i}+\frac{d w_i}{d t} \frac{\partial H}{\partial
+w_i}\right]=\sum_{i=1}^d\left[\frac{\partial H}{\partial w_i}
+\frac{\partial H}{\partial x_i}-\frac{\partial H}{\partial x_i}
+\frac{\partial H}{\partial w_i}\right]=0
+\]</span> This conservation implies that if we are able to sample
+according to Hamilton’s equations <em>perfectly</em>, then we remain on
+some fixed level curve of the Hamiltonian function. As will be clear
+later, this can hold only approximately with discretizing methods.</li>
+<li><strong>Reversibility</strong>: The dynamic <span class="math inline">\(g\)</span> is 1-1 mapping and has an inverse which
+amounts to negating the momentum, then running the dynamic <span class="math inline">\(g\)</span>, and lastly negating the momentum
+again. This property is crucial for the HMC to satisfy detailed balance
+condition (assuming the update is correctly done with adjustment for
+some Jacobian factor).</li>
+<li><strong>Volume Preservation</strong>: The determinant of the
+Jacobian matrix of <span class="math inline">\(g\)</span> has absolute
+value one, equivalently, the dynamic is volume-preserving in <span class="math inline">\((x ,w)\)</span>-space. That is, if we apply the
+mapping <span class="math inline">\(g\)</span> to the points in some
+region <span class="math inline">\(R\)</span> of <span class="math inline">\((x, w)\)</span> space, with some volume, the image
+of <span class="math inline">\(R\)</span> under <span class="math inline">\(g\)</span> will also have the same volume.</li>
+</ul>
+<div id="discretizing-hamiltons-equations" class="section level5">
+<h5>Discretizing Hamilton’s equations</h5>
+<p>Since the true solution for the Hamilton’s equations is continuous,
+we are not able to simulate exact solutions, but have to reply on some
+discrete approximation.</p>
+<p>Earlier attempts are (1) Euler’s method, (2) Modified Euler’s method.
+Unfortunately, (1) does not preserve volume, and (2) involves asymmetric
+update which is not fully reversible.</p>
+<p>The most accurate method that respects the properties is the
+so-called <strong>leapfrog integrator</strong>, which is given by <span class="math display">\[
+\begin{aligned}
+w{(t+1 / 2)} &amp; =w(t)-\frac{\epsilon}{2} \nabla U(x(t)), \\
+x(t+1) &amp; =x(t)+\epsilon \nabla K(w(t+1/2), \\
+w(t+1) &amp; =w(t+1 / 2)-\frac{\epsilon}{2}  \nabla U(x(t+1)).
+\end{aligned}
+\]</span> Here <span class="math inline">\(\nabla U(x):= \partial
+U/\partial x, \nabla K(w):= \partial K/\partial w\)</span>.</p>
+<p>This one update consist of a half update of the momentum and one full
+update of the position, and lastly another half update of the
+momentum.</p>
+<p>Since a move from <span class="math inline">\((x , w)\)</span> to
+<span class="math inline">\((x^*, w^*)\)</span> will never conserve the
+Hamiltonian exatly due to the numerical approximation error by
+discretization, hence we would need to employ a Metropolis-Hastings step
+to decide whether to accept or reject the proposal <span class="math inline">\((x^*, w^*)\)</span>. Due to reversibility and the
+volume-preservation, the acceptance probability is simply <span class="math display">\[
+\alpha=\min \left(1, \frac{p\left(x^*, w^*\right)}{p\left(x,
+w\right)}\right)=\min \left(1, \exp \left(-{H}\left(x^*,
+w^*\right)+{H}\left(x, w\right)\right)\right).
+\]</span></p>
+<p>We use subscript to denote the time: <span class="math inline">\(x_t=x(t); w_t=w(t)\)</span> in the description of
+the algorithms below.</p>
+<p><strong>Hamiltonian Monte Carlo</strong> for <span class="math inline">\(t=0: T\)</span> repeat the following</p>
+<ol style="list-style-type: decimal">
+<li><p>Generate random momentum <span class="math inline">\(w_{t} \sim
+{N}({0}, {\Sigma})\)</span>.</p></li>
+<li><p>Set <span class="math inline">\(\left(x_0^{\prime},
+w_0^{\prime}\right)=\left(x_{t}, w_{t}\right)\)</span>. Perform <span class="math inline">\(L\)</span> leapfrog updates moving from <span class="math inline">\((x_0^{\prime}, w_0^{\prime})\)</span> to <span class="math inline">\((x^{*}, w^{*})\)</span>:</p>
+<p>(1). Perform a half step update for momentum: <span class="math display">\[w_{\frac{1}{2}}^{\prime}=w_0^{\prime}-\frac{\epsilon}{2}
+\nabla U\left(x_0^{\prime}\right);\]</span> (2). <span class="math inline">\(\text {For } l=1\)</span> to <span class="math inline">\(L-1,\)</span> perform alternating one full step
+for <span class="math inline">\(x\)</span> and <span class="math inline">\(w\)</span>: <span class="math display">\[
+\begin{aligned}
+&amp; \qquad \begin{array}{l}
+x_l^{\prime}=x_{l-1}^{\prime}+\epsilon \nabla K(w_{l-1 / 2}^{\prime}) \\
+w_{l+1 / 2}^{\prime}=w_{l-1 / 2}^{\prime}-\epsilon \nabla
+\mathcal{E}\left(x_l^{\prime}\right)
+\end{array}
+\end{aligned};
+\]</span></p>
+<p>(3). Perform a full step update for location: <span class="math inline">\(x_L^{\prime}=x_{L-1}^{\prime}+\epsilon \nabla
+K(w_{L-1 / 2}^{\prime})\)</span>; set <span class="math inline">\(x^* =
+x_L^{\prime}\)</span>.</p>
+<p>(4). Perform a half step update for momentum: <span class="math inline">\(w_L^{\prime}=w_{L-1 /
+2}^{\prime}-\frac{\epsilon}{2} \nabla
+U\left(x_L^{\prime}\right)\)</span>; set <span class="math inline">\(w^*
+= w_L^{\prime}\)</span>.</p></li>
+<li><p>Compute <span class="math display">\[\alpha=\min \left(1, \exp
+\left(-{H}\left(x^*, w^*\right)+{H}\left(x_{t},
+w_{t}\right)\right)\right).\]</span></p></li>
+<li><p>Set <span class="math inline">\(x_{t+1}=x^*\)</span> with
+probability <span class="math inline">\(\alpha\)</span>, otherwise set
+<span class="math inline">\(x_{t+1}=x_{t}\)</span>.</p></li>
+</ol>
+<p><strong>Proof</strong>: provided in class.</p>
+<p><strong>Remarks</strong></p>
+<ul>
+<li>If <span class="math inline">\(K(w)=\frac{1}{2} w^{\top} \Sigma^{-1}
+w\)</span>, then <span class="math inline">\(\nabla K(w) =
+\Sigma^{-1}w.\)</span></li>
+<li>Step length <span class="math inline">\(\epsilon\)</span> may be
+heuristically chosen by fixing <span class="math inline">\(L=1\)</span>
+and <span class="math inline">\(\Sigma=I\)</span> and experimenting
+different magnitudes of <span class="math inline">\(\epsilon\)</span>
+until the acceptance rate can settle between some acceptable range. It
+is also possible to use some scheduler to moderate the step length.</li>
+<li>One can choose <span class="math inline">\(\Sigma\)</span> by first
+running the chain for a burn-in period, then estimate <span class="math inline">\(\Sigma\)</span> by using sample covariance matrix
+of <span class="math inline">\(x\)</span>.</li>
+<li>The number of leapfrog steps <span class="math inline">\(L\)</span>
+may be chosen using the so-called <strong>no-U-turn sampler
+(NUTS)</strong>.</li>
+</ul>
+</div>
+</div>
+<div id="langevin-monte-carlo" class="section level2">
+<h2>Langevin Monte Carlo</h2>
+<p>When we use <span class="math inline">\(L=1\)</span> and <span class="math inline">\(K(w)=\frac{1}{2} w^{\top} \Sigma^{-1} w\)</span>
+in Hamiltonian Monte Carlo, we have what is called <strong>Langevin
+Monte Carlo</strong>. It is also called Metropolis adjusted Langevin
+algorithm (<strong>MALA</strong>).</p>
+<p>For <span class="math inline">\(t=0: T\)</span> repeat the
+following</p>
+<ol style="list-style-type: decimal">
+<li>Generate random momentum <span class="math inline">\(w_{t} \sim
+{N}({0}, {\Sigma})\)</span>.</li>
+<li>Perform a full step update for location: <span class="math display">\[x^*=x_{t}- \frac{\epsilon^2}{2}\Sigma^{-1}\nabla
+U(x_t)+\epsilon \Sigma^{-1} w_t;\]</span></li>
+<li>Perform a half step update for momentum: <span class="math display">\[w^*=w_{t}- \frac{\epsilon}{2}\nabla
+U(x_t)-\frac{\epsilon}{2} \nabla U\left(x^{*}\right);\]</span></li>
+<li>Compute <span class="math display">\[\alpha=\min \left(1, \exp
+\left(-{H}\left(x^*, w^*\right)+{H}\left(x_{t},
+w_{t}\right)\right)\right).\]</span></li>
+<li>Set <span class="math inline">\(x_{t+1}=x^*\)</span> with
+probability <span class="math inline">\(\alpha\)</span>, otherwise set
+<span class="math inline">\(x_{t+1}=x_{t}\)</span>.</li>
+</ol>
 <!------------->
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
 <strong>Updated:</strong> 2023-12-01 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
