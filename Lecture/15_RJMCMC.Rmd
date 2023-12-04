@@ -203,6 +203,8 @@ then skip to the step 5.
 \end{align*}
 4. Generate $U \sim \mathrm{U}(0,1)$, if $U \leq \alpha$, set $k^{(s+1)} \leftarrow k^{*}$, $X^{(s+1)} \leftarrow X^*$; otherwise set $k^{(s+1)} \leftarrow k^{(s)}$, $X^{(s+1)} \leftarrow X^{(s)}$. 
 
+**Proof**: provided in class.
+
 **Remarks**:
 
 (1) Here we allow the state space transition probability $j_{k^{(s)} \to k^{*}}(k^{(s)},X^{(s)})$ depends on $(k^{(s)},X^{(s)})$, for simpler design model, it could be pure deterministic rule.
