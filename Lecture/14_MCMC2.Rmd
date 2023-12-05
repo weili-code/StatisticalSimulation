@@ -268,13 +268,15 @@ At iteration $s$, simulate
 2. $X^{(s+1)} \sim \op{unif}(A^{(s+1)}),$ where $A^{(s+1)}:=\{x: f(x)>U^{(s+1)} \}.$
 
 
-**Remark 1**: A major difficulty in the algorithm is to evaluate the set $A^{(s+1)}$. For a univaraite distribution, an iterative expansion is applied--called **stepping out**: star with some small constants $L>0, R>0$ and consider the candidate interval $x \in (X^{(s)}-L, X^{(s)}+R)$, then we extend the interval until the endpoints fall outside the slice (i.e., either $f(X^{(s)}-L) \leq U^{(s+1)}$ or $f(X^{(s)}+R)\leq U^{(s+1)})$) or after some fixed number of steps. Eventually we aim for the interval 
+**Remark 1**: A major difficulty in the algorithm is to evaluate the set $A^{(s+1)}$. Consider for a univaraite distribution, we can apply an iterative expansion--called **stepping out**: star with some small constants $L>0, R>0$ and consider the candidate interval $x \in (X^{(s)}-L, X^{(s)}+R)$, then we extend the interval until the endpoints fall outside the slice (i.e., either $f(X^{(s)}-L) \leq U^{(s+1)}$ or $f(X^{(s)}+R)\leq U^{(s+1)})$) or after some fixed number of steps. Eventually we aim for the interval 
 $$
 \tilde{A}^{(s+1)}=\{x\in (X^{(s)}-L, X^{(s)}+R): f(x)>U^{(s+1)} \}.
 $$
 Then in a loop we draw $X^*$ from $\tilde{A}^{(s+1)}$ using accept/reject method, i.e., we draw $X^*$ from the interval until $f(X^*)>U^{(s+1)}$ and then set $X^{(s+1)} \leftarrow X^*$. During the loop, if $f(X^*)\leq U^{(s+1)}$, we adjust the interval by **shrinking** it--specifically, if $X^*>X^{(s)}$, set $R \leftarrow X^*-X^{(s)}$; if $X^*<X^{(s)}$, set $L \leftarrow X^{(s)}-X^*$, then redraw from the interval.
 
-**Remark 2**: The algorithm remains valid if we use $\tilde{f}$ the kernel of the p.d.f. in the algorithm.
+**Remark 2**: The procedure described in Remark 1 can be generalized to multivariate distribution.
+
+**Remark 3**: The algorithm remains valid if we use $\tilde{f}$ the kernel of the p.d.f. in the algorithm.
 
 
 **General form**:
