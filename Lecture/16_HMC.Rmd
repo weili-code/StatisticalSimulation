@@ -141,7 +141,7 @@ $$
 \begin{aligned}
 & \qquad \begin{array}{l}
 x_l^{\prime}=x_{l-1}^{\prime}+\epsilon \nabla K(w_{l-1 / 2}^{\prime}) \\
-w_{l+1 / 2}^{\prime}=w_{l-1 / 2}^{\prime}-\epsilon \nabla \mathcal{E}\left(x_l^{\prime}\right)
+w_{l+1 / 2}^{\prime}=w_{l-1 / 2}^{\prime}-\epsilon \nabla U\left(x_l^{\prime}\right)
 \end{array}
 \end{aligned};
 $$
