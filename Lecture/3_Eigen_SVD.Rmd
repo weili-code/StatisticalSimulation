@@ -26,9 +26,11 @@ header-includes:
 - \newcommand\wh[1]{\widehat{#1}}
 - \newcommand\op[1]{\operatorname{#1}}
 - \newcommand\mbb[1]{\mathbb{#1}}
+- \newcommand\T{\top}
+- \newcommand{\wei}[1]{\textcolor{orange}{(Wei:#1)}}
+- \usepackage{mathtools}
 - \usepackage{caption}
 - \captionsetup[figure]{labelformat=empty}
-- \newcommand{\wei}[1]{\textcolor{orange}{(Wei:#1)}}
 ---
 
 <script type="text/x-mathjax-config">
@@ -62,13 +64,13 @@ If the geometric multiplicity is equal to the algebraic multiplicity, then there
 
 Note: $A: (n \times n )$ is a square matrix, $\det(A)=\prod_{i=1}^n \lambda_i$. A square matrix is invertible if and only if its eigenvalues are non-zero.
 
-**Eigen-decomposition:** $A$ is a square and symmetric matrix, then we can write $A=P \Lambda P^T$ where 
+**Eigen-decomposition:** $A$ is a square and symmetric matrix, then we can write $A=P \Lambda P^\top$ where 
 \begin{align*}
 &P=[u_1, u_2,\cdots, u_n], \quad u\mbox{'s are the orthonormal eigenvector of }A \\
 &\Lambda = diag\{\text{eigenvalues of }A\}.
 \end{align*}
 
-Note: If this symmetric matrix $A$ is invertible, then we have $A^{-1}=P\Lambda^{-1}P^T$ where 
+Note: If this symmetric matrix $A$ is invertible, then we have $A^{-1}=P\Lambda^{-1}P^\top$ where 
 \begin{equation*}
 \Lambda^{-1} = 
 \begin{pmatrix}
@@ -122,7 +124,7 @@ $$
    1 
 \end{pmatrix}
 $$
-Now $A=P\Lambda P^T=
+Now $A=P\Lambda P^\top=
 \begin{pmatrix} 
    1 & 0   \\
    0 & 1
@@ -142,12 +144,12 @@ Now $A=P\Lambda P^T=
 **Singular value decomposition**
 ===========
 
-For a $m \times n$ matrix ${A}$, $A^{T}A$ is a symmetric matrix. Let $\{ v_{1},\ldots,v_{n} \}$ be the collection of all the orthonormal eigenvectors of $A^{T}A$ (eigen-decomposition); let  $\lambda_{1},...,\lambda_{n}$ be the associated eigenvalues, $\lambda_{1} \ge \lambda_{2} \ge \cdots \geq \lambda_{n} \ge 0$. We have $\lVert Av_{i}\lVert^{2} = \lambda_{i}$, since 
+For a $m \times n$ matrix ${A}$, $A^{\top}A$ is a symmetric matrix. Let $\{ v_{1},\ldots,v_{n} \}$ be the collection of all the orthonormal eigenvectors of $A^{\top}A$ (eigen-decomposition); let  $\lambda_{1},...,\lambda_{n}$ be the associated eigenvalues, $\lambda_{1} \ge \lambda_{2} \ge \cdots \geq \lambda_{n} \ge 0$. We have $\lVert Av_{i}\lVert^{2} = \lambda_{i}$, since 
 $$
-A^{T}Av_{i} = \lambda_{i}v_{i} \Rightarrow
-v_{i}^{T}A^{T}Av_{i} = \lambda_{i}.
+A^{\top}Av_{i} = \lambda_{i}v_{i} \Rightarrow
+v_{i}^{\top}A^{\top}Av_{i} = \lambda_{i}.
 $$
-The singular values of $A$ are squared roots of the eigenvalues of $A^{T}A$, denoted by $\sigma_{i} = \sqrt{\lambda_{i}}$; $\sigma_{1} \ge \sigma_{2} \ge \cdots \geq \sigma_{n} \ge 0$
+The singular values of $A$ are squared roots of the eigenvalues of $A^{\top}A$, denoted by $\sigma_{i} = \sqrt{\lambda_{i}}$; $\sigma_{1} \ge \sigma_{2} \ge \cdots \geq \sigma_{n} \ge 0$
 
 **Fact**: The rank of a matrix $A$ is equal to the number of positive singular value of $A$.  
 
@@ -165,10 +167,10 @@ $$
 $$
 The Singular Value Decomposition of A is:
 $$
-  A = U_{m \times m}\Sigma_{m \times n}V^{T}_{n \times n},
+  A = U_{m \times m}\Sigma_{m \times n}V^{\top}_{n \times n},
 $$
 where $U$ and $V$ are both orthogonal matrices: 
-$V=[v_1, \cdots, v_n]$ consists of all orthonormal eigenvectors of $A^{T}A$; 
+$V=[v_1, \cdots, v_n]$ consists of all orthonormal eigenvectors of $A^{\top}A$; 
 $U=[u_1, \cdots, u_m]$ consists the column $u_{i}$ as follows
 $$\text{for }   1 \le i \le r, \quad u_{i} = \frac{Av_{i}}{\lVert Av_{i}\rVert} = \frac{Av_{i}}{\sigma_{i}},
 $$
@@ -200,16 +202,16 @@ $$
     0 & 0
   \end{bmatrix}
   \begin{bmatrix}
-    V_{r}^{T} \\
-    V_{n-r}^{T}
+    V_{r}^{\top} \\
+    V_{n-r}^{\top}
   \end{bmatrix}
-  = U_{r}DV_{r}^{T}=\sum_{i=1}^r d_i{u}_iv_i^T.
+  = U_{r}DV_{r}^{\top}=\sum_{i=1}^r d_i{u}_iv_i^\top.
 $$
-**Note 1**: If we instead consider $\tilde{A}=\sum_{i=1}^l d_i{u}_iv_i^T$ for some $l < r$, then this is the low-rank approximation to $A$, sometimes is called **truncated SVD**.
+**Note 1**: If we instead consider $\tilde{A}=\sum_{i=1}^l d_i{u}_iv_i^\top$ for some $l < r$, then this is the low-rank approximation to $A$, sometimes is called **truncated SVD**.
 
 **Note 2**: If $m \geq n$, the SVD (sometimes called **thin SVD**) can be also written as 
 \begin{align*}
-A=\tilde{U}\tilde{D}\tilde{V}^T
+A=\tilde{U}\tilde{D}\tilde{V}^\top
 \end{align*}
 where $\tilde{U}: m \times n, \tilde{D}: n \times n; \tilde{V}: n \times n.$
 
@@ -225,25 +227,25 @@ We can use thin SVD to solve the Least Squares Problems as following:
 
 \begin{align*}
  Ax &= b, \\
- A^{T}Ax &= A^{T}b, \\
- (U_rDV_r^{T})^{T}(U_rDV_r^{T})x &= (U_rDV_r^{T})^{T}b, \\
-  V_rDIDV_r^Tx &= V_rDU_r^{T}b, \\
-  DV_r^{T}x &= U_r^{T}b.
+ A^{\top}Ax &= A^{\top}b, \\
+ (U_rDV_r^{\top})^{\top}(U_rDV_r^{\top})x &= (U_rDV_r^{\top})^{\top}b, \\
+  V_rDIDV_r^\top x &= V_rDU_r^{\top}b, \\
+  DV_r^{\top}x &= U_r^{\top}b.
 \end{align*}
 
-Denote $w = V_r^{T}x$, $y = U_r^{T}b$, we have the following algorithm:  
+Denote $w = V_r^{\top}x$, $y = U_r^{\top}b$, we have the following algorithm:  
 
 **Algorithm**  
 
-1. Find the SVD of $A = U_rDV_r^{T}$;  
-2. Compute $y = U_r^{T}b$;  
+1. Find the SVD of $A = U_rDV_r^{\top}$;  
+2. Compute $y = U_r^{\top}b$;  
 3. Solve the diagonal system $Dw=y$, giving $w^{*} = D^{-1}y$;  
-4. Solve $V_r^{T}x = w^{*} \Rightarrow x^* = V_rw^{*}$.
+4. Solve $V_r^{\top}x = w^{*} \Rightarrow x^* = V_rw^{*}$.
 
-The solution of the equation is $x^* = V_rD^{-1}U_r^{T}b= V\Sigma^{-1}U^{T}b$. 
-We notice that this SVD method allows $A$, $b$ to be arbitrary. Notice that $V_{r}D^{-1}U_{r}^{T}$ is like the "inverse" of A. Here we have the concept of generalized inverse.  
+The solution of the equation is $x^* = V_rD^{-1}U_r^{\top}b= V\Sigma^{-1}U^{\top}b$. 
+We notice that this SVD method allows $A$, $b$ to be arbitrary. Notice that $V_{r}D^{-1}U_{r}^{\top}$ is like the "inverse" of A. Here we have the concept of generalized inverse.  
 
-**Moore-Penrose inverse of A**: $A^{\dagger} = V_{r}D^{-1}U_{r}^{T}.$
+**Moore-Penrose inverse of A**: $A^{\dagger} = V_{r}D^{-1}U_{r}^{\top}.$
 
 2.LS-Problem 
 -----------------------
@@ -252,11 +254,11 @@ In LS Problem
 $$\min_{x} \lVert Ax -b \rVert,$$ 
 where $A$ and $b$ are not restricted at all, we have:  
 $$
-  A^{T}Ax = A^{T}b.
+  A^{\top}Ax = A^{\top}b.
 $$
 Let $\mathfrak{L}$ is the set of all the minimizers to the LS problem. We have following facts.  
 
-**Fact 1** $x^{*} = A^{\dagger}b \in \mathfrak{L}$; from the normal equation, $A^{T}AA^{\dagger} = A^{T}.$  
+**Fact 1** $x^{*} = A^{\dagger}b \in \mathfrak{L}$; from the normal equation, $A^{\top}AA^{\dagger} = A^{\top}.$  
 
 **Fact 2** $A\tilde{x_{1}} = A\tilde{x_{2}}$, for any $\tilde{x_{1}},\tilde{x_{2}} \in \mathfrak{L}$.  
 
@@ -264,18 +266,18 @@ Let $\mathfrak{L}$ is the set of all the minimizers to the LS problem. We have f
 
 **Fact 4** We already have the result that if we choose some $\lambda>0$, LS problem will has a unique solution to the "modified" normal equation:
 $$
- (A^{T}A+\lambda I)x=A^{T}b,
+ (A^{\top}A+\lambda I)x=A^{\top}b,
 $$
-that is, $\hat{x} = (A^{T}A+\lambda I)^{-1}A^{T}b.$ In fact, let $\lambda \rightarrow 0$, we have $(A^{T}A+\lambda I)^{-1}A^{T} \rightarrow A^{\dagger}.$ So 
+that is, $\hat{x} = (A^{\top}A+\lambda I)^{-1}A^{\top}b.$ In fact, let $\lambda \rightarrow 0$, we have $(A^{\top}A+\lambda I)^{-1}A^{\top} \rightarrow A^{\dagger}.$ So 
 $$
- x^*= \lim_{\lambda \to 0} [(A^{T}A+\lambda I)^{-1}A^{T}]b= \lim_{\lambda \to 0} [A^T(AA^T+\lambda I)^{-1}]b = A^{\dagger} b.
+ x^*= \lim_{\lambda \to 0} [(A^{\top}A+\lambda I)^{-1}A^{\top}]b= \lim_{\lambda \to 0} [A^\top(AA^\top+\lambda I)^{-1}]b = A^{\dagger} b.
 $$
 
-**Fact 5** The projection of $b$ on $Col(A)$ is given by $A(A^{T}A)^{-1}A^{T}b$ (assuming $A^{T}A$ is invertible), here is a more general result  
+**Fact 5** The projection of $b$ on $Col(A)$ is given by $A(A^{\top}A)^{-1}A^{\top}b$ (assuming $A^{\top}A$ is invertible), here is a more general result  
 $$
-  \hat{b} = AA^{\dagger}b = \lim_{\lambda \rightarrow 0}[A(A^{T}A+\lambda I)^{-1}A^{T}]b,
+  \hat{b} = AA^{\dagger}b = \lim_{\lambda \rightarrow 0}[A(A^{\top}A+\lambda I)^{-1}A^{\top}]b,
 $$
-so $P_A:=AA^{\dagger}$ is orthogonal projection onto $Col(A)$, $I-P_A$ is orthogonal projection onto $\op{Ker}(A^T).$
+so $P_A:=AA^{\dagger}$ is orthogonal projection onto $Col(A)$, $I-P_A$ is orthogonal projection onto $\op{Ker}(A^\top).$
 
 
 

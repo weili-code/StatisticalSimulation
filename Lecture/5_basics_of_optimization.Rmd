@@ -26,10 +26,11 @@ header-includes:
 - \newcommand\wh[1]{\widehat{#1}}
 - \newcommand\op[1]{\operatorname{#1}}
 - \newcommand\mbb[1]{\mathbb{#1}}
-- \usepackage{caption}
-- \usepackage{mathtools}
-- \captionsetup[figure]{labelformat=empty}
+- \newcommand\T{\top}
 - \newcommand{\wei}[1]{\textcolor{orange}{(Wei:#1)}}
+- \usepackage{mathtools}
+- \usepackage{caption}
+- \captionsetup[figure]{labelformat=empty}
 ---
 
 
@@ -81,13 +82,13 @@ $$
 Some results from calculus:
 
 (1)
-$f(x)=a^Tx :{\mathbb{R^n}}\to{\mathbb{R}}$, $f(x)$ can also written in $f(x)={\sum_{i=1}^{n}}a_ix_i$,
+$f(x)=a^\top x :{\mathbb{R^n}}\to{\mathbb{R}}$, $f(x)$ can also written in $f(x)={\sum_{i=1}^{n}}a_ix_i$,
 the gradient for $f(x)$,
 $${\nabla}f(x)=a.$$
 (2)
-$f(x)=x^TAx$ ($A$ is square matrix), the gradient for $f(x)$,
+$f(x)=x^\top Ax$ ($A$ is square matrix), the gradient for $f(x)$,
 $$
-{\nabla}f(x)=Ax+A^Tx;
+{\nabla}f(x)=Ax+A^\top x;
 $$
 if A is symmetric matrix,
 $$
@@ -99,14 +100,14 @@ $$
 
 $$
 \begin{aligned}
-f(x)&=\lVert Ax-b\rVert^2\\&=\langle Ax-b, Ax-b\rangle\\&=(Ax-b)^T(Ax-b)
-\\&=x^TA^TAx-2b^TAx+b^Tb.
+f(x)&=\lVert Ax-b\rVert^2\\&=\langle Ax-b, Ax-b\rangle\\&=(Ax-b)^\top(Ax-b)
+\\&=x^\top A^\top Ax-2b^\top Ax+b^\top b.
 \end{aligned}
 $$
 
 The gradient of $f(x)$ is
 $$
-{\nabla}f(x)=\frac{{\partial}f(x)}{{\partial}x}=2A^TAx-2b^TA.
+{\nabla}f(x)=\frac{{\partial}f(x)}{{\partial}x}=2A^\top Ax-2b^\top A.
 $$
 
 # Optimization
@@ -128,7 +129,7 @@ Given $f:{\mathbb{R^n}}\to{\mathbb{R}}$, $S{\subseteq}{\mathbb{R^n}}$ is feasibl
 **5. Convex functions**: 
 
 (1) A "smooth" function $f$ is a convex at the point $v$ if and only if ${\nabla}^2f(v){\ge}0$  (positive semidefinite). If $f:{\mathbb{R}}\to{\mathbb{R}}$, $({\partial}^2f(x)/\partial x^2)|_{x=v}{\ge}0$, noting ${\partial}f(v)/{\partial}x$ slope at $v$ = rate of change of $f$ at $v$; ${\partial}^2f(v)/{\partial x^2}=$ rate of change of the slope of $f$ at $v$. This is second order definition.
-(2) A "differentialbe" function $f$ is convex at $v$ if and only if for all $w$ in the neighborhood of $v$, $f(w){\ge}f(v)+{\nabla}f(v)^T(w-v)$. This is first order definition.
+(2) A "differentialbe" function $f$ is convex at $v$ if and only if for all $w$ in the neighborhood of $v$, $f(w){\ge}f(v)+{\nabla}f(v)^\top(w-v)$. This is first order definition.
 (3) A function $f$ is convex on $S$ if and only if it's convex at every point of $S$. A function $f$ is convex on $S$, if and only if $x,y{\in}S$ entails $f({\alpha}x+(1-{\alpha})y){\le}{\alpha}f(x)+(1-{\alpha})f(y)$ for ${\alpha}{\in}[0,1]$.
 
 **6. stationary point and saddle point**
@@ -187,7 +188,7 @@ More generally, $f: \mathbb{R^2} \rightarrow \mathbb{R}$ has continuous second p
 4. If those cases not listed above, then the test is inconclusive.
 
 
-Note $f$ has four second partial derivatives-four measures of concavity (in $\nabla^2 f$). In fact, eigenvalues of the Hessian $\nabla^2 f$ measures concavity in the corresponding eigendirections (take for example, $v^THv=\lambda v^Tv=\lambda$ for an eigenvector $v$).
+Note $f$ has four second partial derivatives-four measures of concavity (in $\nabla^2 f$). In fact, eigenvalues of the Hessian $\nabla^2 f$ measures concavity in the corresponding eigendirections (take for example, $v^\top Hv=\lambda v^\top v=\lambda$ for an eigenvector $v$).
 
 In view of the classical results:
 

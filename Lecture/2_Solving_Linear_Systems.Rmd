@@ -26,9 +26,11 @@ header-includes:
 - \newcommand\wh[1]{\widehat{#1}}
 - \newcommand\op[1]{\operatorname{#1}}
 - \newcommand\mbb[1]{\mathbb{#1}}
+- \newcommand\T{\top}
+- \newcommand{\wei}[1]{\textcolor{orange}{(Wei:#1)}}
+- \usepackage{mathtools}
 - \usepackage{caption}
 - \captionsetup[figure]{labelformat=empty}
-- \newcommand{\wei}[1]{\textcolor{orange}{(Wei:#1)}}
 ---
 
 <script type="text/x-mathjax-config">
@@ -101,34 +103,34 @@ We are not going to discuss Gaussian elimination here. You can find more details
 
 ## Cholesky factorization
 
-**Theorem** (Cholesky factorization/decomposition): If symmetric matrix $A>0$ (positive-definite), then there exists a unique upper triangular matrix $U$ s.t. $A=U^{T}U$.
+**Theorem** (Cholesky factorization/decomposition): If symmetric matrix $A>0$ (positive-definite), then there exists a unique upper triangular matrix $U$ s.t. $A=U^{\top}U$.
 
 *Application 1: Multivariate Normal*
 
-If $Z_1,Z_2,\dots,Z_p\overset{i.i.d}\sim \mathcal{N}(0,1)$, $Z=(Z_1, \ldots, Z_p)^T \sim \mathcal{N}(0,I)$.
+If $Z_1,Z_2,\dots,Z_p\overset{i.i.d}\sim \mathcal{N}(0,1)$, $Z=(Z_1, \ldots, Z_p)^\top \sim \mathcal{N}(0,I)$.
 
-Also, by the well known property of multivariate normal distribution, $\mu+AZ\sim\mathcal{N}(\mu,AA^T),$
+Also, by the well known property of multivariate normal distribution, $\mu+AZ\sim\mathcal{N}(\mu,AA^\top),$
 $$\mu=
 \begin{bmatrix}
 \mu_1\\
 \mu_2\\
 \mu_3
-\end{bmatrix}, \qquad AA^T=
+\end{bmatrix}, \qquad AA^\top=
 \begin{bmatrix}
 \sigma_1^2 & \sigma_{12}^2 & \cdots & \sigma_{1p}^2\\
 \sigma_{21}^2 & \sigma_{2}^2 & \cdots & \sigma_{2p}^2\\
 \vdots & \vdots & \ddots & \vdots\\
 \sigma_{p1}^2 & \sigma_{p2}^2 & \cdots & \sigma_{p}^2
 \end{bmatrix}.$$
-where $AA^T$ is the variance/covariance matrix. 
+where $AA^\top$ is the variance/covariance matrix. 
 
-Goal: To generate (multivariate) $W\sim\mathcal{N}(\mu,\sum)$. Take Cholesky decomposition of $\sum=U^TU$, then $\mu+U^TZ \sim\mathcal{N}(\mu, U^TU).$
+Goal: To generate (multivariate) $W\sim\mathcal{N}(\mu,\sum)$. Take Cholesky decomposition of $\sum=U^\top U$, then $\mu+U^\top Z \sim\mathcal{N}(\mu, U^\top U).$
 
 *Application 2*: Given $A>0$ (hence invertible), solve for $Ax=b$. There are three steps in the algorithm.
 
-1. Compute $A=U^{T}U$. (Then we have $U^{T}Ux=b$, denote $Ux=y$, now $U^{T}y=b$).
+1. Compute $A=U^{\top}U$. (Then we have $U^{\top}Ux=b$, denote $Ux=y$, now $U^{\top}y=b$).
 
-2. Forward solve $U^{T}y=b$ to get $\hat y$. (Here $U^{T}$ is a lower triangular matrix).
+2. Forward solve $U^{\top}y=b$ to get $\hat y$. (Here $U^{\top}$ is a lower triangular matrix).
 
 3. Back solve $Ux=\hat y$ to get $\hat x$. (Here $U$ is an upper triangular matrix).
 
@@ -136,7 +138,7 @@ Goal: To generate (multivariate) $W\sim\mathcal{N}(\mu,\sum)$. Take Cholesky dec
 
 ## QR decomposition
 
-**Theorem** (*Thin/Reduced* QR decomposition): If $A \in \mathbb{R}^{m \times n}$ ($m \ge n$) has $n$ linearly independent columns, then $A=Q_1 R$, where $Q_1 \in \mathbb{R}^{m \times n}$ has orthonormal columns (hence $Q_1^{T}Q_1=I$), and $R \in \mathbb{R}^{n \times n}$ is an upper triangular positive definite matrix.   
+**Theorem** (*Thin/Reduced* QR decomposition): If $A \in \mathbb{R}^{m \times n}$ ($m \ge n$) has $n$ linearly independent columns, then $A=Q_1 R$, where $Q_1 \in \mathbb{R}^{m \times n}$ has orthonormal columns (hence $Q_1^{\top}Q_1=I$), and $R \in \mathbb{R}^{n \times n}$ is an upper triangular positive definite matrix.   
 
 \begin{mdframed}
 Proof:
@@ -163,7 +165,7 @@ R \\
 0
 \end{bmatrix},
 $$
-where $Q\in \mathbb R^{m \times m}$ is orthogonal matrix (i.e. $Q^{T} Q=Q Q^{T}=I$), $Q_2$ is a matrix containing columns all orthogonal to that of $Q_1$ and $\begin{bmatrix}R \\0\end{bmatrix}\in \mathbb R^{m \times n}$. 
+where $Q\in \mathbb R^{m \times m}$ is orthogonal matrix (i.e. $Q^{\top} Q=Q Q^{\top}=I$), $Q_2$ is a matrix containing columns all orthogonal to that of $Q_1$ and $\begin{bmatrix}R \\0\end{bmatrix}\in \mathbb R^{m \times n}$. 
 
 *Remark*: Actually,
 
@@ -195,7 +197,7 @@ q_1&=\frac{a_1}{\|a_1\|}=\begin{bmatrix}
 1\\
 0
 \end{bmatrix}\\
-A&=\begin{bmatrix}a_1 & a_2\end{bmatrix}=\begin{bmatrix}q_1 & q_2\end{bmatrix}R=\begin{bmatrix}q_1 & q_2\end{bmatrix}\begin{bmatrix}\|a_1\| & q_1^{T}a_2\\ 0 & \|a_2-\langle a_2, q_1\rangle q_1\|\end{bmatrix}\\
+A&=\begin{bmatrix}a_1 & a_2\end{bmatrix}=\begin{bmatrix}q_1 & q_2\end{bmatrix}R=\begin{bmatrix}q_1 & q_2\end{bmatrix}\begin{bmatrix}\|a_1\| & q_1^{\top}a_2\\ 0 & \|a_2-\langle a_2, q_1\rangle q_1\|\end{bmatrix}\\
 A &=\begin{bmatrix}
 \frac{1}{\sqrt{2}} & 0 \\
 0 & 1\\
@@ -252,45 +254,45 @@ Our strategy is to find a $\hat x$ such that $A\hat x=\hat b$ is a projection of
 
 Consider $\hat b =A\hat x$. Obtain $\hat b$ by dropping a perpendicular line from $b$ to $\operatorname{Col}(A)$, that is to say $\inner{r}{\hat a} = 0, \hat a \in \operatorname{Col}(A)$, where $r = b-\hat b$ is the residual vector. In particular, 
 \begin{align*}
-\inner{r}{a_i} = 0,i=1,2,\cdots,n &\iff A^Tr=0\\
-&\iff A^T(b-A\hat x)=0\\
-&\iff A^TA \hat x=A^Tb
+\inner{r}{a_i} = 0,i=1,2,\cdots,n &\iff A^\top r=0\\
+&\iff A^\top (b-A\hat x)=0\\
+&\iff A^\top A \hat x=A^\top b
 \end{align*}
 
-Now $\hat x=(A^TA)^{-1}A^Tb$ if $A^TA$ is invertible, and then $\hat b = A(A^TA)^{-1}A^Tb$.
+Now $\hat x=(A^\top A)^{-1}A^\top b$ if $A^\top A$ is invertible, and then $\hat b = A(A^\top A)^{-1}A^\top b$.
 
-Note: $A^TA \hat x=A^Tb$ is called Normal Equation.
+Note: $A^\top A \hat x=A^\top b$ is called Normal Equation.
 
 **Fact 1:** Normal equation always has at least one solution.
 
-**Fact 2:** $A^TA$ is invertible if and only if $A$ has full-column rank. In particular, when $m<n$, $A^TA$ is not invertible.
+**Fact 2:** $A^\top A$ is invertible if and only if $A$ has full-column rank. In particular, when $m<n$, $A^\top A$ is not invertible.
 
-**Fact 3:** The solution to the normal equation is not necessary a solution to the original problem $Ax=b$. For $b\in Col(A)$, then $A^TA=A^Tb$ and $Ax=b$ have the same unique solution if and only if $A$ has full column rank.
+**Fact 3:** The solution to the normal equation is not necessary a solution to the original problem $Ax=b$. For $b\in Col(A)$, then $A^\top A=A^\top b$ and $Ax=b$ have the same unique solution if and only if $A$ has full column rank.
 
 
 \begin{mdframed}
 Example: 
 \end{mdframed}
 
-**Regularization (ridge regression):**  Solve $(A^TA+\lambda I)x=A^Tb$ for $\lambda>0$ is called. In this case, $A^TA+\lambda I$ is always invertible, and we have $$\hat x = (A^TA+\lambda I)^{-1}A^Tb.$$
+**Regularization (ridge regression):**  Solve $(A^\top A+\lambda I)x=A^\top b$ for $\lambda>0$ is called. In this case, $A^\top A+\lambda I$ is always invertible, and we have $$\hat x = (A^\top A+\lambda I)^{-1}A^\top b.$$
 
 **Application of QR to solve a linear least square problem: $\min_x \|Ax-b\|$**.
 
-$A$ columns are linearly independent. $A^TAx=A^Tb$. Decompose matrix $A$ by using QR decomposition:
+$A$ columns are linearly independent. $A^\top Ax=A^\top b$. Decompose matrix $A$ by using QR decomposition:
 
 \begin{align*}
-A=Q_1R &\Rightarrow R^TQ_1^TQ_1Rx=R^TQ_1^Tb\\
-&\Leftrightarrow  R^TRx=R^TQ_1^Tb\\
-&\Leftrightarrow  (R^T)^{-1}R^TRx=(R^T)^{-1}R^TQ_1^Tb\\
-&\Leftrightarrow  Rx=Q_1^Tb=y
+A=Q_1R &\Rightarrow R^\top Q_1^\top Q_1Rx=R^\top Q_1^\top b\\
+&\Leftrightarrow  R^\top Rx=R^\top Q_1^\top b\\
+&\Leftrightarrow  (R^\top )^{-1}R^\top Rx=(R^\top )^{-1}R^\top Q_1^\top b\\
+&\Leftrightarrow  Rx=Q_1^\top b=y
 \end{align*}
 
 Algorithm:
-\begin{enumerate}
-\item Compute thin QR: $A=Q_1R$.
-\item Compute the vector: $y=Q_1^Tb$.
-\item Backsolve the $Rx=y$ to obtain $\hat x$.
-\end{enumerate}
+
+- Compute thin QR: $A=Q_1R$.
+- Compute the vector: $y=Q_1^\top b$.
+- Backsolve the $Rx=y$ to obtain $\hat x$.
+
 
 
 <!------------->

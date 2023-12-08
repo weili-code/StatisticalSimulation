@@ -1651,7 +1651,7 @@ function</strong> <span class="math inline">\(H\)</span>, which is a sum
 of potential energy <span class="math inline">\(U\)</span> and kinetic
 energy <span class="math inline">\(K\)</span> :</p>
 <p><span class="math display">\[
-H(x, w) = U(x) + K(w)
+H(x, w) = U(x) + K(w).
 \]</span> Here, <span class="math inline">\(x \in \mathbb{R}^d\)</span>
 represents the position (parameters of interest in the distribution we
 want to sample from), and <span class="math inline">\(w \in
@@ -1660,14 +1660,14 @@ the same dimension of <span class="math inline">\(x\)</span>.</p>
 <p>The potential energy <span class="math inline">\(U(x)\)</span> is
 typically the negative log of the target probability density (up to a
 constant), which is defined through the target density <span class="math inline">\(p\)</span> by <span class="math display">\[
-p(x)=\frac{1}{Z} \exp (-U(x))
+p(x)=\frac{1}{Z} \exp (-U(x)),
 \]</span> where <span class="math inline">\(Z\)</span> is some
 normalizing constant.</p>
 <p>The kinetic energy <span class="math inline">\(K(w)\)</span> is often
 chosen to be a quadratic function of <span class="math inline">\(w\)</span>, resembling the kinetic energy in
 physics, so <span class="math inline">\(K(w)=K(-w)\)</span>. A common
 choice is that <span class="math display">\[
-K(w)=\frac{1}{2} w^{\top} \Sigma^{-1} w
+K(w)=\frac{1}{2} w^{\top} \Sigma^{-1} w,
 \]</span> for some p.d. <span class="math inline">\(\Sigma\)</span>.
 This just means the momentum follows a multivariate normal distribution.
 A simple example is <span class="math inline">\(\Sigma=\operatorname{diag}(\sigma^2_1, \ldots,
@@ -1676,7 +1676,7 @@ A simple example is <span class="math inline">\(\Sigma=\operatorname{diag}(\sigm
 <p>Effectively, we can think of the problem as sampling from the joint
 distribution of <span class="math inline">\((x, w)\)</span> from <span class="math display">\[
 p(x, w) \propto \exp (-H(x, w))=\exp \left(-U(x)-\frac{1}{2} w^{\top}
-\Sigma^{-1} w\right)
+\Sigma^{-1} w\right),
 \]</span> and the samples of <span class="math inline">\(x\)</span> then
 is from the marginal distribution of <span class="math inline">\(x\)</span>.</p>
 <p><strong>Hamiltonian dynamics</strong></p>
@@ -1704,7 +1704,7 @@ HMC:</p>
 H}{\partial x_i}+\frac{d w_i}{d t} \frac{\partial H}{\partial
 w_i}\right]=\sum_{i=1}^d\left[\frac{\partial H}{\partial w_i}
 \frac{\partial H}{\partial x_i}-\frac{\partial H}{\partial x_i}
-\frac{\partial H}{\partial w_i}\right]=0
+\frac{\partial H}{\partial w_i}\right]=0.
 \]</span> This conservation implies that if we are able to sample
 according to Hamilton’s equations <em>perfectly</em>, then we remain on
 some fixed level curve of the Hamiltonian function. As will be clear
@@ -1840,10 +1840,14 @@ w_{t}\right)\right)\right).\]</span></li>
 probability <span class="math inline">\(\alpha\)</span>, otherwise set
 <span class="math inline">\(x_{t+1}=x_{t}\)</span>.</li>
 </ol>
+<div id="python-code-examples" class="section level3">
+<h3>Python Code Examples</h3>
+<p>Provided and discussed in lab.</p>
 <!------------->
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
 <strong>Updated:</strong> 2023-12-08 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
+</div>
 </div>
 
 

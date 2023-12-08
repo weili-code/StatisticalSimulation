@@ -2066,18 +2066,18 @@ Q(\theta, \theta^{(t-1)}).\]</span></p>
 <p><strong>Example</strong>: Suppose <span class="math inline">\(Z\)</span> follows a <span class="math inline">\(N(\mu,\Sigma)\)</span>, here <span class="math inline">\(\theta:=(\mu,\Sigma)\)</span>. Note that <span class="math display">\[\begin{align*}
 &amp;E_{\theta^{(t-1)}}\left(\log P\left(Z_i; \theta\right) \mid Z_{(r)
 i}\right) \\ =&amp;-\frac{1}{2} \log |2 \pi
-{\Sigma}|-\frac{1}{2}  {E}_{\theta^{(t-1)}}\left[\left(Z_i-{\mu}\right)^{T}
+{\Sigma}|-\frac{1}{2}  {E}_{\theta^{(t-1)}}\left[\left(Z_i-{\mu}\right)^{\top}
 {\Sigma}^{-1}\left(Z_i-{\mu}\right) \mid Z_{(r) i} \right] \\
 =&amp;-\frac{1}{2} \log |{\Sigma}|-\frac{p}{2} \log (2 \pi)-\frac{1}{2}
 \operatorname{tr}\left({\Sigma}^{-1} {E}_{\theta^{(t-1)}}[{S}({\mu})\mid
 Z_{(r) i}]\right),
 \end{align*}\]</span> where <span class="math inline">\({E}_{\theta^{(t-1)}}[{S}({\mu})\mid Z_{(r) i}]:=
-\left({E}_{\theta^{(t-1)}}\left[Z_i Z_i^{T}\mid Z_{(r) i}\right]+{\mu}
-{\mu}^{T}-2 {\mu} {E}_{\theta^{(t-1)}}\left[Z_i\mid Z_{(r)
-i}\right]^{T}\right).\)</span> The key is to compute <span class="math inline">\({E}_{\theta^{(t-1)}}\left[Z_i\mid Z_{(r)
-i}\right]\)</span> and <span class="math inline">\({E}_{\theta^{(t-1)}}\left[Z_i Z_i^{T}\mid Z_{(r)
-i}\right]\)</span>, and these are expected sufficient statistics and can
-be computed using conditional formula for multivariate Gaussian
+\left({E}_{\theta^{(t-1)}}\left[Z_i Z_i^{\top}\mid Z_{(r)
+i}\right]+{\mu} {\mu}^{\top}-2 {\mu} {E}_{\theta^{(t-1)}}\left[Z_i\mid
+Z_{(r) i}\right]^{\top}\right).\)</span> The key is to compute <span class="math inline">\({E}_{\theta^{(t-1)}}\left[Z_i\mid Z_{(r)
+i}\right]\)</span> and <span class="math inline">\({E}_{\theta^{(t-1)}}\left[Z_i Z_i^{\top}\mid
+Z_{(r) i}\right]\)</span>, and these are expected sufficient statistics
+and can be computed using conditional formula for multivariate Gaussian
 distribution.</p>
 <p>In the above calculation, gathering all observations for all missing
 patterns, the solution in the M-step then is given by the MLE solution
@@ -2085,8 +2085,8 @@ using the expected sufficient statistics: <span class="math display">\[\begin{al
 {\mu}^{(t)} &amp; =\frac{1}{n}\sum_{i=1}^n \sum_r
 I(R_i=r){E}_{\theta^{(t-1)}}\left[Z_i\mid Z_{(r) i}\right], \\
 {\Sigma}^{(t)} &amp; =\frac{1}{n} \sum_{i=1}^n \sum_r
-I(R_i=r){E}_{\theta^{(t-1)}}\left[Z_i Z_i^{T}\mid Z_{(r)
-i}\right]-{\mu}^{(t)}\left({\mu}^{(t)}\right)^{T}.
+I(R_i=r){E}_{\theta^{(t-1)}}\left[Z_i Z_i^{\top}\mid Z_{(r)
+i}\right]-{\mu}^{(t)}\left({\mu}^{(t)}\right)^{\top}.
 \end{align*}\]</span></p>
 </div>
 <div id="python-code-examples" class="section level3">

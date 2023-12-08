@@ -1694,38 +1694,38 @@ more details in any algebra textbook.</p>
 <p><strong>Theorem</strong> (Cholesky factorization/decomposition): If
 symmetric matrix <span class="math inline">\(A&gt;0\)</span>
 (positive-definite), then there exists a unique upper triangular matrix
-<span class="math inline">\(U\)</span> s.t. <span class="math inline">\(A=U^{T}U\)</span>.</p>
+<span class="math inline">\(U\)</span> s.t. <span class="math inline">\(A=U^{\top}U\)</span>.</p>
 <p><em>Application 1: Multivariate Normal</em></p>
 <p>If <span class="math inline">\(Z_1,Z_2,\dots,Z_p\overset{i.i.d}\sim
 \mathcal{N}(0,1)\)</span>, <span class="math inline">\(Z=(Z_1, \ldots,
-Z_p)^T \sim \mathcal{N}(0,I)\)</span>.</p>
+Z_p)^\top \sim \mathcal{N}(0,I)\)</span>.</p>
 <p>Also, by the well known property of multivariate normal distribution,
-<span class="math inline">\(\mu+AZ\sim\mathcal{N}(\mu,AA^T),\)</span>
+<span class="math inline">\(\mu+AZ\sim\mathcal{N}(\mu,AA^\top),\)</span>
 <span class="math display">\[\mu=
 \begin{bmatrix}
 \mu_1\\
 \mu_2\\
 \mu_3
-\end{bmatrix}, \qquad AA^T=
+\end{bmatrix}, \qquad AA^\top=
 \begin{bmatrix}
 \sigma_1^2 &amp; \sigma_{12}^2 &amp; \cdots &amp; \sigma_{1p}^2\\
 \sigma_{21}^2 &amp; \sigma_{2}^2 &amp; \cdots &amp; \sigma_{2p}^2\\
 \vdots &amp; \vdots &amp; \ddots &amp; \vdots\\
 \sigma_{p1}^2 &amp; \sigma_{p2}^2 &amp; \cdots &amp; \sigma_{p}^2
-\end{bmatrix}.\]</span> where <span class="math inline">\(AA^T\)</span>
-is the variance/covariance matrix.</p>
+\end{bmatrix}.\]</span> where <span class="math inline">\(AA^\top\)</span> is the variance/covariance
+matrix.</p>
 <p>Goal: To generate (multivariate) <span class="math inline">\(W\sim\mathcal{N}(\mu,\sum)\)</span>. Take Cholesky
-decomposition of <span class="math inline">\(\sum=U^TU\)</span>, then
-<span class="math inline">\(\mu+U^TZ \sim\mathcal{N}(\mu,
-U^TU).\)</span></p>
+decomposition of <span class="math inline">\(\sum=U^\top U\)</span>,
+then <span class="math inline">\(\mu+U^\top Z \sim\mathcal{N}(\mu,
+U^\top U).\)</span></p>
 <p><em>Application 2</em>: Given <span class="math inline">\(A&gt;0\)</span> (hence invertible), solve for
 <span class="math inline">\(Ax=b\)</span>. There are three steps in the
 algorithm.</p>
 <ol style="list-style-type: decimal">
-<li><p>Compute <span class="math inline">\(A=U^{T}U\)</span>. (Then we
-have <span class="math inline">\(U^{T}Ux=b\)</span>, denote <span class="math inline">\(Ux=y\)</span>, now <span class="math inline">\(U^{T}y=b\)</span>).</p></li>
-<li><p>Forward solve <span class="math inline">\(U^{T}y=b\)</span> to
-get <span class="math inline">\(\hat y\)</span>. (Here <span class="math inline">\(U^{T}\)</span> is a lower triangular
+<li><p>Compute <span class="math inline">\(A=U^{\top}U\)</span>. (Then
+we have <span class="math inline">\(U^{\top}Ux=b\)</span>, denote <span class="math inline">\(Ux=y\)</span>, now <span class="math inline">\(U^{\top}y=b\)</span>).</p></li>
+<li><p>Forward solve <span class="math inline">\(U^{\top}y=b\)</span> to
+get <span class="math inline">\(\hat y\)</span>. (Here <span class="math inline">\(U^{\top}\)</span> is a lower triangular
 matrix).</p></li>
 <li><p>Back solve <span class="math inline">\(Ux=\hat y\)</span> to get
 <span class="math inline">\(\hat x\)</span>. (Here <span class="math inline">\(U\)</span> is an upper triangular
@@ -1745,7 +1745,7 @@ have <span class="math inline">\(Ux=b\)</span> where <span class="math inline">\
 <span class="math inline">\(A \in \mathbb{R}^{m \times n}\)</span>
 (<span class="math inline">\(m \ge n\)</span>) has <span class="math inline">\(n\)</span> linearly independent columns, then
 <span class="math inline">\(A=Q_1 R\)</span>, where <span class="math inline">\(Q_1 \in \mathbb{R}^{m \times n}\)</span> has
-orthonormal columns (hence <span class="math inline">\(Q_1^{T}Q_1=I\)</span>), and <span class="math inline">\(R \in \mathbb{R}^{n \times n}\)</span> is an upper
+orthonormal columns (hence <span class="math inline">\(Q_1^{\top}Q_1=I\)</span>), and <span class="math inline">\(R \in \mathbb{R}^{n \times n}\)</span> is an upper
 triangular positive definite matrix.</p>
 <p><em>Remark</em>: The matrix <span class="math inline">\(Q_1\)</span>
 provides an orthonormal basis for <span class="math inline">\(Col(A)\)</span>, i.e., the columns of A are linear
@@ -1768,9 +1768,8 @@ R \\
 0
 \end{bmatrix},
 \]</span> where <span class="math inline">\(Q\in \mathbb R^{m \times
-m}\)</span> is orthogonal matrix (i.e. <span class="math inline">\(Q^{T}
-Q=Q Q^{T}=I\)</span>), <span class="math inline">\(Q_2\)</span> is a
-matrix containing columns all orthogonal to that of <span class="math inline">\(Q_1\)</span> and <span class="math inline">\(\begin{bmatrix}R \\0\end{bmatrix}\in \mathbb R^{m
+m}\)</span> is orthogonal matrix (i.e. <span class="math inline">\(Q^{\top} Q=Q Q^{\top}=I\)</span>), <span class="math inline">\(Q_2\)</span> is a matrix containing columns all
+orthogonal to that of <span class="math inline">\(Q_1\)</span> and <span class="math inline">\(\begin{bmatrix}R \\0\end{bmatrix}\in \mathbb R^{m
 \times n}\)</span>.</p>
 <p><em>Remark</em>: Actually,</p>
 <p><span class="math display">\[
@@ -1799,7 +1798,7 @@ q_1}{\|a_2-\langle a_2, q_1\rangle q_1\|}==\begin{bmatrix}
 \end{bmatrix}\\
 A&amp;=\begin{bmatrix}a_1 &amp; a_2\end{bmatrix}=\begin{bmatrix}q_1
 &amp; q_2\end{bmatrix}R=\begin{bmatrix}q_1 &amp;
-q_2\end{bmatrix}\begin{bmatrix}\|a_1\| &amp; q_1^{T}a_2\\ 0 &amp;
+q_2\end{bmatrix}\begin{bmatrix}\|a_1\| &amp; q_1^{\top}a_2\\ 0 &amp;
 \|a_2-\langle a_2, q_1\rangle q_1\|\end{bmatrix}\\
 A &amp;=\begin{bmatrix}
 \frac{1}{\sqrt{2}} &amp; 0 \\
@@ -1867,39 +1866,50 @@ line from <span class="math inline">\(b\)</span> to <span class="math inline">\(
 <span class="math inline">\(\left\langle r,\hat a\right\rangle = 0, \hat
 a \in \operatorname{Col}(A)\)</span>, where <span class="math inline">\(r = b-\hat b\)</span> is the residual vector. In
 particular, <span class="math display">\[\begin{align*}
-\left\langle r,a_i\right\rangle = 0,i=1,2,\cdots,n &amp;\iff A^Tr=0\\
-&amp;\iff A^T(b-A\hat x)=0\\
-&amp;\iff A^TA \hat x=A^Tb
+\left\langle r,a_i\right\rangle = 0,i=1,2,\cdots,n &amp;\iff A^\top
+r=0\\
+&amp;\iff A^\top (b-A\hat x)=0\\
+&amp;\iff A^\top A \hat x=A^\top b
 \end{align*}\]</span></p>
-<p>Now <span class="math inline">\(\hat x=(A^TA)^{-1}A^Tb\)</span> if
-<span class="math inline">\(A^TA\)</span> is invertible, and then <span class="math inline">\(\hat b = A(A^TA)^{-1}A^Tb\)</span>.</p>
-<p>Note: <span class="math inline">\(A^TA \hat x=A^Tb\)</span> is called
-Normal Equation.</p>
+<p>Now <span class="math inline">\(\hat x=(A^\top A)^{-1}A^\top
+b\)</span> if <span class="math inline">\(A^\top A\)</span> is
+invertible, and then <span class="math inline">\(\hat b = A(A^\top
+A)^{-1}A^\top b\)</span>.</p>
+<p>Note: <span class="math inline">\(A^\top A \hat x=A^\top b\)</span>
+is called Normal Equation.</p>
 <p><strong>Fact 1:</strong> Normal equation always has at least one
 solution.</p>
-<p><strong>Fact 2:</strong> <span class="math inline">\(A^TA\)</span> is
-invertible if and only if <span class="math inline">\(A\)</span> has
-full-column rank. In particular, when <span class="math inline">\(m&lt;n\)</span>, <span class="math inline">\(A^TA\)</span> is not invertible.</p>
+<p><strong>Fact 2:</strong> <span class="math inline">\(A^\top
+A\)</span> is invertible if and only if <span class="math inline">\(A\)</span> has full-column rank. In particular,
+when <span class="math inline">\(m&lt;n\)</span>, <span class="math inline">\(A^\top A\)</span> is not invertible.</p>
 <p><strong>Fact 3:</strong> The solution to the normal equation is not
-necessary a solution to the original problem <span class="math inline">\(Ax=b\)</span>. For <span class="math inline">\(b\in Col(A)\)</span>, then <span class="math inline">\(A^TA=A^Tb\)</span> and <span class="math inline">\(Ax=b\)</span> have the same unique solution if and
+necessary a solution to the original problem <span class="math inline">\(Ax=b\)</span>. For <span class="math inline">\(b\in Col(A)\)</span>, then <span class="math inline">\(A^\top A=A^\top b\)</span> and <span class="math inline">\(Ax=b\)</span> have the same unique solution if and
 only if <span class="math inline">\(A\)</span> has full column rank.</p>
-<p><strong>Regularization (ridge regression):</strong> Solve <span class="math inline">\((A^TA+\lambda I)x=A^Tb\)</span> for <span class="math inline">\(\lambda&gt;0\)</span> is called. In this case,
-<span class="math inline">\(A^TA+\lambda I\)</span> is always
-invertible, and we have <span class="math display">\[\hat x =
-(A^TA+\lambda I)^{-1}A^Tb.\]</span></p>
+<p><strong>Regularization (ridge regression):</strong> Solve <span class="math inline">\((A^\top A+\lambda I)x=A^\top b\)</span> for <span class="math inline">\(\lambda&gt;0\)</span> is called. In this case,
+<span class="math inline">\(A^\top A+\lambda I\)</span> is always
+invertible, and we have <span class="math display">\[\hat x = (A^\top
+A+\lambda I)^{-1}A^\top b.\]</span></p>
 <p><strong>Application of QR to solve a linear least square problem:
 <span class="math inline">\(\min_x \|Ax-b\|\)</span></strong>.</p>
 <p><span class="math inline">\(A\)</span> columns are linearly
-independent. <span class="math inline">\(A^TAx=A^Tb\)</span>. Decompose
-matrix <span class="math inline">\(A\)</span> by using QR
+independent. <span class="math inline">\(A^\top Ax=A^\top b\)</span>.
+Decompose matrix <span class="math inline">\(A\)</span> by using QR
 decomposition:</p>
 <p><span class="math display">\[\begin{align*}
-A=Q_1R &amp;\Rightarrow R^TQ_1^TQ_1Rx=R^TQ_1^Tb\\
-&amp;\Leftrightarrow  R^TRx=R^TQ_1^Tb\\
-&amp;\Leftrightarrow  (R^T)^{-1}R^TRx=(R^T)^{-1}R^TQ_1^Tb\\
-&amp;\Leftrightarrow  Rx=Q_1^Tb=y
+A=Q_1R &amp;\Rightarrow R^\top Q_1^\top Q_1Rx=R^\top Q_1^\top b\\
+&amp;\Leftrightarrow  R^\top Rx=R^\top Q_1^\top b\\
+&amp;\Leftrightarrow  (R^\top )^{-1}R^\top Rx=(R^\top )^{-1}R^\top
+Q_1^\top b\\
+&amp;\Leftrightarrow  Rx=Q_1^\top b=y
 \end{align*}\]</span></p>
-Algorithm:
+<p>Algorithm:</p>
+<ul>
+<li>Compute thin QR: <span class="math inline">\(A=Q_1R\)</span>.</li>
+<li>Compute the vector: <span class="math inline">\(y=Q_1^\top
+b\)</span>.</li>
+<li>Backsolve the <span class="math inline">\(Rx=y\)</span> to obtain
+<span class="math inline">\(\hat x\)</span>.</li>
+</ul>
 <!------------->
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
 <strong>Updated:</strong> 2023-12-08 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">

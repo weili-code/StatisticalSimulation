@@ -26,10 +26,11 @@ header-includes:
 - \newcommand\wh[1]{\widehat{#1}}
 - \newcommand\op[1]{\operatorname{#1}}
 - \newcommand\mbb[1]{\mathbb{#1}}
-- \usepackage{caption}
-- \usepackage{mathtools}
-- \captionsetup[figure]{labelformat=empty}
+- \newcommand\T{\top}
 - \newcommand{\wei}[1]{\textcolor{orange}{(Wei:#1)}}
+- \usepackage{mathtools}
+- \usepackage{caption}
+- \captionsetup[figure]{labelformat=empty}
 ---
 
 
@@ -164,12 +165,12 @@ W_2|X  & \sim \mbox{exponential}(1+(z_2-X)^2).
 
 #### Multivariate Normal
 
-The multivariate normal distribution of a $d-$dimensional random vector $\mathbf{X}=(X_1, \cdots, X_d)^{T}\in\mathbb{R}^d$ can be written in the notation $\mathbf{X} \sim \mathcal{N}(\boldsymbol\mu, \mathbf{\Sigma}).$ When the symmetric covariance matrix $\mathbf{\Sigma}$ is positive definite, then the multivariate normal distribution is non-degenerate, and the distribution has density function
+The multivariate normal distribution of a $d-$dimensional random vector $\mathbf{X}=(X_1, \cdots, X_d)^{\top}\in\mathbb{R}^d$ can be written in the notation $\mathbf{X} \sim \mathcal{N}(\boldsymbol\mu, \mathbf{\Sigma}).$ When the symmetric covariance matrix $\mathbf{\Sigma}$ is positive definite, then the multivariate normal distribution is non-degenerate, and the distribution has density function
 \begin{align*}
-f_{\mathbf{X}}(\mathbf{x} \vert  \boldsymbol\mu, \mathbf{\Sigma}) &= \frac{1}{(2 \pi)^{\frac{d}{2}}} \big( \det(\mathbf{\Sigma}) \big)^{-\frac{1}{2}} \exp \big(-\frac{1}{2} (\mathbf{x}-\boldsymbol\mu)^{T} \mathbf{\Sigma}^{-1} (\mathbf{x}-\boldsymbol\mu)  \big)\\
-&\overset{\mathbf{x}} \propto \exp(-\frac{1}{2} \mathbf{x}^{T} \mathbf{\Sigma}^{-1} \mathbf{x} + \mathbf{x}^{T} \mathbf{\Sigma}^{-1} \boldsymbol\mu)
+f_{\mathbf{X}}(\mathbf{x} \vert  \boldsymbol\mu, \mathbf{\Sigma}) &= \frac{1}{(2 \pi)^{\frac{d}{2}}} \big( \det(\mathbf{\Sigma}) \big)^{-\frac{1}{2}} \exp \big(-\frac{1}{2} (\mathbf{x}-\boldsymbol\mu)^{\top} \mathbf{\Sigma}^{-1} (\mathbf{x}-\boldsymbol\mu)  \big)\\
+&\overset{\mathbf{x}} \propto \exp(-\frac{1}{2} \mathbf{x}^{\top} \mathbf{\Sigma}^{-1} \mathbf{x} + \mathbf{x}^{\top} \mathbf{\Sigma}^{-1} \boldsymbol\mu)
 \end{align*}
-where $\mathbf{x}=(x_1, \cdots, x_d)^{T}$.
+where $\mathbf{x}=(x_1, \cdots, x_d)^{\top}$.
 
 For comparison, the density function of (univariate) normal distribution $X\sim N(\mu, \sigma^2)$,
 $$
@@ -220,9 +221,9 @@ P\left(X_i=+1 \mid X_{-i}=\boldsymbol{x}_{-i}\right) = \frac{1}{1+\exp \left(-2J
 \end{align*}
 where $\eta_i := \sum_{j \sim i} x_j$.
 
-![](../images/ising1.png){ width=80% }
+![](../images/ising1.png){ width=90% }
 
-![](../images/ising2.png){ width=80% }
+![](../images/ising2.png){ width=90% }
 
 **Bayesian binary denoising**
 

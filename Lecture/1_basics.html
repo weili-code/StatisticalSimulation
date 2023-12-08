@@ -1787,10 +1787,10 @@ others.</p>
 represent <span class="math inline">\(b\)</span> as a linear combination
 of columns of <span class="math inline">\(A\)</span>.</p>
 <p><strong>Transpose of a matrix</strong>: The transpose of a matrix
-<span class="math inline">\(A=[a_{i,j}]\)</span> is given by <span class="math inline">\(A^T=[a_{j,i}].\)</span></p>
+<span class="math inline">\(A=[a_{i,j}]\)</span> is given by <span class="math inline">\(A^\top=[a_{j,i}].\)</span></p>
 <p><strong>Inner prodcut</strong>: Suppose <span class="math inline">\(x, y \in \mathbb{R}^n\)</span>, Euclidean inner
-product is <span class="math inline">\(\langle x, y\rangle=
-x^Ty=\sum_{i=1}^n x_iy_i.\)</span> The Euclidean norm of <span class="math inline">\(x\)</span> is <span class="math inline">\(\|x\|:=\sqrt{\langle x,
+product is <span class="math inline">\(\langle x, y\rangle= x^\top
+y=\sum_{i=1}^n x_iy_i.\)</span> The Euclidean norm of <span class="math inline">\(x\)</span> is <span class="math inline">\(\|x\|:=\sqrt{\langle x,
 x\rangle}=\sqrt{\sum_{i=1}^nx_i^2}.\)</span> The angel <span class="math inline">\(\alpha\)</span> (<span class="math inline">\(0
 \leq \alpha \leq \pi\)</span>) between the two vectors <span class="math inline">\(x, y\)</span> is defined by <span class="math inline">\(\cos(\alpha)=\frac{\langle x, y\rangle}{\|x
 \|\|y\|}.\)</span></p>
@@ -1805,15 +1805,15 @@ a subspace <span class="math inline">\(W\)</span> in a vector space
 <span class="math inline">\(V\)</span> is the set of all vectors in
 <span class="math inline">\(V\)</span> that are orthogonal to every
 vector in <span class="math inline">\(W\)</span>. It’s denoted as <span class="math inline">\(W^{\perp}\)</span>.</p>
-<p>Column space and Kernel space: <span class="math inline">\(\operatorname{Col}(A)^{\perp}=\operatorname{Ker}\left(A^T\right)\)</span>
-and <span class="math inline">\(\operatorname{Row}(A)^{\perp}=\operatorname{Ker}(A).\)</span></p>
+<p>Column space and Kernel space: <span class="math inline">\(\operatorname{Col}(A)^{\perp}=\operatorname{Ker}\left(A^\top
+\right)\)</span> and <span class="math inline">\(\operatorname{Row}(A)^{\perp}=\operatorname{Ker}(A).\)</span></p>
 <p><strong>Theorem</strong>: <span class="math inline">\(S=\{v_1,
 \ldots, v_p \}\)</span> be a set of nonzero orthogonal vectors in <span class="math inline">\(\mathbb{R}^n\)</span>, then <span class="math inline">\(S\)</span> is linearly independent.</p>
-<p><strong>Orthogonal/orthonormal matrix</strong>: An <span class="math inline">\(m \times n\)</span> matrix <span class="math inline">\(U\)</span> has orthonormal columns if <span class="math inline">\(U^TU=I\)</span>.</p>
+<p><strong>Orthogonal/orthonormal matrix</strong>: An <span class="math inline">\(m \times n\)</span> matrix <span class="math inline">\(U\)</span> has orthonormal columns if <span class="math inline">\(U^\top U=I\)</span>.</p>
 <p>An <span class="math inline">\(m \times m\)</span> square matrix
 <span class="math inline">\(P\)</span> is called an orthogonal matrix if
 <span class="math display">\[\begin{align*}
-P P^{T}=P^{T} P=I_{m}, \quad \text{or} \quad P^{-1}=P^{T} .
+P P^{\top}=P^{\top} P=I_{m}, \quad \text{or} \quad P^{-1}=P^{\top} .
 \end{align*}\]</span></p>
 <p>Any square matrix with orthonormal columns is an orthogonal matrix,
 and such a matrix must have orthonormal rows too.</p>
@@ -1822,14 +1822,14 @@ inner product, hence length and angles. For this reason, orthogonal
 matrices are often called rotation matrices.
 <p><strong>Positive definite matrix</strong>: A square and symmetric
 matrix <span class="math inline">\(A\)</span> is called a positive
-definite matrix (denoted by <span class="math inline">\(A&gt;0\)</span>), if <span class="math inline">\(x^TAx&gt;0\)</span> for all <span class="math inline">\(x\neq 0\)</span>. A key characterization of a
+definite matrix (denoted by <span class="math inline">\(A&gt;0\)</span>), if <span class="math inline">\(x^\top Ax&gt;0\)</span> for all <span class="math inline">\(x\neq 0\)</span>. A key characterization of a
 positive definite matrix is that the eigenvalues must be strictly
 positive. Similarly, one can define negative definite matrix. Both
 positive definite matrices and negative definite matrices are
 invertible. But the converse is not true.</p>
 <p><strong>Positive semi-definite matrix</strong>: A square and
 symmetric matrix <span class="math inline">\(A\)</span> is called a
-positive semi-definite matrix (denoted by <span class="math inline">\(A\geq 0\)</span>), if <span class="math inline">\(x^TAx\geq 0\)</span> for all <span class="math inline">\(x\neq 0\)</span>. A positive semi-definite matrix
+positive semi-definite matrix (denoted by <span class="math inline">\(A\geq 0\)</span>), if <span class="math inline">\(x^\top Ax\geq 0\)</span> for all <span class="math inline">\(x\neq 0\)</span>. A positive semi-definite matrix
 have non-negative eigenvalues (some possibly are zero). For a positive
 semi-definite matrix, it is invertible if and only if it is also
 positive definite. Similarly, one can define negative semi-definite
@@ -1843,7 +1843,7 @@ another vector <span class="math inline">\(x \in \mathbb{R}^n\)</span>
 (<span class="math inline">\(\|x\|\neq 0\)</span>), i.e., <span class="math inline">\(\rm{span}(x):=\{ax:a \in\mathbb{R}\}\)</span> is
 given by <span class="math display">\[
 P_xy=\frac{\left\langle x,y\right\rangle}{\left\langle
-x,x\right\rangle}x=\frac{xx^T}{\left\langle x,x\right\rangle}y,
+x,x\right\rangle}x=\frac{xx^\top}{\left\langle x,x\right\rangle}y,
 \]</span> which has the property that <span class="math inline">\(\left\langle
 y-P_xy,P_xy\right\rangle=0.\)</span></p>
 <!------------->

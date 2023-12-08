@@ -26,10 +26,11 @@ header-includes:
 - \newcommand\wh[1]{\widehat{#1}}
 - \newcommand\op[1]{\operatorname{#1}}
 - \newcommand\mbb[1]{\mathbb{#1}}
-- \usepackage{caption}
-- \usepackage{mathtools}
-- \captionsetup[figure]{labelformat=empty}
+- \newcommand\T{\top}
 - \newcommand{\wei}[1]{\textcolor{orange}{(Wei:#1)}}
+- \usepackage{mathtools}
+- \usepackage{caption}
+- \captionsetup[figure]{labelformat=empty}
 ---
 
 
@@ -69,12 +70,12 @@ Consider an iterative method to find the minimizaer $w^*$:
 $$w_{new}=w_{old}+\alpha \Delta,$$ for some $\Delta$ and some fixed positive scalar $\alpha$.
 
 By Taylor expansion, note that
-$$L(w+\alpha \Delta)=L(w)+\alpha \Delta^T \nabla L(w)+ \cdots.$$
-The requirement that $L(w+\alpha \nabla)<L(w)$ implies $\Delta^T \nabla L(w)<0$.
+$$L(w+\alpha \Delta)=L(w)+\alpha \Delta^\top \nabla L(w)+ \cdots.$$
+The requirement that $L(w+\alpha \nabla)<L(w)$ implies $\Delta^\top \nabla L(w)<0$.
 
 Let $\beta$ be the angle between $\Delta$ and $\nabla L(w)$, by linear algebra fact, 
-$$-1 \leq \cos(\beta)= \frac{ \Delta^T \nabla L(w)}{ \|\Delta\| \|\nabla L(w)\|}\leq 1.$$
-Therefore, $L(w+\alpha \Delta)-L(w)=\alpha \Delta^T \nabla L(w)= \alpha  \|\Delta\| \|\nabla L(w)\|\cos(\beta)$ becomes smallest (most negative) when $cos(\beta)=-1$,i.e., $\beta=180^{\circ}.$
+$$-1 \leq \cos(\beta)= \frac{ \Delta^\top \nabla L(w)}{ \|\Delta\| \|\nabla L(w)\|}\leq 1.$$
+Therefore, $L(w+\alpha \Delta)-L(w)=\alpha \Delta^\top \nabla L(w)= \alpha  \|\Delta\| \|\nabla L(w)\|\cos(\beta)$ becomes smallest (most negative) when $cos(\beta)=-1$,i.e., $\beta=180^{\circ}.$
 
 Therefore, the best direction $\Delta$ is the opposite direction of the gradient $\nabla L(w)$. The solution $\Delta = -\nabla L(w)$ is the steepest descent direction.
 

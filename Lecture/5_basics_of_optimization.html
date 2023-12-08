@@ -1663,12 +1663,12 @@ function, its gradient is the <span class="math inline">\(n{\times}1\)</span> ve
 \]</span></p>
 <p>Some results from calculus:</p>
 <ol style="list-style-type: decimal">
-<li><span class="math inline">\(f(x)=a^Tx
+<li><span class="math inline">\(f(x)=a^\top x
 :{\mathbb{R^n}}\to{\mathbb{R}}\)</span>, <span class="math inline">\(f(x)\)</span> can also written in <span class="math inline">\(f(x)={\sum_{i=1}^{n}}a_ix_i\)</span>, the gradient
 for <span class="math inline">\(f(x)\)</span>, <span class="math display">\[{\nabla}f(x)=a.\]</span></li>
-<li><span class="math inline">\(f(x)=x^TAx\)</span> (<span class="math inline">\(A\)</span> is square matrix), the gradient for
+<li><span class="math inline">\(f(x)=x^\top Ax\)</span> (<span class="math inline">\(A\)</span> is square matrix), the gradient for
 <span class="math inline">\(f(x)\)</span>, <span class="math display">\[
-{\nabla}f(x)=Ax+A^Tx;
+{\nabla}f(x)=Ax+A^\top x;
 \]</span> if A is symmetric matrix, <span class="math display">\[
 {\nabla}f(x)=2Ax.
 \]</span></li>
@@ -1678,12 +1678,12 @@ Ax-b\rVert^2}\)</span>,</p>
 <p><span class="math display">\[
 \begin{aligned}
 f(x)&amp;=\lVert Ax-b\rVert^2\\&amp;=\langle Ax-b,
-Ax-b\rangle\\&amp;=(Ax-b)^T(Ax-b)
-\\&amp;=x^TA^TAx-2b^TAx+b^Tb.
+Ax-b\rangle\\&amp;=(Ax-b)^\top(Ax-b)
+\\&amp;=x^\top A^\top Ax-2b^\top Ax+b^\top b.
 \end{aligned}
 \]</span></p>
 <p>The gradient of <span class="math inline">\(f(x)\)</span> is <span class="math display">\[
-{\nabla}f(x)=\frac{{\partial}f(x)}{{\partial}x}=2A^TAx-2b^TA.
+{\nabla}f(x)=\frac{{\partial}f(x)}{{\partial}x}=2A^\top Ax-2b^\top A.
 \]</span></p>
 </div>
 <div id="optimization" class="section level1">
@@ -1710,8 +1710,8 @@ x^2)|_{x=v}{\ge}0\)</span>, noting <span class="math inline">\({\partial}f(v)/{\
 change of the slope of <span class="math inline">\(f\)</span> at <span class="math inline">\(v\)</span>. This is second order definition.</li>
 <li>A “differentialbe” function <span class="math inline">\(f\)</span>
 is convex at <span class="math inline">\(v\)</span> if and only if for
-all <span class="math inline">\(w\)</span> in the neighborhood of <span class="math inline">\(v\)</span>, <span class="math inline">\(f(w){\ge}f(v)+{\nabla}f(v)^T(w-v)\)</span>. This
-is first order definition.</li>
+all <span class="math inline">\(w\)</span> in the neighborhood of <span class="math inline">\(v\)</span>, <span class="math inline">\(f(w){\ge}f(v)+{\nabla}f(v)^\top(w-v)\)</span>.
+This is first order definition.</li>
 <li>A function <span class="math inline">\(f\)</span> is convex on <span class="math inline">\(S\)</span> if and only if it’s convex at every
 point of <span class="math inline">\(S\)</span>. A function <span class="math inline">\(f\)</span> is convex on <span class="math inline">\(S\)</span>, if and only if <span class="math inline">\(x,y{\in}S\)</span> entails <span class="math inline">\(f({\alpha}x+(1-{\alpha})y){\le}{\alpha}f(x)+(1-{\alpha})f(y)\)</span>
 for <span class="math inline">\({\alpha}{\in}[0,1]\)</span>.</li>
@@ -1790,7 +1790,7 @@ point</strong>.</li>
 <p>Note <span class="math inline">\(f\)</span> has four second partial
 derivatives-four measures of concavity (in <span class="math inline">\(\nabla^2 f\)</span>). In fact, eigenvalues of the
 Hessian <span class="math inline">\(\nabla^2 f\)</span> measures
-concavity in the corresponding eigendirections (take for example, <span class="math inline">\(v^THv=\lambda v^Tv=\lambda\)</span> for an
+concavity in the corresponding eigendirections (take for example, <span class="math inline">\(v^\top Hv=\lambda v^\top v=\lambda\)</span> for an
 eigenvector <span class="math inline">\(v\)</span>).</p>
 <p>In view of the classical results:</p>
 <ul>

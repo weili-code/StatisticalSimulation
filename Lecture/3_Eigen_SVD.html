@@ -1659,14 +1659,14 @@ square matrix, <span class="math inline">\(\det(A)=\prod_{i=1}^n
 \lambda_i\)</span>. A square matrix is invertible if and only if its
 eigenvalues are non-zero.</p>
 <p><strong>Eigen-decomposition:</strong> <span class="math inline">\(A\)</span> is a square and symmetric matrix, then
-we can write <span class="math inline">\(A=P \Lambda P^T\)</span> where
-<span class="math display">\[\begin{align*}
+we can write <span class="math inline">\(A=P \Lambda P^\top\)</span>
+where <span class="math display">\[\begin{align*}
 &amp;P=[u_1, u_2,\cdots, u_n], \quad u\mbox{&#39;s are the orthonormal
 eigenvector of }A \\
 &amp;\Lambda = diag\{\text{eigenvalues of }A\}.
 \end{align*}\]</span></p>
 <p>Note: If this symmetric matrix <span class="math inline">\(A\)</span>
-is invertible, then we have <span class="math inline">\(A^{-1}=P\Lambda^{-1}P^T\)</span> where <span class="math display">\[\begin{equation*}
+is invertible, then we have <span class="math inline">\(A^{-1}=P\Lambda^{-1}P^\top\)</span> where <span class="math display">\[\begin{equation*}
 \Lambda^{-1} =
 \begin{pmatrix}
 \ddots &amp; 0 &amp; 0 \\
@@ -1677,15 +1677,17 @@ is invertible, then we have <span class="math inline">\(A^{-1}=P\Lambda^{-1}P^T\
 </div>
 <div id="singular-value-decomposition" class="section level1">
 <h1><strong>Singular value decomposition</strong></h1>
-<p>For a <span class="math inline">\(m \times n\)</span> matrix <span class="math inline">\({A}\)</span>, <span class="math inline">\(A^{T}A\)</span> is a symmetric matrix. Let <span class="math inline">\(\{ v_{1},\ldots,v_{n} \}\)</span> be the
-collection of all the orthonormal eigenvectors of <span class="math inline">\(A^{T}A\)</span> (eigen-decomposition); let <span class="math inline">\(\lambda_{1},...,\lambda_{n}\)</span> be the
+<p>For a <span class="math inline">\(m \times n\)</span> matrix <span class="math inline">\({A}\)</span>, <span class="math inline">\(A^{\top}A\)</span> is a symmetric matrix. Let
+<span class="math inline">\(\{ v_{1},\ldots,v_{n} \}\)</span> be the
+collection of all the orthonormal eigenvectors of <span class="math inline">\(A^{\top}A\)</span> (eigen-decomposition); let
+<span class="math inline">\(\lambda_{1},...,\lambda_{n}\)</span> be the
 associated eigenvalues, <span class="math inline">\(\lambda_{1} \ge
 \lambda_{2} \ge \cdots \geq \lambda_{n} \ge 0\)</span>. We have <span class="math inline">\(\lVert Av_{i}\lVert^{2} = \lambda_{i}\)</span>,
 since <span class="math display">\[
-A^{T}Av_{i} = \lambda_{i}v_{i} \Rightarrow
-v_{i}^{T}A^{T}Av_{i} = \lambda_{i}.
+A^{\top}Av_{i} = \lambda_{i}v_{i} \Rightarrow
+v_{i}^{\top}A^{\top}Av_{i} = \lambda_{i}.
 \]</span> The singular values of <span class="math inline">\(A\)</span>
-are squared roots of the eigenvalues of <span class="math inline">\(A^{T}A\)</span>, denoted by <span class="math inline">\(\sigma_{i} = \sqrt{\lambda_{i}}\)</span>; <span class="math inline">\(\sigma_{1} \ge \sigma_{2} \ge \cdots \geq
+are squared roots of the eigenvalues of <span class="math inline">\(A^{\top}A\)</span>, denoted by <span class="math inline">\(\sigma_{i} = \sqrt{\lambda_{i}}\)</span>; <span class="math inline">\(\sigma_{1} \ge \sigma_{2} \ge \cdots \geq
 \sigma_{n} \ge 0\)</span></p>
 <p><strong>Fact</strong>: The rank of a matrix <span class="math inline">\(A\)</span> is equal to the number of positive
 singular value of <span class="math inline">\(A\)</span>.</p>
@@ -1706,11 +1708,10 @@ D = \begin{bmatrix}
       \sigma_{1} \\ &amp; \ddots &amp; \\ &amp; &amp; \sigma_{r}
      \end{bmatrix}.
 \]</span> The Singular Value Decomposition of A is: <span class="math display">\[
-  A = U_{m \times m}\Sigma_{m \times n}V^{T}_{n \times n},
+  A = U_{m \times m}\Sigma_{m \times n}V^{\top}_{n \times n},
 \]</span> where <span class="math inline">\(U\)</span> and <span class="math inline">\(V\)</span> are both orthogonal matrices: <span class="math inline">\(V=[v_1, \cdots, v_n]\)</span> consists of all
-orthonormal eigenvectors of <span class="math inline">\(A^{T}A\)</span>;
-<span class="math inline">\(U=[u_1, \cdots, u_m]\)</span> consists the
-column <span class="math inline">\(u_{i}\)</span> as follows <span class="math display">\[\text{for }   1 \le i \le r, \quad u_{i} =
+orthonormal eigenvectors of <span class="math inline">\(A^{\top}A\)</span>; <span class="math inline">\(U=[u_1, \cdots, u_m]\)</span> consists the column
+<span class="math inline">\(u_{i}\)</span> as follows <span class="math display">\[\text{for }   1 \le i \le r, \quad u_{i} =
 \frac{Av_{i}}{\lVert Av_{i}\rVert} = \frac{Av_{i}}{\sigma_{i}},
 \]</span> and these columns <span class="math inline">\(\{ u_{1},
 \ldots, u_{r}\}\)</span> can be extended to <span class="math inline">\(\{ u_{1}, \ldots, u_{m}\}\)</span> as the
@@ -1740,18 +1741,18 @@ partition:<br />
     0 &amp; 0
   \end{bmatrix}
   \begin{bmatrix}
-    V_{r}^{T} \\
-    V_{n-r}^{T}
+    V_{r}^{\top} \\
+    V_{n-r}^{\top}
   \end{bmatrix}
-  = U_{r}DV_{r}^{T}=\sum_{i=1}^r d_i{u}_iv_i^T.
-\]</span> <strong>Note 1</strong>: If we instead consider <span class="math inline">\(\tilde{A}=\sum_{i=1}^l d_i{u}_iv_i^T\)</span> for
-some <span class="math inline">\(l &lt; r\)</span>, then this is the
+  = U_{r}DV_{r}^{\top}=\sum_{i=1}^r d_i{u}_iv_i^\top.
+\]</span> <strong>Note 1</strong>: If we instead consider <span class="math inline">\(\tilde{A}=\sum_{i=1}^l d_i{u}_iv_i^\top\)</span>
+for some <span class="math inline">\(l &lt; r\)</span>, then this is the
 low-rank approximation to <span class="math inline">\(A\)</span>,
 sometimes is called <strong>truncated SVD</strong>.</p>
 <p><strong>Note 2</strong>: If <span class="math inline">\(m \geq
 n\)</span>, the SVD (sometimes called <strong>thin SVD</strong>) can be
 also written as <span class="math display">\[\begin{align*}
-A=\tilde{U}\tilde{D}\tilde{V}^T
+A=\tilde{U}\tilde{D}\tilde{V}^\top
 \end{align*}\]</span> where <span class="math inline">\(\tilde{U}: m
 \times n, \tilde{D}: n \times n; \tilde{V}: n \times n.\)</span></p>
 </div>
@@ -1764,31 +1765,33 @@ A=\tilde{U}\tilde{D}\tilde{V}^T
 following:</p>
 <p><span class="math display">\[\begin{align*}
 Ax &amp;= b, \\
-A^{T}Ax &amp;= A^{T}b, \\
-(U_rDV_r^{T})^{T}(U_rDV_r^{T})x &amp;= (U_rDV_r^{T})^{T}b, \\
-  V_rDIDV_r^Tx &amp;= V_rDU_r^{T}b, \\
-  DV_r^{T}x &amp;= U_r^{T}b.
+A^{\top}Ax &amp;= A^{\top}b, \\
+(U_rDV_r^{\top})^{\top}(U_rDV_r^{\top})x &amp;=
+(U_rDV_r^{\top})^{\top}b, \\
+  V_rDIDV_r^\top x &amp;= V_rDU_r^{\top}b, \\
+  DV_r^{\top}x &amp;= U_r^{\top}b.
 \end{align*}\]</span></p>
-<p>Denote <span class="math inline">\(w = V_r^{T}x\)</span>, <span class="math inline">\(y = U_r^{T}b\)</span>, we have the following
+<p>Denote <span class="math inline">\(w = V_r^{\top}x\)</span>, <span class="math inline">\(y = U_r^{\top}b\)</span>, we have the following
 algorithm:</p>
 <p><strong>Algorithm</strong></p>
 <ol style="list-style-type: decimal">
 <li>Find the SVD of <span class="math inline">\(A =
-U_rDV_r^{T}\)</span>;<br />
+U_rDV_r^{\top}\)</span>;<br />
 </li>
-<li>Compute <span class="math inline">\(y = U_r^{T}b\)</span>;<br />
+<li>Compute <span class="math inline">\(y = U_r^{\top}b\)</span>;<br />
 </li>
 <li>Solve the diagonal system <span class="math inline">\(Dw=y\)</span>,
 giving <span class="math inline">\(w^{*} = D^{-1}y\)</span>;<br />
 </li>
-<li>Solve <span class="math inline">\(V_r^{T}x = w^{*} \Rightarrow x^* =
-V_rw^{*}\)</span>.</li>
+<li>Solve <span class="math inline">\(V_r^{\top}x = w^{*} \Rightarrow
+x^* = V_rw^{*}\)</span>.</li>
 </ol>
 <p>The solution of the equation is <span class="math inline">\(x^* =
-V_rD^{-1}U_r^{T}b= V\Sigma^{-1}U^{T}b\)</span>. We notice that this SVD
-method allows <span class="math inline">\(A\)</span>, <span class="math inline">\(b\)</span> to be arbitrary. Notice that <span class="math inline">\(V_{r}D^{-1}U_{r}^{T}\)</span> is like the
+V_rD^{-1}U_r^{\top}b= V\Sigma^{-1}U^{\top}b\)</span>. We notice that
+this SVD method allows <span class="math inline">\(A\)</span>, <span class="math inline">\(b\)</span> to be arbitrary. Notice that <span class="math inline">\(V_{r}D^{-1}U_{r}^{\top}\)</span> is like the
 “inverse” of A. Here we have the concept of generalized inverse.</p>
-<p><strong>Moore-Penrose inverse of A</strong>: <span class="math inline">\(A^{\dagger} = V_{r}D^{-1}U_{r}^{T}.\)</span></p>
+<p><strong>Moore-Penrose inverse of A</strong>: <span class="math inline">\(A^{\dagger} =
+V_{r}D^{-1}U_{r}^{\top}.\)</span></p>
 </div>
 <div id="ls-problem" class="section level2">
 <h2>2.LS-Problem</h2>
@@ -1796,12 +1799,12 @@ method allows <span class="math inline">\(A\)</span>, <span class="math inline">
 \rVert,\]</span> where <span class="math inline">\(A\)</span> and <span class="math inline">\(b\)</span> are not restricted at all, we
 have:<br />
 <span class="math display">\[
-  A^{T}Ax = A^{T}b.
+  A^{\top}Ax = A^{\top}b.
 \]</span> Let <span class="math inline">\(\mathfrak{L}\)</span> is the
 set of all the minimizers to the LS problem. We have following
 facts.</p>
 <p><strong>Fact 1</strong> <span class="math inline">\(x^{*} =
-A^{\dagger}b \in \mathfrak{L}\)</span>; from the normal equation, <span class="math inline">\(A^{T}AA^{\dagger} = A^{T}.\)</span></p>
+A^{\dagger}b \in \mathfrak{L}\)</span>; from the normal equation, <span class="math inline">\(A^{\top}AA^{\dagger} = A^{\top}.\)</span></p>
 <p><strong>Fact 2</strong> <span class="math inline">\(A\tilde{x_{1}} =
 A\tilde{x_{2}}\)</span>, for any <span class="math inline">\(\tilde{x_{1}},\tilde{x_{2}} \in
 \mathfrak{L}\)</span>.</p>
@@ -1811,23 +1814,23 @@ A^{\dagger}b\)</span>.</p>
 <p><strong>Fact 4</strong> We already have the result that if we choose
 some <span class="math inline">\(\lambda&gt;0\)</span>, LS problem will
 has a unique solution to the “modified” normal equation: <span class="math display">\[
-(A^{T}A+\lambda I)x=A^{T}b,
-\]</span> that is, <span class="math inline">\(\hat{x} = (A^{T}A+\lambda
-I)^{-1}A^{T}b.\)</span> In fact, let <span class="math inline">\(\lambda
-\rightarrow 0\)</span>, we have <span class="math inline">\((A^{T}A+\lambda I)^{-1}A^{T} \rightarrow
+(A^{\top}A+\lambda I)x=A^{\top}b,
+\]</span> that is, <span class="math inline">\(\hat{x} =
+(A^{\top}A+\lambda I)^{-1}A^{\top}b.\)</span> In fact, let <span class="math inline">\(\lambda \rightarrow 0\)</span>, we have <span class="math inline">\((A^{\top}A+\lambda I)^{-1}A^{\top} \rightarrow
 A^{\dagger}.\)</span> So <span class="math display">\[
-x^*= \lim_{\lambda \to 0} [(A^{T}A+\lambda I)^{-1}A^{T}]b= \lim_{\lambda
-\to 0} [A^T(AA^T+\lambda I)^{-1}]b = A^{\dagger} b.
+x^*= \lim_{\lambda \to 0} [(A^{\top}A+\lambda I)^{-1}A^{\top}]b=
+\lim_{\lambda \to 0} [A^\top(AA^\top+\lambda I)^{-1}]b = A^{\dagger} b.
 \]</span></p>
-<p><strong>Fact 5</strong> The projection of <span class="math inline">\(b\)</span> on <span class="math inline">\(Col(A)\)</span> is given by <span class="math inline">\(A(A^{T}A)^{-1}A^{T}b\)</span> (assuming <span class="math inline">\(A^{T}A\)</span> is invertible), here is a more
-general result<br />
+<p><strong>Fact 5</strong> The projection of <span class="math inline">\(b\)</span> on <span class="math inline">\(Col(A)\)</span> is given by <span class="math inline">\(A(A^{\top}A)^{-1}A^{\top}b\)</span> (assuming
+<span class="math inline">\(A^{\top}A\)</span> is invertible), here is a
+more general result<br />
 <span class="math display">\[
   \hat{b} = AA^{\dagger}b = \lim_{\lambda \rightarrow
-0}[A(A^{T}A+\lambda I)^{-1}A^{T}]b,
+0}[A(A^{\top}A+\lambda I)^{-1}A^{\top}]b,
 \]</span> so <span class="math inline">\(P_A:=AA^{\dagger}\)</span> is
 orthogonal projection onto <span class="math inline">\(Col(A)\)</span>,
 <span class="math inline">\(I-P_A\)</span> is orthogonal projection onto
-<span class="math inline">\(\operatorname{Ker}(A^T).\)</span></p>
+<span class="math inline">\(\operatorname{Ker}(A^\top).\)</span></p>
 <!------------->
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
 <strong>Updated:</strong> 2023-12-08 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">

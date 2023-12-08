@@ -1725,12 +1725,13 @@ scenario that at some step n, we reached the steady state distribution,
 distribution, the state distribution becomes stationary.</p>
 <p><strong>Find the steady state distribution</strong>: For a given
 transition matrix <span class="math inline">\(P\)</span>, note that
-<span class="math display">\[P^T\pi^T = 1\pi^T.\]</span> So <span class="math inline">\(\pi^T\)</span> is eigenvalue of <span class="math inline">\(P^T\)</span> that corresponds to eigenvalue 1. The
-found eigenvector then needs to be normalized. A limitation is that it
-is not guaranteed the found eigenvector is real-valued.</p>
+<span class="math display">\[P^\top\pi^\top = 1\pi^\top.\]</span> So
+<span class="math inline">\(\pi^\top\)</span> is eigenvalue of <span class="math inline">\(P^\top\)</span> that corresponds to eigenvalue 1.
+The found eigenvector then needs to be normalized. A limitation is that
+it is not guaranteed the found eigenvector is real-valued.</p>
 <p>A more general approach is to solve the following system of
-equations: <span class="math display">\[M^T\pi^T = r^T,\]</span> where
-<span class="math inline">\(M\)</span> is a <span class="math inline">\(K \times K\)</span> matrix that removes the last
+equations: <span class="math display">\[M^\top\pi^\top =
+r^\top,\]</span> where <span class="math inline">\(M\)</span> is a <span class="math inline">\(K \times K\)</span> matrix that removes the last
 column of <span class="math inline">\(I-P\)</span> in <span class="math inline">\([I-P, 1]\)</span>, and <span class="math inline">\(r\)</span> is a <span class="math inline">\(1
 \times K\)</span> vector <span class="math inline">\((0, 0, \ldots, 0,
 1)\)</span>.</p>

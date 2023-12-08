@@ -26,10 +26,11 @@ header-includes:
 - \newcommand\wh[1]{\widehat{#1}}
 - \newcommand\op[1]{\operatorname{#1}}
 - \newcommand\mbb[1]{\mathbb{#1}}
-- \usepackage{caption}
-- \usepackage{mathtools}
-- \captionsetup[figure]{labelformat=empty}
+- \newcommand\T{\top}
 - \newcommand{\wei}[1]{\textcolor{orange}{(Wei:#1)}}
+- \usepackage{mathtools}
+- \usepackage{caption}
+- \captionsetup[figure]{labelformat=empty}
 ---
 
 
@@ -154,11 +155,11 @@ Therefore, once we reached the steady state distribution, the state distribution
 
 **Find the steady state distribution**:
 For a given transition matrix $P$, note that
-$$P^T\pi^T = 1\pi^T.$$
-So $\pi^T$ is eigenvalue of $P^T$ that corresponds to eigenvalue 1. The found eigenvector then needs to be normalized. A limitation is that it is not guaranteed the found eigenvector is real-valued.
+$$P^\top\pi^\top = 1\pi^\top.$$
+So $\pi^\top$ is eigenvalue of $P^\top$ that corresponds to eigenvalue 1. The found eigenvector then needs to be normalized. A limitation is that it is not guaranteed the found eigenvector is real-valued.
 
 A more general approach is to solve the following system of equations:
-$$M^T\pi^T = r^T,$$
+$$M^\top\pi^\top = r^\top,$$
 where $M$ is a $K \times K$ matrix that removes the last column of $I-P$ in $[I-P, 1]$, and $r$ is a $1 \times K$ vector $(0, 0, \ldots, 0, 1)$.
 
 **Limiting distribution**: A Markov Chain has a limiting distribution if 

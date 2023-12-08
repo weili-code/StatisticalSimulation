@@ -26,10 +26,11 @@ header-includes:
 - \newcommand\wh[1]{\widehat{#1}}
 - \newcommand\op[1]{\operatorname{#1}}
 - \newcommand\mbb[1]{\mathbb{#1}}
-- \usepackage{caption}
-- \usepackage{mathtools}
-- \captionsetup[figure]{labelformat=empty}
+- \newcommand\T{\top}
 - \newcommand{\wei}[1]{\textcolor{orange}{(Wei:#1)}}
+- \usepackage{mathtools}
+- \usepackage{caption}
+- \captionsetup[figure]{labelformat=empty}
 ---
 
 
@@ -62,25 +63,25 @@ Hamiltonian Monte Carlo (HMC) is another powerful technique to sample from a pro
 The basic idea behind Hamiltonian Monte Carlo is to use the concepts from Hamiltonian dynamics in physics to efficiently explore the target distribution. The system is described by a **Hamiltonian function** $H$, which is a sum of potential energy $U$ and kinetic energy $K$ :
 
 $$
-H(x, w) = U(x) + K(w)
+H(x, w) = U(x) + K(w).
 $$
 Here, $x \in \mathbb{R}^d$ represents the position (parameters of interest in the distribution we want to sample from), and $w \in \mathbb{R}^d$ represents the momentum (auxiliary variables) of the same dimension of $x$.
 
 The potential energy $U(x)$ is typically the negative log of the target probability density (up to a constant), which is defined through the target density $p$ by 
 $$
-p(x)=\frac{1}{Z} \exp (-U(x))
+p(x)=\frac{1}{Z} \exp (-U(x)),
 $$
 where $Z$ is some normalizing constant. 
 
 The kinetic energy $K(w)$ is often chosen to be a quadratic function of $w$, resembling the kinetic energy in physics, so $K(w)=K(-w)$. A common choice is that 
 $$
-K(w)=\frac{1}{2} w^{\top} \Sigma^{-1} w
+K(w)=\frac{1}{2} w^{\top} \Sigma^{-1} w,
 $$
 for some p.d. $\Sigma$. This just means the momentum follows a multivariate normal distribution. A simple example is $\Sigma=\op{diag}(\sigma^2_1, \ldots, \sigma^2_d)$, so $K(w)=\sum_{i=1}^d (w_i^2/2 \sigma_i^2)$.
 
 Effectively, we can think of the problem as sampling from the joint distribution of $(x, w)$ from 
 $$
-p(x, w) \propto \exp (-H(x, w))=\exp \left(-U(x)-\frac{1}{2} w^{\top} \Sigma^{-1} w\right)
+p(x, w) \propto \exp (-H(x, w))=\exp \left(-U(x)-\frac{1}{2} w^{\top} \Sigma^{-1} w\right),
 $$
 and the samples of $x$ then is from the marginal distribution of $x$.
 
@@ -98,7 +99,7 @@ Hamiltonian dynamics have several key properties that are crucial for HMC:
 
 - **Conservation of the Hamiltonian**: The value of $H$ remains constant along any trajectory.
 $$
-\frac{d H}{d t}=\sum_{i=1}^d\left[\frac{d x_i}{d t} \frac{\partial H}{\partial x_i}+\frac{d w_i}{d t} \frac{\partial H}{\partial w_i}\right]=\sum_{i=1}^d\left[\frac{\partial H}{\partial w_i} \frac{\partial H}{\partial x_i}-\frac{\partial H}{\partial x_i} \frac{\partial H}{\partial w_i}\right]=0
+\frac{d H}{d t}=\sum_{i=1}^d\left[\frac{d x_i}{d t} \frac{\partial H}{\partial x_i}+\frac{d w_i}{d t} \frac{\partial H}{\partial w_i}\right]=\sum_{i=1}^d\left[\frac{\partial H}{\partial w_i} \frac{\partial H}{\partial x_i}-\frac{\partial H}{\partial x_i} \frac{\partial H}{\partial w_i}\right]=0.
 $$
 This conservation implies that if we are able to sample according to Hamilton's equations *perfectly*, then we remain on some fixed level curve of the Hamiltonian function. As will be clear later, this can hold only approximately with discretizing methods.
 - **Reversibility**: The dynamic $g$ is 1-1 mapping and has an inverse which amounts to negating the momentum, then running the dynamic $g$, and lastly negating the momentum again. This property is crucial for the HMC to satisfy detailed balance condition (assuming the update is correctly done with adjustment for some Jacobian factor). 
@@ -189,6 +190,10 @@ $$w^*=w_{t}- \frac{\epsilon}{2}\nabla U(x_t)-\frac{\epsilon}{2} \nabla U\left(x^
 4. Compute 
 $$\alpha=\min \left(1, \exp \left(-{H}\left(x^*, w^*\right)+{H}\left(x_{t}, w_{t}\right)\right)\right).$$
 5. Set $x_{t+1}=x^*$ with probability $\alpha$, otherwise set $x_{t+1}=x_{t}$.
+
+### Python Code Examples
+
+Provided and discussed in lab.
 
 
 <!------------->

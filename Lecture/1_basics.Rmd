@@ -26,9 +26,11 @@ header-includes:
 - \newcommand\wh[1]{\widehat{#1}}
 - \newcommand\op[1]{\operatorname{#1}}
 - \newcommand\mbb[1]{\mathbb{#1}}
+- \newcommand\T{\top}
+- \newcommand{\wei}[1]{\textcolor{orange}{(Wei:#1)}}
+- \usepackage{mathtools}
 - \usepackage{caption}
 - \captionsetup[figure]{labelformat=empty}
-- \newcommand{\wei}[1]{\textcolor{orange}{(Wei:#1)}}
 ---
 
 <script type="text/x-mathjax-config">
@@ -199,9 +201,9 @@ if $ad-bc \neq 0.$
 
 If $A$ is invertible, then for any $b$ vector, $Ax=b$ has a unique solution $x$ which is $x=A^{-1}b$, the coefficients needed to represent $b$ as a linear combination of columns of $A$. 
 
-**Transpose of a matrix**: The transpose of a matrix $A=[a_{i,j}]$ is given by $A^T=[a_{j,i}].$
+**Transpose of a matrix**: The transpose of a matrix $A=[a_{i,j}]$ is given by $A^\top=[a_{j,i}].$
 
-**Inner prodcut**: Suppose $x, y \in \mbb{R}^n$, Euclidean inner product is $\langle x, y\rangle= x^Ty=\sum_{i=1}^n x_iy_i.$ The Euclidean norm of $x$ is $\|x\|:=\sqrt{\langle x, x\rangle}=\sqrt{\sum_{i=1}^nx_i^2}.$
+**Inner prodcut**: Suppose $x, y \in \mbb{R}^n$, Euclidean inner product is $\langle x, y\rangle= x^\top y=\sum_{i=1}^n x_iy_i.$ The Euclidean norm of $x$ is $\|x\|:=\sqrt{\langle x, x\rangle}=\sqrt{\sum_{i=1}^nx_i^2}.$
 The angel $\alpha$ ($0 \leq \alpha \leq \pi$) between the two vectors $x, y$ is defined by $\cos(\alpha)=\frac{\langle x, y\rangle}{\|x \|\|y\|}.$
 
 **Trace of a matrix**: The trace of a square matrix $A$ is the sum of all the diagonal entries of $A$. Note: for compatiblae matrices, trace has cyclic property, namely,
@@ -211,7 +213,7 @@ $$\rm{tr}(ABCD)=\rm{tr}(DABC)=\rm{tr}(CDAB).$$
 
 **orthogonal complement**: The orthogonal complement of a subspace $W$ in a vector space $V$ is the set of all vectors in $V$ that are orthogonal to every vector in $W$. It's denoted as $W^{\perp}$.
 
-Column space and Kernel space: $\operatorname{Col}(A)^{\perp}=\operatorname{Ker}\left(A^T\right)$ and $\operatorname{Row}(A)^{\perp}=\operatorname{Ker}(A).$
+Column space and Kernel space: $\operatorname{Col}(A)^{\perp}=\operatorname{Ker}\left(A^\top \right)$ and $\operatorname{Row}(A)^{\perp}=\operatorname{Ker}(A).$
 
 
 **Theorem**: $S=\{v_1, \ldots, v_p \}$ be a set of nonzero orthogonal vectors in $\mbb{R}^n$, then $S$ is linearly independent. 
@@ -222,11 +224,11 @@ Proof:
 \end{mdframed}
 
 **Orthogonal/orthonormal matrix**: 
-An $m \times n$ matrix $U$ has orthonormal columns if $U^TU=I$.
+An $m \times n$ matrix $U$ has orthonormal columns if $U^\top U=I$.
 
 An $m \times m$ square matrix $P$ is called an orthogonal matrix if
 \begin{align*}
-P P^{T}=P^{T} P=I_{m}, \quad \text{or} \quad P^{-1}=P^{T} .
+P P^{\top}=P^{\top} P=I_{m}, \quad \text{or} \quad P^{-1}=P^{\top} .
 \end{align*}
 
 Any square matrix with orthonormal columns is an orthogonal matrix, and such a matrix must have orthonormal rows too.
@@ -236,15 +238,15 @@ Any square matrix with orthonormal columns is an orthogonal matrix, and such a m
 Check: 
 \end{mdframed}
 
-**Positive definite matrix**: A square and symmetric matrix $A$ is called a positive definite matrix (denoted by $A>0$), if $x^TAx>0$ for all $x\neq 0$. A key characterization of a positive definite matrix is that the eigenvalues must be strictly positive. Similarly, one can define negative definite matrix. Both positive definite matrices and negative definite matrices are invertible. But the converse is not true. 
+**Positive definite matrix**: A square and symmetric matrix $A$ is called a positive definite matrix (denoted by $A>0$), if $x^\top Ax>0$ for all $x\neq 0$. A key characterization of a positive definite matrix is that the eigenvalues must be strictly positive. Similarly, one can define negative definite matrix. Both positive definite matrices and negative definite matrices are invertible. But the converse is not true. 
 
-**Positive semi-definite matrix**: A square and symmetric matrix $A$ is called a positive semi-definite matrix (denoted by $A\geq 0$), if $x^TAx\geq 0$ for all $x\neq 0$. A positive semi-definite matrix have non-negative eigenvalues (some possibly are zero). For a positive semi-definite matrix, it is invertible if and only if it is also positive definite. Similarly, one can define negative semi-definite matrix. 
+**Positive semi-definite matrix**: A square and symmetric matrix $A$ is called a positive semi-definite matrix (denoted by $A\geq 0$), if $x^\top Ax\geq 0$ for all $x\neq 0$. A positive semi-definite matrix have non-negative eigenvalues (some possibly are zero). For a positive semi-definite matrix, it is invertible if and only if it is also positive definite. Similarly, one can define negative semi-definite matrix. 
 
 **Indefinite matrix**: A square and symmetric matrix $A$ that is neither positive semi-definite nor negative semi-definite is called indefinite.
 
 **Projection of a vector on the span of another vector**: the projection of a vector $y \in \mathbb{R}^n$ onto the span of another vector $x \in \mbb{R}^n$ ($\|x\|\neq 0$), i.e., $\rm{span}(x):=\{ax:a \in\mbb{R}\}$ is given by 
 $$
-P_xy=\frac{\inner{x}{y}}{\inner{x}{x}}x=\frac{xx^T}{\inner{x}{x}}y,
+P_xy=\frac{\inner{x}{y}}{\inner{x}{x}}x=\frac{xx^\top}{\inner{x}{x}}y,
 $$
 which has the property that $\inner{y-P_xy}{P_xy}=0.$
 

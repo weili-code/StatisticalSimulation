@@ -1652,14 +1652,15 @@ Special case, <span class="math inline">\(\ell\left(y_{i},f\left(x_{i}\right)\ri
 <p>Consider an iterative method to find the minimizaer <span class="math inline">\(w^*\)</span>: <span class="math display">\[w_{new}=w_{old}+\alpha \Delta,\]</span> for some
 <span class="math inline">\(\Delta\)</span> and some fixed positive
 scalar <span class="math inline">\(\alpha\)</span>.</p>
-<p>By Taylor expansion, note that <span class="math display">\[L(w+\alpha \Delta)=L(w)+\alpha \Delta^T \nabla
-L(w)+ \cdots.\]</span> The requirement that <span class="math inline">\(L(w+\alpha \nabla)&lt;L(w)\)</span> implies <span class="math inline">\(\Delta^T \nabla L(w)&lt;0\)</span>.</p>
+<p>By Taylor expansion, note that <span class="math display">\[L(w+\alpha \Delta)=L(w)+\alpha \Delta^\top \nabla
+L(w)+ \cdots.\]</span> The requirement that <span class="math inline">\(L(w+\alpha \nabla)&lt;L(w)\)</span> implies <span class="math inline">\(\Delta^\top \nabla L(w)&lt;0\)</span>.</p>
 <p>Let <span class="math inline">\(\beta\)</span> be the angle between
 <span class="math inline">\(\Delta\)</span> and <span class="math inline">\(\nabla L(w)\)</span>, by linear algebra fact,
-<span class="math display">\[-1 \leq \cos(\beta)= \frac{ \Delta^T \nabla
-L(w)}{ \|\Delta\| \|\nabla L(w)\|}\leq 1.\]</span> Therefore, <span class="math inline">\(L(w+\alpha \Delta)-L(w)=\alpha \Delta^T \nabla
-L(w)= \alpha \|\Delta\| \|\nabla L(w)\|\cos(\beta)\)</span> becomes
-smallest (most negative) when <span class="math inline">\(cos(\beta)=-1\)</span>,i.e., <span class="math inline">\(\beta=180^{\circ}.\)</span></p>
+<span class="math display">\[-1 \leq \cos(\beta)= \frac{ \Delta^\top
+\nabla L(w)}{ \|\Delta\| \|\nabla L(w)\|}\leq 1.\]</span> Therefore,
+<span class="math inline">\(L(w+\alpha \Delta)-L(w)=\alpha \Delta^\top
+\nabla L(w)= \alpha \|\Delta\| \|\nabla L(w)\|\cos(\beta)\)</span>
+becomes smallest (most negative) when <span class="math inline">\(cos(\beta)=-1\)</span>,i.e., <span class="math inline">\(\beta=180^{\circ}.\)</span></p>
 <p>Therefore, the best direction <span class="math inline">\(\Delta\)</span> is the opposite direction of the
 gradient <span class="math inline">\(\nabla L(w)\)</span>. The solution
 <span class="math inline">\(\Delta = -\nabla L(w)\)</span> is the

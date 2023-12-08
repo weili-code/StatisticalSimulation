@@ -26,10 +26,11 @@ header-includes:
 - \newcommand\wh[1]{\widehat{#1}}
 - \newcommand\op[1]{\operatorname{#1}}
 - \newcommand\mbb[1]{\mathbb{#1}}
-- \usepackage{caption}
-- \usepackage{mathtools}
-- \captionsetup[figure]{labelformat=empty}
+- \newcommand\T{\top}
 - \newcommand{\wei}[1]{\textcolor{orange}{(Wei:#1)}}
+- \usepackage{mathtools}
+- \usepackage{caption}
+- \captionsetup[figure]{labelformat=empty}
 ---
 
 
@@ -430,15 +431,15 @@ $$\theta^{(t)} =\arg \max_{\theta} Q(\theta, \theta^{(t-1)}).$$
 **Example**: Suppose $Z$ follows a $N(\mu,\Sigma)$, here $\theta:=(\mu,\Sigma)$.
 Note that 
 \begin{align*}
-&E_{\theta^{(t-1)}}\left(\log P\left(Z_i; \theta\right) \mid Z_{(r) i}\right) \\ =&-\frac{1}{2} \log |2 \pi {\Sigma}|-\frac{1}{2}  {E}_{\theta^{(t-1)}}\left[\left(Z_i-{\mu}\right)^{T} {\Sigma}^{-1}\left(Z_i-{\mu}\right) \mid Z_{(r) i} \right] \\
+&E_{\theta^{(t-1)}}\left(\log P\left(Z_i; \theta\right) \mid Z_{(r) i}\right) \\ =&-\frac{1}{2} \log |2 \pi {\Sigma}|-\frac{1}{2}  {E}_{\theta^{(t-1)}}\left[\left(Z_i-{\mu}\right)^{\top} {\Sigma}^{-1}\left(Z_i-{\mu}\right) \mid Z_{(r) i} \right] \\
 =&-\frac{1}{2} \log |{\Sigma}|-\frac{p}{2} \log (2 \pi)-\frac{1}{2} \operatorname{tr}\left({\Sigma}^{-1} {E}_{\theta^{(t-1)}}[{S}({\mu})\mid Z_{(r) i}]\right),
 \end{align*}
-where ${E}_{\theta^{(t-1)}}[{S}({\mu})\mid Z_{(r) i}]:= \left({E}_{\theta^{(t-1)}}\left[Z_i Z_i^{T}\mid Z_{(r) i}\right]+{\mu} {\mu}^{T}-2 {\mu} {E}_{\theta^{(t-1)}}\left[Z_i\mid Z_{(r) i}\right]^{T}\right).$ The key is to compute ${E}_{\theta^{(t-1)}}\left[Z_i\mid Z_{(r) i}\right]$ and ${E}_{\theta^{(t-1)}}\left[Z_i Z_i^{T}\mid Z_{(r) i}\right]$, and these are expected sufficient statistics and can be computed using conditional formula for multivariate Gaussian distribution. 
+where ${E}_{\theta^{(t-1)}}[{S}({\mu})\mid Z_{(r) i}]:= \left({E}_{\theta^{(t-1)}}\left[Z_i Z_i^{\top}\mid Z_{(r) i}\right]+{\mu} {\mu}^{\top}-2 {\mu} {E}_{\theta^{(t-1)}}\left[Z_i\mid Z_{(r) i}\right]^{\top}\right).$ The key is to compute ${E}_{\theta^{(t-1)}}\left[Z_i\mid Z_{(r) i}\right]$ and ${E}_{\theta^{(t-1)}}\left[Z_i Z_i^{\top}\mid Z_{(r) i}\right]$, and these are expected sufficient statistics and can be computed using conditional formula for multivariate Gaussian distribution. 
 
 In the above calculation, gathering all observations for all missing patterns, the solution in the M-step then is given by the MLE solution using the expected sufficient statistics:
 \begin{align*}
 {\mu}^{(t)} & =\frac{1}{n}\sum_{i=1}^n \sum_r I(R_i=r){E}_{\theta^{(t-1)}}\left[Z_i\mid Z_{(r) i}\right], \\
-{\Sigma}^{(t)} & =\frac{1}{n} \sum_{i=1}^n \sum_r I(R_i=r){E}_{\theta^{(t-1)}}\left[Z_i Z_i^{T}\mid Z_{(r) i}\right]-{\mu}^{(t)}\left({\mu}^{(t)}\right)^{T}.
+{\Sigma}^{(t)} & =\frac{1}{n} \sum_{i=1}^n \sum_r I(R_i=r){E}_{\theta^{(t-1)}}\left[Z_i Z_i^{\top}\mid Z_{(r) i}\right]-{\mu}^{(t)}\left({\mu}^{(t)}\right)^{\top}.
 \end{align*}
 
 ### Python Code Examples

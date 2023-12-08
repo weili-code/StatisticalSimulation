@@ -26,10 +26,11 @@ header-includes:
 - \newcommand\wh[1]{\widehat{#1}}
 - \newcommand\op[1]{\operatorname{#1}}
 - \newcommand\mbb[1]{\mathbb{#1}}
-- \usepackage{caption}
-- \usepackage{mathtools}
-- \captionsetup[figure]{labelformat=empty}
+- \newcommand\T{\top}
 - \newcommand{\wei}[1]{\textcolor{orange}{(Wei:#1)}}
+- \usepackage{mathtools}
+- \usepackage{caption}
+- \captionsetup[figure]{labelformat=empty}
 ---
 
 
@@ -85,7 +86,6 @@ The choice of $\alpha_t, \beta_t$:
 - $\alpha_t$ decreases slowly to $0$; $\beta_t$ decreases more slowly than $\alpha_t$
 - $\sum_{t} \alpha_t =\infty$
 - $\sum_{t}(\alpha_t/\beta_t)^2 <\infty$, e.g., $\alpha_t=1/(t+1)$, $\beta_t=1/(t+1)^{0.1}$
-
 
 ### Simulated Annealing
 
