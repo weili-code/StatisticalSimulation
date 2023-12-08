@@ -11,7 +11,7 @@
 
 <meta name="author" content="Instructor: Dr. Wei Li" />
 
-<meta name="date" content="2023-11-21" />
+<meta name="date" content="2023-12-08" />
 
 <title>MAT 653: Statistical Simulation</title>
 
@@ -1624,7 +1624,7 @@ display: none;
 <h1 class="title toc-ignore">MAT 653: Statistical Simulation</h1>
 <h4 class="author">Instructor<span class="math inline">\(:\)</span>
 Dr. Wei Li</h4>
-<h4 class="date">2023-11-21</h4>
+<h4 class="date">2023-12-08</h4>
 
 </div>
 
@@ -1635,7 +1635,7 @@ MathJax.Hub.Config({
 });
 </script>
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2023-11-21 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2023-12-08 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 <!------------->
 <div id="markov-chain" class="section level2">
@@ -1645,14 +1645,14 @@ Statistical Simulation, Wei Li </span> </span></p>
 mainly discuss M.C in a discrete state space here, say, <span class="math inline">\(S = \{1,2, \cdots , K\}\)</span>.</p>
 <p><strong>Definition:</strong> A Markov Chain is a sequence of random
 variables <span class="math inline">\(X^{(n)}\)</span> such that <span class="math display">\[\begin{align*}
-&amp;P(X^{(n)}\in A_n | X^{(n-1)}\in A_{n-1},\cdots, X^{(0)}\in A_0)\\
-&amp;= P(X^{(n)}\in A_n | X^{(n-1)}\in A_{n-1})
+&amp;P(X^{(n)}\in A_n | X^{(n-1)}\in A_{n-1},\cdots, X^{(0)}\in A_0)=
+P(X^{(n)}\in A_n | X^{(n-1)}\in A_{n-1}).
 \end{align*}\]</span> That is the probability distribution of <span class="math inline">\(X^{(n)}\)</span> given the past variables depends
 only on <span class="math inline">\(X^{(n-1)}\)</span>. This is called
 first-order Markov Chain.</p>
 <p>Define the one-step transition kernel <span class="math display">\[p^{[ n-1,n ]}_{ij} := P(X^{(n)}=j| X^{(n-1)}=i)
-\qquad \text{transition kernel}\]</span> We’ll restrict ourselves to the
-time-invariant M.C.,that is, <span class="math inline">\(p^{[n-1,
+\qquad \text{transition kernel}.\]</span> We’ll restrict ourselves to
+the time-invariant M.C.,that is, <span class="math inline">\(p^{[n-1,
 n]}_{ij}\)</span> does not depend on the time reference point, but only
 depend on how far apart the two time points are. So we write <span class="math inline">\(p_{ij}^{[1]}:=p^{[n, n+1]}_{ij}=p^{[n-1,
 n]}_{ij}=\cdots=p^{[0, 1]}_{ij}\)</span> etc.</p>
@@ -1673,21 +1673,21 @@ p_{K1} &amp; p_{K2} &amp; \cdots &amp; p_{KK}\\
 <p><strong>m-step transition kernel</strong></p>
 <ul>
 <li><p>transition probability <span class="math display">\[p^{[m]}_{ij}
-:= P(X^{(n+m)}=j| X^{(n)}=i)\]</span></p></li>
+:= P(X^{(n+m)}=j| X^{(n)}=i),\]</span></p></li>
 <li><p>Transition matrix <span class="math display">\[P^{[m]} :=
 \begin{bmatrix}
 p_{11}^{[m]} &amp; p_{12}^{[m]} &amp; \cdots &amp; p_{1K}^{[m]}\\
 p_{21}^{[m]} &amp; p_{22}^{[m]} &amp; \cdots &amp; p_{2K}^{[m]}\\
 \vdots &amp; \ddots &amp; \cdots &amp; \vdots\\
 p_{K1}^{[m]} &amp; p_{K2}^{[m]} &amp; \cdots &amp; p_{KK}^{[m]}\\
-\end{bmatrix}\]</span></p></li>
+\end{bmatrix}.\]</span></p></li>
 </ul>
 <p>Let’s consider some state distribution (occupation prob dist):</p>
 <p><strong>Time 0</strong>: <span class="math display">\[\alpha^{(0)} =
 (\alpha_1^{(0)}, \cdots,\alpha_K^{(0)}), \text{ where } \
 P(X^{(0)}=i)=\alpha_i^{(0)}.\]</span></p>
 <p><strong>Time 1</strong>: <span class="math display">\[\alpha^{(1)} =
-(\alpha_1^{(1)}, \cdots,\alpha_K^{(1)})= \alpha^{(0)}P\]</span> One can
+(\alpha_1^{(1)}, \cdots,\alpha_K^{(1)})= \alpha^{(0)}P.\]</span> One can
 show that the state distribution at time <span class="math inline">\(m\)</span> is given by <span class="math inline">\(\alpha^{(m)}=\alpha^{(0)}P^m\)</span>. By
 definition, <span class="math inline">\(\alpha^{(m)}=\alpha^{(0)}
 P^{[m]}\)</span>.</p>
@@ -1702,7 +1702,7 @@ moving from <span class="math inline">\(i\)</span> to <span class="math inline">
 distribution)</strong>: If a state distribution (<span class="math inline">\(\pi\)</span>) satisfies: <span class="math display">\[\pi P = \pi.\]</span> Then <span class="math inline">\(\pi\)</span> is called a “steady state
 distribution” (stationary distribution). Note that it is the same as
 <span class="math display">\[\begin{align*}
-\pi_j = \sum_{i=1}^K\pi_ip_{ij}, \ \forall \ j = 1,2,\cdots , K
+\pi_j = \sum_{i=1}^K\pi_ip_{ij}, \ \forall \ j = 1,2,\cdots , K.
 \end{align*}\]</span> The LHS <span class="math inline">\(\pi_j\)</span>
 is steady state prob for the state <span class="math inline">\(j\)</span>. The RHS <span class="math inline">\(\sum_{i=1}^K\pi_ip_{ij}\)</span> is total
 probability flowing into state <span class="math inline">\(j\)</span>
@@ -1719,13 +1719,13 @@ from that state into <span class="math inline">\(j\)</span>.</p>
 <p>To see the meaning of the steady state distribution, consider a
 scenario that at some step n, we reached the steady state distribution,
 <span class="math display">\[\begin{align*}
-\alpha^{(n)} &amp;= \pi \\
-\alpha^{(n+1)} &amp;= \alpha^{(n)}P = \pi
+\alpha^{(n)} &amp;= \pi, \\
+\alpha^{(n+1)} &amp;= \alpha^{(n)}P = \pi.
 \end{align*}\]</span> Therefore, once we reached the steady state
 distribution, the state distribution becomes stationary.</p>
 <p><strong>Find the steady state distribution</strong>: For a given
 transition matrix <span class="math inline">\(P\)</span>, note that
-<span class="math display">\[P^T\pi^T = 1\pi^T\]</span> So <span class="math inline">\(\pi^T\)</span> is eigenvalue of <span class="math inline">\(P^T\)</span> that corresponds to eigenvalue 1. The
+<span class="math display">\[P^T\pi^T = 1\pi^T.\]</span> So <span class="math inline">\(\pi^T\)</span> is eigenvalue of <span class="math inline">\(P^T\)</span> that corresponds to eigenvalue 1. The
 found eigenvector then needs to be normalized. A limitation is that it
 is not guaranteed the found eigenvector is real-valued.</p>
 <p>A more general approach is to solve the following system of
@@ -1736,7 +1736,7 @@ column of <span class="math inline">\(I-P\)</span> in <span class="math inline">
 1)\)</span>.</p>
 <p><strong>Limiting distribution</strong>: A Markov Chain has a limiting
 distribution if <span class="math display">\[
-\pi_j = \lim_{n\to \infty} p_{ij}^n
+\pi_j = \lim_{n\to \infty} p_{ij}^n,
 \]</span> exits and the distribution is independent of the starting
 state. This basically says that the long-run distribution <span class="math inline">\(P(X^{(n)}=j) \to \pi_j\)</span> as <span class="math inline">\(n \to \infty\)</span> and is independent of the
 state at time <span class="math inline">\(0\)</span>.</p>
@@ -1756,7 +1756,7 @@ state, i.e. <span class="math display">\[\forall i,j, \ p_{ij}^{[n_0]}
 <h5>aperiodic</h5>
 <ul>
 <li>A state <span class="math inline">\(i\)</span> has period <span class="math inline">\(v \in \mathbb{N}\)</span> if <span class="math inline">\(p_{ii}^{[m]}&gt;0\)</span> <em>only</em> holds for
-<span class="math inline">\(m\)</span> that is a multiple of <span class="math inline">\(v&gt;1\)</span></li>
+<span class="math inline">\(m\)</span> that is a multiple of <span class="math inline">\(v&gt;1\)</span>.</li>
 <li>A state is aperiodic if <span class="math inline">\(p_{ii}^{[m]}&gt;0\)</span> for all <span class="math inline">\(m\)</span> sufficiently large that is no multiple
 of any <span class="math inline">\(v&gt;1\)</span>.</li>
 <li>A chain is called “aperiodic” if all states are aperiodic.</li>
@@ -1873,8 +1873,8 @@ distribution.</p>
 </div>
 </div>
 </div>
-<div id="metropolis-algorithm" class="section level2">
-<h2>Metropolis Algorithm</h2>
+<div id="metropolis-algorithm-discrete-state-space" class="section level2">
+<h2>Metropolis Algorithm (discrete state space)</h2>
 <p><strong>Goal</strong>: to find the transition kernel <span class="math inline">\(\tilde{P}_{ij}\)</span>, s.t., the detailed
 balance condition holds, i.e., <span class="math inline">\(\pi_j\tilde{P}_{ji}=\pi_i\tilde{P}_{ij},\forall
 i,j\)</span>.</p>
@@ -1897,16 +1897,17 @@ the transition probability.</p>
 <p>Formally, Metropolis’ idea works as follows. Given some <span class="math inline">\(\pi\)</span>–the stationary distribution (target
 distribution), choose some candidate transition kernel <span class="math inline">\(P_{ij}\)</span>. For all <span class="math inline">\(i\)</span>,</p>
 <ol style="list-style-type: decimal">
-<li>Define acceptance probability <span class="math display">\[\alpha_{ij}=\min\Big(\frac{\pi_jP_{ji}}{\pi_iP_{ij}},1\Big)\]</span>
+<li>Define acceptance probability <span class="math display">\[\alpha_{ij}=\min\Big(\frac{\pi_jP_{ji}}{\pi_iP_{ij}},1\Big),\]</span>
 for each <span class="math inline">\(i\)</span> and <span class="math inline">\(j\neq i\)</span>.</li>
 <li>Let <span class="math display">\[
-\tilde{P}_{ij}=\alpha_{ij}P_{ij},  j \neq i
+\tilde{P}_{ij}=\alpha_{ij}P_{ij},  j \neq i,
 \]</span> <span class="math display">\[
-\tilde{P}_{ii}=1-\sum_{j:j\neq i}\tilde{P}_{ij}
+\tilde{P}_{ii}=1-\sum_{j:j\neq i}\tilde{P}_{ij}.
 \]</span></li>
 </ol>
 <p>Then <span class="math inline">\(\pi\)</span> is the stationary
 distribution from M.C. with transition probability given by this <span class="math inline">\(\tilde{P}_{ij}\)</span>.</p>
+<p><strong>Proof</strong>: provided in class.</p>
 <strong>Note</strong>: <span class="math inline">\(\tilde{P}_{ii}=1-\sum_{j:j\neq
 i}\tilde{P}_{ij}\)</span> is the probability that we reject any proposal
 that moves from <span class="math inline">\(i\)</span> to any other
@@ -1919,9 +1920,9 @@ transition kernel.
 <p><span class="math inline">\(X^{(0)}\in S\)</span>, <span class="math inline">\(S\)</span> is a discrete space.</p>
 <ol style="list-style-type: decimal">
 <li><p>draw <span class="math inline">\(X^* \sim
-P(\cdot|X^{(t-1)})\)</span></p></li>
+P(\cdot|X^{(t-1)})\)</span>;</p></li>
 <li><p>compute acceptance probability <span class="math display">\[
-\alpha(X^{(t-1)},X^*):=min\left\{1,\frac{P(X^{(t-1)}|X^*)\pi_{X^*}}{P(X^*|X^{(t-1)})\pi_{X^{(t-1)}}}\right\}
+\alpha(X^{(t-1)},X^*):=min\left\{1,\frac{P(X^{(t-1)}|X^*)\pi_{X^*}}{P(X^*|X^{(t-1)})\pi_{X^{(t-1)}}}\right\},
 \]</span> where <span class="math inline">\(\pi_{X^*}\)</span> is the
 probability of taking value <span class="math inline">\(X^*\)</span>
 under the stationary distribution <span class="math inline">\(\pi\)</span>, and <span class="math inline">\(\pi_{X^{(t-1)}}\)</span> is the probability of
@@ -1933,9 +1934,13 @@ with probability <span class="math inline">\(\alpha(X^{(t-1)},X)\)</span>; other
 <p>To implement step 3, one can implement: generate <span class="math inline">\(U \sim Unif(0,1)\)</span>, if <span class="math inline">\(U \leq \alpha(X^{(t-1)},X^*)\)</span>, then accept
 <span class="math inline">\(X^*\)</span>, i.e., set <span class="math inline">\(X^{(t)}\leftarrow X^*\)</span>; otherwise, reject
 <span class="math inline">\(X^*\)</span>, set <span class="math inline">\(X^{(t)}\leftarrow X^{(t-1)}\)</span>.</p>
+</div>
+<div id="python-code-examples" class="section level3">
+<h3>Python Code Examples</h3>
+<p>Provided and discussed in lab.</p>
 <!------------->
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2023-11-21 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2023-12-08 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 </div>
 </div>

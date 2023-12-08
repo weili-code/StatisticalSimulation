@@ -277,6 +277,10 @@ This problem may suggest that we can view PCA as a predictive model. However, , 
 
 Note the objective function essentially is $\frac{1}{n}\left\|\mathbf{X}-\mathbf{X}V {V}^{\top}\right\|_F^2$ such that $V^TV=I$, so the error is just a kind of reconstruction error. The reconstruction is purely deterministic (fixing $V$ or estimated $V$): given $\mb{z}_i$, the $\mb{x}_i$ is fully determined. A probabilistic PCA is a probabilistic version of PCA that allows generation of $\mb{x}_i$: given $\mb{z}_i$, $\mb{x}_i$ can be generated according to some specified distribution.
 
+### Python Code Examples
+
+Provided and discussed in lab.
+
 <!------------->
 <span style="background-color: #f5f5f5; padding: 5px; display: block;">
     <span style="width: 25%; display: inline-block; text-align: left;">

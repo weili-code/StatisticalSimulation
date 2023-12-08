@@ -60,9 +60,9 @@ We consider Markov chains in the continuous state space, that is, $S$ = uncounta
 
 Transition probability from each possible state $x$ to each possible set of states $A$:
 \begin{align*}
-&P(x_0,A):=P(X^{(n+1)} \in A | X^{(n)}=x_0)\\
-\text{CDF}:\ &F(x_1|x_0):=P(X^{(n+1)} \leq x_1 | X^{(n)}=x_0)\\
-\text{One-step transition density function}:\ &f(x_0, x_1):= \frac{\partial F(x_1|x_0)}{\partial x_1}= p(X^{(n+1)}=x_1|X^{(n)}=x_0)\\
+&P(x_0,A):=P(X^{(n+1)} \in A | X^{(n)}=x_0),\\
+\text{CDF}:\ &F(x_1|x_0):=P(X^{(n+1)} \leq x_1 | X^{(n)}=x_0),\\
+\text{One-step transition density function}:\ &f(x_0, x_1):= \frac{\partial F(x_1|x_0)}{\partial x_1}= p(X^{(n+1)}=x_1|X^{(n)}=x_0).\\
 \end{align*}
 
 ### Transition density 
@@ -76,7 +76,7 @@ Two-step transition density:
 \begin{align*}
 f^{[2]}(x_n,x_{n+2}):=p(X^{(n+2)}=x_{n+2}|X^{(n)}=x_n)&= \int p(X^{(n+2)}=x_{n+2}|X^{(n+1)}=x_{n+1},X^{(n)}=x_n)  p(X^{(n+1)}=x_{n+1}|X^n=x_n)d x_{n+1}\\
 &=\int p(X^{(n+2)}=x_{n+2}|X^{(n+1)}=x_{n+1}) p(X^{(n+1)}=x_{n+1}|X^{(n)}=x_n)d x_{n+1}\\
-&=\int f^{[1]}(x_n,x_{n+1}) f^{[1]}(x_{n+1},x_{n+2})d x_{n+1}
+&=\int f^{[1]}(x_n,x_{n+1}) f^{[1]}(x_{n+1},x_{n+2})d x_{n+1}.
 \end{align*}
 
 Three-step transition density:
@@ -101,11 +101,11 @@ $$
 ### Some important properties
 
 If some regular (ergodic) M.C. possesses a limiting transition density independent of the initial state, that is 
-$$\lim_{n \to \infty}f^{[n]}(x,v)=g(v)$$
+$$\lim_{n \to \infty}f^{[n]}(x,v)=g(v),$$
 then $g(v)$ is called "stationary/steady-state density" (long-term probability density) of M.C. and it is a solution to steady-state equation:
 
 $$g(v)=\int_{-\infty}^{+\infty}g(w)f(w,v)dw \qquad (*)$$
-$$(\text{recall discrete space}: \pi_j=\sum_{i=1}^{K} \pi_i p_{ij} \qquad \forall j=1,2,\cdots ,K)$$
+$$(\text{recall discrete space}: \pi_j=\sum_{i=1}^{K} \pi_i p_{ij} \qquad \forall j=1,2,\cdots ,K),$$
 where $g(w)$ may be viewed as the start distribution and $f(w,v)$ is the transition density function.
 Note that an equivalent expression to $(*)$ is
 $$\int_A g(v) dv=\int_{-\infty}^{+\infty}g(w)P(w,A)dw \text{, for all set } A, \text{ where } P(w, A):=P(X^{(n+1)} \in A|X^{(n)}=w).$$
@@ -137,11 +137,11 @@ Choose an arbitrary transition density $q(\cdot | \cdot)$, without requring that
 
 The goal of this is to regulate the flow of probabilities between the current state and the proposed state. So given that our current state is $x$  then the probability of a particular state being proposed and accepted is $\alpha (x^*|x) q(x^*|x)$. Similarly, we can calculate the probability that any proposal is accepted as $a(x) :=\int \alpha (x^*|x) q(x^*|x)dx^*$. A proposal is not accepted with probability $r(x) := 1- a(x)$, in which case we set $x^* = x$. The (effective) transition density is then 
 
-$$p(x^*|x) =  \alpha (x^*|x) q(x^*|x) + r(x)\delta_x(x^*)$$
+$$p(x^*|x) =  \alpha (x^*|x) q(x^*|x) + r(x)\delta_x(x^*),$$
 
 where $\delta_x(x^*) = 1$ if $x^*=x$ and 0 otherwise. Then since we are in continuous state space, this can be generalized to 
 
-$$P(x, A)=\int_A p(x^*|x)dx^* = \int_A\alpha (x^*|x) q(x^*|x)dx^* + r(x)\delta_A(x)$$
+$$P(x, A)=\int_A p(x^*|x)dx^* = \int_A\alpha (x^*|x) q(x^*|x)dx^* + r(x)\delta_A(x),$$
 
 where $\delta_A(x) = 1$ if $x\in A$ and 0 otherwise.
 
@@ -150,6 +150,8 @@ We can show that the (effective) transition density indeed satisfies the detaile
 \begin{mdframed}
 Proof: 
 \end{mdframed}
+
+**Proof**: provided in class.
 
 
 ### Metropolis-Hastings algorithm
@@ -164,7 +166,7 @@ $$\alpha(x^*|x^{(s)}) = \min \left(1, \frac{q(x^{(s)}|x^*)f(x^*)}{q(x^*|x^{(s)})
 **Remark**:
 
 A necessary condition for the algorithm to work is $\mbox{supp}(f)\subseteq \mbox{supp}(q(\cdot|x))$ for all $x\in \mbox{supp}(f)$.
-A minimal necessary condition would be $\mbox{supp}(f)\subseteq \cup_{x\in \mbox{supp}(f)}[\mbox{supp}(q(\cdot|x))]$
+A minimal necessary condition would be $\mbox{supp}(f)\subseteq \cup_{x\in \mbox{supp}(f)}[\mbox{supp}(q(\cdot|x))].$
 
 ### Choice of Transition Density
 
@@ -180,7 +182,7 @@ Proposals should not be too bold (standard deviation not too high), however shou
 
 1. **Burn-in** 
     i.   Run algorithm until some iteration $B$ for which Markov Chain appears to reach stationarity.
-    ii. Run algorithm $B'$ more times and keep $\{x^{B+1},\ldots,x^{B+B'} \}$
+    ii. Run algorithm $B'$ more times and keep $\{x^{B+1},\ldots,x^{B+B'} \}.$
     iii. Use empirical distribution of $\{x^{B+1},\ldots,x^{B+B'} \}$ to approximate the density $f$.
             
 2. **Thinning**: After burning to discard first B observations, then thin the chain by including every kth draw.
@@ -192,6 +194,11 @@ Proposals should not be too bold (standard deviation not too high), however shou
 4. **"ACF" Autocorrelation Function**: Calculate the "lag-$j$ sample covariance" as 
 $$\hat\gamma_j = \frac{1}{T}\sum_{t=j+1}^T(x^{(t)}-\bar x)(x^{(t-j)}-\bar x)$$
 and the "lag-$j$ sample autocorrelation"  as $\hat{\rho}_j = \hat\gamma_j/\hat\gamma_0$. Then plotting autocorrelation $\hat{\rho}_j$ v.s. the lag index ($j$), relatively high values would indicate a high degree of correlation between draws and therefore, slow mixing.
+
+### Python Code Examples
+
+Provided and discussed in lab.
+
 
 <!------------->
 <span style="background-color: #f5f5f5; padding: 5px; display: block;">

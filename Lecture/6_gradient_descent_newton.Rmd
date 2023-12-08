@@ -64,7 +64,7 @@ We'll consider the gradient method, and Newton's method (and its variants). Both
 
 1. start the process with some initial point $x_0$;
 2. iterate steps $x_k \rightarrow x_{k+1}$ by going downhill.
-3. Repeat step 2 until the sequence of points converge to a stationary point.
+3. repeat step 2 until the sequence of points converge to a stationary point.
 
 For a general (non-convex) function, we run the procedure several times with different initial values $x_0$.
 
@@ -72,7 +72,7 @@ For a general (non-convex) function, we run the procedure several times with dif
 Choose a direction $p_k$ and search along the direction from the current iterate $x_k$ for a new iterate with lower function value $f(x_{k+1}) < f(x_k)$. Consider $x_k+\alpha P_k$ ( $\alpha$ = "step length", "learning rate",  $\alpha>0$ scalar) as the next iterate. 
 
 Fix $\alpha$: Taylor approximation of $f$ at $x_k$ is given by
-$$f(x_k +\alpha p) \approx f(x_k)+\alpha p^T\nabla f(x_k):=T(x_k, \alpha p)$$
+$$f(x_k +\alpha p) \approx f(x_k)+\alpha p^T\nabla f(x_k):=T(x_k, \alpha p).$$
 To solve for the direction $p$, $\min_{||p||=1} p^T \nabla f(x_k)$, whose solution gives us the the unit direction that has the most rapid decrease in $f$. 
 
 $p^T\nabla f(x_k) = ||p|| \cdot ||\nabla f(x_k)|| cos(\theta)$, $0\leq \theta \leq \pi$
@@ -94,14 +94,14 @@ Until stopping condition is met (e.g., $||\nabla f(x_k)||=0$).
 # Newton's Method
 Take a second order Taylor expansion of $T(x_k, \alpha p)$ in the direction given by $\alpha p$:
 $$T(x_k,\alpha p):=f(x_k)+\alpha p^T\nabla f(x_k)+\alpha^2p^T\nabla^2f(x_k)p/2.$$
-we travel to a stationary point of this quadratic approximation by solving for a minimizer $p$ (if $f$ is convex) and move $x_{k+1} \leftarrow x_k +\alpha p$. 
+We travel to a stationary point of this quadratic approximation by solving for a minimizer $p$ (if $f$ is convex) and move $x_{k+1} \leftarrow x_k +\alpha p$. 
 
 To see this, set $\alpha \equiv 1$; set the gradient of $T(x_k,\alpha p)$ to zero and solve for $p$: 
 \begin{align*}
 FOC: &\nabla_pT(x_k,\alpha p) \overset{set}{=} 0\\
 &\nabla f(x_k) + \nabla^2f(x_k)p = 0\\
 &\Rightarrow   p = p_k = -\nabla f(x_k)^{-1} \cdot \nabla f(x_k), \text{ if} \ \nabla^2f(x_k) \ \text{ is invertible}\\
-&x_{k+1} \leftarrow x_k - \big[\nabla^2f(x_k)\big]^{-1} \cdot \nabla f(x_k)
+&x_{k+1} \leftarrow x_k - \big[\nabla^2f(x_k)\big]^{-1} \cdot \nabla f(x_k).
 \end{align*}
 
 If $\nabla^2f(x_k)$ is not invertible, you can use $\big[\nabla^2f(x_k)\big]^\dagger$.
@@ -109,7 +109,7 @@ An alternative way is to solve:
 \begin{align*}
 &\nabla f(x_k) + \nabla^2 f(x_k)(x_{k+1} - x_k) = 0.\\
 \Leftrightarrow &\nabla^2f(x_k)x_{k+1} = \nabla^2f(x_k) x_k - \nabla f(x_k).\\
-\Rightarrow &\text{solve for } x_{k+1}\\
+\Rightarrow &\text{solve for } x_{k+1}.\\
 \end{align*}
 
 
@@ -124,8 +124,8 @@ Newton method produces a sequence of points $x_1 , x_2, ...$ that minimizes a se
 \end{align*}
 here,  $B_k$ is some approximation to $\nabla^2f(x_k)$. Note that
 \begin{align*}
-  & \nabla f(x_{k+1}) = \nabla f(x_k) + \nabla^2f(x_k)(x_{k+1} - x_k) + o(||x_{k+1} - x_k||)\\
-  & \Leftrightarrow \nabla^2f(x_k)(x_{k+1} - x_k) \small  \approx \nabla f(x_{k+1}) - \nabla f(x_k)
+  & \nabla f(x_{k+1}) = \nabla f(x_k) + \nabla^2f(x_k)(x_{k+1} - x_k) + o(||x_{k+1} - x_k||),\\
+  & \Leftrightarrow \nabla^2f(x_k)(x_{k+1} - x_k) \small  \approx \nabla f(x_{k+1}) - \nabla f(x_k).
 \end{align*}
  
 $B_k$ is required to satisfy: (1). $B_k$ is symmetric; (2). $B_k(x_{k+1} - x_k) = \nabla f(x_{k+1}) - \nabla f(x_k)$ (secant equation).
@@ -138,7 +138,7 @@ Let $s_k= x_{k+1} - x_k$, $y_k = \nabla f(x_{k+1}) - \nabla f(x_k)$. If $B_0 >0$
 \end{align*}
 Then substitute $\alpha$ and $\beta$ back into $B_{k+1}=B_k+\alpha {u} {u}^{T}+\beta {v} {v}^{T}$ and get the update equation of $B_{k+1}$ :
 \begin{align*}
-B_{k+1} = B_k - \frac{B_ks_ks_k^T B_k}{s_k^T B_ks_k} +  \frac{y_ky_k^T}{y_k^T s_k}\\ 
+B_{k+1} = B_k - \frac{B_ks_ks_k^T B_k}{s_k^T B_ks_k} +  \frac{y_ky_k^T}{y_k^T s_k}.\\ 
 \end{align*}
 
 **Alternative version of BFGS** 
@@ -167,7 +167,7 @@ $$
 
 We now turn to the problem of how to find the step length: choose $\alpha$ assume $p_k$ has been found (say $p_k^T\nabla f_k<0$). An ideal choice of $\alpha$ is find a global minimizer of
 $$  
-  \phi(\alpha) \equiv f(x_k + \alpha p_k), \quad \alpha > 0
+  \phi(\alpha) \equiv f(x_k + \alpha p_k), \quad \alpha > 0,
 $$
 but too costly. Instead, we use some inexact line search method to identify a step length that achieves adequate reduction in $f$.
 
@@ -213,8 +213,6 @@ This curvature condition, together with the Armijo condition are called the **Wo
 \left|\nabla f\left(x_k+\alpha p_k\right)^T p_k \right| \leq c_2\left|\nabla f\left(x_k\right)^T p_k \right|
 \end{align*}
 prevents the slope of $\phi(\alpha)$ from getting too large, hence excluding unlikely candidates that are far away from the stationary point.
-
-WIKI: "Wolfe's conditions are more complicated than Armijo's condition, and a gradient descent algorithm based on Armijo's condition has a better theoretical guarantee than one based on Wolfe conditions."
 
 #### Algorithm (BFGS with line search)
 
@@ -303,10 +301,10 @@ If any $\alpha_i$ is either too close to it's predecessor $\alpha_{i-1}$ or too 
 ### Modified Newton Method
 
 By eigen-decomposition, we write for the square symmetric matrix $\nabla^2f(x_k)=V_kD_kV_k^T$. 
-By definition, $\nabla^2f(x_k)V_k=V_kD_k \text{ where } (D_k={\delta_j}$diagonal matrix consists of eigenvalues of the $\nabla^2 f(x_k)$). 
+By definition, $\nabla^2f(x_k)V_k=V_kD_k \text{ where } (D_k=\{\delta_j\}$diagonal matrix consists of eigenvalues of the $\nabla^2 f(x_k)$). 
 
-If $\delta_j<\epsilon$, then set $\delta_j\leftarrow 2\epsilon$, call the new $D_k\rightarrow\widetilde{D}_k$; 
-redefine Hessian to be $V_k\widetilde{D}_kV_K^T$. Note that $\nabla^2f(x_k)^{-1}=V_k \widetilde{D}_k^{-1}V^T_k$.
+If $\delta_j<\epsilon$, then set $\delta_j\leftarrow 2\epsilon$, call the new $D_k\rightarrow\tilde{D}_k$; 
+redefine Hessian to be $V_k\tilde{D}_kV_K^T$. Note that $\nabla^2f(x_k)^{-1}=V_k \tilde{D}_k^{-1}V^T_k$.
 
 More generally, we can modify $\nabla^2f(x_k)$ to $\nabla^2f(x_k)+\tau_kI$ where $\tau_k \geq -min\{0, \delta_1, \ldots, \delta_n\}$--this guarantees the modified Hessian to be positive definite.
 
@@ -319,7 +317,7 @@ r_1(x) \\
 r_2(x) \\ 
 \vdots\\
 r_m(x)\\
-\end{bmatrix}
+\end{bmatrix},
 $$
 then $f(x)=\frac{1}{2}||r(x)||^2.$
 
@@ -337,7 +335,7 @@ We can show that
 
 $$\nabla f(x)=\sum_{j=1}^{m}r_j(x)\nabla r_j(x)=J(x)^Tr(x)$$
 
-$$\nabla^2f(x)=\sum_{j=1}^{m}\nabla r_j(x)\nabla r_j(x)^T+\sum_{j=1}^{m}r_j(x)\nabla^2r_j(x)\\=J(x)^TJ(x)+\sum_{j=1}^{m}r_j(x)\nabla^2r_j(x)$$
+$$\nabla^2f(x)=\sum_{j=1}^{m}\nabla r_j(x)\nabla r_j(x)^T+\sum_{j=1}^{m}r_j(x)\nabla^2r_j(x)\\=J(x)^TJ(x)+\sum_{j=1}^{m}r_j(x)\nabla^2r_j(x).$$
 
 On the right hand side, the first term $\sum_{j=1}^{m}\nabla r_j(x)\nabla r_j(x)^T$ is in general more important than the second term, either because of the near-linearity of the model near the solution, or because of small residuals. 
 
@@ -346,7 +344,7 @@ $J_k^TJ_k p_k=-J_k^Tr_k$ iteratively. This method is sometimes called **Gauss-Ne
 
 ### Solve non-linear equations
 
-$r: R^n\rightarrow R^n, r(x)=0$
+$r: R^n\rightarrow R^n, r(x)=0.$
 
 $r(x_k+p)\approx r(x_k)+J(x_k)p$ (Taylor expansion for multiple equation and $J(x)=\nabla r(x)$ -- a $n\times n$ matrix is the Jacobian of $r$).
 We solve for $p_k=-J^{-1}(x_k)r(x_k)$ if $J(x_k)$ is invertible. Then $x_{k-1}\leftarrow x_k+p_k.$
@@ -357,7 +355,7 @@ Note: if the solution to $r(x)=0$ exists, then solving the equation is equivalen
 
 **Example**: Linear LS problem
 
-$\min f(x)=||Ax-b||^2=x^TA^TAx-2b^TAx+b^Tb$
+$\min f(x)=||Ax-b||^2=x^TA^TAx-2b^TAx+b^Tb.$
 
 **Example**: non-linear LS problem (logistic regression):
 
@@ -379,7 +377,7 @@ $$
 
 $$
 \begin{aligned}
-\nabla RSS(\widetilde{\beta})&=\frac{d}{d_{\widetilde{\beta}}}\sum_{i=1}^{n}(\delta(\widetilde{x}^T_i\widetilde{\beta})-y_i)^2\\&=2\sum_{i=1}^{n}(\delta(\widetilde{x}^T_i\widetilde{\beta})-y_i)\delta(\widetilde{x}^T_i\widetilde{\beta})(1-\delta(\widetilde{x}^T_i\widetilde{\beta}))\widetilde{x}_i
+\nabla RSS(\widetilde{\beta})&=\frac{d}{d_{\widetilde{\beta}}}\sum_{i=1}^{n}(\delta(\widetilde{x}^T_i\widetilde{\beta})-y_i)^2\\&=2\sum_{i=1}^{n}(\delta(\widetilde{x}^T_i\widetilde{\beta})-y_i)\delta(\widetilde{x}^T_i\widetilde{\beta})(1-\delta(\widetilde{x}^T_i\widetilde{\beta}))\widetilde{x}_i.
 \end{aligned}
 $$
 

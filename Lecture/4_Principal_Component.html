@@ -1794,8 +1794,8 @@ centered design matrix of <span class="math inline">\(\mathbf{X}\)</span>.</p>
 <li>eigen-decomposition of <span class="math inline">\(\mathbf{X}_{c}^{T} \mathbf{X}_{c}\)</span>: <span class="math inline">\(\mathbf{X}_{c}^{T}
 \mathbf{X}_{c}=VD^2V^T\)</span></li>
 <li>singular value decomposition <span class="math inline">\((\mathrm{SVD})\)</span> of <span class="math inline">\(\mathbf{X}_{c}\)</span>: <span class="math inline">\(\mathbf{X}_{c}=UDV^T\)</span>.</li>
-<li>Here <span class="math inline">\(D=\operatorname{diag}(\text{singular values of }
-\mathbf{X}_c)=\operatorname{diag}(\text{eigenvalues of }
+<li><span class="math inline">\(D=\operatorname{diag}(\text{singular
+values of } \mathbf{X}_c)=\operatorname{diag}(\text{eigenvalues of }
 \mathbf{X}_c^T\mathbf{X}_c)\)</span></li>
 </ul>
 <p>Specifically, in the following discussion, suppose we have <span class="math inline">\(n \times p\)</span> demeaned data matrix <span class="math inline">\(\mathbf{X}\)</span> with <span class="math inline">\(n \geq p\)</span> (<strong>we assume <span class="math inline">\(\mathbf{X}\)</span> it to be in mean-deviance form
@@ -1845,7 +1845,7 @@ component can be assessed by <span class="math inline">\(z_{ij}^2/\sum_{k=1}^nz_
 \boldsymbol{z}_{2}^{T} \\
 \vdots \\
 \boldsymbol{z}_{n}^{T}
-\end{array}\right]
+\end{array}\right].
 \end{align*}\]</span></p>
 <p>Note the <span class="math inline">\(p \times 1\)</span> vector <span class="math inline">\(\boldsymbol{z}_{i}=V^T \boldsymbol{x}_i\)</span>
 is the <strong><span class="math inline">\(i\)</span>-th score of the
@@ -1974,6 +1974,10 @@ probabilistic PCA is a probabilistic version of PCA that allows
 generation of <span class="math inline">\(\mathbf{x}_i\)</span>: given
 <span class="math inline">\(\mathbf{z}_i\)</span>, <span class="math inline">\(\mathbf{x}_i\)</span> can be generated according
 to some specified distribution.</p>
+</div>
+<div id="python-code-examples" class="section level3">
+<h3>Python Code Examples</h3>
+<p>Provided and discussed in lab.</p>
 <!------------->
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
 <strong>Updated:</strong> 2023-12-08 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">

@@ -11,7 +11,7 @@
 
 <meta name="author" content="Instructor: Dr. Wei Li" />
 
-<meta name="date" content="2023-09-20" />
+<meta name="date" content="2023-12-08" />
 
 <title>MAT 653: Statistical Simulation</title>
 
@@ -1624,7 +1624,7 @@ display: none;
 <h1 class="title toc-ignore">MAT 653: Statistical Simulation</h1>
 <h4 class="author">Instructor<span class="math inline">\(:\)</span>
 Dr. Wei Li</h4>
-<h4 class="date">2023-09-20</h4>
+<h4 class="date">2023-12-08</h4>
 
 </div>
 
@@ -1635,7 +1635,7 @@ MathJax.Hub.Config({
 });
 </script>
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2023-09-20 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2023-12-08 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 <!------------->
 <div id="gradient-descent" class="section level1">
@@ -2047,7 +2047,7 @@ little improvement; if we decay it very fast, our system will be unable
 to reach the best position. A sufficient condition for SGD to converge
 is the Robbins-Monro Condition: <span class="math display">\[\begin{align*}
 \frac{\sum_{t=1}^{\infty} \alpha_t^2}{\sum_{t=1}^{\infty} \alpha_t}
-\rightarrow 0 \quad \text { as } \alpha_t \rightarrow 0
+\rightarrow 0 \quad \text { as } \alpha_t \rightarrow 0.
 \end{align*}\]</span></p>
 <ul>
 <li>Step decay - Reduce the learning rate by some factor every few
@@ -2062,10 +2062,14 @@ number.</li>
 where, <span class="math inline">\(\epsilon_0\)</span> and <span class="math inline">\(a, k\)</span> are the hyperparameters and <span class="math inline">\(t\)</span> is the iteration number. This is often
 used in stochastic gradient descent (i.e., batch size=1).</li>
 </ul>
+<div id="python-code-examples" class="section level3">
+<h3>Python Code Examples</h3>
+<p>Provided and discussed in lab.</p>
 <!------------->
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2023-09-20 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2023-12-08 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
+</div>
 </div>
 
 

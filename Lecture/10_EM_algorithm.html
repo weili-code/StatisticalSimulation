@@ -11,7 +11,7 @@
 
 <meta name="author" content="Instructor: Dr. Wei Li" />
 
-<meta name="date" content="2023-10-16" />
+<meta name="date" content="2023-12-08" />
 
 <title>MAT 653: Statistical Simulation</title>
 
@@ -1624,7 +1624,7 @@ display: none;
 <h1 class="title toc-ignore">MAT 653: Statistical Simulation</h1>
 <h4 class="author">Instructor<span class="math inline">\(:\)</span>
 Dr. Wei Li</h4>
-<h4 class="date">2023-10-16</h4>
+<h4 class="date">2023-12-08</h4>
 
 </div>
 
@@ -1635,7 +1635,7 @@ MathJax.Hub.Config({
 });
 </script>
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2023-10-16 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2023-12-08 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 <!------------->
 <div id="em-algorithm" class="section level2">
@@ -1696,10 +1696,10 @@ E_{\theta^{(0)}}[logf(\boldsymbol{z}|\boldsymbol{x},\theta)|\boldsymbol{x}]
 \theta^{(0)},\boldsymbol{x}),
 \end{align*}\]</span> where we take <span class="math display">\[\begin{align*}
 Q(\theta | \theta^{(0)},\boldsymbol{x}) :=
-E_{\theta^{(0)}}[logf(\boldsymbol{x},\boldsymbol{z}|\theta)|\boldsymbol{x}]
+E_{\theta^{(0)}}[logf(\boldsymbol{x},\boldsymbol{z}|\theta)|\boldsymbol{x}],
 \\
 K(\theta | \theta^{(0)},\boldsymbol{x}):=
-E_{\theta^{(0)}}[logf(\boldsymbol{z}|\boldsymbol{x},\theta)|\boldsymbol{x}]
+E_{\theta^{(0)}}[logf(\boldsymbol{z}|\boldsymbol{x},\theta)|\boldsymbol{x}].
 \end{align*}\]</span></p>
 <p>It turns out for any candidate <span class="math inline">\(\theta^{&#39;}\)</span> for next iterate, <span class="math display">\[\begin{align*}
   K(\theta^{&#39;}|\theta^{0},\boldsymbol{x}) \le K(\theta^{(0)} |
@@ -1774,7 +1774,7 @@ If we approximate <span class="math inline">\(Q\)</span> function using
 this idea, this then gives the so-called <strong>Monte-Carlo
 EM</strong>: <span class="math display">\[\begin{align*}
   \hat{Q}(\theta|\theta^{(m)},\boldsymbol{x}) =
-\frac{1}{T}\sum^{T}_{j=1}log[L^{c}(\theta|\boldsymbol{x},\boldsymbol{z}_j)].
+\frac{1}{T}\sum^{T}_{j=1}log[L^{c}(\theta|\boldsymbol{x},\boldsymbol{z}_j)],
 \end{align*}\]</span><br />
 where <span class="math inline">\(\boldsymbol{z}_1, \ldots,
 \boldsymbol{z}_T\)</span> is an i.i.d. random sample generated from
@@ -1784,8 +1784,8 @@ where <span class="math inline">\(\boldsymbol{z}_1, \ldots,
 Instead, sometimes we just find <span class="math inline">\(\theta^{(m+1)}\)</span> that can improve upon the
 value of <span class="math inline">\(Q\)</span> at the current <span class="math inline">\(\theta^{(m)}\)</span>, that is, <span class="math display">\[\begin{align*}
   Q(\theta^{(m+1)}|\theta^{(m)},\boldsymbol{x}) \ge
-Q(\theta^{(m)}|\theta^{(m)},\boldsymbol{x}),  
-\end{align*}\]</span> we called that <strong>generalized EM
+Q(\theta^{(m)}|\theta^{(m)},\boldsymbol{x}).
+\end{align*}\]</span> We called that <strong>generalized EM
 Algorithm</strong>.</li>
 </ol>
 </div>
@@ -1807,7 +1807,7 @@ complete data likelihood function.</p>
 <p>Suppose <span class="math inline">\(X_i\overset{i.i.d.}{\sim}\frac{1}{4}N(\mu_1,1)+\frac{3}{4}N(\mu_2,1)\)</span>,
 <span class="math inline">\(\theta=(\mu_1,\mu_2).\)</span><br />
 log-likelihood function: <span class="math display">\[\log L(\theta\mid
-{X})=\sum\limits_{i=1}^{n}\log\big(\frac{1}{4}f(X_i\mid\mu_1)+\frac{3}{4}f(X_i\mid\mu_2)\big)\]</span>
+{X})=\sum\limits_{i=1}^{n}\log\big(\frac{1}{4}f(X_i\mid\mu_1)+\frac{3}{4}f(X_i\mid\mu_2)\big),\]</span>
 where <span class="math inline">\(L(\theta\mid
 {X})=\prod\limits_{i=1}^{n}f(X_i\mid\mu_1,\mu_2).\)</span><br />
 The p.d.f of <span class="math inline">\(X_i\)</span> is:<br />
@@ -1826,14 +1826,14 @@ X_i=Z_iW_{1i}+(1-Z_i)W_{2i}.
 \begin{aligned}
 L^c( \theta|{X}, {Z})&amp;=\prod\limits_{i=1}^{n}P(X_i,Z_i)\\
 &amp;=\prod\limits_{i=1}^{n}\big[P(X_i\mid
-Z_i=1)P(Z_i=1)\big]^{Z_i}\big[P(X_i\mid Z_i=0)P(Z_i=0)\big]^{1-Z_i}
+Z_i=1)P(Z_i=1)\big]^{Z_i}\big[P(X_i\mid Z_i=0)P(Z_i=0)\big]^{1-Z_i}.
 \end{aligned}
 \]</span></p>
 <p>So the log-likelihood function: <span class="math display">\[
 \log\big(L^c(\theta\mid
 {X},  {Z})\big)=\sum\limits_{i=1}^{n}\big[Z_i\log f(X_i\mid
 \mu_1)+Z_i\log\frac{1}{4}+(1-Z_i)\log f(X_i\mid
-\mu_2)+(1-Z_i)\log\frac{3}{4}\big]
+\mu_2)+(1-Z_i)\log\frac{3}{4}\big].
 \]</span> Let <span class="math inline">\(\theta^{(0)}=(\mu_1^{(0)},\mu_2^{(0)})\)</span>,
 <span class="math display">\[
 \begin{aligned}
@@ -1844,7 +1844,7 @@ X_i]+\frac{1}{2}E_{\theta^{(0)}}\big[(1-Z_i)(X_i-\mu_2)^2\mid
 X_i\big]\Big\}\\
 &amp;\ \ \ \ \ +\sum\limits_{i=1}^{n}\Big\{\log(\frac{1}{4})
 E_{\theta^{(0)}}(Z_i\mid X_i)- \log(\frac{3}{4})
-E_{\theta^{(0)}}(1-Z_i\mid X_i)\Big\}+C
+E_{\theta^{(0)}}(1-Z_i\mid X_i)\Big\}+C,
 \end{aligned}
 \]</span></p>
 where <span class="math display">\[
@@ -1852,7 +1852,7 @@ E_{\theta^{(0)}}[Z_i(X_i-\mu_1)^2\mid
 X_i]=(X_i-\mu_1)^2E_{\theta^{(0)}}[Z_i\mid X_i].
 \]</span> Since <span class="math display">\[E[Z\mid
 X=x]=\frac{P(X=x\mid Z=1)P(Z=1)}{P(X=x\mid Z=1)P(Z=1)+P(X=x\mid
-Z=0)P(Z=0)}\]</span>
+Z=0)P(Z=0)}.\]</span>
 <p>So we can calculate <span class="math inline">\(E_{\theta^{(0)}}[Z_i\mid X_i]\)</span>:</p>
 <p><span class="math display">\[
 E_{\theta^{(0)}}\big[Z_i\mid X_i\big]=\frac{\frac{1}{4}f_1(X_i\mid
@@ -1861,22 +1861,22 @@ E_{\theta^{(0)}}\big[Z_i\mid X_i\big]=\frac{\frac{1}{4}f_1(X_i\mid
 <p>And <span class="math inline">\(Q(\theta\mid\theta^{(0)},
 {X})\)</span> can be expressed: <span class="math display">\[
 Q(\theta\mid\theta^{(0)},
-{X})=-\sum\limits_{i=1}^{n}\Big\{\frac{1}{2}(X_i-\mu_1)^2\alpha_i^{(0)}(X_i;\mu_1^{(0)},\mu_2^{(0)})+\frac{1}{2}(X_i-\mu_2)^2\big(1-\alpha_i^{(0)}(X_i;\mu_1^{(0)},\mu_2^{(0)})\big)\Big\}+const
+{X})=-\sum\limits_{i=1}^{n}\Big\{\frac{1}{2}(X_i-\mu_1)^2\alpha_i^{(0)}(X_i;\mu_1^{(0)},\mu_2^{(0)})+\frac{1}{2}(X_i-\mu_2)^2\big(1-\alpha_i^{(0)}(X_i;\mu_1^{(0)},\mu_2^{(0)})\big)\Big\}+const.
 \]</span></p>
 <p>Setting the derivatives w.r.t. the <span class="math inline">\(\theta\)</span> to zero function: <span class="math display">\[
 \begin{cases}
 \frac{\partial Q(\theta\mid\theta^{(0)}, {X})}{\partial
 \mu_1}\overset{set}{=}0\\
 \frac{\partial Q(\theta\mid\theta^{(0)}, {X})}{\partial
-\mu_2}\overset{set}{=}0
+\mu_2}\overset{set}{=}0,
 \end{cases}
 \]</span></p>
 <p>we obtain the solutions <span class="math inline">\(\mu_1^{(1)}\)</span> and <span class="math inline">\(\mu_2^{(1)}\)</span></p>
 <p><span class="math display">\[
 \begin{cases}
 \mu_1^{(1)}=\frac{\sum\limits_{i=1}^{n}\alpha_i^{(0)}(X_i;\mu_1^{(0)},\mu_2^{(0)})X_i}{\sum\limits_{i=1}^{n}\alpha_i^{(0)}(X_i;\mu_1^{(0)},\mu_2^{(0)})}\\
-\mu_2^{(1)}=\frac{\sum\limits_{i=1}^{n}\big[1-\alpha_i^{(0)}(X_i;\mu_1^{(0)},\mu_2^{(0)})\big]X_i}{\sum\limits_{i=1}^{n}\big[1-\alpha_i^{(0)}(X_i;\mu_1^{(0)},\mu_2^{(0)})\big]}
-\end{cases}.
+\mu_2^{(1)}=\frac{\sum\limits_{i=1}^{n}\big[1-\alpha_i^{(0)}(X_i;\mu_1^{(0)},\mu_2^{(0)})\big]X_i}{\sum\limits_{i=1}^{n}\big[1-\alpha_i^{(0)}(X_i;\mu_1^{(0)},\mu_2^{(0)})\big]}.
+\end{cases}
 \]</span></p>
 </div>
 <div id="right-censored-data-r.c-example-5.13-and-5.14" class="section level3">
@@ -1893,7 +1893,7 @@ observed. They are right censored.</p>
 Y_i=
 \begin{cases}
 a \ \ \ if \ X_i\ge a \\
-X_i \ \ \ if \ X_i\le a
+X_i \ \ \ if \ X_i\le a,
 \end{cases}
 \]</span> where <span class="math inline">\(a\)</span> is some fixed
 constant. That is <span class="math inline">\(Y_i=\min(X_i,a)\)</span>.<br />
@@ -1920,7 +1920,7 @@ L(\theta\mid Y_1, Y_2, \dots, Y_n, \delta_1, \delta_2, \dots,
 \delta_n)&amp;=\prod\limits_{i=1}^{n}\big(f(Y_i-\theta)\big)^{\delta_i}\big(P(Y_i=a)\big)^{1-\delta_i}\\
 &amp;=\prod\limits_{i=1}^{n}\big(f(Y_i-\theta)\big)^{\delta_i}\big(1-P(X_i\le
 a)\big)^{1-\delta_i}\\
-&amp;=\prod\limits_{i=1}^{n}\big(f(Y_i-\theta)\big)^{\delta_i}\big(1-F(a-\theta)\big)^{1-\delta_i}
+&amp;=\prod\limits_{i=1}^{n}\big(f(Y_i-\theta)\big)^{\delta_i}\big(1-F(a-\theta)\big)^{1-\delta_i}.
 \end{aligned}
 \]</span></p>
 <p>Let <span class="math inline">\({Z}\)</span> be the vector of the
@@ -1928,11 +1928,11 @@ unobservable <span class="math inline">\(X_{m+1}, X_{m+2}, \dots,
 X_n\)</span>.<br />
 The complete data likelihood function: <span class="math display">\[
 L^c(\theta\mid Y_1, Y_2, \dots,
-Y_m;  {Z})=\prod\limits_{i=1}^{m}f(Y_i-\theta)\prod\limits_{i=m+1}^{n}f(X_i-\theta)
+Y_m;  {Z})=\prod\limits_{i=1}^{m}f(Y_i-\theta)\prod\limits_{i=m+1}^{n}f(X_i-\theta).
 \]</span> The log-likelihood function: <span class="math display">\[
 \log L^c(\theta\mid Y_1, Y_2, \dots,
 Y_m;  {Z})=\sum\limits_{i=1}^{m}\log
-f(Y_i-\theta)+\sum\limits_{i=m+1}^{n}\log f(X_i-\theta)
+f(Y_i-\theta)+\sum\limits_{i=m+1}^{n}\log f(X_i-\theta).
 \]</span></p>
 <p><span class="math inline">\(Q(\theta\mid\theta^{(0)}, {X})\)</span>
 can be expressed: <span class="math display">\[
@@ -1941,33 +1941,33 @@ Q(\theta\mid\theta^{(0)};Y_1, \dots, Y_n, \delta_1, \dots,
 \delta_n)&amp;=E_{\theta^{(0)}}\big[\log L^c(\theta\mid X_1, \dots,
 X_n)\mid Y_1, \dots, Y_n, \delta_1, \dots, \delta_n\big]\\
 &amp;=-\frac{1}{2}\sum\limits_{i=1}^{m}(Y_i-\theta)^2-\frac{1}{2}\sum\limits_{i=m+1}^{n}E_{\theta^{(0)}}\big[(X_i-\theta)^2\mid
-Y_1, \dots, Y_n, \delta_1, \dots, \delta_n\big]
+Y_1, \dots, Y_n, \delta_1, \dots, \delta_n\big].
 \end{aligned}
 \]</span></p>
 <p>For those <span class="math inline">\(i=m+1, \dots, n\)</span>, <span class="math inline">\(\delta_i=0\)</span>, So<br />
 <span class="math display">\[
 E_{\theta^{(0)}}\big[(X_i-\theta)^2\mid Y_i=a,
-\delta_i=0\big]=E_{\theta^{(0)}}\big[(X_i-\theta)^2\mid X_i\ge a \big]
+\delta_i=0\big]=E_{\theta^{(0)}}\big[(X_i-\theta)^2\mid X_i\ge a \big].
 \]</span></p>
 <p>We can calculate <span class="math inline">\(\theta^{(1)}\)</span>
 by: <span class="math display">\[
 \frac{\partial Q(\theta\mid\theta^{(0)};Y_1, \dots, Y_n, \delta_1,
-\dots, \delta_n)}{\partial\theta}\overset{set}{=}0
+\dots, \delta_n)}{\partial\theta}\overset{set}{=}0,
 \]</span></p>
 <p>which can be expressed as: <span class="math display">\[
 \sum\limits_{i=1}^{m}(Y_i-\theta)+\sum\limits_{i=m+1}^{n}E_{\theta^{(0)}}\big[(X_i-\theta)\mid
-X_i\ge a\big]\overset{set}{=}0  \\
+X_i\ge a\big]\overset{set}{=}0,  \\
 \]</span> <span class="math display">\[
 \sum\limits_{i=1}^{m}Y_i-m\theta+\sum\limits_{i=m+1}^{n}E_{\theta^{(0)}}[X_i\mid
-X_i\ge a]-(n-m)\theta\overset{set}{=}0
+X_i\ge a]-(n-m)\theta\overset{set}{=}0.
 \]</span></p>
-<p>we can calculate the solution <span class="math inline">\(\theta^{(1)}\)</span>: <span class="math display">\[
+<p>We can calculate the solution <span class="math inline">\(\theta^{(1)}\)</span>: <span class="math display">\[
 \theta^{(1)}=\frac{(\sum\limits_{i=1}^{m}Y_i)+(n-m)E_{\theta^{(0)}}[X_i\mid
-X_i\ge a]}{n}
+X_i\ge a]}{n}.
 \]</span></p>
 Finally, we can show that <span class="math display">\[
 E_{\theta^{(0)}}[X_i\mid X_i\ge
-a]=\theta^{(0)}+\frac{\phi(a-\theta^{(0)})}{1-\Phi(a-\theta^{(0)})}
+a]=\theta^{(0)}+\frac{\phi(a-\theta^{(0)})}{1-\Phi(a-\theta^{(0)})}.
 \]</span>
 </div>
 <div id="missing-data" class="section level3">
@@ -1978,7 +1978,7 @@ components are subject to missing.</li>
 <li><span class="math inline">\(R\)</span> observation indicator <span class="math inline">\(R=\left(R_1, \cdots, R_p\right) \in
 \{0,1\}^p\)</span> such that <span class="math display">\[\begin{align*}
 R_k= \begin{cases}1 &amp; \text { if } Z_k \text { is observed } \\ 0
-&amp; \text { if } Z_k \text { is missing }\end{cases}
+&amp; \text { if } Z_k \text { is missing }.\end{cases}
 \end{align*}\]</span> For a specific <span class="math inline">\(r=\left(r_1, \ldots, r_p\right)
 \in\{0,1\}^p\)</span>, <span class="math inline">\(Z_{(r)}\)</span> is
 the subset of components that are observed; <span class="math inline">\(Z_{(\bar{r})}\)</span> subset of components that
@@ -1993,7 +1993,7 @@ Z_{(R_i)i}\right)_{i=1}^n.\)</span></li>
 </ul></li>
 </ul>
 <p><strong>MAR</strong> (missing at random) assumption: <span class="math display">\[\begin{align*}
-P(R=r \mid Z)=P(R=r \mid Z_{(r)})
+P(R=r \mid Z)=P(R=r \mid Z_{(r)}).
 \end{align*}\]</span></p>
 <p><strong>Selection model factorization</strong>: suppose a joint model
 <span class="math inline">\(P(z, r ; \psi, \theta)\)</span> for the
@@ -2003,7 +2003,7 @@ as</p>
 \begin{aligned}
 P(z, r ; \psi, \theta) &amp; =P(Z=z, R=r ; \psi, \theta) \\
 &amp; =P(R=r|Z=z ; \psi) P(Z=z ; \theta) \\
-&amp; =P(R=r| Z_{(r)}=z_{(r)} ; \psi) P(Z=z ; \theta)
+&amp; =P(R=r| Z_{(r)}=z_{(r)} ; \psi) P(Z=z ; \theta),
 \end{aligned}
 \end{align*}\]</span> where the last equation is due to MAR. This
 factorization (with MAR) is called separability condition, which says
@@ -2017,7 +2017,7 @@ P\left(R=r, Z_{(R)}\right. &amp; \left.=z_{(r)} ; \psi,
 &amp; =P\left(R=r \mid Z_{(r)}=z_{(r)} ; \psi\right) \int P(z ; \theta)
 d z_{(\bar{r})} \\
 &amp; =P\left(R=r \mid Z_{(r)}=z_{(r)} ; \psi\right)
-P\left(Z_{(r)}=z_{(r)} ; \theta\right)
+P\left(Z_{(r)}=z_{(r)} ; \theta\right).
 \end{align*}\]</span></p>
 <p>The likelihood based on <span class="math inline">\(\left(R_i=r_i,
 Z_{\left(R_i\right)i}=z_{\left(r_i\right)}\right)_{i=1}^n\)</span> is
@@ -2042,14 +2042,14 @@ d{z_{(\bar{r})}}\right)\right].
 \]</span> By the MAR and separability, it suffices to consider the full
 data likelihood. <span class="math display">\[
 \prod_{i} \prod_{r} P(Z_{(R_i)i},  Z_{(\bar{R}_i)i};
-\theta)^{I\{R_i=r\}}
+\theta)^{I\{R_i=r\}}.
 \]</span></p>
 <p>In the same spirit of EM discussed previously, the E-step is <span class="math display">\[\begin{align*}
 Q\left(\theta, \theta^{(t-1)}\right)=\sum_{i=1}^n
 E_{\theta^{(t-1)}}(\log \prod_{r}P(Z_i;\theta)^{I(R_i=r)}|R_i,
 Z_{(R_i)i})= \sum_{i=1}^n \sum_{r}I\left(R_i=r\right)
 E_{\theta^{(t-1)}}\left(\log P\left(Z_i; \theta\right) \mid Z_{(r)
-i}\right)
+i}\right),
 \end{align*}\]</span> here the expectation is conditional on the
 observables <span class="math inline">\((R_i,
 Z_{(R_i)i})_{i=1}^n\)</span> with parameter <span class="math inline">\(\theta^{(t-1)}\)</span>. The second equality holds
@@ -2057,7 +2057,7 @@ because <span class="math display">\[\begin{align*}
 \sum_{r}I\left(R_i=r\right) E_{\theta^{\prime}}\left(\log P\left(Z_i;
 \theta\right) \mid R_i=r, Z_{(r)i}\right) =\sum_{r}I\left(R_i=r\right)
 E_{\theta^{\prime}}\left(\log P\left(Z_i; \theta\right) \mid Z_{(r)
-i}\right)
+i}\right),
 \end{align*}\]</span> here the expectation is conditional on <span class="math inline">\((R_i=r, Z_{(r)i})\)</span> with parameter <span class="math inline">\(\theta&#39;\)</span>. The equality holds because
 of MAR.</p>
 <p>The M-step:</p>
@@ -2066,31 +2066,35 @@ Q(\theta, \theta^{(t-1)}).\]</span></p>
 <p><strong>Example</strong>: Suppose <span class="math inline">\(Z\)</span> follows a <span class="math inline">\(N(\mu,\Sigma)\)</span>, here <span class="math inline">\(\theta:=(\mu,\Sigma)\)</span>. Note that <span class="math display">\[\begin{align*}
 &amp;E_{\theta^{(t-1)}}\left(\log P\left(Z_i; \theta\right) \mid Z_{(r)
 i}\right) \\ =&amp;-\frac{1}{2} \log |2 \pi
-{\Sigma}|-\frac{1}{2}  {E}_{\theta^{(t-1)}}\left[\left(Z_i-{\mu}\right)^{\top}
+{\Sigma}|-\frac{1}{2}  {E}_{\theta^{(t-1)}}\left[\left(Z_i-{\mu}\right)^{T}
 {\Sigma}^{-1}\left(Z_i-{\mu}\right) \mid Z_{(r) i} \right] \\
 =&amp;-\frac{1}{2} \log |{\Sigma}|-\frac{p}{2} \log (2 \pi)-\frac{1}{2}
 \operatorname{tr}\left({\Sigma}^{-1} {E}_{\theta^{(t-1)}}[{S}({\mu})\mid
-Z_{(r) i}]\right)
+Z_{(r) i}]\right),
 \end{align*}\]</span> where <span class="math inline">\({E}_{\theta^{(t-1)}}[{S}({\mu})\mid Z_{(r) i}]:=
-\left({E}_{\theta^{(t-1)}}\left[Z_i Z_i^{\top}\mid Z_{(r)
-i}\right]+{\mu} {\mu}^{\top}-2 {\mu} {E}_{\theta^{(t-1)}}\left[Z_i\mid
-Z_{(r) i}\right]^{\top}\right).\)</span> The key is to compute <span class="math inline">\({E}_{\theta^{(t-1)}}\left[Z_i\mid Z_{(r)
-i}\right]\)</span> and <span class="math inline">\({E}_{\theta^{(t-1)}}\left[Z_i Z_i^{\top}\mid
-Z_{(r) i}\right]\)</span>, and these are expected sufficient statistics
-and can be computed using conditional formula for multivariate Gaussian
+\left({E}_{\theta^{(t-1)}}\left[Z_i Z_i^{T}\mid Z_{(r) i}\right]+{\mu}
+{\mu}^{T}-2 {\mu} {E}_{\theta^{(t-1)}}\left[Z_i\mid Z_{(r)
+i}\right]^{T}\right).\)</span> The key is to compute <span class="math inline">\({E}_{\theta^{(t-1)}}\left[Z_i\mid Z_{(r)
+i}\right]\)</span> and <span class="math inline">\({E}_{\theta^{(t-1)}}\left[Z_i Z_i^{T}\mid Z_{(r)
+i}\right]\)</span>, and these are expected sufficient statistics and can
+be computed using conditional formula for multivariate Gaussian
 distribution.</p>
 <p>In the above calculation, gathering all observations for all missing
 patterns, the solution in the M-step then is given by the MLE solution
 using the expected sufficient statistics: <span class="math display">\[\begin{align*}
 {\mu}^{(t)} &amp; =\frac{1}{n}\sum_{i=1}^n \sum_r
-I(R_i=r){E}_{\theta^{(t-1)}}\left[Z_i\mid Z_{(r) i}\right] \\
+I(R_i=r){E}_{\theta^{(t-1)}}\left[Z_i\mid Z_{(r) i}\right], \\
 {\Sigma}^{(t)} &amp; =\frac{1}{n} \sum_{i=1}^n \sum_r
-I(R_i=r){E}_{\theta^{(t-1)}}\left[Z_i Z_i^{\top}\mid Z_{(r)
-i}\right]-{\mu}^{(t)}\left({\mu}^{(t)}\right)^{\top}.
+I(R_i=r){E}_{\theta^{(t-1)}}\left[Z_i Z_i^{T}\mid Z_{(r)
+i}\right]-{\mu}^{(t)}\left({\mu}^{(t)}\right)^{T}.
 \end{align*}\]</span></p>
+</div>
+<div id="python-code-examples" class="section level3">
+<h3>Python Code Examples</h3>
+<p>Provided and discussed in lab.</p>
 <!------------->
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2023-10-16 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2023-12-08 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 </div>
 </div>

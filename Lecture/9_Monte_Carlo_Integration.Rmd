@@ -118,7 +118,7 @@ Here $g$ is called **importance function**, $f(X_i)/g(X_i)$ is called **importan
 **Example** (continued): recall that $Z \sim \mathcal{N}(0,1)$, and we are asked to evaluate $P(Z>4.5)$. Now we can take $g$ to be density function of $\op{exp}(1)$ (right) truncated at $4.5$:
 \begin{align*}
 g(y)&=P\left(exp(1)=y|exp(1)>4.5\right)=\frac{P\left(exp(1)=y , exp(1)>4.5\right)}{P\left(exp(1)>4.5\right)}= \frac{P\left(exp(1)=y\right)}{P\left(exp(1)>4.5\right)}\\
-&=\frac{e^{-y}}{1-\int_0^{4.5}e^{-x}\,dx}=\frac{e^{-y}}{1-(1-e^{-4.5})}=e^{-(y-4.5)} \quad (y> 4.5)
+&=\frac{e^{-y}}{1-\int_0^{4.5}e^{-x}\,dx}=\frac{e^{-y}}{1-(1-e^{-4.5})}=e^{-(y-4.5)} \quad (y> 4.5).
 \end{align*}
 
 Now we can generate a sample of size $n$, $\{Y_i\}_{i=1}^n \overset{iid}\sim g$, recall $f(x)=\frac{1}{\sqrt{2\pi}} e^{-x}$, then the importance sampling estimator for $P(Z>4.5)={E}_f [\mathbf{1}_{(4.5,\infty)}(Z)]$ becomes 
@@ -135,12 +135,12 @@ where here $\mathbf{1}_{(4.5,\infty)}(Y_i)=1$ since $\{Y_i\}_{i=1}^n \overset{ii
 **Variance reduction**:
 Let $h^*:=h(X)f(X)/g(X)$. Note that $E_g(h^*(X)=E_f(h(X))$, and 
 \begin{equation*}
-\operatorname{Var}_g\left(h^*({X})\right) =\int \frac{h({x})^2 f({x})}{g({x})} f({x}) d {x}-(E_g(h^*(X))^2
+\operatorname{Var}_g\left(h^*({X})\right) =\int \frac{h({x})^2 f({x})}{g({x})} f({x}) d {x}-(E_g(h^*(X))^2.
 \end{equation*}
 
 Note that 
 \begin{equation*}
-\operatorname{Var}_f(h({X}))-\operatorname{Var}_g\left(h^*({X})\right)=\int h({x})^2\left(1-\frac{f({x})}{g({x})}\right) f({x}) d {x}
+\operatorname{Var}_f(h({X}))-\operatorname{Var}_g\left(h^*({X})\right)=\int h({x})^2\left(1-\frac{f({x})}{g({x})}\right) f({x}) d {x}.
 \end{equation*}
 
 A variance deduction can be achieved if: (1). $f({x}) / g({x})>1$ for $x$ where $h({x}) f({x})$ is small and (2). $f({x}) / g({x})<1$ for $x$ where $h({x}) f({x})$ is large. An ideal $g$ should put more weight on where $h({x}) f({x})$ is large (nontrivial).
@@ -173,11 +173,11 @@ The last term equals to $\int \frac{h(x) f(x)}{g(x)}g(x)\,dx \big/\int \frac{f(x
 Suppose $f\propto f_0$, $g$ is importance pdf, and $supp(f)\subset supp(g).$ Self-normalized importance sampling gives $\Big(x_i , \frac{f_0(x_i)}{g_0(x_i)}\Big)_{i}$ a collection of importance samples. It turns out the collection can be recycled by multinomial resampling into a sample that is approximately distributed from $f$.
 
 **Step 1:** 
-Sample $x_i\sim g$, obtain $\big(x_i,\frac{f_0(x_i)}{g_0(x_i)}\big)_{i=1}^n$
+Sample $x_i\sim g$, obtain $\big(x_i,\frac{f_0(x_i)}{g_0(x_i)}\big)_{i=1}^n.$
 
 **Step 2:**
 Compute importance weights $w_i = \frac{f_0(x_i)}{g_0(x_i)}$. Let $$\hat{w_i}=\frac{\frac{1}{n}w_i}{\frac{1}{n}\sum_j^n w_j}.$$ 
-Notice that $\hat{w_i}\in(0,1), \sum\hat{w_i}=1$
+Notice that $\hat{w_i}\in(0,1), \sum\hat{w_i}=1.$
 
 **Step 3:**
 Draw a random sample of size $m$ with replacement from $x_1,\cdots,x_n$ with weighted probabilities by $\hat{w_1},\cdots,\hat{w_n}$: that is for $k=1, 2, \ldots, m$,
@@ -187,7 +187,7 @@ X^*_k= \left\{
 x_1 &\quad& \mbox{with prob}=\hat{w_1}\\
 x_2 &\quad& \mbox{with prob}=\hat{w_2}\\
 &\vdots&\\
-x_n &\quad& \mbox{with prob}=\hat{w_n}
+x_n &\quad& \mbox{with prob}=\hat{w_n}.
 \end{aligned}
 \right.
 \end{equation*}
@@ -197,7 +197,11 @@ It turns out that $(X_1^*,X_2^*,\cdots,X_m^*)$ is a random sample approximately 
 
 **Remark**: If $f \propto f_0$, and $g$ is a p.d.f, a byproduct of the algorithm is that we obtain an estimator for the normalization constant in $f$ by using $(1/n)\times\sum_{i} (f_0(X_i) /g(X_i))$ where $X_i \sim g.$
 
-**Remark**: Accept-reject sampling and the self-normalize importance sampling can be used for multi-dimensional density function. However, in practice, the performance is bad.
+**Remark**: Accept-reject sampling and the self-normalize importance sampling may be used for multi-dimensional density function. However, in practice, the performance could be unsatisfactory.
+
+### Python Code Examples
+
+Provided and discussed in lab.
 
 
 <!------------->

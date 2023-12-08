@@ -431,12 +431,16 @@ Note: the minibatch versions for momemtum and Nesterov gradient descent can be o
 If we decay it slowly there are chances that our system will bounce around chaotically with little improvement; if we decay it very fast, our system will be unable to reach the best position.
 A sufficient condition for SGD to converge is the Robbins-Monro Condition:
 \begin{align*}
-\frac{\sum_{t=1}^{\infty} \alpha_t^2}{\sum_{t=1}^{\infty} \alpha_t} \rightarrow 0 \quad \text { as } \alpha_t \rightarrow 0
+\frac{\sum_{t=1}^{\infty} \alpha_t^2}{\sum_{t=1}^{\infty} \alpha_t} \rightarrow 0 \quad \text { as } \alpha_t \rightarrow 0.
 \end{align*}
 
 - Step decay - Reduce the learning rate by some factor every few epochs. A typical heuristic could be to observe the validation error, while training with a fixed learning rate, and reduce the learning rate by a constant (say 0.5 ) whenever there is no improvement in the validation error. Another method is to reduce the learning rate by half every 5 epochs, or by 0.1 every 20 epochs.
 - Exponential decay - such as $\alpha_t=\epsilon_0 e^{-k t}$ where $\epsilon_0$ and $k$ are hyperparameters and $t$ is the iteration number or epoch number.
 - Polynomial decay - such as $\alpha_t=\frac{\epsilon_0}{(1+k t)^a}$ where, $\epsilon_0$ and $a, k$ are the hyperparameters and $t$ is the iteration number. This is often used in stochastic gradient descent (i.e., batch size=1).
+
+### Python Code Examples
+
+Provided and discussed in lab.
 
 
 <!------------->

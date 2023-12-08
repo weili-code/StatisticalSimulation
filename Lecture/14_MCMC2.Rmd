@@ -64,13 +64,13 @@ We use two candidate transition densities $q_{X} (x \vert x_c, y_c)$ and $q_{Y} 
 **Algorithm:**
 
 1. Update $X$   
-   (a) sample $X^* \sim q_X(\cdot \vert  X^{(s)}, Y^{(s)})$   
-   (b) compute $\alpha_X (X^* \vert  X^{(s)}, Y^{(s)})=\displaystyle \frac{f(X^{*}, Y^{(s)})}{f(X^{(s)}, Y^{(s)})} \cdot \frac{q_X(X^{(s)}\vert  X^{*}, Y^{(s)})}{q_X(X^{*} \vert  X^{(s)}, Y^{(s)})}$
+   (a) sample $X^* \sim q_X(\cdot \vert  X^{(s)}, Y^{(s)}),$   
+   (b) compute $\alpha_X (X^* \vert  X^{(s)}, Y^{(s)})=\displaystyle \frac{f(X^{*}, Y^{(s)})}{f(X^{(s)}, Y^{(s)})} \cdot \frac{q_X(X^{(s)}\vert  X^{*}, Y^{(s)})}{q_X(X^{*} \vert  X^{(s)}, Y^{(s)})},$
    (c) set $X^{(s+1)}$ to $X^*$ with probability $\min (1, \alpha_X)$; set $X^{(s+1)}$ to $X^{(s)}$ otherwise.
    
 2. Update $Y$   
-   (a) sample $Y^* \sim q_Y(\cdot \vert  X^{(s+1)}, Y^{(s)})$   
-   (b) compute $\alpha_Y (Y^* \vert  X^{(s+1)}, Y^{(s)})=\displaystyle \frac{f(X^{(s+1)}, Y^{*})}{f(X^{(s+1)}, Y^{(s)})} \cdot \frac{q_Y(Y^{(s)}\vert  X^{(s+1)}, Y^{*})}{q_Y(Y^{*} \vert  X^{(s+1)}, Y^{(s)})}$
+   (a) sample $Y^* \sim q_Y(\cdot \vert  X^{(s+1)}, Y^{(s)}),$   
+   (b) compute $\alpha_Y (Y^* \vert  X^{(s+1)}, Y^{(s)})=\displaystyle \frac{f(X^{(s+1)}, Y^{*})}{f(X^{(s+1)}, Y^{(s)})} \cdot \frac{q_Y(Y^{(s)}\vert  X^{(s+1)}, Y^{*})}{q_Y(Y^{*} \vert  X^{(s+1)}, Y^{(s)})},$
    (c) set $Y^{(s+1)}$ to $Y^*$ with probability $\min (1, \alpha_Y)$; set $Y^{(s+1)}$ to $Y^{(s)}$ otherwise.
    
 **Remark:** The detailed balance condition holds within each update component; however it does not hold for the composition, that is, $\displaystyle p \big( (x,y) \to (x^*,y^*) \big) f(x,y) = p \big( (x^*,y^*) \to (x,y) \big) f(x^*,y^*)$ does not hold for this algorithm in general.   
@@ -78,6 +78,8 @@ We use two candidate transition densities $q_{X} (x \vert x_c, y_c)$ and $q_{Y} 
 \begin{mdframed}
 Proof: 
 \end{mdframed}
+
+**Proof**: provided in class.
 
 
 
@@ -96,7 +98,7 @@ Suppose we take $q_X(x|X^{(s)}, Y^{(s)})$ to be full conditional distribution $f
 \begin{align*}
 \alpha_X(X^*|X^{(s)},Y^{(s)})&=\frac{f(X^*,Y^{(s)})}{f(X^{(s)},Y^{(s)})}\cdot\frac{q_X(X^{(s)}|X^{*},Y^{(s)})}{q_X(X^*|X^{(s)},Y^{(s)})}\\
 &=\frac{f_{X|Y}(X^*|Y^{(s)})}{f_{X|Y}(X^{(s)}|Y^{(s)})}\cdot\frac{f_{X|Y}(X^{(s)}|Y^{(s)})}{f_{X|Y}(X^*|Y^{(s)})}\\
-&=1
+&=1.
 \end{align*}
 
 2. Update $Y$: Similar argument goes through if we use the full conditional distributions as our candidate transition densities, i.e., taking $q_Y(y|X^{(s+1)},Y^{(s)})$ to be full condition distribution $f_{Y|X}(y|X^{(s+1)})$,
@@ -153,7 +155,7 @@ Gibbs sampling: ${w}=(w_1, w_2)$
 
 Here
 \[f_{X|W}(x|w_1,w_2) \overset{x} \propto e^{-\big(\sum w_i\big)x^2+2x\sum w_iz_i} e^{-x^2/20}\sim N \Big(\frac{\sum w_iz_i}{\sum w_i+1/20},\frac{1}{2\big(\sum w_i+1/20\big)} \Big),\]
-\[f_{W|X}(w_1,w_2|x)  \overset{w} \propto e^{-w_1(1+(z_1-x)^2)} e^{-w_2(1+(z_2-x)^2)},\]
+\[f_{W|X}(w_1,w_2|x)  \overset{w} \propto e^{-w_1(1+(z_1-x)^2)} e^{-w_2(1+(z_2-x)^2)}.\]
 Note from the factorization above, $w_1,w_2$ are independent given $x$, therefore,
 \begin{align*}
 W_1|X &\sim \mbox{exponential}(1+(z_1-X)^2),\\
@@ -162,14 +164,14 @@ W_2|X  & \sim \mbox{exponential}(1+(z_2-X)^2).
 
 #### Multivariate Normal
 
-The multivariate normal distribution of a $d-$dimensional random vector $\mathbf{X}=(X_1, \cdots, X_d)^{\top}\in\mathbb{R}^d$ can be written in the notation $\mathbf{X} \sim \mathcal{N}(\boldsymbol\mu, \mathbf{\Sigma}).$ When the symmetric covariance matrix $\mathbf{\Sigma}$ is positive definite, then the multivariate normal distribution is non-degenerate, and the distribution has density function
+The multivariate normal distribution of a $d-$dimensional random vector $\mathbf{X}=(X_1, \cdots, X_d)^{T}\in\mathbb{R}^d$ can be written in the notation $\mathbf{X} \sim \mathcal{N}(\boldsymbol\mu, \mathbf{\Sigma}).$ When the symmetric covariance matrix $\mathbf{\Sigma}$ is positive definite, then the multivariate normal distribution is non-degenerate, and the distribution has density function
 \begin{align*}
-f_{\mathbf{X}}(\mathbf{x} \vert  \boldsymbol\mu, \mathbf{\Sigma}) &= \frac{1}{(2 \pi)^{\frac{d}{2}}} \big( \det(\mathbf{\Sigma}) \big)^{-\frac{1}{2}} \exp \big(-\frac{1}{2} (\mathbf{x}-\boldsymbol\mu)^{\top} \mathbf{\Sigma}^{-1} (\mathbf{x}-\boldsymbol\mu)  \big)\\
-&\overset{\mathbf{x}} \propto \exp(-\frac{1}{2} \mathbf{x}^{\top} \mathbf{\Sigma}^{-1} \mathbf{x} + \mathbf{x}^{\top} \mathbf{\Sigma}^{-1} \boldsymbol\mu)
+f_{\mathbf{X}}(\mathbf{x} \vert  \boldsymbol\mu, \mathbf{\Sigma}) &= \frac{1}{(2 \pi)^{\frac{d}{2}}} \big( \det(\mathbf{\Sigma}) \big)^{-\frac{1}{2}} \exp \big(-\frac{1}{2} (\mathbf{x}-\boldsymbol\mu)^{T} \mathbf{\Sigma}^{-1} (\mathbf{x}-\boldsymbol\mu)  \big)\\
+&\overset{\mathbf{x}} \propto \exp(-\frac{1}{2} \mathbf{x}^{T} \mathbf{\Sigma}^{-1} \mathbf{x} + \mathbf{x}^{T} \mathbf{\Sigma}^{-1} \boldsymbol\mu)
 \end{align*}
-where $\mathbf{x}=(x_1, \cdots, x_d)^{\top}$.
+where $\mathbf{x}=(x_1, \cdots, x_d)^{T}$.
 
-For comparison, the density function of (univariate) normal distribution $X\sim N(\mu, \sigma^2)$
+For comparison, the density function of (univariate) normal distribution $X\sim N(\mu, \sigma^2)$,
 $$
 f_X(x \vert  \mu, \sigma^2)=\frac{1}{\sqrt{2\pi}\sigma} \exp \big(-\frac{1}{2\sigma^2}(x-\mu)^2 \big) \overset{x} \propto \exp\big(-\frac{1}{2\sigma^2}(x^2-2x\mu+\mu^2)\big) \overset{x} \propto \exp\big(-\frac{1}{2} x^2 (\sigma^2)^{-1}+ x(\sigma^2)^{-1}\mu\big).
 $$
@@ -178,7 +180,7 @@ $$
 Bivariate normal 
 $$\displaystyle (X,Y)\sim N \left(\begin{pmatrix}\mu_X\\ \mu_Y\end{pmatrix},\begin{pmatrix}\sigma_X^2 & \sigma_{XY}\\ \sigma_{XY}&\sigma_Y^2\end{pmatrix} \right),$$ 
 Let $\rho=\frac{\sigma_{XY}}{\sigma_{X}\sigma_Y}$ be the correlation. It is a fact that
-\[f_{X|Y}(x|y)\sim N(\mu_X+\rho\frac{\sigma_X}{\sigma_Y}(y-\mu_Y), \sigma_X^2(1-\rho^2))\]
+\[f_{X|Y}(x|y)\sim N(\mu_X+\rho\frac{\sigma_X}{\sigma_Y}(y-\mu_Y), \sigma_X^2(1-\rho^2)),\]
 \[f_{Y|X}(y|x)\sim N(\mu_Y+\rho\frac{\sigma_Y}{\sigma_X}(x-\mu_X), \sigma_Y^2(1-\rho^2)).\]
 
 
@@ -218,6 +220,10 @@ P\left(X_i=+1 \mid X_{-i}=\boldsymbol{x}_{-i}\right) = \frac{1}{1+\exp \left(-2J
 \end{align*}
 where $\eta_i := \sum_{j \sim i} x_j$.
 
+![](../images/ising1.png){ width=80% }
+
+![](../images/ising2.png){ width=80% }
+
 **Bayesian binary denoising**
 
 Assume that a collection of original binary images has a distribution that is described by the Ising model $\pi(x)$ above. We further assume that the observed images are noisy versions of the original images.
@@ -226,7 +232,7 @@ To be concrete, we assume for each pixel $X_i$, we actually observe $Y_i=X_i+\ep
 
 Using Bayes' rule, 
 \begin{align*}
-p_{X \mid Y}(x \mid y)=\frac{p_{Y \mid X}(y \mid x) p_X(x)}{p_Y(y)}=\frac{1}{Z_y} \exp \left(-H(y, x)\right)
+p_{X \mid Y}(x \mid y)=\frac{p_{Y \mid X}(y \mid x) p_X(x)}{p_Y(y)}=\frac{1}{Z_y} \exp \left(-H(y, x)\right),
 \end{align*}
 where 
 \begin{align*}
@@ -237,6 +243,8 @@ The full conditional distribution of $X_i$ can be similarly derived
 P\left(X_i=+1 \mid X_{-i}=\boldsymbol{x}_{-i}, Y=\boldsymbol{y} \right) = \frac{1}{1+\exp \left(-2(J \eta_i+ y_i/\sigma^2)\right)},
 \end{align*}
 where $\eta_i := \sum_{j \sim i} x_j$.
+
+![](../images/ising3.png){ width=80% }
 
 # Slice Sampling
 
@@ -250,21 +258,21 @@ f(x)=\int_{0}^{f(x)}1du.
 $$
 So $f(x)$ is a marginal density (in $X$) of the joint uniform distribution on the set
 $$
-\{(x, u): 0<u<f(x), x\in\mathcal{X},\}
+\{(x, u): 0<u<f(x), x\in\mathcal{X}\},
 $$
 with the p.d.f. $f(x, u)=1_{\{(x, u): 0<u<f(x)\}}(x, u).$
 
 To obtain a sample of $(X ,U)$ from this distribution, we can sample from a M.C. that has the target stationary distribution which can be done using Gibbs sampling, noting that
 \begin{align*}
-&f_{X|U}(x|u) \sim \op{unif}\{x: u< f(x) \} \\
-&f_{U|X}(u|x) \sim \op{unif}\{u: 0< u< f(x) \}
+&f_{X|U}(x|u) \sim \op{unif}\{x: u< f(x) \}, \\
+&f_{U|X}(u|x) \sim \op{unif}\{u: 0< u< f(x) \}.
 \end{align*}
 
 **Slice sampling**:
 
 At iteration $s$, simulate
 
-1. $U^{(s+1)} \sim \op{unif}(0, f(X^{(s)}))$
+1. $U^{(s+1)} \sim \op{unif}(0, f(X^{(s)}))$,
 2. $X^{(s+1)} \sim \op{unif}(A^{(s+1)}),$ where $A^{(s+1)}:=\{x: f(x)>U^{(s+1)} \}.$
 
 
@@ -304,6 +312,10 @@ At iteration $s$, simulate
    $W_{k}^{(s+1)} \sim \op{unif}(0, f_k(X^{(s)}))$, 
 
 2. $X^{(s+1)} \sim \op{unif}(A^{(s+1)})$, where $A^{(s+1)}:=\{x: f_i(x) \geq W_i^{(s+1)}, \forall i=1, \ldots, k\}.$
+
+### Python Code Examples
+
+Provided and discussed in lab.
 
 
 <!------------->

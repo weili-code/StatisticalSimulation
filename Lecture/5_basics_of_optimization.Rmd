@@ -5,13 +5,13 @@ date: "`r Sys.Date()`"
 geometry: left=2cm, right=2cm, top=2cm, bottom=2cm
 linestretch: 1.3
 output:
-  pdf_document: 
-      include:
-        in_header: preamble_rmd.tex
   html_document:
     df_print: paged
     mathjax_config:
       - TeX-AMS-MML_HTMLorMML   
+  pdf_document: 
+      include:
+        in_header: preamble_rmd.tex
   html_notebook: default
 fontsize: 14pt
 header-includes:
@@ -100,13 +100,13 @@ $$
 $$
 \begin{aligned}
 f(x)&=\lVert Ax-b\rVert^2\\&=\langle Ax-b, Ax-b\rangle\\&=(Ax-b)^T(Ax-b)
-\\&=x^TA^TAx-2b^TAx+b^Tb
+\\&=x^TA^TAx-2b^TAx+b^Tb.
 \end{aligned}
 $$
 
-the gradient of $f(x)$ is
+The gradient of $f(x)$ is
 $$
-{\nabla}f(x)=\frac{{\partial}f(x)}{{\partial}x}=2A^TAx-2b^TA\overset{set}{=}0
+{\nabla}f(x)=\frac{{\partial}f(x)}{{\partial}x}=2A^TAx-2b^TA.
 $$
 
 # Optimization

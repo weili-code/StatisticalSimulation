@@ -59,13 +59,12 @@ Consider a sequence of random variables $\{ X^{(n)}: n=0, 1, \ldots,  \}$, each 
 
 **Definition:** A Markov Chain is a sequence of random variables $X^{(n)}$ such that
 \begin{align*} 
-&P(X^{(n)}\in A_n | X^{(n-1)}\in A_{n-1},\cdots, X^{(0)}\in A_0)\\
-&= P(X^{(n)}\in A_n | X^{(n-1)}\in A_{n-1})
+&P(X^{(n)}\in A_n | X^{(n-1)}\in A_{n-1},\cdots, X^{(0)}\in A_0)= P(X^{(n)}\in A_n | X^{(n-1)}\in A_{n-1}).
 \end{align*}
 That is the probability distribution of $X^{(n)}$ given the past variables depends only on $X^{(n-1)}$. This is called first-order Markov Chain.
 
 Define the one-step transition kernel
-$$p^{[ n-1,n ]}_{ij} := P(X^{(n)}=j| X^{(n-1)}=i) \qquad \text{transition kernel}$$ 
+$$p^{[ n-1,n ]}_{ij} := P(X^{(n)}=j| X^{(n-1)}=i) \qquad \text{transition kernel}.$$ 
 We'll restrict ourselves to the time-invariant M.C.,that is, $p^{[n-1, n]}_{ij}$ does not depend on the time reference point, but only depend on how far apart the two time points are. So we write $p_{ij}^{[1]}:=p^{[n, n+1]}_{ij}=p^{[n-1, n]}_{ij}=\cdots=p^{[0, 1]}_{ij}$ etc.
 
 **one-step transition kernel**
@@ -86,7 +85,7 @@ $$p_{ij} \geq 0, \  \forall i=1,\cdots, K; \  \sum_{j=1}^K p_{ij} = 1.$$
 **m-step transition kernel**
 
 - transition probability
-$$p^{[m]}_{ij} := P(X^{(n+m)}=j| X^{(n)}=i)$$
+$$p^{[m]}_{ij} := P(X^{(n+m)}=j| X^{(n)}=i),$$
 
 - Transition matrix
 $$P^{[m]} := \begin{bmatrix}
@@ -94,7 +93,7 @@ p_{11}^{[m]} & p_{12}^{[m]} & \cdots & p_{1K}^{[m]}\\
 p_{21}^{[m]} & p_{22}^{[m]} & \cdots & p_{2K}^{[m]}\\
  \vdots & \ddots & \cdots & \vdots\\
 p_{K1}^{[m]} & p_{K2}^{[m]} & \cdots & p_{KK}^{[m]}\\
-\end{bmatrix}$$
+\end{bmatrix}.$$
 
 Let's consider some state distribution (occupation prob dist): 
 
@@ -102,7 +101,7 @@ Let's consider some state distribution (occupation prob dist):
 $$\alpha^{(0)} = (\alpha_1^{(0)}, \cdots,\alpha_K^{(0)}), \text{ where } \ P(X^{(0)}=i)=\alpha_i^{(0)}.$$
 
 **Time 1**:
-$$\alpha^{(1)} = (\alpha_1^{(1)}, \cdots,\alpha_K^{(1)})= \alpha^{(0)}P$$
+$$\alpha^{(1)} = (\alpha_1^{(1)}, \cdots,\alpha_K^{(1)})= \alpha^{(0)}P.$$
 One can show that the state distribution at time $m$ is given by $\alpha^{(m)}=\alpha^{(0)}P^m$. By definition, $\alpha^{(m)}=\alpha^{(0)} P^{[m]}$. 
 
 Therefore, 
@@ -137,7 +136,7 @@ which states that the probability of moving from $i$ to $j$ in $m+n$ steps is ju
 $$\pi P = \pi.$$
 Then $\pi$ is called a "steady state distribution" (stationary distribution). Note that it is the same as
 \begin{align*}
-\pi_j = \sum_{i=1}^K\pi_ip_{ij}, \ \forall \ j = 1,2,\cdots , K
+\pi_j = \sum_{i=1}^K\pi_ip_{ij}, \ \forall \ j = 1,2,\cdots , K.
 \end{align*}
 The LHS $\pi_j$ is steady state prob for the state $j$. The RHS $\sum_{i=1}^K\pi_ip_{ij}$ is total probability flowing into state $j$ from any states. An expression is the **global balance equations**:
 \begin{align*}
@@ -148,14 +147,14 @@ which states that the probability of being in state $j$ times the net total prob
 
 To see the meaning of the steady state distribution, consider a scenario that at some step n, we reached the steady state distribution,
 \begin{align*}
-\alpha^{(n)} &= \pi \\
-\alpha^{(n+1)} &= \alpha^{(n)}P = \pi 
+\alpha^{(n)} &= \pi, \\
+\alpha^{(n+1)} &= \alpha^{(n)}P = \pi.
 \end{align*}
 Therefore, once we reached the steady state distribution, the state distribution becomes stationary. 
 
 **Find the steady state distribution**:
 For a given transition matrix $P$, note that
-$$P^T\pi^T = 1\pi^T$$
+$$P^T\pi^T = 1\pi^T.$$
 So $\pi^T$ is eigenvalue of $P^T$ that corresponds to eigenvalue 1. The found eigenvector then needs to be normalized. A limitation is that it is not guaranteed the found eigenvector is real-valued.
 
 A more general approach is to solve the following system of equations:
@@ -164,7 +163,7 @@ where $M$ is a $K \times K$ matrix that removes the last column of $I-P$ in $[I-
 
 **Limiting distribution**: A Markov Chain has a limiting distribution if 
 $$
-\pi_j = \lim_{n\to \infty} p_{ij}^n 
+\pi_j = \lim_{n\to \infty} p_{ij}^n,
 $$
 exits and the distribution is independent of the starting state. This basically says that the long-run distribution $P(X^{(n)}=j) \to \pi_j$ as $n \to \infty$ and is independent of the state at time $0$.
 
@@ -179,7 +178,7 @@ Most of the M.C. encountered in MCMC settings enjoy some nice properties. In par
 
 ##### aperiodic
 
-- A state $i$ has period $v \in \mathbb{N}$ if $p_{ii}^{[m]}>0$ *only* holds for $m$ that is a multiple of $v>1$
+- A state $i$ has period $v \in \mathbb{N}$ if $p_{ii}^{[m]}>0$ *only* holds for $m$ that is a multiple of $v>1$.
 - A state is aperiodic if  $p_{ii}^{[m]}>0$ for all $m$ sufficiently large that is no multiple of any $v>1$. 
 - A chain is called "aperiodic" if all states are aperiodic.
 
@@ -288,7 +287,7 @@ Proof: $\sum_i\pi_iP_{ij}=\sum_i\pi_jP_{ji}=\pi_j\sum_iP_{ji}=\pi_j \times 1=\pi
 **Remark**: The detailed balance condition is sufficient but not necessary condition for a M.C. to have a stationary distribution. The key insight for sampling from some stationary distribution $\pi$ is that it suffices to sample from the some transition distribution that satisfies the detailed balance condition defined by the stationary distribution.
 
 
-## Metropolis Algorithm
+## Metropolis Algorithm (discrete state space)
 
 **Goal**: to find the transition kernel $\tilde{P}_{ij}$, s.t., the detailed balance condition holds, i.e.,  $\pi_j\tilde{P}_{ji}=\pi_i\tilde{P}_{ij},\forall i,j$.
 
@@ -304,14 +303,14 @@ Whenever a move is proposed, we want to weight it using some acceptance probabil
 Formally, Metropolis' idea works as follows. Given some $\pi$--the stationary distribution (target distribution), choose some candidate transition kernel $P_{ij}$. For all $i$, 
 
 (1) Define acceptance probability 
-$$\alpha_{ij}=\min\Big(\frac{\pi_jP_{ji}}{\pi_iP_{ij}},1\Big)$$ 
+$$\alpha_{ij}=\min\Big(\frac{\pi_jP_{ji}}{\pi_iP_{ij}},1\Big),$$ 
 for each $i$ and $j\neq i$.
 (2) Let 
 $$
-\tilde{P}_{ij}=\alpha_{ij}P_{ij},  j \neq i
+\tilde{P}_{ij}=\alpha_{ij}P_{ij},  j \neq i,
 $$
 $$
-\tilde{P}_{ii}=1-\sum_{j:j\neq i}\tilde{P}_{ij}
+\tilde{P}_{ii}=1-\sum_{j:j\neq i}\tilde{P}_{ij}.
 $$
 
 Then $\pi$ is the stationary distribution from M.C. with transition probability given by this $\tilde{P}_{ij}$.
@@ -319,6 +318,9 @@ Then $\pi$ is the stationary distribution from M.C. with transition probability 
 \begin{mdframed}
 Proof: 
 \end{mdframed}
+
+**Proof**: provided in class.
+
 
 **Note**: $\tilde{P}_{ii}=1-\sum_{j:j\neq i}\tilde{P}_{ij}$ is the probability that we reject any proposal that moves from $i$ to any other state $j\neq i$, that is, it is the probability of moving from $i$ to $i$ itself (remaining in $i$). We can prove that our $[\tilde{P}_{ij}: i, j]$ is a well-defined transition kernel.
 \begin{mdframed}
@@ -329,16 +331,21 @@ Check: $1\geq \tilde{P}_{ij}\geq0$, $\sum_j\tilde{P}_{ij}=\sum_j\tilde{P}_{ij}=\
 
 $X^{(0)}\in S$, $S$ is a discrete space.
 
-1. draw $X^* \sim P(\cdot|X^{(t-1)})$
+1. draw $X^* \sim P(\cdot|X^{(t-1)})$;
 
 2. compute acceptance probability
 $$
-\alpha(X^{(t-1)},X^*):=min\left\{1,\frac{P(X^{(t-1)}|X^*)\pi_{X^*}}{P(X^*|X^{(t-1)})\pi_{X^{(t-1)}}}\right\}
+\alpha(X^{(t-1)},X^*):=min\left\{1,\frac{P(X^{(t-1)}|X^*)\pi_{X^*}}{P(X^*|X^{(t-1)})\pi_{X^{(t-1)}}}\right\},
 $$
 where $\pi_{X^*}$ is the probability of taking value $X^*$ under the stationary distribution $\pi$, and $\pi_{X^{(t-1)}}$ is the probability of taking value $X^{(t-1)}$ under the stationary distribution $\pi$. 
 3. set $X^{(t)}\leftarrow X^*$ with probability $\alpha(X^{(t-1)},X)$; otherwise $X^{(t)}\leftarrow X^{(t-1)}$.
 
 To implement step 3, one can implement: generate $U \sim Unif(0,1)$, if $U \leq \alpha(X^{(t-1)},X^*)$, then accept $X^*$, i.e., set $X^{(t)}\leftarrow X^*$; otherwise, reject $X^*$, set  $X^{(t)}\leftarrow X^{(t-1)}$.
+
+### Python Code Examples
+
+Provided and discussed in lab.
+
 
 <!------------->
 <span style="background-color: #f5f5f5; padding: 5px; display: block;">

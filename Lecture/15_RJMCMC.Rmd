@@ -59,7 +59,7 @@ MathJax.Hub.Config({
 
 We consider MH algorithms with different move types; which gives a more general framework for MH algorithms.
 
-- $X \in \mathbb{R}^{d}$
+- $X \in \mathbb{R}^{d}.$
 - Let $\mathcal{M}$ denote a finite or countable set of move types, e.g., $\mathcal{M}=\{1, 2, \ldots, M\}$.
 - $\gamma_m(x)$ denote probability of choosing move $m$ when the current value $X^{(s)}=x$, $\sum_{m} \gamma_m(x)=1$.
 
@@ -73,7 +73,7 @@ Let $s=0$.
 2. Generate $X^* \sim q_{m^{(s+1)}}(\cdot|X^{(s)})$;
 3. Let acceptance probablity be
 $$
-\alpha_{m^{(s+1)}}(X^{*}|X^{(s)})=\min \left\{ \frac{f(X^{*})\gamma_{m^{(s+1)}}(X^{*})q_{m^{(s+1)}}(X^{(s)}|X^{*})}{f(X^{(s)})\gamma_{m^{(s+1)}}(X^{(s)})q_{m^{(s+1)}}(X^{*}|X^{(s)})}, 1  \right\}
+\alpha_{m^{(s+1)}}(X^{*}|X^{(s)})=\min \left\{ \frac{f(X^{*})\gamma_{m^{(s+1)}}(X^{*})q_{m^{(s+1)}}(X^{(s)}|X^{*})}{f(X^{(s)})\gamma_{m^{(s+1)}}(X^{(s)})q_{m^{(s+1)}}(X^{*}|X^{(s)})}, 1  \right\}.
 $$
 4. Generate $U\sim \mbox{unif}(0,1)$
     i. if $U\leq \alpha_{m^{(s+1)}}(X^{*}|X^{(s)})$, set $X^{(s+1)} = X^*$;
@@ -101,13 +101,15 @@ $$
 for all $A, B$.
 Then the (modified) acceptance probability is 
 $$
-\alpha_m(X^*|X^{(s)})=\min \left\{  \frac{\gamma_m(X^{^*}) \psi_m(X^{*}, X^{(s)})}{\gamma_m(X^{(s)}) \psi_m(X^{(s)}, X^{*})}, 1 \right\}
+\alpha_m(X^*|X^{(s)})=\min \left\{  \frac{\gamma_m(X^{^*}) \psi_m(X^{*}, X^{(s)})}{\gamma_m(X^{(s)}) \psi_m(X^{(s)}, X^{*})}, 1 \right\}.
 $$
 
 **Remark**:
 
 (1) If the transition density $q_m$ from $X^{(s)}$ to $X^*$ exists (or well-defined density), then $\psi_m(x, x')=f(x)q_m(x'|x)$, giving the previous algorithm. More generally, however, in this modified algorithm, is that we allow $C_m$ to be a lower dimensional space of $\mathbb{R}^d \times \mathbb{R}^d$.
 (2) This modified algorithm generalizes the blockwise MH algorithm and the Gibbs sampling. 
+
+**Proof**: provided in class.
 
 
 ## Reversible Jump Markov Chain Monte Carlo
@@ -214,6 +216,10 @@ then skip to the step 5.
 (5) It is allowed that either $W^*$ or $W^{(s)}$ is zero dimensional (null), as long as the dimensions matching is maintained.
 (6) Here we allow the proposal density $g_{k^{(s)} \to k^{*}}(\cdot)$ dependent on the current state, i.e., $g_{k^{(s)} \to k^{*}}(\cdot|k^{(s)}, X^{(s)})$, for simpler design model, this needs not be so. Also, for some transition $k \to k'$, we may not need to sample an auxiliary variable at all, that is, $g_{k \to k'}$ can be set to $1$.
 (7) This is possible to extend the above algorithm by allowing drawing a different move type $m\in \mathcal{M}$ and all subsequent functions $j, q, h$ and $g$ then be made dependent on $m$, with acceptance probability adjusted by a ratio of the type move probabilities.
+
+### Python Code Examples
+
+Provided and discussed in lab.
 
 
 <!------------->

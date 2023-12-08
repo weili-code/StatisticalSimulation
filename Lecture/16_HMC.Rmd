@@ -163,6 +163,17 @@ $$\alpha=\min \left(1, \exp \left(-{H}\left(x^*, w^*\right)+{H}\left(x_{t}, w_{t
 - One can choose $\Sigma$ by first running the chain for a burn-in period, then estimate $\Sigma$ by using sample covariance matrix of $x$.
 - The number of leapfrog steps $L$ may be chosen using the so-called **no-U-turn sampler (NUTS)**.
 
+#### Example
+
+Suppose we want to sample from
+\begin{align*}
+\pi(\theta) \propto\exp \left(-20\left(\|\theta\|_2-10\right)^2\right).
+\end{align*}
+
+Because of the squared term $\left(\|\theta\|_2-10\right)^2$, the density has the radial symmetry and the concentric rings of high density around the points where the Euclidean norm is approximately 10.
+
+![](../images/hmc.png){ width=60% }
+
 
 ## Langevin Monte Carlo
 
