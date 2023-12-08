@@ -1,17 +1,17 @@
 ---
-title: "MAT 653: Statistical Simulation--WL"
+title: "MAT 653: Statistical Simulation"
 author: Instructor$:$ Dr. Wei Li
 date: "`r Sys.Date()`"
 geometry: left=2cm, right=2cm, top=2cm, bottom=2cm
 linestretch: 1.3
 output:
-  pdf_document: 
-      include:
-        in_header: preamble_rmd.tex
   html_document:
     df_print: paged
     mathjax_config:
       - TeX-AMS-MML_HTMLorMML         
+  pdf_document: 
+      include:
+        in_header: preamble_rmd.tex
   html_notebook: default
 fontsize: 14pt
 header-includes:
@@ -74,7 +74,7 @@ Generic capital letter will often denote a matrix, e.g. ${A}$, a $m \times n$ ma
 =
 \left[\begin{array}{c}
 {a}_{1},{a}_{2} \cdots {a}_{n}
-\end{array}\right]
+\end{array}\right],
 \end{align*}
 with each $a_i$ belonging to $\mbb{R}^m$.
 
@@ -84,16 +84,13 @@ Suppose ${e}_{i}, i=1, \ldots, n$ is $n \times 1$ unit vector, with 1 in the ith
 =
 \left[\begin{array}{c}
 {e}_{1},{e}_{2} \cdots {e}_{n}
-\end{array}\right]
+\end{array}\right].
 \end{align*}
 
 For $A$ an $m \times n$ matrix, Then the ith column of $A$ can be expresed as $A \mathbf{e}_{i},$ for $i=1, \ldots, n$.
 
 
-
 ## Elementary definitions and results
-
-
 
 **Matrix-vector multiplication**:
 $$
@@ -104,7 +101,7 @@ Ax=\begin{bmatrix}
 x_1 \\
 \vdots \\
 x_n 
-\end{bmatrix}=b
+\end{bmatrix}=b.
 $$
 $Ax$ is a linear combination of columns vectors of $A$. The coefficients of the linear combinations are stored in $x$.
 
@@ -115,39 +112,37 @@ Let
 =
 \left[\begin{array}{c}
 {a}_{1},{a}_{2} \cdots {a}_{n}
-\end{array}\right]
+\end{array}\right], \quad \ell \times m
 \end{align*}
-a $\ell \times m$ matrix, 
 and 
 \begin{align*}
 {C}
 =
 \left[\begin{array}{c}
 {c}_{1},{c}_{2} \cdots {c}_{n}
-\end{array}\right]
+\end{array}\right], \quad m \times n
 \end{align*}
-a $m \times n$ matrix, then 
+then 
 $$
-AC=B=[b_1, \cdots, b_n] : \quad  ( \ell \times n) 
+AC=B=[b_1, \cdots, b_n] : \quad  \ell \times n
 $$
 where $b_j=Ac_j$, $j=1, \ldots, n.$
 
-**Range space (column space)**: The column space $\rm{col}(A)$ of $A$ is the span of vectors $a_1, \ldots, a_n$, i.e., $\rm{span}\{a_1, \ldots, a_n\}$ the set of all linear combinations of $a_1, \ldots, a_n$.
-
+**Range space (column space)**: The column space $\rm{col}(A)$ of $A$ is the span of vectors $a_1, \ldots, a_n$, i.e., $\rm{span}\{a_1, \ldots, a_n\}$ the set of all linear combinations of $a_1, \ldots, a_n$:
 \begin{align*}
 \operatorname{Col} (A)=\left\{b: b=A x \text { for some } x \in \mathbb{R}^{n}\right\}
 \end{align*}
 
 The vector $b \in \mbb{R}^m$ belongs to $\rm{Col}(A)$ iff $\exists$ scalars $x_1, \ldots, x_n$ such that $b=x_1a_1+\cdots+x_na_n$.
 
-**Kernel space (null space)**: The kernel space of an $m \times n$ matrix $A$, written as $\rm{ker}(A)$, is the set of all solutions of the homogeneous equation $Ax=0$. In set notation,
+**Kernel space (null space)**: The kernel space of an $m \times n$ matrix $A$, written as $\rm{ker}(A)$, is the set of all solutions of the homogeneous equation $Ax=0$. 
 \begin{align*}
-\operatorname{ker}(A)=\left\{x: x \in \mathbb{R}^{n} \text { and } A x=0\right\}
+\operatorname{ker}(A)=\left\{x: x \in \mathbb{R}^{n} \text { and } A x=0\right\}.
 \end{align*}
 
 **Linear independence of a set of vectors**: suppose we have $p$ vectors in $\mbb{R}^n$, say, $v_1,\ldots, v_p$
 
-- we call this collection $V=\{v_1,\ldots, v_p\}$ to be linearly independent if whenever $x_1v_1+\cdots+x_pv_p=0$, we have $x_1=\cdots=x_p=0$
+- we call this collection $V=\{v_1,\ldots, v_p\}$ to be linearly independent if whenever $x_1v_1+\cdots+x_pv_p=0$, we have $x_1=\cdots=x_p=0$.
 - $V=\{v_1,\ldots, v_p\}$ is said to be linearly dependent if $\exists$ some vector in $V$ that is a linear combination of the other vectors in $V$.
 
 **Rank of a matrix**: The **row rank** of a matrix is the maximum number of rows, thought
@@ -159,7 +154,7 @@ speaks of the **rank** of a matrix. For a $m\times n$ matrix $A$, we call it **f
 **Theorem** (rank-nullity theorem): Let $A$ be an $m \times n$ matrix,
 Then
 \begin{align*}
-n=\operatorname{dim}(Col(A))+\operatorname{dim}(\operatorname{ker}(A)) = \op{rank} +  \operatorname{dim}(\operatorname{ker}(A)) 
+n=\operatorname{dim}(Col(A))+\operatorname{dim}(\operatorname{ker}(A)) = \op{rank} +  \operatorname{dim}(\operatorname{ker}(A)).
 \end{align*}
 where the dimension $\operatorname{dim}$ is the maximal number of linearly independent elements that span the space.
 
@@ -172,7 +167,7 @@ matrix. A square matrix is invertible exactly when the determinant is non-zero. 
 \left|\left[\begin{array}{ll}
 a & b \\
 c & d
-\end{array}\right]\right|=ad-bc
+\end{array}\right]\right|=ad-bc.
 \end{align*}
 
 The determinant of a square matrix is equal to the product of its eigenvalues (see later for definition).
@@ -181,7 +176,7 @@ The determinant of a square matrix is equal to the product of its eigenvalues (s
 Suppose $A$ is an $m \times m$ square matrix, the $m \times m$ matrix $Z$ is said to be the inverse of $A$ iff $AZ=I=ZA$. We then call $A$ is invertible, denote its inverse by $A^{-1}$. A square matrix that is not invertible is called singular.
 When $A$ is invertible, then its inverse is given by
 $$
-A^{-1}=\frac{1}{|A|}adj(A)
+A^{-1}=\frac{1}{|A|}adj(A),
 $$
 where $adj(A)$ is the adjoint matrix of $A$. 
 
@@ -196,7 +191,7 @@ c & d
 \end{array}\right]^{-1}=\frac{1}{a d-b c}\left[\begin{array}{cc}
 d & -b \\
 -c & a
-\end{array}\right]
+\end{array}\right],
 \end{align*}
 if $ad-bc \neq 0.$
 
@@ -216,7 +211,7 @@ $$\rm{tr}(ABCD)=\rm{tr}(DABC)=\rm{tr}(CDAB).$$
 
 **orthogonal complement**: The orthogonal complement of a subspace $W$ in a vector space $V$ is the set of all vectors in $V$ that are orthogonal to every vector in $W$. It's denoted as $W^{\perp}$.
 
-Column space and Kernel space: $\operatorname{Col}(A)^{\perp}=\operatorname{Ker}\left(A^T\right)$ and $\operatorname{Row}(A)^{\perp}=\operatorname{Ker}(A)$
+Column space and Kernel space: $\operatorname{Col}(A)^{\perp}=\operatorname{Ker}\left(A^T\right)$ and $\operatorname{Row}(A)^{\perp}=\operatorname{Ker}(A).$
 
 
 **Theorem**: $S=\{v_1, \ldots, v_p \}$ be a set of nonzero orthogonal vectors in $\mbb{R}^n$, then $S$ is linearly independent. 
@@ -231,7 +226,7 @@ An $m \times n$ matrix $U$ has orthonormal columns if $U^TU=I$.
 
 An $m \times m$ square matrix $P$ is called an orthogonal matrix if
 \begin{align*}
-P P^{T}=P^{T} P=I_{m}, \quad \text { or } P^{-1}=P^{T} .
+P P^{T}=P^{T} P=I_{m}, \quad \text{or} \quad P^{-1}=P^{T} .
 \end{align*}
 
 Any square matrix with orthonormal columns is an orthogonal matrix, and such a matrix must have orthonormal rows too.
@@ -249,9 +244,9 @@ Check:
 
 **Projection of a vector on the span of another vector**: the projection of a vector $y \in \mathbb{R}^n$ onto the span of another vector $x \in \mbb{R}^n$ ($\|x\|\neq 0$), i.e., $\rm{span}(x):=\{ax:a \in\mbb{R}\}$ is given by 
 $$
-P_xy=\frac{\inner{x}{y}}{\inner{x}{x}}x=\frac{xx'}{\inner{x}{x}}y
+P_xy=\frac{\inner{x}{y}}{\inner{x}{x}}x=\frac{xx^T}{\inner{x}{x}}y,
 $$
-which has the property that $\inner{y-P_xy}{P_xy}=0$
+which has the property that $\inner{y-P_xy}{P_xy}=0.$
 
 \begin{mdframed}
 Proof: 

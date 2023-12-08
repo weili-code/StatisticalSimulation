@@ -11,7 +11,7 @@
 
 <meta name="author" content="Instructor: Dr. Wei Li" />
 
-<meta name="date" content="2023-09-13" />
+<meta name="date" content="2023-12-08" />
 
 <title>MAT 653: Statistical Simulation</title>
 
@@ -1624,7 +1624,7 @@ display: none;
 <h1 class="title toc-ignore">MAT 653: Statistical Simulation</h1>
 <h4 class="author">Instructor<span class="math inline">\(:\)</span>
 Dr. Wei Li</h4>
-<h4 class="date">2023-09-13</h4>
+<h4 class="date">2023-12-08</h4>
 
 </div>
 
@@ -1635,7 +1635,7 @@ MathJax.Hub.Config({
 });
 </script>
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2023-09-13 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2023-12-08 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 <!------------->
 <div id="solving-linear-systems" class="section level1">
@@ -1644,8 +1644,8 @@ Statistical Simulation, Wei Li </span> </span></p>
 \in \mathbb{R}^{m \times n}\)</span> known, <span class="math inline">\(b \in \mathbb{R}^{m \times 1}\)</span> known , and
 <span class="math inline">\(x \in \mathbb{R}^{n \times 1}\)</span>
 unknown. Our goal is: given <span class="math inline">\(A\)</span> and
-<span class="math inline">\(b\)</span>, want to find <span class="math inline">\(x\)</span>.</p>
-<p>We may encounter the following questions</p>
+<span class="math inline">\(b\)</span>, find <span class="math inline">\(x\)</span>.</p>
+<p>We may encounter the following questions:</p>
 <p><strong>1.</strong> (Existence) Is there any solution?</p>
 <p><strong>2.</strong> (Uniqueness) When there is an unique solution?
 (i.e. under what condition?)</p>
@@ -1667,7 +1667,7 @@ unique solution <span class="math inline">\(\iff\)</span> columns of
 <p>Special case: If <span class="math inline">\(A\)</span> is square
 matrix that has linearly independent columns, then there exists a unique
 solution to <span class="math inline">\(Ax=b\)</span> for any <span class="math inline">\(b \in \mathbb{R}^m\)</span>, which is <span class="math inline">\(x=A^{-1}b\)</span>.</p>
-<p>Turning to question 3, if there are multiple solutions, one may
+<p><strong>Question 3</strong>, if there are multiple solutions, one may
 characterize the solution space completely, or when a unique solution is
 desired, regularization technique can be applied or additional
 constraint may be imposed. This depends on the applications and will not
@@ -1678,8 +1678,8 @@ some regularization, which will be covered under the question 4.</p>
 <h2>Sovling a linear system</h2>
 <p>Given <span class="math inline">\(A \in \mathbb R^{m\times
 n}\)</span>, <strong>assuming there exists one unique solution</strong>,
-then <strong>how to solve for <span class="math inline">\(x\)</span></strong>. The well-known methods
-include:</p>
+then <strong>solve for <span class="math inline">\(x\)</span></strong>.
+The well-known methods include:</p>
 <ul>
 <li>Gaussian elimination</li>
 <li>Cholesky factorization</li>
@@ -1694,13 +1694,13 @@ more details in any algebra textbook.</p>
 <p><strong>Theorem</strong> (Cholesky factorization/decomposition): If
 symmetric matrix <span class="math inline">\(A&gt;0\)</span>
 (positive-definite), then there exists a unique upper triangular matrix
-<span class="math inline">\(U\)</span> s.t. <span class="math inline">\(A=U^{\top}U\)</span>.</p>
+<span class="math inline">\(U\)</span> s.t. <span class="math inline">\(A=U^{T}U\)</span>.</p>
 <p><em>Application 1: Multivariate Normal</em></p>
-<p>If <span class="math inline">\(Z_1,Z_2,\dots,Z_p\overset{iid}\sim
+<p>If <span class="math inline">\(Z_1,Z_2,\dots,Z_p\overset{i.i.d}\sim
 \mathcal{N}(0,1)\)</span>, <span class="math inline">\(Z=(Z_1, \ldots,
 Z_p)^T \sim \mathcal{N}(0,I)\)</span>.</p>
 <p>Also, by the well known property of multivariate normal distribution,
-<span class="math inline">\(\mu+AZ\sim\mathcal{N}(\mu,AA^T)\)</span>
+<span class="math inline">\(\mu+AZ\sim\mathcal{N}(\mu,AA^T),\)</span>
 <span class="math display">\[\mu=
 \begin{bmatrix}
 \mu_1\\
@@ -1712,23 +1712,24 @@ Z_p)^T \sim \mathcal{N}(0,I)\)</span>.</p>
 \sigma_{21}^2 &amp; \sigma_{2}^2 &amp; \cdots &amp; \sigma_{2p}^2\\
 \vdots &amp; \vdots &amp; \ddots &amp; \vdots\\
 \sigma_{p1}^2 &amp; \sigma_{p2}^2 &amp; \cdots &amp; \sigma_{p}^2
-\end{bmatrix}.\]</span> <span class="math inline">\(AA^T\)</span> is the
-variance/covariance matrix.</p>
+\end{bmatrix}.\]</span> where <span class="math inline">\(AA^T\)</span>
+is the variance/covariance matrix.</p>
 <p>Goal: To generate (multivariate) <span class="math inline">\(W\sim\mathcal{N}(\mu,\sum)\)</span>. Take Cholesky
 decomposition of <span class="math inline">\(\sum=U^TU\)</span>, then
 <span class="math inline">\(\mu+U^TZ \sim\mathcal{N}(\mu,
-U^TU)\)</span></p>
+U^TU).\)</span></p>
 <p><em>Application 2</em>: Given <span class="math inline">\(A&gt;0\)</span> (hence invertible), solve for
 <span class="math inline">\(Ax=b\)</span>. There are three steps in the
 algorithm.</p>
 <ol style="list-style-type: decimal">
-<li><p>Compute <span class="math inline">\(A=U^{\top}U\)</span>. (Then
-we have <span class="math inline">\(U^{\top}Ux=b\)</span>, denote <span class="math inline">\(Ux=y\)</span>, now <span class="math inline">\(U^{\top}y=b\)</span>)</p></li>
-<li><p>Forward solve <span class="math inline">\(U^{\top}y=b\)</span> to
-get <span class="math inline">\(\hat y\)</span>. (Here <span class="math inline">\(U^{\top}\)</span> is a lower triangular
-matrix)</p></li>
+<li><p>Compute <span class="math inline">\(A=U^{T}U\)</span>. (Then we
+have <span class="math inline">\(U^{T}Ux=b\)</span>, denote <span class="math inline">\(Ux=y\)</span>, now <span class="math inline">\(U^{T}y=b\)</span>).</p></li>
+<li><p>Forward solve <span class="math inline">\(U^{T}y=b\)</span> to
+get <span class="math inline">\(\hat y\)</span>. (Here <span class="math inline">\(U^{T}\)</span> is a lower triangular
+matrix).</p></li>
 <li><p>Back solve <span class="math inline">\(Ux=\hat y\)</span> to get
-<span class="math inline">\(\hat x\)</span>. (Here <span class="math inline">\(U\)</span> is an upper triangular matrix)</p></li>
+<span class="math inline">\(\hat x\)</span>. (Here <span class="math inline">\(U\)</span> is an upper triangular
+matrix).</p></li>
 </ol>
 <p><em>Usage</em>: In R, we use <em>chol(A)</em> to implement Cholesky
 decomposition to matrix <span class="math inline">\(A\)</span>. If we
@@ -1736,7 +1737,7 @@ have <span class="math inline">\(Ux=b\)</span> where <span class="math inline">\
 <em><span class="math inline">\(x \leftarrow backsolve
 (U,b)\)</span></em>. And if we have <span class="math inline">\(Lx=b\)</span> where <span class="math inline">\(L\)</span> is a lower triangular matrix, we use
 <em><span class="math inline">\(x \leftarrow forwardsolve
-(L,b)\)</span></em></p>
+(L,b)\)</span></em>.</p>
 </div>
 <div id="qr-decomposition" class="section level2">
 <h2>QR decomposition</h2>
@@ -1744,14 +1745,14 @@ have <span class="math inline">\(Ux=b\)</span> where <span class="math inline">\
 <span class="math inline">\(A \in \mathbb{R}^{m \times n}\)</span>
 (<span class="math inline">\(m \ge n\)</span>) has <span class="math inline">\(n\)</span> linearly independent columns, then
 <span class="math inline">\(A=Q_1 R\)</span>, where <span class="math inline">\(Q_1 \in \mathbb{R}^{m \times n}\)</span> has
-orthonormal columns (hence <span class="math inline">\(Q_1^{\top}Q_1=I\)</span>), and <span class="math inline">\(R \in \mathbb{R}^{n \times n}\)</span> is an upper
+orthonormal columns (hence <span class="math inline">\(Q_1^{T}Q_1=I\)</span>), and <span class="math inline">\(R \in \mathbb{R}^{n \times n}\)</span> is an upper
 triangular positive definite matrix.</p>
 <p><em>Remark</em>: The matrix <span class="math inline">\(Q_1\)</span>
 provides an orthonormal basis for <span class="math inline">\(Col(A)\)</span>, i.e., the columns of A are linear
 combinations of the columns of <span class="math inline">\(Q_1\)</span>.
 In fact, we have <span class="math inline">\(Col(A)=Col(Q_1)\)</span>,
 and any partial set of columns satisfy the same property, i.e., <span class="math display">\[
-span\{q_1, \cdots, q_k\}=span\{a_1, \cdots, a_k\} \quad k=1,2,\cdots,n
+span\{q_1, \cdots, q_k\}=span\{a_1, \cdots, a_k\} \quad k=1,2,\cdots,n.
 \]</span> And from the proof of the theorem we can tell <span class="math inline">\(q_k \perp \{a_1,a_2,\cdots, a_{k-1}\}, k\geq
 2\)</span>.</p>
 <p><strong>Theorem</strong> (<em>Full</em> QR decomposition): With <span class="math inline">\(A=Q_1R\)</span> as above, write</p>
@@ -1765,17 +1766,18 @@ R \\
 \end{bmatrix} =Q\begin{bmatrix}
 R \\
 0
-\end{bmatrix}
+\end{bmatrix},
 \]</span> where <span class="math inline">\(Q\in \mathbb R^{m \times
-m}\)</span> is orthogonal matrix (i.e. <span class="math inline">\(Q^{\top} Q=Q Q^{\top}=I\)</span>), <span class="math inline">\(Q_2\)</span> is a matrix containing columns all
-orthogonal to that of <span class="math inline">\(Q_1\)</span> and <span class="math inline">\(\begin{bmatrix}R \\0\end{bmatrix}\in \mathbb R^{m
+m}\)</span> is orthogonal matrix (i.e. <span class="math inline">\(Q^{T}
+Q=Q Q^{T}=I\)</span>), <span class="math inline">\(Q_2\)</span> is a
+matrix containing columns all orthogonal to that of <span class="math inline">\(Q_1\)</span> and <span class="math inline">\(\begin{bmatrix}R \\0\end{bmatrix}\in \mathbb R^{m
 \times n}\)</span>.</p>
 <p><em>Remark</em>: Actually,</p>
 <p><span class="math display">\[
 A=Q\begin{bmatrix}
 R \\
 0
-\end{bmatrix}=Q_1 R+Q_2 0
+\end{bmatrix}=Q_1 R+Q_2 0.
 \]</span></p>
 <p>Note that to make sure <span class="math inline">\(Q=\begin{bmatrix}
 Q_1 &amp; Q_2 \end{bmatrix}\)</span> is orthogonal, we are appending
@@ -1797,7 +1799,7 @@ q_1}{\|a_2-\langle a_2, q_1\rangle q_1\|}==\begin{bmatrix}
 \end{bmatrix}\\
 A&amp;=\begin{bmatrix}a_1 &amp; a_2\end{bmatrix}=\begin{bmatrix}q_1
 &amp; q_2\end{bmatrix}R=\begin{bmatrix}q_1 &amp;
-q_2\end{bmatrix}\begin{bmatrix}\|a_1\| &amp; q_1^{\top}a_2\\ 0 &amp;
+q_2\end{bmatrix}\begin{bmatrix}\|a_1\| &amp; q_1^{T}a_2\\ 0 &amp;
 \|a_2-\langle a_2, q_1\rangle q_1\|\end{bmatrix}\\
 A &amp;=\begin{bmatrix}
 \frac{1}{\sqrt{2}} &amp; 0 \\
@@ -1847,10 +1849,10 @@ Rx=Q_1^{\top}b\)</span>. Denote <span class="math inline">\(y=Q_1^{\top}b\)</spa
 <h2>Solving Linear Least Squares</h2>
 <p>Goal: <span class="math inline">\(Ax=b\)</span>, given <span class="math inline">\(A\)</span> and <span class="math inline">\(b\)</span>, to find <span class="math inline">\(x\)</span>.</p>
 <p><strong>When there is no solution: <span class="math inline">\(b\not
-\in \operatorname{Col} (A)\)</span></strong></p>
+\in \operatorname{Col} (A)\)</span></strong>.</p>
 <p>In this case, a natural problem to consider is the linear least
 square problem: <span class="math display">\[
-\min_x\|Ax-b\|
+\min_x\|Ax-b\|.
 \]</span> Our strategy is to find a <span class="math inline">\(\hat
 x\)</span> such that <span class="math inline">\(A\hat x=\hat b\)</span>
 is a projection of b on <span class="math inline">\(\operatorname{Col}(A)\)</span>. Then <span class="math inline">\(\hat x\)</span> is an approximate solution of the
@@ -1898,10 +1900,9 @@ A=Q_1R &amp;\Rightarrow R^TQ_1^TQ_1Rx=R^TQ_1^Tb\\
 &amp;\Leftrightarrow  Rx=Q_1^Tb=y
 \end{align*}\]</span></p>
 Algorithm:
-<p>Note: R command: solve(A,b), qr.solve(A,b)</p>
 <!------------->
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2023-09-13 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2023-12-08 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 </div>
 </div>

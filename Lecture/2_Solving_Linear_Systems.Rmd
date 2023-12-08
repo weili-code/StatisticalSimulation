@@ -56,9 +56,9 @@ MathJax.Hub.Config({
 
 # Solving Linear Systems
 
-Suppose we have a linear system $Ax=b$, where $A \in \mathbb{R}^{m \times n}$ known, $b \in \mathbb{R}^{m \times 1}$ known , and $x \in \mathbb{R}^{n \times 1}$ unknown. Our goal is: given $A$ and $b$, want to find $x$.
+Suppose we have a linear system $Ax=b$, where $A \in \mathbb{R}^{m \times n}$ known, $b \in \mathbb{R}^{m \times 1}$ known , and $x \in \mathbb{R}^{n \times 1}$ unknown. Our goal is: given $A$ and $b$, find $x$.
 
-We may encounter the following questions
+We may encounter the following questions:
 
 **1.** (Existence) Is there any solution?
 
@@ -86,11 +86,11 @@ Proof:
 
 Special case: If $A$ is square matrix that has linearly independent columns, then there exists a unique solution to $Ax=b$ for any $b \in \mathbb{R}^m$, which is $x=A^{-1}b$.
 
-Turning to question 3, if there are multiple solutions, one may characterize the solution space completely, or when a unique solution is desired, regularization technique can be applied or additional constraint may be imposed. This depends on the applications and will not be further discussed here. An alternative is to cast the problem as a least square minimization problem and then solve for the solution with some regularization, which will be covered under the question 4.
+**Question 3**, if there are multiple solutions, one may characterize the solution space completely, or when a unique solution is desired, regularization technique can be applied or additional constraint may be imposed. This depends on the applications and will not be further discussed here. An alternative is to cast the problem as a least square minimization problem and then solve for the solution with some regularization, which will be covered under the question 4.
 
 ## Sovling a linear system
 
-Given $A \in \mathbb R^{m\times n}$, **assuming there exists one unique solution**, then **how to solve for $x$**. The well-known methods include:
+Given $A \in \mathbb R^{m\times n}$, **assuming there exists one unique solution**, then **solve for $x$**. The well-known methods include:
 
 - Gaussian elimination
 - Cholesky factorization
@@ -101,13 +101,13 @@ We are not going to discuss Gaussian elimination here. You can find more details
 
 ## Cholesky factorization
 
-**Theorem** (Cholesky factorization/decomposition): If symmetric matrix $A>0$ (positive-definite), then there exists a unique upper triangular matrix $U$ s.t. $A=U^{\top}U$.
+**Theorem** (Cholesky factorization/decomposition): If symmetric matrix $A>0$ (positive-definite), then there exists a unique upper triangular matrix $U$ s.t. $A=U^{T}U$.
 
 *Application 1: Multivariate Normal*
 
-If $Z_1,Z_2,\dots,Z_p\overset{iid}\sim \mathcal{N}(0,1)$, $Z=(Z_1, \ldots, Z_p)^T \sim \mathcal{N}(0,I)$.
+If $Z_1,Z_2,\dots,Z_p\overset{i.i.d}\sim \mathcal{N}(0,1)$, $Z=(Z_1, \ldots, Z_p)^T \sim \mathcal{N}(0,I)$.
 
-Also, by the well known property of multivariate normal distribution, $\mu+AZ\sim\mathcal{N}(\mu,AA^T)$
+Also, by the well known property of multivariate normal distribution, $\mu+AZ\sim\mathcal{N}(\mu,AA^T),$
 $$\mu=
 \begin{bmatrix}
 \mu_1\\
@@ -120,23 +120,23 @@ $$\mu=
 \vdots & \vdots & \ddots & \vdots\\
 \sigma_{p1}^2 & \sigma_{p2}^2 & \cdots & \sigma_{p}^2
 \end{bmatrix}.$$
-$AA^T$ is the variance/covariance matrix. 
+where $AA^T$ is the variance/covariance matrix. 
 
-Goal: To generate (multivariate) $W\sim\mathcal{N}(\mu,\sum)$. Take Cholesky decomposition of $\sum=U^TU$, then $\mu+U^TZ \sim\mathcal{N}(\mu, U^TU)$
+Goal: To generate (multivariate) $W\sim\mathcal{N}(\mu,\sum)$. Take Cholesky decomposition of $\sum=U^TU$, then $\mu+U^TZ \sim\mathcal{N}(\mu, U^TU).$
 
 *Application 2*: Given $A>0$ (hence invertible), solve for $Ax=b$. There are three steps in the algorithm.
 
-1. Compute $A=U^{\top}U$. (Then we have $U^{\top}Ux=b$, denote $Ux=y$, now $U^{\top}y=b$)
+1. Compute $A=U^{T}U$. (Then we have $U^{T}Ux=b$, denote $Ux=y$, now $U^{T}y=b$).
 
-2. Forward solve $U^{\top}y=b$ to get $\hat y$. (Here $U^{\top}$ is a lower triangular matrix)
+2. Forward solve $U^{T}y=b$ to get $\hat y$. (Here $U^{T}$ is a lower triangular matrix).
 
-3. Back solve $Ux=\hat y$ to get $\hat x$. (Here $U$ is an upper triangular matrix)
+3. Back solve $Ux=\hat y$ to get $\hat x$. (Here $U$ is an upper triangular matrix).
 
-*Usage*: In R, we use *chol(A)* to implement Cholesky decomposition to matrix $A$. If we have $Ux=b$ where $U$ is an upper triangular matrix, we use *$x \leftarrow backsolve (U,b)$*. And if we have $Lx=b$ where $L$ is a lower triangular matrix, we use *$x \leftarrow forwardsolve (L,b)$*
+*Usage*: In R, we use *chol(A)* to implement Cholesky decomposition to matrix $A$. If we have $Ux=b$ where $U$ is an upper triangular matrix, we use *$x \leftarrow backsolve (U,b)$*. And if we have $Lx=b$ where $L$ is a lower triangular matrix, we use *$x \leftarrow forwardsolve (L,b)$*.
 
 ## QR decomposition
 
-**Theorem** (*Thin/Reduced* QR decomposition): If $A \in \mathbb{R}^{m \times n}$ ($m \ge n$) has $n$ linearly independent columns, then $A=Q_1 R$, where $Q_1 \in \mathbb{R}^{m \times n}$ has orthonormal columns (hence $Q_1^{\top}Q_1=I$), and $R \in \mathbb{R}^{n \times n}$ is an upper triangular positive definite matrix.   
+**Theorem** (*Thin/Reduced* QR decomposition): If $A \in \mathbb{R}^{m \times n}$ ($m \ge n$) has $n$ linearly independent columns, then $A=Q_1 R$, where $Q_1 \in \mathbb{R}^{m \times n}$ has orthonormal columns (hence $Q_1^{T}Q_1=I$), and $R \in \mathbb{R}^{n \times n}$ is an upper triangular positive definite matrix.   
 
 \begin{mdframed}
 Proof:
@@ -144,7 +144,7 @@ Proof:
 
 *Remark*: The matrix $Q_1$ provides an orthonormal basis for $Col(A)$, i.e., the columns of A are linear combinations of the columns of $Q_1$. In fact, we have $Col(A)=Col(Q_1)$, and any partial set of columns satisfy the same property, i.e.,
 $$
-span\{q_1, \cdots, q_k\}=span\{a_1, \cdots, a_k\} \quad k=1,2,\cdots,n
+span\{q_1, \cdots, q_k\}=span\{a_1, \cdots, a_k\} \quad k=1,2,\cdots,n.
 $$
 And from the proof of the theorem we can tell $q_k \perp \{a_1,a_2,\cdots, a_{k-1}\}, k\geq 2$.
 
@@ -161,9 +161,9 @@ R \\
 \end{bmatrix} =Q\begin{bmatrix}
 R \\
 0
-\end{bmatrix}
+\end{bmatrix},
 $$
-where $Q\in \mathbb R^{m \times m}$ is orthogonal matrix (i.e. $Q^{\top} Q=Q Q^{\top}=I$), $Q_2$ is a matrix containing columns all orthogonal to that of $Q_1$ and $\begin{bmatrix}R \\0\end{bmatrix}\in \mathbb R^{m \times n}$. 
+where $Q\in \mathbb R^{m \times m}$ is orthogonal matrix (i.e. $Q^{T} Q=Q Q^{T}=I$), $Q_2$ is a matrix containing columns all orthogonal to that of $Q_1$ and $\begin{bmatrix}R \\0\end{bmatrix}\in \mathbb R^{m \times n}$. 
 
 *Remark*: Actually,
 
@@ -171,7 +171,7 @@ $$
 A=Q\begin{bmatrix}
 R \\
 0
-\end{bmatrix}=Q_1 R+Q_2 0
+\end{bmatrix}=Q_1 R+Q_2 0.
 $$
 
 Note that to make sure $Q=\begin{bmatrix} Q_1 & Q_2 \end{bmatrix}$ is orthogonal, we are appending additional orthonormal columns to $Q_1$ to get $Q$, which means columns of $Q_2$ are orthonormal, orthogonal to $Q_1$. Then we also know columns of $Q_2$ orthogonal to that of $A$, since $A=Q_1 R$.
@@ -195,7 +195,7 @@ q_1&=\frac{a_1}{\|a_1\|}=\begin{bmatrix}
 1\\
 0
 \end{bmatrix}\\
-A&=\begin{bmatrix}a_1 & a_2\end{bmatrix}=\begin{bmatrix}q_1 & q_2\end{bmatrix}R=\begin{bmatrix}q_1 & q_2\end{bmatrix}\begin{bmatrix}\|a_1\| & q_1^{\top}a_2\\ 0 & \|a_2-\langle a_2, q_1\rangle q_1\|\end{bmatrix}\\
+A&=\begin{bmatrix}a_1 & a_2\end{bmatrix}=\begin{bmatrix}q_1 & q_2\end{bmatrix}R=\begin{bmatrix}q_1 & q_2\end{bmatrix}\begin{bmatrix}\|a_1\| & q_1^{T}a_2\\ 0 & \|a_2-\langle a_2, q_1\rangle q_1\|\end{bmatrix}\\
 A &=\begin{bmatrix}
 \frac{1}{\sqrt{2}} & 0 \\
 0 & 1\\
@@ -242,11 +242,11 @@ $$
 
 Goal: $Ax=b$, given $A$ and $b$, to find $x$.
 
-**When there is no solution: $b\not \in \operatorname{Col} (A)$**
+**When there is no solution: $b\not \in \operatorname{Col} (A)$**.
 
 In this case, a natural problem to consider is the linear least square problem:
 $$
-\min_x\|Ax-b\|
+\min_x\|Ax-b\|.
 $$
 Our strategy is to find a $\hat x$ such that $A\hat x=\hat b$ is a projection of b on $\operatorname{Col}(A)$. Then $\hat x$ is an approximate solution of the original problem $Ax=b$, but only in the sense that $Ax$ is close to $b$ in $L_2$ norm. Note however, this is from the point of view of optimization. From statistical point of view, least square problem is primarily driven by the goal to minimize some "expected" error -- mean-squared error between random objects.
 
@@ -292,7 +292,6 @@ Algorithm:
 \item Backsolve the $Rx=y$ to obtain $\hat x$.
 \end{enumerate}
 
-Note: R command: solve(A,b), qr.solve(A,b)
 
 <!------------->
 <span style="background-color: #f5f5f5; padding: 5px; display: block;">

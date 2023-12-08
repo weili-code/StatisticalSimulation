@@ -11,9 +11,9 @@
 
 <meta name="author" content="Instructor: Dr. Wei Li" />
 
-<meta name="date" content="2023-09-13" />
+<meta name="date" content="2023-12-08" />
 
-<title>MAT 653: Statistical Simulation–WL</title>
+<title>MAT 653: Statistical Simulation</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1621,10 +1621,10 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">MAT 653: Statistical Simulation–WL</h1>
+<h1 class="title toc-ignore">MAT 653: Statistical Simulation</h1>
 <h4 class="author">Instructor<span class="math inline">\(:\)</span>
 Dr. Wei Li</h4>
-<h4 class="date">2023-09-13</h4>
+<h4 class="date">2023-12-08</h4>
 
 </div>
 
@@ -1635,7 +1635,7 @@ MathJax.Hub.Config({
 });
 </script>
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2023-09-13 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2023-12-08 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 <!------------->
 <div id="some-basics-of-matrix-algebra" class="section level1">
@@ -1658,7 +1658,7 @@ x_n
 =
 \left[\begin{array}{c}
 {a}_{1},{a}_{2} \cdots {a}_{n}
-\end{array}\right]
+\end{array}\right],
 \end{align*}\]</span> with each <span class="math inline">\(a_i\)</span>
 belonging to <span class="math inline">\(\mathbb{R}^m\)</span>.</p>
 <p>Suppose <span class="math inline">\({e}_{i}, i=1, \ldots, n\)</span>
@@ -1668,7 +1668,7 @@ in the ith position and zeros elsewhere, i.e., the identity <span class="math in
 =
 \left[\begin{array}{c}
 {e}_{1},{e}_{2} \cdots {e}_{n}
-\end{array}\right]
+\end{array}\right].
 \end{align*}\]</span></p>
 <p>For <span class="math inline">\(A\)</span> an <span class="math inline">\(m \times n\)</span> matrix, Then the ith column of
 <span class="math inline">\(A\)</span> can be expresed as <span class="math inline">\(A \mathbf{e}_{i},\)</span> for <span class="math inline">\(i=1, \ldots, n\)</span>.</p>
@@ -1683,7 +1683,7 @@ Ax=\begin{bmatrix}
 x_1 \\
 \vdots \\
 x_n
-\end{bmatrix}=b
+\end{bmatrix}=b.
 \]</span> <span class="math inline">\(Ax\)</span> is a linear
 combination of columns vectors of <span class="math inline">\(A\)</span>. The coefficients of the linear
 combinations are stored in <span class="math inline">\(x\)</span>.</p>
@@ -1692,22 +1692,19 @@ combinations are stored in <span class="math inline">\(x\)</span>.</p>
 =
 \left[\begin{array}{c}
 {a}_{1},{a}_{2} \cdots {a}_{n}
-\end{array}\right]
-\end{align*}\]</span> a <span class="math inline">\(\ell \times
-m\)</span> matrix, and <span class="math display">\[\begin{align*}
+\end{array}\right], \quad \ell \times m
+\end{align*}\]</span> and <span class="math display">\[\begin{align*}
 {C}
 =
 \left[\begin{array}{c}
 {c}_{1},{c}_{2} \cdots {c}_{n}
-\end{array}\right]
-\end{align*}\]</span> a <span class="math inline">\(m \times n\)</span>
-matrix, then <span class="math display">\[
-AC=B=[b_1, \cdots, b_n] : \quad  ( \ell \times n)
+\end{array}\right], \quad m \times n
+\end{align*}\]</span> then <span class="math display">\[
+AC=B=[b_1, \cdots, b_n] : \quad  \ell \times n
 \]</span> where <span class="math inline">\(b_j=Ac_j\)</span>, <span class="math inline">\(j=1, \ldots, n.\)</span></p>
 <p><strong>Range space (column space)</strong>: The column space <span class="math inline">\(\rm{col}(A)\)</span> of <span class="math inline">\(A\)</span> is the span of vectors <span class="math inline">\(a_1, \ldots, a_n\)</span>, i.e., <span class="math inline">\(\rm{span}\{a_1, \ldots, a_n\}\)</span> the set of
 all linear combinations of <span class="math inline">\(a_1, \ldots,
-a_n\)</span>.</p>
-<p><span class="math display">\[\begin{align*}
+a_n\)</span>: <span class="math display">\[\begin{align*}
 \operatorname{Col} (A)=\left\{b: b=A x \text { for some } x \in
 \mathbb{R}^{n}\right\}
 \end{align*}\]</span></p>
@@ -1716,15 +1713,15 @@ belongs to <span class="math inline">\(\rm{Col}(A)\)</span> iff <span class="mat
 <p><strong>Kernel space (null space)</strong>: The kernel space of an
 <span class="math inline">\(m \times n\)</span> matrix <span class="math inline">\(A\)</span>, written as <span class="math inline">\(\rm{ker}(A)\)</span>, is the set of all solutions
 of the homogeneous equation <span class="math inline">\(Ax=0\)</span>.
-In set notation, <span class="math display">\[\begin{align*}
+<span class="math display">\[\begin{align*}
 \operatorname{ker}(A)=\left\{x: x \in \mathbb{R}^{n} \text { and } A
-x=0\right\}
+x=0\right\}.
 \end{align*}\]</span></p>
 <p><strong>Linear independence of a set of vectors</strong>: suppose we
 have <span class="math inline">\(p\)</span> vectors in <span class="math inline">\(\mathbb{R}^n\)</span>, say, <span class="math inline">\(v_1,\ldots, v_p\)</span></p>
 <ul>
 <li>we call this collection <span class="math inline">\(V=\{v_1,\ldots,
-v_p\}\)</span> to be linearly independent if whenever <span class="math inline">\(x_1v_1+\cdots+x_pv_p=0\)</span>, we have <span class="math inline">\(x_1=\cdots=x_p=0\)</span></li>
+v_p\}\)</span> to be linearly independent if whenever <span class="math inline">\(x_1v_1+\cdots+x_pv_p=0\)</span>, we have <span class="math inline">\(x_1=\cdots=x_p=0\)</span>.</li>
 <li><span class="math inline">\(V=\{v_1,\ldots, v_p\}\)</span> is said
 to be linearly dependent if <span class="math inline">\(\exists\)</span>
 some vector in <span class="math inline">\(V\)</span> that is a linear
@@ -1742,7 +1739,7 @@ rank</strong> if its columns are linearly independent.</p>
 <p><strong>Theorem</strong> (rank-nullity theorem): Let <span class="math inline">\(A\)</span> be an <span class="math inline">\(m
 \times n\)</span> matrix, Then <span class="math display">\[\begin{align*}
 n=\operatorname{dim}(Col(A))+\operatorname{dim}(\operatorname{ker}(A)) =
-\operatorname{rank} +  \operatorname{dim}(\operatorname{ker}(A))
+\operatorname{rank} +  \operatorname{dim}(\operatorname{ker}(A)).
 \end{align*}\]</span> where the dimension <span class="math inline">\(\operatorname{dim}\)</span> is the maximal number
 of linearly independent elements that span the space.</p>
 <p><strong>Determinant of a matrix</strong>: Determinant is a number
@@ -1754,7 +1751,7 @@ is non-zero. Example:</p>
 \left|\left[\begin{array}{ll}
 a &amp; b \\
 c &amp; d
-\end{array}\right]\right|=ad-bc
+\end{array}\right]\right|=ad-bc.
 \end{align*}\]</span></p>
 <p>The determinant of a square matrix is equal to the product of its
 eigenvalues (see later for definition).</p>
@@ -1765,7 +1762,7 @@ to be the inverse of <span class="math inline">\(A\)</span> iff <span class="mat
 <span class="math inline">\(A^{-1}\)</span>. A square matrix that is not
 invertible is called singular. When <span class="math inline">\(A\)</span> is invertible, then its inverse is
 given by <span class="math display">\[
-A^{-1}=\frac{1}{|A|}adj(A)
+A^{-1}=\frac{1}{|A|}adj(A),
 \]</span> where <span class="math inline">\(adj(A)\)</span> is the
 adjoint matrix of <span class="math inline">\(A\)</span>.</p>
 <p>A square matrix is invertible if and only if its determinant is not
@@ -1778,7 +1775,7 @@ c &amp; d
 \end{array}\right]^{-1}=\frac{1}{a d-b c}\left[\begin{array}{cc}
 d &amp; -b \\
 -c &amp; a
-\end{array}\right]
+\end{array}\right],
 \end{align*}\]</span> if <span class="math inline">\(ad-bc \neq
 0.\)</span></p>
 <p><strong>Theorems</strong>: A square matrix has a unique inverse,
@@ -1809,14 +1806,14 @@ a subspace <span class="math inline">\(W\)</span> in a vector space
 <span class="math inline">\(V\)</span> that are orthogonal to every
 vector in <span class="math inline">\(W\)</span>. It’s denoted as <span class="math inline">\(W^{\perp}\)</span>.</p>
 <p>Column space and Kernel space: <span class="math inline">\(\operatorname{Col}(A)^{\perp}=\operatorname{Ker}\left(A^T\right)\)</span>
-and <span class="math inline">\(\operatorname{Row}(A)^{\perp}=\operatorname{Ker}(A)\)</span></p>
+and <span class="math inline">\(\operatorname{Row}(A)^{\perp}=\operatorname{Ker}(A).\)</span></p>
 <p><strong>Theorem</strong>: <span class="math inline">\(S=\{v_1,
 \ldots, v_p \}\)</span> be a set of nonzero orthogonal vectors in <span class="math inline">\(\mathbb{R}^n\)</span>, then <span class="math inline">\(S\)</span> is linearly independent.</p>
 <p><strong>Orthogonal/orthonormal matrix</strong>: An <span class="math inline">\(m \times n\)</span> matrix <span class="math inline">\(U\)</span> has orthonormal columns if <span class="math inline">\(U^TU=I\)</span>.</p>
 <p>An <span class="math inline">\(m \times m\)</span> square matrix
 <span class="math inline">\(P\)</span> is called an orthogonal matrix if
 <span class="math display">\[\begin{align*}
-P P^{T}=P^{T} P=I_{m}, \quad \text { or } P^{-1}=P^{T} .
+P P^{T}=P^{T} P=I_{m}, \quad \text{or} \quad P^{-1}=P^{T} .
 \end{align*}\]</span></p>
 <p>Any square matrix with orthonormal columns is an orthogonal matrix,
 and such a matrix must have orthonormal rows too.</p>
@@ -1846,12 +1843,12 @@ another vector <span class="math inline">\(x \in \mathbb{R}^n\)</span>
 (<span class="math inline">\(\|x\|\neq 0\)</span>), i.e., <span class="math inline">\(\rm{span}(x):=\{ax:a \in\mathbb{R}\}\)</span> is
 given by <span class="math display">\[
 P_xy=\frac{\left\langle x,y\right\rangle}{\left\langle
-x,x\right\rangle}x=\frac{xx&#39;}{\left\langle x,x\right\rangle}y
+x,x\right\rangle}x=\frac{xx^T}{\left\langle x,x\right\rangle}y,
 \]</span> which has the property that <span class="math inline">\(\left\langle
-y-P_xy,P_xy\right\rangle=0\)</span></p>
+y-P_xy,P_xy\right\rangle=0.\)</span></p>
 <!------------->
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2023-09-13 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2023-12-08 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 </div>
 </div>
