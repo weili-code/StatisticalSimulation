@@ -56,15 +56,15 @@ MathJax.Hub.Config({
 
 
 # PCA
-The principal component analysis (PCA) is concerned with explaining the variance-covariance structure of ${X}=\left({X}_{1}, \cdots, {X}_{p}\right)'$ through a few linear combinations of these variables.
+The principal component analysis (PCA) is concerned with explaining the variance-covariance structure of ${X}=\left({X}_{1}, \cdots, {X}_{p}\right)^T$ through a few linear combinations of these variables.
 
 Define the random vector and its mean vector
 $$
-X=\left(X_{1}, \cdots, X_{p}\right)^{T}, \quad \boldsymbol{\mu}=E(X)=\left(\mu_{1}, \cdots, \mu_{p}\right)^{T}
+X=\left(X_{1}, \cdots, X_{p}\right)^{T}, \quad \boldsymbol{\mu}=E(X)=\left(\mu_{1}, \cdots, \mu_{p}\right)^{T}.
 $$
 The variance-covariance matrix of $X$ is the
 $$
-\Sigma=\operatorname{Cov}(X)=E(X-\boldsymbol{\mu})(X-\boldsymbol{\mu})^{T}
+\Sigma=\operatorname{Cov}(X)=E(X-\boldsymbol{\mu})(X-\boldsymbol{\mu})^{T},
 $$
 its $i j$ -th entry $\sigma_{i j}=E\left(X_{i}-\mu_{i}\right)\left(X_{j}-\mu_{j}\right)$ for any $1 \leq i \leq j \leq p$, 
 where $\bs{\mu}$ is the population mean and $\Sigma$ is the population variance-covariance matrix. In practice, $\bs{\mu}$ and $\Sigma$ are unknown and estimated from the data.
@@ -73,20 +73,20 @@ Consider the linear combinations
 \begin{align*}
 Z_{1} &=\mathbf{v}_{1}^{T} {X}=v_{11} X_{1}+v_{21} X_{2}+\cdots+v_{p1} X_{p} \\
 Z_{2} &=\mathbf{v}_{2}^{T} {X}=v_{12} X_{1}+v_{22} X_{2}+\cdots+v_{p2} X_{p} \\
-\cdots &=\cdots \\
+\vdots &=\qquad \qquad \vdots \\
 Z_{p} &=\mathbf{v}_{p}^{T} {X}=v_{1p} X_{1}+v_{2p} X_{2}+\cdots+v_{p p} X_{p}
 \end{align*}
 In a matrix form, 
 
 $$
-Z= V^T X
+Z= V^T X,
 $$
 where $Z=(Z_1, \ldots, Z_p)^T$, $V=(\mb{v}_1, \ldots, \mb{v}_p)$. 
 Then
 $$
 \begin{array}{l}
-\operatorname{Var}\left(Z_{j}\right)=\mathbf{v}_{j}^{T} \Sigma \mathbf{v}_{j}, \quad j=1, \cdots, p \\
-\operatorname{Cov}\left(Z_{j}, Z_{k}\right)=\mathbf{v}_{j}^{T} \Sigma \mathbf{v}_{k}, \quad \forall j \neq k
+\operatorname{Var}\left(Z_{j}\right)=\mathbf{v}_{j}^{T} \Sigma \mathbf{v}_{j}, \quad j=1, \cdots, p, \\
+\operatorname{Cov}\left(Z_{j}, Z_{k}\right)=\mathbf{v}_{j}^{T} \Sigma \mathbf{v}_{k}, \quad \forall j \neq k.
 \end{array}
 $$
 Principal component analysis is a procedure that finds directions ($\mathbf{v}_{j}, j=1,\ldots,p$) such that $Z_{1}, \cdots, Z_{p}$ has maximum variability and also are linearly uncorrelated and uses these $Z_j$'s for subsequent statistical analysis. 
@@ -99,7 +99,7 @@ Principal components (PCs):
 
 The procedure can be described as 
 
-- The first $\mathrm{PC}=$ linear combination $Z_{1}=\mathbf{v}_{1}^{T} X$ that maximizes $\operatorname{Var}\left(\mathbf{v}_{1}^{T} X\right)$ subject to $\left\|\mathbf{v}_{1}\right\|=1$
+- The first $\mathrm{PC}=$ linear combination $Z_{1}=\mathbf{v}_{1}^{T} X$ that maximizes $\operatorname{Var}\left(\mathbf{v}_{1}^{T} X\right)$ subject to $\left\|\mathbf{v}_{1}\right\|=1.$
 - The second $\mathrm{PC}=$ linear combination $\mathrm{Z}_{2}=\mathbf{v}_{2}^{T} \mathrm{X}$ that maximizes $\operatorname{Var}\left(\mathbf{v}_{2}^{T} X\right)$ subject to $\left\|\mathbf{v}_{2}\right\|=1$ and $\operatorname{Cov}\left(\mathbf{v}_{1}^{T} X, \mathbf{v}_{2}^{T} X\right)=0$.
 
 - The $j$-th PC satisfies
@@ -124,13 +124,13 @@ where $\lambda_{1} \geq \lambda_{2} \geq \cdots \geq \lambda_{p}\geq 0$ and $\le
 0 & \lambda_2 & \cdots & 0 \\
 \vdots & \vdots & \ddots & \vdots \\
 0 & 0 & \cdots & \lambda_p
-\end{array}\right]V^T
+\end{array}\right]V^T.
 \end{align*} 
 
 
 - The $j$ th $\mathrm{PC}$ is given by $Z_{j}=\mb{v}_{j}^{T}{X}$ and its variance is
 $$
-\operatorname{Var}\left(Z_{j}\right)=\mb{v}_{j}^{T} \Sigma \mb{v}_{j}=\lambda_{j}
+\operatorname{Var}\left(Z_{j}\right)=\mb{v}_{j}^{T} \Sigma \mb{v}_{j}=\lambda_{j},
 $$
 $$
 \operatorname{Cov}\left(Z_{j}, Z_{k}\right)=\mathbf{v}_{j}^{T} \Sigma \mathbf{v}_{k} = 0, \quad j \neq k.
@@ -164,10 +164,10 @@ If $\Sigma$ is unknown, we use sample vcariance $S_{n}$ as its estimator.
 =
 \left[\begin{array}{c}
 \mb{x}_{1},\mb{x}_{2} \cdots \mb{x}_{p}
-\end{array}\right]
+\end{array}\right],
 \end{align*}
 $$
-S_{n}=\frac{1}{n-1} \mb{X}_{c}^{T} \mb{X}_{c}=\frac{1}{n-1} \sum_{i=1}^{n}\left({X}_{i}-\overline{{X}}\right)\left({X}_{i}-\overline{{X}}\right)^{T}
+S_{n}=\frac{1}{n-1} \mb{X}_{c}^{T} \mb{X}_{c}=\frac{1}{n-1} \sum_{i=1}^{n}\left({X}_{i}-\overline{{X}}\right)\left({X}_{i}-\overline{{X}}\right)^{T},
 $$
 where $\mb{X}_{c}$ the centered design matrix of $\mb{X}$.
 
@@ -175,7 +175,7 @@ There are two ways to find $V=(\mb{v}_1, \ldots, \mb{v}_p)$:
 
 - eigen-decomposition of $\mb{X}_{c}^{T} \mb{X}_{c}$: $\mb{X}_{c}^{T} \mb{X}_{c}=VD^2V^T$
 - singular value decomposition $(\mathrm{SVD})$ of $\mb{X}_{c}$: $\mb{X}_{c}=UDV^T$.
-- Here $D=\op{diag}(\text{singular values of } \mb{X}_c)=\op{diag}(\text{eigenvalues of } \mb{X}_c^T\mb{X}_c)$
+- $D=\op{diag}(\text{singular values of } \mb{X}_c)=\op{diag}(\text{eigenvalues of } \mb{X}_c^T\mb{X}_c)$
 
 
 Specifically, in the following discussion, suppose we have $n \times p$ demeaned data matrix $\mb{X}$ with $n \geq p$ (**we assume $\mb{X}$ it to be in mean-deviance form $\mb{X}_c$**), by the full SVD (or use thin SVD):
@@ -205,7 +205,7 @@ where
 \bs{z}_{2}^{T} \\
 \vdots \\
 \bs{z}_{n}^{T}
-\end{array}\right]
+\end{array}\right].
 \end{align*}
 
 Note the $p \times 1$ vector $\bs{z}_{i}=V^T \bs{x}_i$ is the **$i$-th score of the principal components** of $\mb{X}$, $i=1, \cdots, n$. 

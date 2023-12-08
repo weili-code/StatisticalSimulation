@@ -11,7 +11,7 @@
 
 <meta name="author" content="Instructor: Dr. Wei Li" />
 
-<meta name="date" content="2023-09-07" />
+<meta name="date" content="2023-12-08" />
 
 <title>MAT 653: Statistical Simulation</title>
 
@@ -1570,23 +1570,17 @@ overflow-y: auto;
 border: 1px solid #ddd;
 border-radius: 4px;
 }
-.tabset-dropdown > .nav-tabs > li.active:before {
-content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+content: "\e259";
 font-family: 'Glyphicons Halflings';
 display: inline-block;
 padding: 10px;
 border-right: 1px solid #ddd;
 }
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-content: "";
-border: none;
-}
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-content: "";
+content: "\e258";
 font-family: 'Glyphicons Halflings';
-display: inline-block;
-padding: 10px;
-border-right: 1px solid #ddd;
+border: none;
 }
 .tabset-dropdown > .nav-tabs > li.active {
 display: block;
@@ -1630,7 +1624,7 @@ display: none;
 <h1 class="title toc-ignore">MAT 653: Statistical Simulation</h1>
 <h4 class="author">Instructor<span class="math inline">\(:\)</span>
 Dr. Wei Li</h4>
-<h4 class="date">2023-09-07</h4>
+<h4 class="date">2023-12-08</h4>
 
 </div>
 
@@ -1641,7 +1635,7 @@ MathJax.Hub.Config({
 });
 </script>
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2023-09-07 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2023-12-08 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 <!------------->
 <div id="eigenvalue-decomposition" class="section level1">
@@ -1677,8 +1671,8 @@ is invertible, then we have <span class="math inline">\(A^{-1}=P\Lambda^{-1}P^T\
 \begin{pmatrix}
 \ddots &amp; 0 &amp; 0 \\
 0 &amp; \frac{1}{\lambda_i} &amp; 0 \\
-0 &amp; 0 &amp; \ddots.
-\end{pmatrix}
+0 &amp; 0 &amp; \ddots
+\end{pmatrix}.
 \end{equation*}\]</span></p>
 </div>
 <div id="singular-value-decomposition" class="section level1">
@@ -1712,8 +1706,8 @@ D = \begin{bmatrix}
       \sigma_{1} \\ &amp; \ddots &amp; \\ &amp; &amp; \sigma_{r}
      \end{bmatrix}.
 \]</span> The Singular Value Decomposition of A is: <span class="math display">\[
-  A = U_{m \times m}\Sigma_{m \times n}V^{T}_{n \times n}
-\]</span> Where <span class="math inline">\(U\)</span> and <span class="math inline">\(V\)</span> are both orthogonal matrices: <span class="math inline">\(V=[v_1, \cdots, v_n]\)</span> consists of all
+  A = U_{m \times m}\Sigma_{m \times n}V^{T}_{n \times n},
+\]</span> where <span class="math inline">\(U\)</span> and <span class="math inline">\(V\)</span> are both orthogonal matrices: <span class="math inline">\(V=[v_1, \cdots, v_n]\)</span> consists of all
 orthonormal eigenvectors of <span class="math inline">\(A^{T}A\)</span>;
 <span class="math inline">\(U=[u_1, \cdots, u_m]\)</span> consists the
 column <span class="math inline">\(u_{i}\)</span> as follows <span class="math display">\[\text{for }   1 \le i \le r, \quad u_{i} =
@@ -1734,7 +1728,7 @@ partition:<br />
   \Sigma = \begin{bmatrix}
   D &amp; 0 \\
   0 &amp; 0
-\end{bmatrix}
+\end{bmatrix}.
 \]</span> Consequently, the SVD of <span class="math inline">\(A\)</span> can be reduced to<br />
 <span class="math display">\[
   A =
@@ -1749,13 +1743,14 @@ partition:<br />
     V_{r}^{T} \\
     V_{n-r}^{T}
   \end{bmatrix}
-  = U_{r}DV_{r}^{T}=\sum_{i=1}^r d_i{u}_iv_i^T
-\]</span> If we instead consider <span class="math inline">\(\tilde{A}=\sum_{i=1}^l d_i{u}_iv_i^T\)</span> for
+  = U_{r}DV_{r}^{T}=\sum_{i=1}^r d_i{u}_iv_i^T.
+\]</span> <strong>Note 1</strong>: If we instead consider <span class="math inline">\(\tilde{A}=\sum_{i=1}^l d_i{u}_iv_i^T\)</span> for
 some <span class="math inline">\(l &lt; r\)</span>, then this is the
 low-rank approximation to <span class="math inline">\(A\)</span>,
 sometimes is called <strong>truncated SVD</strong>.</p>
-<p><strong>Note</strong>: if <span class="math inline">\(m \geq
-n\)</span>, sometimes <strong>thin SVD</strong> is written as <span class="math display">\[\begin{align*}
+<p><strong>Note 2</strong>: If <span class="math inline">\(m \geq
+n\)</span>, the SVD (sometimes called <strong>thin SVD</strong>) can be
+also written as <span class="math display">\[\begin{align*}
 A=\tilde{U}\tilde{D}\tilde{V}^T
 \end{align*}\]</span> where <span class="math inline">\(\tilde{U}: m
 \times n, \tilde{D}: n \times n; \tilde{V}: n \times n.\)</span></p>
@@ -1787,13 +1782,13 @@ U_rDV_r^{T}\)</span>;<br />
 giving <span class="math inline">\(w^{*} = D^{-1}y\)</span>;<br />
 </li>
 <li>Solve <span class="math inline">\(V_r^{T}x = w^{*} \Rightarrow x^* =
-V_rw^{*}\)</span>;</li>
+V_rw^{*}\)</span>.</li>
 </ol>
 <p>The solution of the equation is <span class="math inline">\(x^* =
 V_rD^{-1}U_r^{T}b= V\Sigma^{-1}U^{T}b\)</span>. We notice that this SVD
 method allows <span class="math inline">\(A\)</span>, <span class="math inline">\(b\)</span> to be arbitrary. Notice that <span class="math inline">\(V_{r}D^{-1}U_{r}^{T}\)</span> is like the
 “inverse” of A. Here we have the concept of generalized inverse.</p>
-<p><strong>Moore-Penrose inverse of A</strong>: <span class="math inline">\(A^{\dagger} = V_{r}D^{-1}U_{r}^{T}\)</span></p>
+<p><strong>Moore-Penrose inverse of A</strong>: <span class="math inline">\(A^{\dagger} = V_{r}D^{-1}U_{r}^{T}.\)</span></p>
 </div>
 <div id="ls-problem" class="section level2">
 <h2>2.LS-Problem</h2>
@@ -1835,7 +1830,7 @@ orthogonal projection onto <span class="math inline">\(Col(A)\)</span>,
 <span class="math inline">\(\operatorname{Ker}(A^T).\)</span></p>
 <!------------->
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2023-09-07 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2023-12-08 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 </div>
 </div>
