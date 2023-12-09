@@ -1,5 +1,5 @@
 ---
-title: "MAT 653: Statistical Simulation"
+title: "Statistical Computation and Simulation"
 author: Instructor$:$ Dr. Wei Li
 date: "`r Sys.Date()`"
 geometry: left=2cm, right=2cm, top=2cm, bottom=2cm
