@@ -128,7 +128,7 @@ rmarkdown::render("./Lecture/2_Solving_Linear_Systems.Rmd", quiet = TRUE)
 
 ## Preface
 
-Materials here are outline for the topics on Statistical Computation and Simulation. 
+Materials for the topics on Statistical Computation and Simulation. 
 
 ## Topics
 
