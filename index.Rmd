@@ -132,8 +132,8 @@ Materials for the topics on Statistical Computation and Simulation.
 
 ## Topics
 
-- [Review: basics](1_basics.html)
-- [Solving Linear Systems](2_Solving_Linear_Systems.html)
+- [Review: basics](./docs/1_basics.html)
+- [Solving Linear Systems](./docs/2_Solving_Linear_Systems.html)
 
 
 #### License 
