@@ -1,5 +1,5 @@
 ---
-title: "MAT 653 Statistical Simulation"
+title: "Statistical Computation and Simulation"
 author: '<span class="author-name">Dr. Wei Li</span> <a href="https://wli169.expressions.syr.edu/"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L2 12H5V22H19V12H22L12 2Z" fill="black"/></svg></a> <a href="https://github.com/weili-code"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12C2 16.41 4.87 20.17 8.84 21.4C9.34 21.53 9.68 21.27 9.7 21C9.7 20.76 9.7 20.29 9.7 19.03C6.73 19.74 5.61 17.37 5.61 17.37C5.08 15.78 4.1 15.39 4.1 15.39C2.84 14.61 4.63 14.63 4.63 14.63C6.27 14.78 7.16 16.23 7.16 16.23C8.21 18.04 10.17 17.46 11 17.18C11.12 16.51 11.5 16.13 11.93 15.88C8.33 15.57 5.04 14.24 5.04 10.63C5.04 9.58 5.42 8.78 6 8.13C5.87 7.88 5.6 6.84 6.18 5.32C6.18 5.32 7.1 4.93 9.7 6.68C10.9 6.42 12.17 6.32 13.4 6.32C14.62 6.32 15.9 6.42 17.1 6.68C19.7 4.93 20.6 5.32 20.6 5.32C21.2 6.84 20.9 7.88 20.8 8.13C21.4 8.78 21.8 9.58 21.8 10.63C21.8 14.24 18.5 15.57 14.9 15.88C15.5 16.27 16 17.01 16 18.11C16 19.76 16 21 16 21.38C16 21.65 16.3 21.91 16.8 21.78C20.77 20.56 23.64 16.8 23.64 12C23.64 6.48 19.52 2 12 2Z" fill="black"/></svg></a>'
 date: "`r Sys.Date()`"
 geometry: left=2cm, right=2cm, top=2cm, bottom=2cm
@@ -128,11 +128,11 @@ rmarkdown::render("./Lecture/2_Solving_Linear_Systems.Rmd", quiet = TRUE)
 
 ## Preface
 
-This is the MAT 653 course website that provides supplementary materials.
+Materials here are outline for the topics on Statistical Computation and Simulation. 
 
 ## Topics
 
-- [Review: basics](1_basics.html)
+- [Review: basics](./Lecture/1_basics.html)
 
 
 #### License 
