@@ -1,6 +1,6 @@
 ---
 title: "Statistical Computation and Simulation"
-author: Instructor$:$ Dr. Wei Li
+author: Wei Li
 date: "`r Sys.Date()`"
 geometry: left=2cm, right=2cm, top=2cm, bottom=2cm
 linestretch: 1.3
@@ -33,9 +33,9 @@ header-includes:
 - \captionsetup[figure]{labelformat=empty}
 ---
 
-
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
+  showMathMenu: false,  // This line disables the MathJax context menu
   TeX: { equationNumbers: { autoNumber: "AMS" } }
 });
 </script>

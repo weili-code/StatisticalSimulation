@@ -37,7 +37,8 @@ header-includes:
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
-  TeX: { equationNumbers: { autoNumber: "AMS" } }po
+  showMathMenu: false,  // This line disables the MathJax context menu
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
 });
 </script>
 
@@ -113,8 +114,8 @@ plt.show()
 
 
 ```{r include=FALSE}
-rmarkdown::render("./Lecture/1_basics.Rmd", quiet = TRUE)
-rmarkdown::render("./Lecture/2_Solving_Linear_Systems.Rmd", quiet = TRUE)
+#rmarkdown::render("./Lecture/1_basics.Rmd", quiet = TRUE)
+#rmarkdown::render("./Lecture/2_Solving_Linear_Systems.Rmd", quiet = TRUE)
 ```
 
 <!-- ```{r child = "2.Rmd"} -->
