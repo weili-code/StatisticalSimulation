@@ -8,7 +8,7 @@ output:
   html_document:
     df_print: paged
     mathjax_config:
-      - TeX-AMS-MML_HTMLorMML   
+      - TeX-AMS-MML_HTMLorMML    
   html_notebook: default
   pdf_document: 
       include:

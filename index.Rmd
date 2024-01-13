@@ -49,6 +49,11 @@ MathJax.Hub.Config({
 }
 </style>
 
+<!---- 
+HTML produced by this script needs to be placed 
+inside ./docs/ to be loaded on the Github server.
+------>
+
 <!------------->
 
 ```{r include=FALSE}
@@ -134,7 +139,21 @@ Materials for the topics on Statistical Computation and Simulation.
 ## Topics
 
 - [Review: basics](1_basics.html)
-- [Solving Linear Systems](2_Solving_Linear_Systems.html)
+- [Solving linear systems](2_Solving_Linear_Systems.html)
+- [Eigen-decomposition, SVD](3_Eigen_SVD.html)
+- [Principal components](4_Principal_Component.html)
+- [Basics of optimization](5_basics_of_optimization.html)
+- [Gradient descent](6_gradient_descent_newton.html)
+- [Modern optimization](7_modern_optimzation.html)
+- [Random variable generation](8_random-variable_generation.html)
+- [Monte_Carlo_Integration](9_Monte_Carlo_Integration.html)
+- [EM Algorithm](10_EM_algorithm.html)
+- [Simulated Annealing](11_Simulated_Annealing_Others.html)
+- [Basic Metropolis](12_Basics_MC_Metropolis.html)
+- [MCMC](13_MCMC.html)
+- [MCMC2](14_MCMC2.html)
+- [RJMCMC](15_RJMCMC.html)
+- [HMC](16_HMC.html)
 
 
 #### License 
