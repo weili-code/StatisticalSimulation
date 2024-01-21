@@ -27,18 +27,32 @@ header-includes:
 - \newcommand\op[1]{\operatorname{#1}}
 - \newcommand\mbb[1]{\mathbb{#1}}
 - \newcommand\T{\top}
-- \newcommand{\wei}[1]{\textcolor{orange}{(Wei:#1)}}
 - \usepackage{mathtools}
 - \usepackage{caption}
 - \captionsetup[figure]{labelformat=empty}
+- \newcommand{\wei}[1]{\textcolor{orange}{(Wei:#1)}}
 ---
 
 <script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  showMathMenu: false,  // This line disables the MathJax context menu
-  TeX: { equationNumbers: { autoNumber: "AMS" } }
-});
+  MathJax.Hub.Config({
+    jax: ["input/TeX", "output/CommonHTML"],
+    extensions: ["tex2jax.js"],
+    TeX: {
+      extensions: ["AMSmath.js", "AMSsymbols.js", "noErrors.js", "noUndefined.js"]
+    },
+    "HTML-CSS": {
+      availableFonts: [],
+      preferredFont: null,
+      webFont: "TeX",
+      imageFont: null
+    },
+    CommonHTML: {
+      linebreaks: { automatic: true }
+    },
+    showMathMenu: false  // Disable the MathJax context menu
+  });
 </script>
+
 
 
 

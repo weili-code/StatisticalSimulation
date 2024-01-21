@@ -51,11 +51,25 @@ header-includes:
 ---
 
 <script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  showMathMenu: false,  // This line disables the MathJax context menu
-  TeX: { equationNumbers: { autoNumber: "AMS" } }
-});
+  MathJax.Hub.Config({
+    jax: ["input/TeX", "output/CommonHTML"],
+    extensions: ["tex2jax.js"],
+    TeX: {
+      extensions: ["AMSmath.js", "AMSsymbols.js", "noErrors.js", "noUndefined.js"]
+    },
+    "HTML-CSS": {
+      availableFonts: [],
+      preferredFont: null,
+      webFont: "TeX",
+      imageFont: null
+    },
+    CommonHTML: {
+      linebreaks: { automatic: true }
+    },
+    showMathMenu: false  // Disable the MathJax context menu
+  });
 </script>
+
 
 
 <style>

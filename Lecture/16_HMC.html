@@ -11,7 +11,7 @@
 
 <meta name="author" content="Wei Li" />
 
-<meta name="date" content="2023-12-09" />
+<meta name="date" content="2024-01-21" />
 
 <title>Statistical Computation and Simulation</title>
 
@@ -1623,19 +1623,32 @@ display: none;
 
 <h1 class="title toc-ignore">Statistical Computation and Simulation</h1>
 <h4 class="author">Wei Li</h4>
-<h4 class="date">2023-12-09</h4>
+<h4 class="date">2024-01-21</h4>
 
 </div>
 
 
 <script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  showMathMenu: false,  // This line disables the MathJax context menu
-  TeX: { equationNumbers: { autoNumber: "AMS" } }
-});
+  MathJax.Hub.Config({
+    jax: ["input/TeX", "output/CommonHTML"],
+    extensions: ["tex2jax.js"],
+    TeX: {
+      extensions: ["AMSmath.js", "AMSsymbols.js", "noErrors.js", "noUndefined.js"]
+    },
+    "HTML-CSS": {
+      availableFonts: [],
+      preferredFont: null,
+      webFont: "TeX",
+      imageFont: null
+    },
+    CommonHTML: {
+      linebreaks: { automatic: true }
+    },
+    showMathMenu: false  // Disable the MathJax context menu
+  });
 </script>
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2023-12-09 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2024-01-21 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 <!------------->
 <div id="hamiltonian-monte-carlo" class="section level2">
@@ -1845,7 +1858,7 @@ probability <span class="math inline">\(\alpha\)</span>, otherwise set
 <p>Provided and discussed in lab.</p>
 <!------------->
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2023-12-09 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2024-01-21 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 </div>
 </div>
