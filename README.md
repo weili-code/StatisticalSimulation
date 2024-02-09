@@ -1,4 +1,4 @@
-Outline of materials for the topics in Statistical Computation and Simulation.
+Outline of materials for the topics in Statistical Computation and Simulation (in progress).
 
 Webpage: https://weili-code.github.io/StatisticalSimulation/
 
