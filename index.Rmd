@@ -163,7 +163,7 @@ plt.show()
 
 ## Preface
 
-Outline of materials for the topics in Statistical Computation and Simulation. 
+Outline of materials for the topics in Statistical Computation and Simulation (in progress). Feel free to contact me if you find any typo or error.
 
 ## Topics
 
@@ -184,7 +184,7 @@ Outline of materials for the topics in Statistical Computation and Simulation.
 - [RJMCMC](15_RJMCMC.html)
 - [HMC](16_HMC.html)
 
-Feel free to contact me if you find any typo or error.
+
 
 #### License 
 
