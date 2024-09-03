@@ -11,7 +11,7 @@
 
 <meta name="author" content="Wei Li" />
 
-<meta name="date" content="2024-01-21" />
+<meta name="date" content="2024-08-29" />
 
 <title>Statistical Computation and Simulation</title>
 
@@ -1623,7 +1623,7 @@ display: none;
 
 <h1 class="title toc-ignore">Statistical Computation and Simulation</h1>
 <h4 class="author">Wei Li</h4>
-<h4 class="date">2024-01-21</h4>
+<h4 class="date">2024-08-29</h4>
 
 </div>
 
@@ -1648,7 +1648,7 @@ display: none;
   });
 </script>
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2024-01-21 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2024-08-29 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 <!------------->
 <div id="solving-linear-systems" class="section level1">
@@ -1707,14 +1707,13 @@ more details in any algebra textbook.</p>
 <p><strong>Theorem</strong> (Cholesky factorization/decomposition): If
 symmetric matrix <span class="math inline">\(A&gt;0\)</span>
 (positive-definite), then there exists a unique upper triangular matrix
-<span class="math inline">\(U\)</span> s.t. <span class="math inline">\(A=U^{\top}U\)</span>.</p>
+<span class="math inline">\(U\)</span> s.t. <span class="math inline">\(A=U^{\top}U\)</span>; diagonal entries of <span class="math inline">\(U\)</span> are strictly positive.</p>
 <p><em>Application 1: Multivariate Normal</em></p>
 <p>If <span class="math inline">\(Z_1,Z_2,\dots,Z_p\overset{i.i.d}\sim
-\mathcal{N}(0,1)\)</span>, <span class="math inline">\(Z=(Z_1, \ldots,
-Z_p)^\top \sim \mathcal{N}(0,I)\)</span>.</p>
+{N}(0,1)\)</span>, <span class="math inline">\(Z=(Z_1, \ldots, Z_p)^\top
+\sim {N}(0,I)\)</span>.</p>
 <p>Also, by the well known property of multivariate normal distribution,
-<span class="math inline">\(\mu+AZ\sim\mathcal{N}(\mu,AA^\top),\)</span>
-<span class="math display">\[\mu=
+<span class="math inline">\(\mu+AZ\sim {N}(\mu,AA^\top),\)</span> <span class="math display">\[\mu=
 \begin{bmatrix}
 \mu_1\\
 \mu_2\\
@@ -1727,10 +1726,8 @@ Z_p)^\top \sim \mathcal{N}(0,I)\)</span>.</p>
 \sigma_{p1}^2 &amp; \sigma_{p2}^2 &amp; \cdots &amp; \sigma_{p}^2
 \end{bmatrix}.\]</span> where <span class="math inline">\(AA^\top\)</span> is the variance/covariance
 matrix.</p>
-<p>Goal: To generate (multivariate) <span class="math inline">\(W\sim\mathcal{N}(\mu,\sum)\)</span>. Take Cholesky
-decomposition of <span class="math inline">\(\sum=U^\top U\)</span>,
-then <span class="math inline">\(\mu+U^\top Z \sim\mathcal{N}(\mu,
-U^\top U).\)</span></p>
+<p>Goal: To generate (multivariate) <span class="math inline">\(W\sim
+{N}(\mu,\sum)\)</span>. Take Cholesky decomposition of <span class="math inline">\(\sum=U^\top U\)</span>, then <span class="math inline">\(\mu+U^\top Z \sim {N}(\mu, U^\top U).\)</span></p>
 <p><em>Application 2</em>: Given <span class="math inline">\(A&gt;0\)</span> (hence invertible), solve for
 <span class="math inline">\(Ax=b\)</span>. There are three steps in the
 algorithm.</p>
@@ -1745,8 +1742,9 @@ matrix).</p></li>
 matrix).</p></li>
 </ol>
 <p><em>Usage</em>: In R, we use <em>chol(A)</em> to implement Cholesky
-decomposition to matrix <span class="math inline">\(A\)</span>. If we
-have <span class="math inline">\(Ux=b\)</span> where <span class="math inline">\(U\)</span> is an upper triangular matrix, we use
+decomposition to matrix <span class="math inline">\(A\)</span>. In
+Python, we use numpy functions <em>linalg.cholesky</em> and
+<em>linalg.solve</em>. If we have <span class="math inline">\(Ux=b\)</span> where <span class="math inline">\(U\)</span> is an upper triangular matrix, we use
 <em><span class="math inline">\(x \leftarrow backsolve
 (U,b)\)</span></em>. And if we have <span class="math inline">\(Lx=b\)</span> where <span class="math inline">\(L\)</span> is a lower triangular matrix, we use
 <em><span class="math inline">\(x \leftarrow forwardsolve
@@ -1784,13 +1782,6 @@ R \\
 m}\)</span> is orthogonal matrix (i.e. <span class="math inline">\(Q^{\top} Q=Q Q^{\top}=I\)</span>), <span class="math inline">\(Q_2\)</span> is a matrix containing columns all
 orthogonal to that of <span class="math inline">\(Q_1\)</span> and <span class="math inline">\(\begin{bmatrix}R \\0\end{bmatrix}\in \mathbb R^{m
 \times n}\)</span>.</p>
-<p><em>Remark</em>: Actually,</p>
-<p><span class="math display">\[
-A=Q\begin{bmatrix}
-R \\
-0
-\end{bmatrix}=Q_1 R+Q_2 0.
-\]</span></p>
 <p>Note that to make sure <span class="math inline">\(Q=\begin{bmatrix}
 Q_1 &amp; Q_2 \end{bmatrix}\)</span> is orthogonal, we are appending
 additional orthonormal columns to <span class="math inline">\(Q_1\)</span> to get <span class="math inline">\(Q\)</span>, which means columns of <span class="math inline">\(Q_2\)</span> are orthonormal, orthogonal to <span class="math inline">\(Q_1\)</span>. Then we also know columns of <span class="math inline">\(Q_2\)</span> orthogonal to that of <span class="math inline">\(A\)</span>, since <span class="math inline">\(A=Q_1 R\)</span>.</p>
@@ -1798,55 +1789,6 @@ additional orthonormal columns to <span class="math inline">\(Q_1\)</span> to ge
 a_2\end{bmatrix}=\begin{bmatrix} 1 &amp; 0 \\ 0 &amp; 1 \\ 1 &amp; 0
 \end{bmatrix}\)</span>, find thin and full QR decomposition of <span class="math inline">\(A\)</span>, i.e. <span class="math inline">\(A=Q_1
 R= Q\begin{bmatrix} R \\ 0 \end{bmatrix}\)</span>.</p>
-<p><span class="math display">\[\begin{align*}
-q_1&amp;=\frac{a_1}{\|a_1\|}=\begin{bmatrix}
-\frac{1}{\sqrt{2}} \\
-0\\
-\frac{1}{\sqrt{2}}
-\end{bmatrix},\quad \quad q_2=\frac{a_2-\langle a_2, q_1\rangle
-q_1}{\|a_2-\langle a_2, q_1\rangle q_1\|}==\begin{bmatrix}
-0 \\
-1\\
-0
-\end{bmatrix}\\
-A&amp;=\begin{bmatrix}a_1 &amp; a_2\end{bmatrix}=\begin{bmatrix}q_1
-&amp; q_2\end{bmatrix}R=\begin{bmatrix}q_1 &amp;
-q_2\end{bmatrix}\begin{bmatrix}\|a_1\| &amp; q_1^{\top}a_2\\ 0 &amp;
-\|a_2-\langle a_2, q_1\rangle q_1\|\end{bmatrix}\\
-A &amp;=\begin{bmatrix}
-\frac{1}{\sqrt{2}} &amp; 0 \\
-0 &amp; 1\\
-\frac{1}{\sqrt{2}}&amp; 0
-\end{bmatrix}
-\begin{bmatrix}
-\sqrt{2} &amp; 0 \\
-0 &amp; 1
-\end{bmatrix} \quad \textit{(Thin QR)}
-\end{align*}\]</span> To get full QR, we want to find normalized <span class="math inline">\(q_3=\begin{bmatrix}x\\y\\z\end{bmatrix}\)</span>
-s.t. <span class="math inline">\(q_3 \perp q_1\)</span>, <span class="math inline">\(q_3 \perp q_2\)</span>.</p>
-<p>From <span class="math inline">\(\langle q_3,q_1\rangle=0\)</span>,
-we have <span class="math inline">\(\frac{1}{\sqrt{2}}x+\frac{1}{\sqrt{2}}z=0\)</span>,
-and from <span class="math inline">\(\langle q_3,q_2\rangle=0\)</span>,
-we have <span class="math inline">\(y=0\)</span>. Then we can fix <span class="math inline">\(x=1\)</span> to get <span class="math inline">\(y=0\)</span>, <span class="math inline">\(z=-1\)</span>, normalize the vector to get <span class="math inline">\(q_3=\begin{bmatrix}\frac{1}{\sqrt{2}}
-\\0\\-\frac{1}{\sqrt{2}}\end{bmatrix}\)</span>. Then we have</p>
-<p><span class="math display">\[
-A = \begin{bmatrix}
-q_1 &amp; q_2 &amp; q_3
-\end{bmatrix}
-\begin{bmatrix}
-R \\
-0
-\end{bmatrix}=\begin{bmatrix}
-\frac{1}{\sqrt{2}} &amp; 0 &amp; \frac{1}{\sqrt{2}}\\
-0 &amp; 1 &amp; 0\\
-\frac{1}{\sqrt{2}}&amp; 0 &amp; -\frac{1}{\sqrt{2}}
-\end{bmatrix}
-\begin{bmatrix}
-\sqrt{2} &amp; 0 \\
-0 &amp; 1\\
-0 &amp; 0
-\end{bmatrix} \quad \textit{(Full QR)}
-\]</span></p>
 <p><em>Application</em>: Solving linear system <span class="math inline">\(Ax=b\)</span>, where <span class="math inline">\(A\in \mathbb R^{m\times n}\)</span> has linearly
 independent columns (hence the system has a unique solution). There are
 three steps in the algorithm.</p>
@@ -1907,9 +1849,10 @@ A+\lambda I)^{-1}A^\top b.\]</span></p>
 <p><span class="math inline">\(A\)</span> columns are linearly
 independent. <span class="math inline">\(A^\top Ax=A^\top b\)</span>.
 Decompose matrix <span class="math inline">\(A\)</span> by using QR
-decomposition:</p>
+decomposition <span class="math inline">\(A=Q_1R\)</span>:</p>
 <p><span class="math display">\[\begin{align*}
-A=Q_1R &amp;\Rightarrow R^\top Q_1^\top Q_1Rx=R^\top Q_1^\top b\\
+A^\top Ax=A^\top b &amp;\Leftrightarrow  R^\top Q_1^\top Q_1Rx=R^\top
+Q_1^\top b\\
 &amp;\Leftrightarrow  R^\top Rx=R^\top Q_1^\top b\\
 &amp;\Leftrightarrow  (R^\top )^{-1}R^\top Rx=(R^\top )^{-1}R^\top
 Q_1^\top b\\
@@ -1925,7 +1868,7 @@ b\)</span>.</li>
 </ul>
 <!------------->
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2024-01-21 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2024-08-29 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 </div>
 </div>

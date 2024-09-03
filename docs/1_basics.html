@@ -11,7 +11,7 @@
 
 <meta name="author" content="Wei Li" />
 
-<meta name="date" content="2024-01-21" />
+<meta name="date" content="2024-08-29" />
 
 <title>Statistical Computation and Simulation</title>
 
@@ -1623,11 +1623,12 @@ display: none;
 
 <h1 class="title toc-ignore">Statistical Computation and Simulation</h1>
 <h4 class="author">Wei Li</h4>
-<h4 class="date">2024-01-21</h4>
+<h4 class="date">2024-08-29</h4>
 
 </div>
 
 
+<!-- rnb-text-begin -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({
     jax: ["input/TeX", "output/CommonHTML"],
@@ -1648,7 +1649,7 @@ display: none;
   });
 </script>
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2024-01-21 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2024-08-29 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 <!------------->
 <div id="some-basics-of-matrix-algebra" class="section level1">
@@ -1715,7 +1716,7 @@ combinations are stored in <span class="math inline">\(x\)</span>.</p>
 \end{align*}\]</span> then <span class="math display">\[
 AC=B=[b_1, \cdots, b_n] : \quad  \ell \times n
 \]</span> where <span class="math inline">\(b_j=Ac_j\)</span>, <span class="math inline">\(j=1, \ldots, n.\)</span></p>
-<p><strong>Range space (column space)</strong>: The column space <span class="math inline">\(\rm{col}(A)\)</span> of <span class="math inline">\(A\)</span> is the span of vectors <span class="math inline">\(a_1, \ldots, a_n\)</span>, i.e., <span class="math inline">\(\rm{span}\{a_1, \ldots, a_n\}\)</span> the set of
+<p><strong>Range space (column space)</strong>: The column space <span class="math inline">\(\rm{col}(A)\)</span> of <span class="math inline">\(A\)</span> is the span of vectors <span class="math inline">\(a_1, \ldots, a_n\)</span>, i.e., <span class="math inline">\({\rm span}\{a_1, \ldots, a_n\}\)</span> the set of
 all linear combinations of <span class="math inline">\(a_1, \ldots,
 a_n\)</span>: <span class="math display">\[\begin{align*}
 \operatorname{Col} (A)=\left\{b: b=A x \text { for some } x \in
@@ -1744,15 +1745,15 @@ combination of the other vectors in <span class="math inline">\(V\)</span>.</li>
 matrix is the maximum number of rows, thought of as vectors, which are
 linearly independent. Similarly, the <strong>column rank</strong> is the
 maximum number of columns which are linearly independent. A basic fact
-is show that the row and column ranks of a matrix are equal to each
-other. Thus one simply speaks of the <strong>rank</strong> of a matrix.
-For a <span class="math inline">\(m\times n\)</span> matrix <span class="math inline">\(A\)</span>, we call it <strong>full row
+is that the row and column ranks of a matrix are equal to each other.
+Thus one simply speaks of the <strong>rank</strong> of a matrix.</p>
+<p>For a <span class="math inline">\(m\times n\)</span> matrix <span class="math inline">\(A\)</span>, we call it <strong>full row
 rank</strong> if it rows are linearly independent; <strong>full column
 rank</strong> if its columns are linearly independent.</p>
 <p><strong>Theorem</strong> (rank-nullity theorem): Let <span class="math inline">\(A\)</span> be an <span class="math inline">\(m
 \times n\)</span> matrix, Then <span class="math display">\[\begin{align*}
 n=\operatorname{dim}(Col(A))+\operatorname{dim}(\operatorname{ker}(A)) =
-\operatorname{rank} +  \operatorname{dim}(\operatorname{ker}(A)).
+\operatorname{rank}(A) +  \operatorname{dim}(\operatorname{ker}(A)).
 \end{align*}\]</span> where the dimension <span class="math inline">\(\operatorname{dim}\)</span> is the maximal number
 of linearly independent elements that span the space.</p>
 <p><strong>Determinant of a matrix</strong>: Determinant is a number
@@ -1853,7 +1854,7 @@ semi-definite nor negative semi-definite is called indefinite.</p>
 <p><strong>Projection of a vector on the span of another
 vector</strong>: the projection of a vector <span class="math inline">\(y \in \mathbb{R}^n\)</span> onto the span of
 another vector <span class="math inline">\(x \in \mathbb{R}^n\)</span>
-(<span class="math inline">\(\|x\|\neq 0\)</span>), i.e., <span class="math inline">\(\rm{span}(x):=\{ax:a \in\mathbb{R}\}\)</span> is
+(<span class="math inline">\(\|x\|\neq 0\)</span>), i.e., <span class="math inline">\({\rm span}(x):=\{ax:a \in\mathbb{R}\}\)</span> is
 given by <span class="math display">\[
 P_xy=\frac{\left\langle x,y\right\rangle}{\left\langle
 x,x\right\rangle}x=\frac{xx^\top}{\left\langle x,x\right\rangle}y,
@@ -1861,8 +1862,9 @@ x,x\right\rangle}x=\frac{xx^\top}{\left\langle x,x\right\rangle}y,
 y-P_xy,P_xy\right\rangle=0.\)</span></p>
 <!------------->
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2024-01-21 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2024-08-29 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
+<!-- rnb-text-end -->
 </div>
 </div>
 
