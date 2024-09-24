@@ -11,7 +11,7 @@
 
 <meta name="author" content="Wei Li" />
 
-<meta name="date" content="2024-09-23" />
+<meta name="date" content="2024-09-24" />
 
 <title>Statistical Computation and Simulation</title>
 
@@ -1623,7 +1623,7 @@ display: none;
 
 <h1 class="title toc-ignore">Statistical Computation and Simulation</h1>
 <h4 class="author">Wei Li</h4>
-<h4 class="date">2024-09-23</h4>
+<h4 class="date">2024-09-24</h4>
 
 </div>
 
@@ -1648,7 +1648,7 @@ display: none;
   });
 </script>
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2024-09-23 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2024-09-24 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 <!------------->
 <div id="gradient-descent" class="section level1">
@@ -1899,12 +1899,12 @@ rely on the overall behaviour of the gradients over many timesteps. One
 way of looking at this is that we are interested in the expected value
 of the gradients and not on a single point estimate computed at time
 <span class="math inline">\(t\)</span>. However, instead of computing
-<span class="math inline">\(E\left[\nabla L(w_{t})\right]\)</span> we
-are computing <span class="math inline">\(v_{t}\)</span> as the
-exponentially moving average. Ideally we would want <span class="math inline">\(E\left[v_{t}\right]\)</span> to be equal to <span class="math inline">\(E\left[\nabla L(w_{t})\right]\)</span>. It turns
-out that for stationary <span class="math inline">\(E\left[\nabla
-L(w_{t})\right]\)</span>, one can show that <span class="math inline">\(E\left[\hat{v}_{t}\right]=E\left[\nabla
-L(w_{t})\right].\)</span></p>
+<span class="math inline">\(E(\nabla L(w_{t}))\)</span> we are computing
+<span class="math inline">\(v_{t}\)</span> as the exponentially moving
+average. Ideally we would want <span class="math inline">\(E(v_{t})\)</span> to be equal to <span class="math inline">\(E(\nabla L(w_{t}))\)</span>. It turns out that for
+stationary <span class="math inline">\(E(\nabla L(w_{t}))\)</span>, one
+can show that <span class="math inline">\(E(\hat{v}_{t})=E(\nabla
+L(w_{t})).\)</span></p>
 <p><strong>Comments</strong>: KM (2022) p.295. For adaptive learning
 rates methods, the base learning rate is still needed. It is shown that
 with the weighted exponentially decaying moving average methods, they
@@ -1913,12 +1913,12 @@ may result in non-convergence even in convex problems.</p>
 </div>
 <div id="stochastic-gradient-descent" class="section level1">
 <h1>Stochastic gradient descent</h1>
-<p>Note that our objective function has the form: <span class="math inline">\(L(w)=E_{\mathcal{P}_n}[\ell(Y, f(X; w))]\)</span>,
+<p>Note that our objective function has the form: <span class="math inline">\(L(w)=E_{\mathcal{P}_n}(\ell(Y, f(X; w)))\)</span>,
 where <span class="math inline">\(\mathcal{P}_n\)</span> is the
 empirical distribution of <span class="math inline">\((X, Y)\)</span>’s,
 the population version of <span class="math inline">\(L(w)\)</span> is
-<span class="math inline">\(E[\ell(Y, f(X; w))]\)</span>, in principle,
-for the descent algorithm, any gradient <span class="math inline">\(g\)</span> such that <span class="math inline">\(E(g)=E[\nabla\ell(Y, f(X; w))]\)</span> would
+<span class="math inline">\(E(\ell(Y, f(X; w)))\)</span>, in principle,
+for the descent algorithm, any gradient <span class="math inline">\(g\)</span> such that <span class="math inline">\(E(g)=E(\nabla\ell(Y, f(X; w)))\)</span> would
 work. Obviously, <span class="math inline">\(\nabla L(w)\)</span> is one
 example: <span class="math display">\[
 w_{t+1} = w_t - \alpha \nabla L(w_t)=w_t - \alpha\frac{1}{n}\sum_{i=1}^n
@@ -2038,20 +2038,20 @@ descent.</li>
 def minibatch_gradient_descent():
     for b in range(max_epochs):
         dw = 0
-        # Shuffling the data
+        # shuffling the data
         combined = list(zip(X, Y))
         random.shuffle(combined)
         X[:], Y[:] = zip(*combined)
-        # Create mini-batches
+        # create mini-batches
         for i in range(0, len(X), minibatch_size):
             X_mini_batch = X[i:i + minibatch_size]
             Y_mini_batch = Y[i:i + minibatch_size]
-            # Loop over points in the mini-batch
+            # loop over points in the mini-batch
             for x, y in zip(X_mini_batch, Y_mini_batch):
                 dw += grad_w(w, x, y)
-            # Update weights after processing one mini-batch
+            # update weights after processing one mini-batch
             w = w - alpha * dw
-            dw = 0  # Reset gradients</code></pre>
+            dw = 0  # reset gradients</code></pre>
 <p>Note: the minibatch versions for momemtum and Nesterov gradient
 descent can be obtained similarly.</p>
 <p><strong>learning rate</strong>: The choice of the learning rate is
@@ -2100,13 +2100,72 @@ used as the “test data”. Validation dataset is used to evaluate the
 model’s performance during or after training. Unlike the training data,
 the validation data is never used to train the model. It is used to
 assess how well the model generalizes to new data.</p>
+<p>For instance, the original dataset is randomly split into two parts
+<span class="math inline">\(\{(x_i,
+y_i)\}_{i=1}^{n_{\text{train}}}\)</span> and <span class="math inline">\(\{(x_i, y_i)\}_{i=1}^{n_{\text{val}}}\)</span>,
+while we minimizes over the training data <span class="math display">\[\begin{align*}
+\underset{w}{\operatorname{minimize}} \frac{1}{n_{\text{train}}}
+\sum_{i=1}^{n_{\text{train}}} \ell\left(y_i, f\left(x_i;
+w\right)\right),
+\end{align*}\]</span> we also evaluate the performance of <span class="math inline">\(w\)</span> periodically and after the training by
+assessing the loss on the validation data <span class="math display">\[\begin{align*}
+\frac{1}{n_{\text{val}}} \sum_{i=1}^{n_{\text{val}}} \ell\left(y_i,
+f\left(x_i; w\right)\right).
+\end{align*}\]</span> It is the <span class="math inline">\(w\)</span>
+desired that minimizes the loss on the validation data.</p>
+<pre class="python"><code>X_train, Y_train: training data matrices
+X_val, Y_val: validation data matrices
+loss_function: function to calculate loss (e.g., MSE, cross-entropy)
+
+def minibatch_gradient_descent():
+    best_w = None  # to store the best weights
+    best_val_loss = float(&#39;inf&#39;)  # to store the lowest validation loss
+
+    for epoch in range(max_epochs):
+        dw = 0
+        
+        # shuffling the training data
+        combined_train = list(zip(X_train, Y_train))
+        random.shuffle(combined_train)
+        X_train[:], Y_train[:] = zip(*combined_train)
+        
+        # Mini-batch gradient descent
+        for i in range(0, len(X_train), minibatch_size):
+            X_mini_batch = X_train[i:i + minibatch_size]
+            Y_mini_batch = Y_train[i:i + minibatch_size]
+            
+            # calculate gradients for the mini-batch
+            for x, y in zip(X_mini_batch, Y_mini_batch):
+                dw += grad_w(w, x, y)
+            
+            # update weights after processing one mini-batch
+            w = w - alpha * dw
+            dw = 0  # reset gradients after each mini-batch
+        
+        # evaluate on validation set after each epoch
+        val_loss = 0
+        for x_val, y_val in zip(X_val, Y_val):
+            val_loss += loss_function(w, x_val, y_val)
+        val_loss /= len(X_val)  # average loss over validation set
+        
+        # early stopping: check if validation loss improves
+        if val_loss &lt; best_val_loss:
+            best_val_loss = val_loss
+            best_w = w  # store the best weights
+        
+        # (Optional) early stopping condition: stop if validation loss increases
+        if val_loss &gt; best_val_loss:
+            print(&quot;Early stopping at epoch&quot;, epoch)
+            break
+
+    return best_w  # return the best weights after training</code></pre>
 </div>
 <div id="python-code-examples" class="section level3">
 <h3>Python Code Examples</h3>
 <p>Provided and discussed in lab.</p>
 <!------------->
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2024-09-23 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2024-09-24 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 </div>
 </div>
