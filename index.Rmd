@@ -175,7 +175,7 @@ Outline of materials for the topics in Statistical Computation and Simulation (i
 - [Gradient descent](6_gradient_descent_newton.html)
 - [Modern optimization](7_modern_optimization.html)
 - [Random variable generation](8_random-variable_generation.html)
-- [Monte_Carlo_Integration](9_Monte_Carlo_Integration.html)
+- [Monte Carlo Integration](9_Monte_Carlo_Integration.html)
 - [EM Algorithm](10_EM_algorithm.html)
 - [Simulated Annealing](11_Simulated_Annealing_Others.html)
 - [Basic Metropolis](12_Basics_MC_Metropolis.html)
