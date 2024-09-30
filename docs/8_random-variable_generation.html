@@ -11,7 +11,7 @@
 
 <meta name="author" content="Wei Li" />
 
-<meta name="date" content="2024-01-21" />
+<meta name="date" content="2024-09-30" />
 
 <title>Statistical Computation and Simulation</title>
 
@@ -1623,7 +1623,7 @@ display: none;
 
 <h1 class="title toc-ignore">Statistical Computation and Simulation</h1>
 <h4 class="author">Wei Li</h4>
-<h4 class="date">2024-01-21</h4>
+<h4 class="date">2024-09-30</h4>
 
 </div>
 
@@ -1648,11 +1648,13 @@ display: none;
   });
 </script>
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2024-01-21 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2024-09-30 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 <!------------->
 <div id="random-variable-generation" class="section level1">
 <h1>Random Variable Generation</h1>
+<p>Ref. Robert, C.P., Casella, G. and Casella, G., 2010. Introducing
+Monte Carlo Methods with R. New York: Springer.</p>
 <p><strong>Definition</strong>: A random variable <span class="math inline">\(U\)</span> has a uniform distribution <span class="math inline">\(U \sim U(0,1)\)</span> if <span class="math inline">\(P(U\in (a,b))=b-a\)</span> for any <span class="math inline">\(0&lt;a&lt;b&lt;1\)</span>.</p>
 <p><strong>Definition</strong>: A random variable <span class="math inline">\(X\)</span> has PDF (probability density function)
 <span class="math inline">\(f(x)\)</span> if <span class="math inline">\(P(X \in A)=\int_A f(x)dx\)</span> for some <span class="math inline">\(f(x) \geq 0\)</span> and <span class="math inline">\(\int_{\mathbb{R}} f(x)dx=1\)</span>.</p>
@@ -1756,36 +1758,34 @@ computational time.</li>
 <div id="the-fundamental-theorem-of-simulation" class="section level2">
 <h2>The Fundamental Theorem of Simulation</h2>
 <p><strong>Theorem</strong>: If <span class="math inline">\(f\)</span>
-is a probability density function in <span class="math inline">\(\mathbb{R}^d\)</span> (supported on <span class="math inline">\(\mathcal{X}\)</span>), then we can write <span class="math inline">\(f(x)=\int_0^{f(x)}1du\)</span> where <span class="math inline">\(1\)</span> is the p.d.f of the uniform random
+is a probability density function in <span class="math inline">\(\mathbb{R}^d\)</span> (<span class="math inline">\(supp(f)=\mathcal{X}\)</span>), then we can write
+<span class="math inline">\(f(x)=\int_0^{f(x)}1du\)</span> where <span class="math inline">\(1\)</span> is the p.d.f of the uniform random
 variable. Hence we can consider <span class="math inline">\(f\)</span>
 as the marginal distribution of <span class="math inline">\(X\)</span>
-in the joint distribution <span class="math display">\[(X,U)\sim
-\rm{unif}(\{(x,u):0&lt;u&lt;f(x), x\in \mathcal{X}\}).\]</span></p>
+in the joint distribution <span class="math display">\[(X,U)\sim {\rm
+unif}(\{(x,u):0&lt;u&lt;f(x), x\in \mathcal{X}\}).\]</span></p>
 <p>Therefore, generating <span class="math inline">\(X\sim f\)</span>
-can be thought as a procedure of generating <span class="math inline">\((X,U)\sim
-\rm{unif}(\{(x,u):0&lt;u&lt;f(x)\})\)</span> from where then collecting
-the generated <span class="math inline">\(X\)</span>’s. So this is
-essentially the same as sampling uniformly from the area under the curve
-of <span class="math inline">\(f\)</span>.</p>
-<p>How do we sample uniformly from the area under the curve of <span class="math inline">\(f\)</span>, i.e., generate <span class="math inline">\((X,U)\sim
-\rm{unif}(\{(x,u):0&lt;u&lt;f(x)\})\)</span>?</p>
+can be thought as a procedure of generating <span class="math inline">\((X,U)\sim {\rm unif}(\{(x,u):0&lt;u&lt;f(x), x\in
+\mathcal{X}\})\)</span> from where then collecting the generated <span class="math inline">\(X\)</span>’s. So this is essentially the same as
+sampling uniformly from the area under the curve of <span class="math inline">\(f\)</span>.</p>
+<p>How do we sample uniformly from the area under the curve of <span class="math inline">\(f\)</span>, i.e., generate <span class="math inline">\((X,U)\sim {\rm unif}(\{(x,u):0&lt;u&lt;f(x), x\in
+\mathcal{X}\})\)</span>?</p>
 <ol style="list-style-type: decimal">
 <li>Can we generate <span class="math inline">\(X \sim f\)</span> then
 generate <span class="math inline">\(U\mid f(X)=f(x) \sim
-\mbox{unif}(0,f(x))\)</span>? This would indeed generate <span class="math inline">\((X,U)\sim
-\rm{unif}(\{(x,u):0&lt;u&lt;f(x)\})\)</span> (can prove it). But the
-answer is no, since the purpose of this simulation is to make simulating
-<span class="math inline">\(f\)</span> simpler, so simulating from <span class="math inline">\(f\)</span> directly is pointless.</li>
+\mbox{unif}(0,f(x))\)</span>? This would indeed generate <span class="math inline">\((X,U)\sim {\rm unif}(\{(x,u):0&lt;u&lt;f(x), x\in
+\mathcal{X}\})\)</span> (can prove it). But the answer is no, since the
+purpose of this simulation is to make simulating <span class="math inline">\(f\)</span> simpler, so simulating from <span class="math inline">\(f\)</span> directly is pointless.</li>
 <li>Can we generate <span class="math inline">\(U\)</span> from its
 marginal distribution and then generate <span class="math inline">\(f\mid U\)</span>? No, this would require knowing
 how to generate the marginal distribution of <span class="math inline">\(U\)</span>, and generate <span class="math inline">\(f\)</span> given <span class="math inline">\(U\)</span>, both may be not feasible.</li>
 </ol>
 <p><strong>Solution</strong>: Suppose we have another p.d.f. <span class="math inline">\(g\)</span> such that <span class="math inline">\(f(\cdot)\leq Mg(\cdot)\)</span>. So we can see
-that <span class="math inline">\(\mbox{supp}(f)\subseteq
-\mbox{supp}(g)\)</span>. Also suppose we can draw from some larger set
-<span class="math inline">\((Y,U)\sim
-\mbox{unif}\{(y,u):0&lt;u&lt;g(y)\}\)</span>. Then iteratively draw from
-this distribution and keep the pairs of <span class="math inline">\((y,u)\)</span>’s such that <span class="math inline">\(y\)</span> that satisfy <span class="math inline">\(u&lt;f(y)\)</span>. Then we collect these <span class="math inline">\(y\)</span>’s–the samples we keep will satisfy
+that <span class="math inline">\(\mathcal{X}:=\mbox{supp}(f)\subseteq
+\mbox{supp}(g)=:\mathcal{Y}\)</span>. Also suppose we can draw from some
+larger set <span class="math inline">\((Y,U)\sim
+\mbox{unif}\{(y,u):0&lt;u&lt;g(y), y\in\mathcal{Y}\}\)</span>. Then
+iteratively draw from this distribution and keep the pairs of <span class="math inline">\((y,u)\)</span>’s such that <span class="math inline">\(y\)</span> that satisfy <span class="math inline">\(u&lt;f(y)\)</span>. Then we collect these <span class="math inline">\(y\)</span>’s–the samples we keep will satisfy
 <span class="math inline">\(y\sim f\)</span>.</p>
 <p><strong>Corollary</strong>: If <span class="math inline">\(X\sim
 f\)</span> and we have another distribution <span class="math inline">\(g\)</span> so that <span class="math inline">\(f(\cdot)\leq Mg(\cdot)\)</span>, for some <span class="math inline">\(M\geq 1\)</span> and <span class="math inline">\(f,g :\mathbb{R}^d\to \mathbb{R}\)</span>. Then to
@@ -1800,17 +1800,18 @@ satisfy <span class="math inline">\(u&lt;f(y)\)</span>, discard <span class="mat
 <p>We can show that each of the kept <span class="math inline">\(Y \sim
 f\)</span>. Thus the whole collection selected is a sample from <span class="math inline">\(f\)</span>.</p>
 <p><strong>Intuitive argument</strong>: The <strong>first step</strong>
-of the corollary creates a uniform distribution on <span class="math inline">\(E = \{(y,u):0&lt;u&lt;Mg(y)\}\subseteq
-\mathbb{R}^{d+1}\)</span> (can prove it). Further, the uniform
-distribution on <span class="math inline">\(E\)</span> gives another
-uniform distribution when restricted onto a subset of <span class="math inline">\(E\)</span> (intuitively correct, but why?). Note
-that <span class="math inline">\(\{(x,u):0&lt;u&lt;f(x) \}\)</span> is a
-subset of <span class="math inline">\(E\)</span>. The <strong>second
-step</strong> of the corollary practically enforces this restriction of
-<span class="math inline">\(E\)</span> onto <span class="math inline">\(\{(x,u):0&lt;u&lt;f(x) \}\)</span>, thus retaining
-samples that are essentially uniform draws on <span class="math inline">\(\{(x,u):0&lt;u&lt;f(x) \}\)</span>. Finally,
-invoking the Fundamental Theorem of Simulation, the uniform drawing on
-the restricted set <span class="math inline">\(\{(x,u):0&lt;u&lt;f(x)
+of the corollary creates a uniform distribution on <span class="math inline">\(E = \{(y,u):0&lt;u&lt;Mg(y), y \in
+\mathcal{Y}\}\subseteq \mathbb{R}^{d+1}\)</span> (can prove it).
+Further, the uniform distribution on <span class="math inline">\(E\)</span> gives another uniform distribution when
+restricted onto a subset of <span class="math inline">\(E\)</span>
+(intuitively correct, but why?). Note that <span class="math inline">\(\{(x,u):0&lt;u&lt;f(x), x \in \mathcal{X}
+\}\)</span> is a subset of <span class="math inline">\(E\)</span>. The
+<strong>second step</strong> of the corollary practically enforces this
+restriction of <span class="math inline">\(E\)</span> onto <span class="math inline">\(\{(x,u):0&lt;u&lt;f(x), x \in \mathcal{X}
+\}\)</span>, thus retaining samples that are essentially uniform draws
+on <span class="math inline">\(\{(x,u):0&lt;u&lt;f(x), x \in \mathcal{X}
+\}\)</span>. Finally, invoking the Fundamental Theorem of Simulation,
+the uniform drawing on the restricted set <span class="math inline">\(\{(x,u):0&lt;u&lt;f(x), x \in \mathcal{X}
 \}\)</span> has a marginal pdf for <span class="math inline">\(x\)</span> which is the target pdf <span class="math inline">\(f\)</span>, giving the conclusion of the
 corollary. A formal proof is given in the class.</p>
 <p><strong>Remark</strong>:</p>
@@ -1821,15 +1822,16 @@ algorithm also works for <span class="math inline">\(x \propto
 is the kernel function of some pdf <span class="math inline">\(f\)</span>.</li>
 <li>As we shall see later on, sampling based on the conditional
 distribution of <span class="math inline">\(U\)</span> give <span class="math inline">\(X\)</span> and the conditional distribution of
-<span class="math inline">\(X\)</span> give <span class="math inline">\(U\)</span> turns out to be a valid strategy which
-falls under a class of sampling method called ‘Gibbs sampling’.</li>
+<span class="math inline">\(X\)</span> give <span class="math inline">\(U\)</span> (assuming both are feasible) turns out
+to be a valid strategy which falls under a class of sampling method
+called ‘Gibbs sampling’.</li>
 </ul>
 <div id="python-code-examples" class="section level3">
 <h3>Python Code Examples</h3>
 <p>Provided and discussed in lab.</p>
 <!------------->
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2024-01-21 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2024-09-30 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 </div>
 </div>
