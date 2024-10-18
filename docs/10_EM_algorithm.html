@@ -2073,9 +2073,8 @@ E_{\theta^{\prime}}\left(\log P\left(Z_i; \theta\right) \mid Z_{(r)
 i}\right),
 \end{align*}\]</span> here the expectation is conditional on <span class="math inline">\((R_i=r, Z_{(r)i})\)</span> with parameter <span class="math inline">\(\theta&#39;\)</span>. The equality holds because
 of MAR.</p>
-<p>The M-step:</p>
-<p><span class="math display">\[\theta^{(t)} =\arg \max_{\theta}
-Q(\theta, \theta^{(t-1)}).\]</span></p>
+<p>The M-step: <span class="math display">\[\theta^{(t)} =\arg
+\max_{\theta} Q(\theta, \theta^{(t-1)}).\]</span></p>
 <p><strong>Example</strong>: Suppose <span class="math inline">\(Z\)</span> follows a <span class="math inline">\(N(\mu,\Sigma)\)</span>, here <span class="math inline">\(\theta:=(\mu,\Sigma)\)</span>. Note that <span class="math display">\[\begin{align*}
 &amp;E_{\theta^{(t-1)}}\left(\log P\left(Z_i; \theta\right) \mid Z_{(r)
 i}\right) \\ =&amp;-\frac{1}{2} \log |2 \pi
