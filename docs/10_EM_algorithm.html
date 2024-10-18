@@ -11,7 +11,7 @@
 
 <meta name="author" content="Wei Li" />
 
-<meta name="date" content="2024-01-21" />
+<meta name="date" content="2024-10-18" />
 
 <title>Statistical Computation and Simulation</title>
 
@@ -1623,7 +1623,7 @@ display: none;
 
 <h1 class="title toc-ignore">Statistical Computation and Simulation</h1>
 <h4 class="author">Wei Li</h4>
-<h4 class="date">2024-01-21</h4>
+<h4 class="date">2024-10-18</h4>
 
 </div>
 
@@ -1648,7 +1648,7 @@ display: none;
   });
 </script>
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2024-01-21 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2024-10-18 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 <!------------->
 <div id="em-algorithm" class="section level2">
@@ -1731,16 +1731,16 @@ d\boldsymbol{z}.
 f(\boldsymbol{z}|\boldsymbol{x},\theta^{&#39;})\)</span>, <span class="math inline">\(h(\boldsymbol{z}) =
 f(\boldsymbol{z}|\boldsymbol{x},\theta^{(m)})\)</span>. It suffices to
 show <span class="math display">\[\begin{align*}
-  E_{h}\Big[\log\frac{h(z)}{g(z)}\Big] \ge 0.
-\end{align*}\]</span> The term <span class="math inline">\(E_{h}\Big[\log\frac{h(z)}{g(z)}\Big]\)</span> is
+  E_{h}\Big(\log\frac{h(z)}{g(z)}\Big) \ge 0.
+\end{align*}\]</span> The term <span class="math inline">\(E_{h}\Big(\log\frac{h(z)}{g(z)}\Big)\)</span> is
 the so-called Kullback-Leibler divergence <span class="math inline">\(KL(h||g)\)</span> between the distributions <span class="math inline">\(h\)</span> and <span class="math inline">\(g\)</span>. To see the inequality, we use Jensen’s
 inequality:<br />
 <span class="math display">\[\begin{align*}
   LHS &amp; = \int \log \Big(\frac{h(z)}{g(z)}\Big) h(z) dz \\
       &amp; = -\int \log \Big(\frac{g(z)}{h(z)}\Big) h(z) dz \\
       &amp; \ge - log \int \frac{g(z)}{h(z)}h(z) dz = 0.
-\end{align*}\]</span> In fact <span class="math inline">\(E_{h}\Big[\log\frac{h(z)}{g(z)}\Big] =0\)</span>
-if and only if <span class="math inline">\(h=g\)</span>.</p>
+\end{align*}\]</span> In fact <span class="math inline">\(E_{h}(\log(h(z)/g(z))) =0\)</span> if and only if
+<span class="math inline">\(h=g\)</span>.</p>
 <p>So to maximize <span class="math inline">\(log(L(\theta|\boldsymbol{x})\)</span> over <span class="math inline">\(\theta\)</span>, it suffices to just maximize
 <span class="math inline">\(Q(\theta |
 \theta^{(0)},\boldsymbol{x})\)</span> over <span class="math inline">\(\theta\)</span>. By maximizing <span class="math inline">\(Q(\theta | \theta^{(0)},\boldsymbol{x})\)</span>
@@ -1773,10 +1773,10 @@ Q(\theta |\theta^{(m)},\boldsymbol{x})=
 E_{\theta^{(m)}}[logf(\boldsymbol{x}|\boldsymbol{z},
 \theta)|\boldsymbol{x}].
 \]</span></li>
-<li>Consider for <span class="math inline">\(h(x)=E[H(x,Z)]\)</span>
+<li>Consider for <span class="math inline">\(h(x)=E(H(x,Z))\)</span>
 where the expectation is taken w.r.t to the random variable <span class="math inline">\(Z\)</span>. <span class="math display">\[\begin{align*}
-  \max\limits_{x} h(x) &amp;= \max \limits_{x} E[H(x,Z)] \\
-                   &amp;= \max \limits_{x} E[H(X,Z)|X = x] \\
+  \max\limits_{x} h(x) &amp;= \max \limits_{x} E(H(x,Z)) \\
+                   &amp;= \max \limits_{x} E(H(X,Z)|X = x) \\
                    &amp;= \max \limits_{x} \int H(x,z)f(z|x)dz,
 \end{align*}\]</span> we can use Monte Carlo to approximate the
 objective function: <span class="math display">\[\begin{align*}
@@ -1787,7 +1787,7 @@ If we approximate <span class="math inline">\(Q\)</span> function using
 this idea, this then gives the so-called <strong>Monte-Carlo
 EM</strong>: <span class="math display">\[\begin{align*}
   \hat{Q}(\theta|\theta^{(m)},\boldsymbol{x}) =
-\frac{1}{T}\sum^{T}_{j=1}log[L^{c}(\theta|\boldsymbol{x},\boldsymbol{z}_j)],
+\frac{1}{T}\sum^{T}_{j=1}log(L^{c}(\theta|\boldsymbol{x},\boldsymbol{z}_j)),
 \end{align*}\]</span><br />
 where <span class="math inline">\(\boldsymbol{z}_1, \ldots,
 \boldsymbol{z}_T\)</span> is an i.i.d. random sample generated from
@@ -1856,7 +1856,7 @@ L^c(\theta\mid {X}, {Z})\mid {X}\big]\\
 X_i]+\frac{1}{2}E_{\theta^{(0)}}\big[(1-Z_i)(X_i-\mu_2)^2\mid
 X_i\big]\Big\}\\
 &amp;\ \ \ \ \ +\sum\limits_{i=1}^{n}\Big\{\log(\frac{1}{4})
-E_{\theta^{(0)}}(Z_i\mid X_i)- \log(\frac{3}{4})
+E_{\theta^{(0)}}(Z_i\mid X_i)+\log(\frac{3}{4})
 E_{\theta^{(0)}}(1-Z_i\mid X_i)\Big\}+C,
 \end{aligned}
 \]</span></p>
@@ -1869,12 +1869,12 @@ Z=0)P(Z=0)}.\]</span>
 <p>So we can calculate <span class="math inline">\(E_{\theta^{(0)}}[Z_i\mid X_i]\)</span>:</p>
 <p><span class="math display">\[
 E_{\theta^{(0)}}\big[Z_i\mid X_i\big]=\frac{\frac{1}{4}f_1(X_i\mid
-\mu_1^{(0)})}{\frac{1}{4}f_1(X_i\mid\mu_1^{(0)})+\frac{3}{4}f_2(X_i\mid\mu_2^{(0)})}=:\alpha_i^{(0)}(X_i;\mu_1^{(0)},\mu_2^{(0)}).
+\mu_1^{(0)})}{\frac{1}{4}f_1(X_i\mid\mu_1^{(0)})+\frac{3}{4}f_2(X_i\mid\mu_2^{(0)})}=:r_i^{(0)}(X_i;\mu_1^{(0)},\mu_2^{(0)}).
 \]</span></p>
 <p>And <span class="math inline">\(Q(\theta\mid\theta^{(0)},
 {X})\)</span> can be expressed: <span class="math display">\[
 Q(\theta\mid\theta^{(0)},
-{X})=-\sum\limits_{i=1}^{n}\Big\{\frac{1}{2}(X_i-\mu_1)^2\alpha_i^{(0)}(X_i;\mu_1^{(0)},\mu_2^{(0)})+\frac{1}{2}(X_i-\mu_2)^2\big(1-\alpha_i^{(0)}(X_i;\mu_1^{(0)},\mu_2^{(0)})\big)\Big\}+const.
+{X})=-\sum\limits_{i=1}^{n}\Big\{\frac{1}{2}(X_i-\mu_1)^2r_i^{(0)}(X_i;\mu_1^{(0)},\mu_2^{(0)})+\frac{1}{2}(X_i-\mu_2)^2\big(1-r_i^{(0)}(X_i;\mu_1^{(0)},\mu_2^{(0)})\big)\Big\}+const.
 \]</span></p>
 <p>Setting the derivatives w.r.t. the <span class="math inline">\(\theta\)</span> to zero function: <span class="math display">\[
 \begin{cases}
@@ -1887,8 +1887,8 @@ Q(\theta\mid\theta^{(0)},
 <p>we obtain the solutions <span class="math inline">\(\mu_1^{(1)}\)</span> and <span class="math inline">\(\mu_2^{(1)}\)</span></p>
 <p><span class="math display">\[
 \begin{cases}
-\mu_1^{(1)}=\frac{\sum\limits_{i=1}^{n}\alpha_i^{(0)}(X_i;\mu_1^{(0)},\mu_2^{(0)})X_i}{\sum\limits_{i=1}^{n}\alpha_i^{(0)}(X_i;\mu_1^{(0)},\mu_2^{(0)})}\\
-\mu_2^{(1)}=\frac{\sum\limits_{i=1}^{n}\big[1-\alpha_i^{(0)}(X_i;\mu_1^{(0)},\mu_2^{(0)})\big]X_i}{\sum\limits_{i=1}^{n}\big[1-\alpha_i^{(0)}(X_i;\mu_1^{(0)},\mu_2^{(0)})\big]}.
+\mu_1^{(1)}=\frac{\sum\limits_{i=1}^{n}r_i^{(0)}(X_i;\mu_1^{(0)},\mu_2^{(0)})X_i}{\sum\limits_{i=1}^{n}r_i^{(0)}(X_i;\mu_1^{(0)},\mu_2^{(0)})}\\
+\mu_2^{(1)}=\frac{\sum\limits_{i=1}^{n}\big(1-r_i^{(0)}(X_i;\mu_1^{(0)},\mu_2^{(0)})\big)X_i}{\sum\limits_{i=1}^{n}\big(1-r_i^{(0)}(X_i;\mu_1^{(0)},\mu_2^{(0)})\big)}.
 \end{cases}
 \]</span></p>
 </div>
@@ -2019,8 +2019,8 @@ P(z, r ; \psi, \theta) &amp; =P(Z=z, R=r ; \psi, \theta) \\
 &amp; =P(R=r| Z_{(r)}=z_{(r)} ; \psi) P(Z=z ; \theta),
 \end{aligned}
 \end{align*}\]</span> where the last equation is due to MAR. This
-factorization (with MAR) is called separability condition, which says
-that there is no information about <span class="math inline">\(\theta\)</span> in <span class="math inline">\(\psi.\)</span> Therefore, for the purpose of
+factorization (with MAR) is called <strong>separability
+condition</strong>, which says that there is no information about <span class="math inline">\(\theta\)</span> in <span class="math inline">\(\psi.\)</span> Therefore, for the purpose of
 estimation of <span class="math inline">\(\theta\)</span>, it suffices
 to consider <span class="math inline">\(P(Z=z ; \theta).\)</span></p>
 <p>The likelihood for the observed data point <span class="math inline">\(\left(R=r, Z_{(R)}=z_{(r)}\right)\)</span> is
@@ -2079,27 +2079,27 @@ Q(\theta, \theta^{(t-1)}).\]</span></p>
 <p><strong>Example</strong>: Suppose <span class="math inline">\(Z\)</span> follows a <span class="math inline">\(N(\mu,\Sigma)\)</span>, here <span class="math inline">\(\theta:=(\mu,\Sigma)\)</span>. Note that <span class="math display">\[\begin{align*}
 &amp;E_{\theta^{(t-1)}}\left(\log P\left(Z_i; \theta\right) \mid Z_{(r)
 i}\right) \\ =&amp;-\frac{1}{2} \log |2 \pi
-{\Sigma}|-\frac{1}{2}  {E}_{\theta^{(t-1)}}\left[\left(Z_i-{\mu}\right)^{\top}
-{\Sigma}^{-1}\left(Z_i-{\mu}\right) \mid Z_{(r) i} \right] \\
+{\Sigma}|-\frac{1}{2}  {E}_{\theta^{(t-1)}}\left(\left(Z_i-{\mu}\right)^{\top}
+{\Sigma}^{-1}\left(Z_i-{\mu}\right) \mid Z_{(r) i} \right) \\
 =&amp;-\frac{1}{2} \log |{\Sigma}|-\frac{p}{2} \log (2 \pi)-\frac{1}{2}
-\operatorname{tr}\left({\Sigma}^{-1} {E}_{\theta^{(t-1)}}[{S}({\mu})\mid
-Z_{(r) i}]\right),
-\end{align*}\]</span> where <span class="math inline">\({E}_{\theta^{(t-1)}}[{S}({\mu})\mid Z_{(r) i}]:=
-\left({E}_{\theta^{(t-1)}}\left[Z_i Z_i^{\top}\mid Z_{(r)
-i}\right]+{\mu} {\mu}^{\top}-2 {\mu} {E}_{\theta^{(t-1)}}\left[Z_i\mid
-Z_{(r) i}\right]^{\top}\right).\)</span> The key is to compute <span class="math inline">\({E}_{\theta^{(t-1)}}\left[Z_i\mid Z_{(r)
-i}\right]\)</span> and <span class="math inline">\({E}_{\theta^{(t-1)}}\left[Z_i Z_i^{\top}\mid
-Z_{(r) i}\right]\)</span>, and these are expected sufficient statistics
-and can be computed using conditional formula for multivariate Gaussian
+\operatorname{tr}\left({\Sigma}^{-1} {E}_{\theta^{(t-1)}}({S}({\mu})\mid
+Z_{(r) i})\right),
+\end{align*}\]</span> where <span class="math inline">\({E}_{\theta^{(t-1)}}({S}({\mu})\mid Z_{(r) i}):=
+{E}_{\theta^{(t-1)}}(Z_i Z_i^{\top}\mid Z_{(r) i})+{\mu} {\mu}^{\top}-2
+{\mu} {E}_{\theta^{(t-1)}}(Z_i\mid Z_{(r) i})^{\top}.\)</span> The key
+is to compute <span class="math inline">\({E}_{\theta^{(t-1)}}(Z_i\mid
+Z_{(r) i})\)</span> and <span class="math inline">\({E}_{\theta^{(t-1)}}(Z_i Z_i^{\top}\mid Z_{(r)
+i})\)</span>, and these are expected sufficient statistics and can be
+computed using conditional formula for multivariate Gaussian
 distribution.</p>
 <p>In the above calculation, gathering all observations for all missing
 patterns, the solution in the M-step then is given by the MLE solution
 using the expected sufficient statistics: <span class="math display">\[\begin{align*}
 {\mu}^{(t)} &amp; =\frac{1}{n}\sum_{i=1}^n \sum_r
-I(R_i=r){E}_{\theta^{(t-1)}}\left[Z_i\mid Z_{(r) i}\right], \\
+I(R_i=r){E}_{\theta^{(t-1)}}(Z_i\mid Z_{(r) i}), \\
 {\Sigma}^{(t)} &amp; =\frac{1}{n} \sum_{i=1}^n \sum_r
-I(R_i=r){E}_{\theta^{(t-1)}}\left[Z_i Z_i^{\top}\mid Z_{(r)
-i}\right]-{\mu}^{(t)}\left({\mu}^{(t)}\right)^{\top}.
+I(R_i=r){E}_{\theta^{(t-1)}}(Z_i Z_i^{\top}\mid Z_{(r)
+i})-{\mu}^{(t)}{\mu}^{(t)\top}.
 \end{align*}\]</span></p>
 </div>
 <div id="python-code-examples" class="section level3">
@@ -2107,7 +2107,7 @@ i}\right]-{\mu}^{(t)}\left({\mu}^{(t)}\right)^{\top}.
 <p>Provided and discussed in lab.</p>
 <!------------->
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2024-01-21 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2024-10-18 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 </div>
 </div>
