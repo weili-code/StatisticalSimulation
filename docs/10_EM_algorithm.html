@@ -11,7 +11,7 @@
 
 <meta name="author" content="Wei Li" />
 
-<meta name="date" content="2024-10-28" />
+<meta name="date" content="2024-10-31" />
 
 <title>Statistical Computation and Simulation</title>
 
@@ -1623,7 +1623,7 @@ display: none;
 
 <h1 class="title toc-ignore">Statistical Computation and Simulation</h1>
 <h4 class="author">Wei Li</h4>
-<h4 class="date">2024-10-28</h4>
+<h4 class="date">2024-10-31</h4>
 
 </div>
 
@@ -1648,7 +1648,7 @@ display: none;
   });
 </script>
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2024-10-28 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2024-10-31 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 <!------------->
 <div id="em-algorithm" class="section level2">
@@ -2020,11 +2020,11 @@ P(z, r ; \psi, \theta) &amp; =P(Z=z, R=r ; \psi, \theta) \\
 \end{aligned}
 \end{align*}\]</span> where the last equation is due to MAR. This
 factorization (with MAR) is called <strong>separability
-condition</strong>, which says that there is no information about <span class="math inline">\(\theta\)</span> in <span class="math inline">\(\psi.\)</span> Therefore, for the purpose of
-estimation of <span class="math inline">\(\theta\)</span>, it suffices
-to consider <span class="math inline">\(P(Z=z ; \theta).\)</span></p>
-<p>The likelihood for the observed data point <span class="math inline">\(\left(R=r, Z_{(R)}=z_{(r)}\right)\)</span> is
-given by <span class="math display">\[\begin{align*}
+condition</strong>, which says that there is no information about <span class="math inline">\(\theta\)</span> in <span class="math inline">\(\psi\)</span> (assuming no overlap of elements).
+Therefore, if we are interested in the estimation of <span class="math inline">\(\theta\)</span> alone, it suffices to consider
+<span class="math inline">\(P(Z=z ; \theta).\)</span></p>
+<p>Now, the likelihood for the observed data point <span class="math inline">\(\left(R=r, Z_{(R)}=z_{(r)}\right)\)</span> is
+obtained accordingly <span class="math display">\[\begin{align*}
 P\left(R=r, Z_{(R)}\right. &amp; \left.=z_{(r)} ; \psi,
 \theta\right)=\int P(z ; r ; \psi, \theta) d z_{(\bar{r})} \\
 &amp; =P\left(R=r \mid Z_{(r)}=z_{(r)} ; \psi\right) \int P(z ; \theta)
@@ -2032,24 +2032,27 @@ d z_{(\bar{r})} \\
 &amp; =P\left(R=r \mid Z_{(r)}=z_{(r)} ; \psi\right)
 P\left(Z_{(r)}=z_{(r)} ; \theta\right).
 \end{align*}\]</span></p>
-<p>The likelihood based on <span class="math inline">\(\left(R_i=r_i,
+<p>The likelihood based on the observed data <span class="math inline">\(\left(R_i=r_i,
 Z_{\left(R_i\right)i}=z_{\left(r_i\right)}\right)_{i=1}^n\)</span> is
-given by</p>
+therefore given by</p>
 <p><span class="math display">\[\begin{align*}
 &amp; \prod_i \prod_r P\left(R_i=r ; Z_{(r) i}=z_{(r)} ; \psi,
 \theta\right)^{1\left(R_i=r\right)} \\
 = &amp; \prod_i\left(\prod_r P\left(R_i=r|Z_{(r) i}=z_{(r) ;} ; \psi
 \right)^{1\left(R_i=r\right)} \prod_r P\left(Z_{(r) i}=z_{(r)} ;
 \theta\right)^{1\left(R_i=r\right)}\right).
-\end{align*}\]</span> It suffices to maximize the following objective
-function over <span class="math inline">\(\theta\)</span>: <span class="math display">\[\begin{align*}
+\end{align*}\]</span> <strong>Goal</strong>: Suppose we are only
+interested in <span class="math inline">\(\theta\)</span>, the MLE aims
+to maximize the following objective function over <span class="math inline">\(\theta\)</span>: <span class="math display">\[\begin{align*}
 &amp;\sum_{i=1}^n \sum_r 1\left(R_i=r\right) \log
 P\left(Z_{(r)i}=z_{(r)}; \theta\right) \\
 =&amp;\sum_{i=1}^n \sum_r \left[1\left(R_i=r\right) \log \left( \int
 P\left(z_{(r)i}, z_{(\bar{r})i}; \theta\right)
 d{z_{(\bar{r})}}\right)\right].
 \end{align*}\]</span></p>
-<p>The ideal full (complete) data likelihood is given by <span class="math display">\[
+<p><strong>EM algorithm</strong>: Let’s consider how EM algorithm works
+in this situation. The ideal full (complete) data likelihood is given by
+<span class="math display">\[
 \prod_{i} \prod_{r} P(R_i, Z_{(R_i)i},  Z_{(\bar{R}_i)i}; \psi,
 \theta)^{1\{R_i=r\}}.
 \]</span> By the MAR and separability, it suffices to consider the full
@@ -2058,7 +2061,7 @@ data likelihood. <span class="math display">\[
 \theta)^{1\{R_i=r\}}.
 \]</span></p>
 <p>In the same spirit of EM discussed previously, the E-step is <span class="math display">\[\begin{align*}
-Q\left(\theta, \theta^{(t-1)}\right)=\sum_{i=1}^n
+Q\left(\theta| \theta^{(t-1)}\right)=\sum_{i=1}^n
 E_{\theta^{(t-1)}}(\log \prod_{r}P(Z_i;\theta)^{1(R_i=r)}|R_i,
 Z_{(R_i)i})= \sum_{i=1}^n \sum_{r}1\left(R_i=r\right)
 E_{\theta^{(t-1)}}\left(\log P\left(Z_i; \theta\right) \mid Z_{(r)
@@ -2074,7 +2077,7 @@ i}\right),
 \end{align*}\]</span> here the expectation is conditional on <span class="math inline">\((R_i=r, Z_{(r)i})\)</span> with parameter <span class="math inline">\(\theta&#39;\)</span>. The equality holds because
 of MAR.</p>
 <p>The M-step: <span class="math display">\[\theta^{(t)} =\arg
-\max_{\theta} Q(\theta, \theta^{(t-1)}).\]</span></p>
+\max_{\theta} Q(\theta| \theta^{(t-1)}).\]</span></p>
 <p><strong>Example</strong>: Suppose <span class="math inline">\(Z\)</span> follows a <span class="math inline">\(N(\mu,\Sigma)\)</span>, here <span class="math inline">\(\theta:=(\mu,\Sigma)\)</span>. Note that <span class="math display">\[\begin{align*}
 &amp;E_{\theta^{(t-1)}}\left(\log P\left(Z_i; \theta\right) \mid Z_{(r)
 i}\right) \\ =&amp;-\frac{1}{2} \log |2 \pi
@@ -2106,7 +2109,7 @@ i})-{\mu}^{(t)}{\mu}^{(t)\top}.
 <p>Provided and discussed in lab.</p>
 <!------------->
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2024-10-28 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2024-10-31 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 </div>
 </div>
