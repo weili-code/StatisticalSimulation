@@ -11,7 +11,7 @@
 
 <meta name="author" content="Wei Li" />
 
-<meta name="date" content="2024-01-21" />
+<meta name="date" content="2024-11-08" />
 
 <title>Statistical Computation and Simulation</title>
 
@@ -1623,7 +1623,7 @@ display: none;
 
 <h1 class="title toc-ignore">Statistical Computation and Simulation</h1>
 <h4 class="author">Wei Li</h4>
-<h4 class="date">2024-01-21</h4>
+<h4 class="date">2024-11-08</h4>
 
 </div>
 
@@ -1648,14 +1648,14 @@ display: none;
   });
 </script>
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2024-01-21 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2024-11-08 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 <!------------->
 <div id="markov-chain" class="section level2">
 <h2>Markov Chain</h2>
 <p>Consider a sequence of random variables <span class="math inline">\(\{ X^{(n)}: n=0, 1, \ldots, \}\)</span>, each
 <span class="math inline">\(X^{(n)} \in S\)</span> (state space). We
-mainly discuss M.C in a discrete state space here, say, <span class="math inline">\(S = \{1,2, \cdots , K\}\)</span>.</p>
+mainly discuss M.C in a discrete state space here, say, <span class="math inline">\(S = \{1,2, \cdots, K\}\)</span>.</p>
 <p><strong>Definition:</strong> A Markov Chain is a sequence of random
 variables <span class="math inline">\(X^{(n)}\)</span> such that <span class="math display">\[\begin{align*}
 &amp;P(X^{(n)}\in A_n | X^{(n-1)}\in A_{n-1},\cdots, X^{(0)}\in A_0)=
@@ -1737,9 +1737,8 @@ scenario that at some step n, we reached the steady state distribution,
 \end{align*}\]</span> Therefore, once we reached the steady state
 distribution, the state distribution becomes stationary.</p>
 <p><strong>Find the steady state distribution</strong>: For a given
-transition matrix <span class="math inline">\(P\)</span>, note that
-<span class="math display">\[P^\top\pi^\top = 1\pi^\top.\]</span> So
-<span class="math inline">\(\pi^\top\)</span> is eigenvalue of <span class="math inline">\(P^\top\)</span> that corresponds to eigenvalue 1.
+transition matrix <span class="math inline">\(P\)</span> (non-degenerate
+with possibly zero entries), note that <span class="math display">\[P^\top\pi^\top = 1\pi^\top.\]</span> So <span class="math inline">\(\pi^\top\)</span> is eigenvalue of <span class="math inline">\(P^\top\)</span> that corresponds to eigenvalue 1.
 The found eigenvector then needs to be normalized. A limitation is that
 it is not guaranteed the found eigenvector is real-valued.</p>
 <p>A more general approach is to solve the following system of
@@ -1872,8 +1871,8 @@ balance condition</strong>) <span class="math display">\[
 weighted by the outgoing state probabilities: <span class="math display">\[
 P(X^{(n)}=j)P(X^{(n+1)}=i|X^{(n)}=j)=P(X^{(n)}=i)P(X^{(n+1)}=j|X^{(n)}=i).
 \]</span> Note also that the time reversibility of the chain is implied,
-so the direction of the time does not matter in the dynamic of the
-chain: <span class="math inline">\(P(X^{(n)}=i|X^{(n+1)}=j)=P(X^{(n+1)}=i|X^{(n)}=j)=P_{ji}\)</span>.</p>
+so the direction of the time does not matter for the probability in the
+move of the chain: <span class="math inline">\(P(X^{(n)}=i|X^{(n+1)}=j)=P(X^{(n+1)}=i|X^{(n)}=j)=P_{ji}\)</span>.</p>
 <p><strong>Theorem</strong>: A set of transition probabilities <span class="math inline">\(P_{i,j}\)</span>, satisfying the “detailed balance
 condition” will have <span class="math inline">\(\pi\)</span> as its
 stationary distribution.</p>
@@ -1954,7 +1953,7 @@ with probability <span class="math inline">\(\alpha(X^{(t-1)},X)\)</span>; other
 <p>Provided and discussed in lab.</p>
 <!------------->
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2024-01-21 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2024-11-08 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 </div>
 </div>
