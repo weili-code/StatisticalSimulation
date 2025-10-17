@@ -11,7 +11,7 @@
 
 <meta name="author" content="Wei Li" />
 
-<meta name="date" content="2024-10-31" />
+<meta name="date" content="2025-10-17" />
 
 <title>Statistical Computation and Simulation</title>
 
@@ -1623,7 +1623,7 @@ display: none;
 
 <h1 class="title toc-ignore">Statistical Computation and Simulation</h1>
 <h4 class="author">Wei Li</h4>
-<h4 class="date">2024-10-31</h4>
+<h4 class="date">2025-10-17</h4>
 
 </div>
 
@@ -1648,7 +1648,7 @@ display: none;
   });
 </script>
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2024-10-31 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2025-10-17 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 <!------------->
 <div id="em-algorithm" class="section level2">
@@ -1701,18 +1701,17 @@ taken with respect to <span class="math inline">\(f(\boldsymbol{z}|
 <p><span class="math display">\[\begin{align*}
   E_{\theta^{(0)}}(log(L(\theta|\boldsymbol{x})))  =
 log(L(\theta|\boldsymbol{x})) &amp; =
-E_{\theta^{(0)}}[logf(\boldsymbol{x},\boldsymbol{z}|\theta)|\boldsymbol{x}]
+E_{\theta^{(0)}}\big(logf(\boldsymbol{x},\boldsymbol{z}|\theta)|\boldsymbol{x}\big)
 -
-E_{\theta^{(0)}}[logf(\boldsymbol{z}|\boldsymbol{x},\theta)|\boldsymbol{x}]
+E_{\theta^{(0)}}\big(logf(\boldsymbol{z}|\boldsymbol{x},\theta)|\boldsymbol{x}\big)
 \\
   &amp; = Q(\theta | \theta^{(0)},\boldsymbol{x}) - K(\theta |
 \theta^{(0)},\boldsymbol{x}),
 \end{align*}\]</span> where we take <span class="math display">\[\begin{align*}
-Q(\theta | \theta^{(0)},\boldsymbol{x}) :=
-E_{\theta^{(0)}}[logf(\boldsymbol{x},\boldsymbol{z}|\theta)|\boldsymbol{x}],
-\\
-K(\theta | \theta^{(0)},\boldsymbol{x}):=
-E_{\theta^{(0)}}[logf(\boldsymbol{z}|\boldsymbol{x},\theta)|\boldsymbol{x}].
+Q(\theta | \theta^{(0)},\boldsymbol{x}) := E_{\theta^{(0)}}\big(\log
+f(\boldsymbol{x},\boldsymbol{z}|\theta)|\boldsymbol{x}\big), \\
+K(\theta | \theta^{(0)},\boldsymbol{x}):= E_{\theta^{(0)}}\big(\log
+f(\boldsymbol{z}|\boldsymbol{x},\theta)|\boldsymbol{x}\big).
 \end{align*}\]</span></p>
 <p>It turns out for any candidate <span class="math inline">\(\theta^{&#39;}\)</span> for next iterate, <span class="math display">\[\begin{align*}
   K(\theta^{&#39;}|\theta^{0},\boldsymbol{x}) \le K(\theta^{(0)} |
@@ -1769,9 +1768,8 @@ practice, you’ll try different starting values of <span class="math inline">\(
 <li>If <span class="math inline">\(f(\boldsymbol{z}|\theta)\)</span>
 does not depend on <span class="math inline">\(\theta\)</span>, then the
 algorithm is equivalent to that uses <span class="math display">\[
-Q(\theta |\theta^{(m)},\boldsymbol{x})=
-E_{\theta^{(m)}}[logf(\boldsymbol{x}|\boldsymbol{z},
-\theta)|\boldsymbol{x}].
+Q(\theta |\theta^{(m)},\boldsymbol{x})= E_{\theta^{(m)}}\big(
+log f(\boldsymbol{x}|\boldsymbol{z}, \theta)|\boldsymbol{x}\big).
 \]</span></li>
 <li>Consider for <span class="math inline">\(h(x)=E(H(x,Z))\)</span>
 where the expectation is taken w.r.t to the random variable <span class="math inline">\(Z\)</span>. <span class="math display">\[\begin{align*}
@@ -1805,8 +1803,8 @@ Algorithm</strong>.</li>
 <div id="em-algorithms-examples" class="section level2">
 <h2>EM Algorithms (examples)</h2>
 <p><strong>E-step</strong>: evaluate <span class="math display">\[
-Q(\theta\mid\theta^{(m)}, {X})=E_{\theta^{(m)}}\big[\log L^c(\theta\mid
-{X}, {Z})\mid {X}\big],
+Q(\theta\mid\theta^{(m)}, {X})=E_{\theta^{(m)}}\big(\log L^c(\theta\mid
+{X}, {Z})\mid {X}\big),
 \]</span></p>
 <p>where <span class="math inline">\({X}\)</span> is observable, <span class="math inline">\({Z}\)</span> is unobservable; <span class="math inline">\(E_{\theta^{(m)}}\)</span> is the conditional
 expectation of <span class="math inline">\(Z\)</span> given <span class="math inline">\(X\)</span>, where the conditional density is given
@@ -1838,31 +1836,31 @@ X_i=Z_iW_{1i}+(1-Z_i)W_{2i}.
 <span class="math display">\[
 \begin{aligned}
 L^c( \theta|{X}, {Z})&amp;=\prod\limits_{i=1}^{n}P(X_i,Z_i)\\
-&amp;=\prod\limits_{i=1}^{n}\big[P(X_i\mid
-Z_i=1)P(Z_i=1)\big]^{Z_i}\big[P(X_i\mid Z_i=0)P(Z_i=0)\big]^{1-Z_i}.
+&amp;=\prod\limits_{i=1}^{n}\big(P(X_i\mid
+Z_i=1)P(Z_i=1)\big)^{Z_i}\big(P(X_i\mid Z_i=0)P(Z_i=0)\big)^{1-Z_i}.
 \end{aligned}
 \]</span></p>
 <p>So the log-likelihood function: <span class="math display">\[
 \log\big(L^c(\theta\mid
-{X},  {Z})\big)=\sum\limits_{i=1}^{n}\big[Z_i\log f(X_i\mid
+{X},  {Z})\big)=\sum\limits_{i=1}^{n}\Big(Z_i\log f(X_i\mid
 \mu_1)+Z_i\log\frac{1}{4}+(1-Z_i)\log f(X_i\mid
-\mu_2)+(1-Z_i)\log\frac{3}{4}\big].
+\mu_2)+(1-Z_i)\log\frac{3}{4}\Big).
 \]</span> Let <span class="math inline">\(\theta^{(0)}=(\mu_1^{(0)},\mu_2^{(0)})\)</span>,
 <span class="math display">\[
 \begin{aligned}
-Q(\theta\mid\theta^{(0)}, {X})&amp;=E_{\theta^{(0)}}\big[\log
-L^c(\theta\mid {X}, {Z})\mid {X}\big]\\
-&amp;=-\sum\limits_{i=1}^{n}\Big\{\frac{1}{2}E_{\theta^{(0)}}[Z_i(X_i-\mu_1)^2\mid
-X_i]+\frac{1}{2}E_{\theta^{(0)}}\big[(1-Z_i)(X_i-\mu_2)^2\mid
-X_i\big]\Big\}\\
+Q(\theta\mid\theta^{(0)}, {X})&amp;=E_{\theta^{(0)}}\big(\log
+L^c(\theta\mid {X}, {Z})\mid {X}\big)\\
+&amp;=-\sum\limits_{i=1}^{n}\Big\{\frac{1}{2}E_{\theta^{(0)}}(Z_i(X_i-\mu_1)^2\mid
+X_i)+\frac{1}{2}E_{\theta^{(0)}}\big((1-Z_i)(X_i-\mu_2)^2\mid
+X_i\big)\Big\}\\
 &amp;\ \ \ \ \ +\sum\limits_{i=1}^{n}\Big\{\log(\frac{1}{4})
 E_{\theta^{(0)}}(Z_i\mid X_i)+\log(\frac{3}{4})
 E_{\theta^{(0)}}(1-Z_i\mid X_i)\Big\}+C,
 \end{aligned}
 \]</span></p>
 where <span class="math display">\[
-E_{\theta^{(0)}}[Z_i(X_i-\mu_1)^2\mid
-X_i]=(X_i-\mu_1)^2E_{\theta^{(0)}}[Z_i\mid X_i].
+E_{\theta^{(0)}}(Z_i(X_i-\mu_1)^2\mid
+X_i)=(X_i-\mu_1)^2E_{\theta^{(0)}}(Z_i\mid X_i).
 \]</span> Since <span class="math display">\[E[Z\mid
 X=x]=\frac{P(X=x\mid Z=1)P(Z=1)}{P(X=x\mid Z=1)P(Z=1)+P(X=x\mid
 Z=0)P(Z=0)}.\]</span>
@@ -1890,6 +1888,62 @@ E_{\theta^{(0)}}\big[Z_i\mid X_i\big]=\frac{\frac{1}{4}f_1(X_i\mid
 \mu_2^{(1)}=\frac{\sum\limits_{i=1}^{n}\big(1-r_i^{(0)}(X_i;\mu_1^{(0)},\mu_2^{(0)})\big)X_i}{\sum\limits_{i=1}^{n}\big(1-r_i^{(0)}(X_i;\mu_1^{(0)},\mu_2^{(0)})\big)}.
 \end{cases}
 \]</span></p>
+<div id="general-case-gaussian-mixture-model-gmm-k-components" class="section level4">
+<h4>General case: Gaussian Mixture Model (GMM), <span class="math inline">\(K\)</span> components</h4>
+<p><strong>Model.</strong> For <span class="math inline">\(X_i \in
+\mathbb{R}^p\)</span>, <span class="math inline">\(i=1,\dots,n\)</span>:
+<span class="math display">\[
+p(x) = \sum_{k=1}^K \pi_k\, {N}\!\left(x\mid
+\boldsymbol{\mu}_k,\Sigma_k\right),\quad
+\pi_k&gt;0,\ \sum_{k=1}^K \pi_k=1.
+\]</span> Multivariate normal density: <span class="math display">\[
+{N}(x\mid \boldsymbol{\mu},\Sigma)=\frac{1}{(2\pi)^{p/2}|\Sigma|^{1/2}}
+\exp\!\left(-\tfrac12(x-\boldsymbol{\mu})^{\top}\Sigma^{-1}(x-\boldsymbol{\mu})\right).
+\]</span></p>
+<p><strong>Latent indicators.</strong> <span class="math inline">\(Z_{ik}\in\{0,1\}\)</span> with <span class="math inline">\(\sum_{k=1}^K Z_{ik}=1\)</span>, <span class="math inline">\(P(Z_{ik}=1)=\pi_k\)</span>.</p>
+<p><strong>Complete-data log-likelihood.</strong> <span class="math display">\[
+\log L^c(\{\pi_k,\boldsymbol{\mu}_k,\Sigma_k\}\mid X,Z)
+=\sum_{i=1}^n\sum_{k=1}^K Z_{ik}
+\Big(\log \pi_k + \log {N}(X_i\mid \boldsymbol{\mu}_k,\Sigma_k)\Big).
+\]</span></p>
+<div id="em-algorithm-1" class="section level6">
+<h6>EM Algorithm</h6>
+<p><strong>Initialize</strong> <span class="math inline">\(\{\pi_k^{(0)},\boldsymbol{\mu}_k^{(0)},\Sigma_k^{(0)}\}\)</span>,</p>
+<p>Let <span class="math inline">\(\Theta^{(t)}=\{\pi_k^{(t)},\boldsymbol{\mu}_k^{(t)},\Sigma_k^{(t)}\}_{k=1}^K.\)</span></p>
+<p>The Q-function is the conditional expectation of the complete-data
+log-likelihood: <span class="math display">\[
+Q(\Theta \mid \Theta^{(t)}) =
+E_{\Theta^{(t)}}\!\left(\,\log L^c(\Theta \mid X, Z)\mid X\,\right).
+\]</span></p>
+</div>
+<div id="e-step-responsibilities" class="section level6">
+<h6>E-step (Responsibilities)</h6>
+<p>For <span class="math inline">\(i=1,\dots,n\)</span>, <span class="math inline">\(k=1,\dots,K\)</span>: <span class="math display">\[
+\gamma_{ik}^{(t)} \equiv E(Z_{ik}\mid X_i;\Theta^{(t)})
+= \frac{\pi_k^{(t)}\,{N}(X_i\mid
+\boldsymbol{\mu}_k^{(t)},\Sigma_k^{(t)})}
+{\sum_{\ell=1}^K \pi_{\ell}^{(t)}\,{N}(X_i\mid
+\boldsymbol{\mu}_{\ell}^{(t)},\Sigma_{\ell}^{(t)})}.
+\]</span> Effective component sizes: <span class="math display">\[
+N_k^{(t)}=\sum_{i=1}^n \gamma_{ik}^{(t)}.
+\]</span></p>
+</div>
+<div id="m-step-parameter-updates" class="section level6">
+<h6>M-step (Parameter Updates)</h6>
+<p>Mixing weights: <span class="math display">\[
+\pi_k^{(t+1)}=\frac{N_k^{(t)}}{n}.
+\]</span> Means: <span class="math display">\[
+\boldsymbol{\mu}_k^{(t+1)}=\frac{1}{N_k^{(t)}}\sum_{i=1}^n
+\gamma_{ik}^{(t)} X_i.
+\]</span> Covariances: <span class="math display">\[
+\Sigma_k^{(t+1)}=\frac{1}{N_k^{(t)}}\sum_{i=1}^n \gamma_{ik}^{(t)}
+\big(X_i-\boldsymbol{\mu}_k^{(t+1)}\big)\big(X_i-\boldsymbol{\mu}_k^{(t+1)}\big)^{\top}.
+\]</span></p>
+<p><strong>Iterate</strong> E/M until convergence (e.g., change in
+observed <span class="math inline">\(\log L\)</span> below a
+tolerance).</p>
+</div>
+</div>
 </div>
 <div id="right-censored-data-r.c-example-5.13-and-5.14" class="section level3">
 <h3>Right censored data (R.C example 5.13 and 5.14)</h3>
@@ -2051,8 +2105,9 @@ P\left(z_{(r)i}, z_{(\bar{r})i}; \theta\right)
 d{z_{(\bar{r})}}\right)\right].
 \end{align*}\]</span></p>
 <p><strong>EM algorithm</strong>: Let’s consider how EM algorithm works
-in this situation. The ideal full (complete) data likelihood is given by
-<span class="math display">\[
+in this situation, where the model <span class="math inline">\(P(Z;
+\theta)\)</span> is of the interest. The ideal full (complete) data
+likelihood is given by <span class="math display">\[
 \prod_{i} \prod_{r} P(R_i, Z_{(R_i)i},  Z_{(\bar{R}_i)i}; \psi,
 \theta)^{1\{R_i=r\}}.
 \]</span> By the MAR and separability, it suffices to consider the full
@@ -2078,6 +2133,12 @@ i}\right),
 of MAR.</p>
 <p>The M-step: <span class="math display">\[\theta^{(t)} =\arg
 \max_{\theta} Q(\theta| \theta^{(t-1)}).\]</span></p>
+<p>MAR is a working assumption — often defensible but unverifiable from
+data alone. Under MAR + separability, one can focus entirely on the data
+model <span class="math inline">\(P(Z; \theta)\)</span> to impute the
+missing values and use standard likelihood or EM methods — avoiding
+explicit modeling of the missingness mechanism <span class="math inline">\(P(R \mid Z; \psi)\)</span>, which is often
+unidentifiable.</p>
 <p><strong>Example</strong>: Suppose <span class="math inline">\(Z\)</span> follows a <span class="math inline">\(N(\mu,\Sigma)\)</span>, here <span class="math inline">\(\theta:=(\mu,\Sigma)\)</span>. Note that <span class="math display">\[\begin{align*}
 &amp;E_{\theta^{(t-1)}}\left(\log P\left(Z_i; \theta\right) \mid Z_{(r)
 i}\right) \\ =&amp;-\frac{1}{2} \log |2 \pi
@@ -2109,7 +2170,7 @@ i})-{\mu}^{(t)}{\mu}^{(t)\top}.
 <p>Provided and discussed in lab.</p>
 <!------------->
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2024-10-31 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2025-10-17 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 </div>
 </div>
