@@ -11,7 +11,7 @@
 
 <meta name="author" content="Wei Li" />
 
-<meta name="date" content="2024-01-21" />
+<meta name="date" content="2025-10-22" />
 
 <title>Statistical Computation and Simulation</title>
 
@@ -1623,7 +1623,7 @@ display: none;
 
 <h1 class="title toc-ignore">Statistical Computation and Simulation</h1>
 <h4 class="author">Wei Li</h4>
-<h4 class="date">2024-01-21</h4>
+<h4 class="date">2025-10-22</h4>
 
 </div>
 
@@ -1648,7 +1648,7 @@ display: none;
   });
 </script>
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2024-01-21 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2025-10-22 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 <!------------->
 <div id="markov-chain-with-continuous-state-space" class="section level1">
@@ -1754,10 +1754,12 @@ on proposed samples as <span class="math display">\[\alpha(x^*|x) = \min
 current state and the proposed state. So given that our current state is
 <span class="math inline">\(x\)</span> then the probability of a
 particular state being proposed and accepted is <span class="math inline">\(\alpha (x^*|x) q(x^*|x)\)</span>. Similarly, we
-can calculate the probability that any proposal is accepted as <span class="math inline">\(a(x) :=\int \alpha (x^*|x) q(x^*|x)dx^*\)</span>.
-A proposal is not accepted with probability <span class="math inline">\(r(x) := 1- a(x)\)</span>, in which case we set
-<span class="math inline">\(x^* = x\)</span>. The (effective) transition
-density is then</p>
+can calculate the probability that any proposal is accepted and a
+subsequent move occurs as <span class="math inline">\(a(x) :=\int \alpha
+(x^*|x) q(x^*|x)dx^*\)</span>. A proposal is not accepted (hence no
+move) with probability <span class="math inline">\(r(x) := 1-
+a(x)\)</span>, in which case we set <span class="math inline">\(x^* =
+x\)</span>. The (effective) transition density is then</p>
 <p><span class="math display">\[p(x^*|x) =  \alpha (x^*|x) q(x^*|x) +
 r(x)\delta_x(x^*),\]</span></p>
 <p>where <span class="math inline">\(\delta_x(x^*) = 1\)</span> if <span class="math inline">\(x^*=x\)</span> and 0 otherwise. Then since we are
@@ -1808,7 +1810,37 @@ Then due to the symmetry about 0, <span class="math inline">\(q(x^*|x)
 of the current value <span class="math inline">\(x^{(s)}\)</span>. For
 example <span class="math inline">\(q\sim N(0,1)\)</span>
 throughout.</p></li>
+<li><p>Metropolis-Adjusted Langevin Algorithm (MALA)</p></li>
 </ol>
+<p>MALA originates from the Langevin diffusion, a continuous-time
+stochastic process whose stationary distribution is exactly <span class="math inline">\(f(x)\)</span> : <span class="math display">\[\begin{align*}
+d X_t=\frac{1}{2} \nabla \log f\left(X_t\right) d t+d W_t
+\end{align*}\]</span></p>
+<p>where <span class="math inline">\(W_t\)</span> is a standard Wiener
+process (Brownian motion). The drift term <span class="math inline">\(\frac{1}{2} \nabla \log f(x)\)</span> drives the
+process toward regions of high probability density. The noise term <span class="math inline">\(d W_t\)</span> ensures exploration of the full
+space. This diffusion has <span class="math inline">\(f(x)\)</span> as
+its invariant (stationary) distribution under mild regularity
+conditions.</p>
+<p>To simulate this diffusion in discrete steps of size <span class="math inline">\(\delta\)</span>,the so-called Euler-Maruyama
+approximation is applied: <span class="math display">\[\begin{align*}
+x^*=x^{(s)}+\frac{\delta^2}{2} \nabla \log f\left(x^{(s)}\right)+\delta
+\varepsilon^{(s)}, \quad \varepsilon^{(s)} \sim N(0, I)
+\end{align*}\]</span> However, because this is a numerical
+approximation, it does not exactly preserve <span class="math inline">\(f(x)\)</span>. To correct this bias, we add a
+Metropolis-Hastings acceptance step, yielding MALA. <span class="math display">\[\begin{align*}
+\alpha\left(x^* \mid x\right)=\min \left(1, \frac{f\left(x^*\right)
+q\left(x \mid x^*\right)}{f(x) q\left(x^* \mid x\right)}\right) .
+\end{align*}\]</span> where <span class="math display">\[\begin{align*}
+q\left(x&#39; \mid x\right)={N}\Big(x&#39; ; x+\frac{\delta^2}{2} \nabla
+\log f(x), \delta^2 I\Big)
+\end{align*}\]</span></p>
+<ul>
+<li>Note 1: The optimal scaling of step size satisfies roughly: <span class="math inline">\(\delta \propto d^{-1 / 6}\)</span> where <span class="math inline">\(d\)</span> is the dimension of the parameter
+space. In practice, need to experiment with <span class="math inline">\(\delta\)</span>.</li>
+<li>Note 2: Langevin Monte Carlo (LMC) is a special case of the
+Hamiltonian Monte Carlo (HMC).</li>
+</ul>
 </div>
 <div id="practicalities" class="section level3">
 <h3>Practicalities</h3>
@@ -1822,9 +1854,9 @@ acceptance rate is ideal.</p>
 <li>Run algorithm until some iteration <span class="math inline">\(B\)</span> for which Markov Chain appears to reach
 stationarity.</li>
 <li>Run algorithm <span class="math inline">\(B&#39;\)</span> more times
-and keep <span class="math inline">\(\{x^{B+1},\ldots,x^{B+B&#39;}
+and keep <span class="math inline">\(\{x^{(B+1)},\ldots,x^{(B+B&#39;)}
 \}.\)</span></li>
-<li>Use empirical distribution of <span class="math inline">\(\{x^{B+1},\ldots,x^{B+B&#39;} \}\)</span> to
+<li>Use empirical distribution of <span class="math inline">\(\{x^{(B+1)},\ldots,x^{(B+B&#39;)} \}\)</span> to
 approximate the density <span class="math inline">\(f\)</span>.</li>
 </ol></li>
 <li><p><strong>Thinning</strong>: After burning to discard first B
@@ -1832,8 +1864,10 @@ observations, then thin the chain by including every kth draw.</p></li>
 <li><p><strong>Trace Plot</strong>: The plot of the values generated
 from the metropolis algorithm against the iteration number. Check:</p>
 <ol style="list-style-type: lower-alpha">
-<li>The chain doesn’t get stuck in a certain area of space.</li>
-<li>The chain can move relatively fast (across the support).</li>
+<li>The chain does not become trapped in a specific region of the state
+space.</li>
+<li>The chain moves reasonably quickly across the support, suggesting
+good mixing.</li>
 </ol></li>
 <li><p><strong>“ACF” Autocorrelation Function</strong>: Calculate the
 “lag-<span class="math inline">\(j\)</span> sample covariance” as <span class="math display">\[\hat\gamma_j =
@@ -1843,6 +1877,13 @@ as <span class="math inline">\(\hat{\rho}_j =
 \hat\gamma_j/\hat\gamma_0\)</span>. Then plotting autocorrelation <span class="math inline">\(\hat{\rho}_j\)</span> v.s. the lag index (<span class="math inline">\(j\)</span>), relatively high values would indicate
 a high degree of correlation between draws and therefore, slow
 mixing.</p></li>
+<li><p><strong>Gelman-Rubin Statistic</strong> <span class="math inline">\((\hat{R})\)</span> Run multiple chains from
+overdispersed starting values. Compare between-chain and within-chain
+variance: <span class="math display">\[\begin{align*}
+\hat{R}=\sqrt{\frac{\widehat{\operatorname{Var}}^{+}(x)}{W}},
+\end{align*}\]</span> where <span class="math inline">\(\widehat{\operatorname{Var}}^{+}(x)\)</span> is
+the pooled variance and <span class="math inline">\(W\)</span> is the
+within-chain variance. Rule of thumb: convergence if <span class="math inline">\(\hat{R}&lt;1.01\)</span> or 1.05 .</p></li>
 </ol>
 </div>
 <div id="python-code-examples" class="section level3">
@@ -1850,7 +1891,7 @@ mixing.</p></li>
 <p>Provided and discussed in lab.</p>
 <!------------->
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2024-01-21 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2025-10-22 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 </div>
 </div>
