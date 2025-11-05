@@ -11,7 +11,7 @@
 
 <meta name="author" content="Wei Li" />
 
-<meta name="date" content="2025-11-03" />
+<meta name="date" content="2025-11-05" />
 
 <title>Statistical Computation and Simulation</title>
 
@@ -1623,7 +1623,7 @@ display: none;
 
 <h1 class="title toc-ignore">Statistical Computation and Simulation</h1>
 <h4 class="author">Wei Li</h4>
-<h4 class="date">2025-11-03</h4>
+<h4 class="date">2025-11-05</h4>
 
 </div>
 
@@ -1648,7 +1648,7 @@ display: none;
   });
 </script>
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2025-11-03 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2025-11-05 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 <!------------->
 <div id="metropolis-hasting-algorithm-blockwise" class="section level1">
@@ -1876,7 +1876,9 @@ external factors or a priori information about the image. For
 simplicity, we assume <span class="math inline">\(h=0\)</span> for the
 moment.</li>
 </ul>
-<p>The probability measure for the system on <span class="math inline">\(\mathcal{X}\)</span> can be written as <span class="math display">\[\begin{align*}
+<p>The probability measure (via Boltzman-Gibbs transformation) for the
+system on <span class="math inline">\(\mathcal{X}\)</span> can be
+written as <span class="math display">\[\begin{align*}
 \pi(x)=\frac{1}{Z} \exp (-H(x)),
 \end{align*}\]</span> where <span class="math inline">\(Z\)</span> is
 the normalizing constant.</p>
@@ -1924,7 +1926,7 @@ density (in <span class="math inline">\(X\)</span>) of the joint uniform
 distribution on the set <span class="math display">\[
 \{(x, u): 0&lt;u&lt;f(x), x\in\mathcal{X}\},
 \]</span> with the p.d.f. <span class="math inline">\(f(x, u)=1_{\{(x,
-u): 0&lt;u&lt;f(x)\}}(x, u).\)</span></p>
+u): 0&lt;u&lt;f(x), x\in \mathcal{X}\}}(x, u).\)</span></p>
 <p>To obtain a sample of <span class="math inline">\((X ,U)\)</span>
 from this distribution, we can sample from a M.C. that has the target
 stationary distribution which can be done using Gibbs sampling, noting
@@ -1941,31 +1943,15 @@ f(X^{(s)}))\)</span>,</li>
 \operatorname{unif}(A^{(s+1)}),\)</span> where <span class="math inline">\(A^{(s+1)}:=\{x: f(x)&gt;U^{(s+1)}
 \}.\)</span></li>
 </ol>
-<p><strong>Remark 1</strong>: A major difficulty in the algorithm is to
-evaluate the set <span class="math inline">\(A^{(s+1)}\)</span>.
-Consider for a univaraite distribution, we can apply an iterative
-expansion–called <strong>stepping out</strong>: star with some small
-constants <span class="math inline">\(L&gt;0, R&gt;0\)</span> and
-consider the candidate interval <span class="math inline">\(x \in
-(X^{(s)}-L, X^{(s)}+R)\)</span>, then we extend the interval until the
-endpoints fall outside the slice (i.e., either <span class="math inline">\(f(X^{(s)}-L) \leq U^{(s+1)}\)</span> or <span class="math inline">\(f(X^{(s)}+R)\leq U^{(s+1)})\)</span>) or after
-some fixed number of steps. Eventually we aim for the interval <span class="math display">\[
-\tilde{A}^{(s+1)}=\{x\in (X^{(s)}-L, X^{(s)}+R): f(x)&gt;U^{(s+1)} \}.
-\]</span> Then in a loop we draw <span class="math inline">\(X^*\)</span> from <span class="math inline">\(\tilde{A}^{(s+1)}\)</span> using accept/reject
-method, i.e., we draw <span class="math inline">\(X^*\)</span> from the
-interval until <span class="math inline">\(f(X^*)&gt;U^{(s+1)}\)</span>
-and then set <span class="math inline">\(X^{(s+1)} \leftarrow
-X^*\)</span>. During the loop, if <span class="math inline">\(f(X^*)\leq
-U^{(s+1)}\)</span>, we adjust the interval by <strong>shrinking</strong>
-it–specifically, if <span class="math inline">\(X^*&gt;X^{(s)}\)</span>,
-set <span class="math inline">\(R \leftarrow X^*-X^{(s)}\)</span>; if
-<span class="math inline">\(X^*&lt;X^{(s)}\)</span>, set <span class="math inline">\(L \leftarrow X^{(s)}-X^*\)</span>, then redraw
-from the interval.</p>
-<p><strong>Remark 2</strong>: The procedure described in Remark 1 can be
-generalized to multivariate distribution.</p>
-<p><strong>Remark 3</strong>: The algorithm remains valid if we use
-<span class="math inline">\(\tilde{f}\)</span> the kernel of the p.d.f.
-in the algorithm.</p>
+<p>Conceptually, Step 2 can indeed be understood as an accept-reject
+procedure:</p>
+<ul>
+<li>Draw <span class="math inline">\(X^*\)</span> from some proposal
+<span class="math inline">\(q(x)\)</span> with support covering the
+slice.</li>
+<li>Accept <span class="math inline">\(X^*\)</span> if <span class="math inline">\(f\left(X^*\right)&gt;U^{(s+1)}\)</span>;
+otherwise, reject and resample.</li>
+</ul>
 <p><strong>General form</strong>:</p>
 <p>Suppose <span class="math inline">\(f(x) \propto \prod_{i=1}^k
 f_i(x)\)</span>, where <span class="math inline">\(f_i(x)&gt;0\)</span>
@@ -1992,12 +1978,58 @@ f_k(X^{(s)}))\)</span>,</p></li>
 \operatorname{unif}(A^{(s+1)})\)</span>, where <span class="math inline">\(A^{(s+1)}:=\{x: f_i(x) \geq W_i^{(s+1)}, \forall
 i=1, \ldots, k\}.\)</span></p></li>
 </ol>
+<div id="stepping-out-and-shrinkage-procedure" class="section level4">
+<h4>stepping-out and shrinkage procedure</h4>
+<p>A major challenge in slice sampling is to identify or approximate the
+slice <span class="math inline">\(A^{(s+1)}\)</span>.For a univariate
+target <span class="math inline">\(f\)</span>, a common strategy is the
+stepping-out and shrinkage procedure:</p>
+<ol style="list-style-type: decimal">
+<li>Start with small positive constants <span class="math inline">\(L\)</span> and <span class="math inline">\(R\)</span>, and define an initial candidate
+interval</li>
+</ol>
+<p><span class="math display">\[\begin{align*}
+\left(X^{(s)}-L, X^{(s)}+R\right) .
+\end{align*}\]</span></p>
+<ol start="2" style="list-style-type: decimal">
+<li>Stepping out: iteratively (and possibly independently) expand the
+interval until both ends fall outside the slice (that is, until <span class="math inline">\(f\left(X^{(s)}-L\right) \leq U^{(s+1)}\)</span>
+and <span class="math inline">\(f\left(X^{(s)}+R\right) \leq
+U^{(s+1)}\)</span> ), or after reaching a fixed maximum number of
+expansions.</li>
+<li>Define the working interval <span class="math display">\[\begin{align*}
+\tilde{A}^{(s+1)}=\left\{x \in\Big(X^{(s)}-L, X^{(s)}+R\Big):
+f(x)&gt;U^{(s+1)}\right\} .
+\end{align*}\]</span></li>
+<li>Sampling by accept-reject on <span class="math inline">\(\tilde{A}^{(s+1)}\)</span> with shrinkage:
+<ul>
+<li>Draw a candidate <span class="math inline">\(X^*\)</span> uniformly
+from the current interval.</li>
+<li>If <span class="math inline">\(f\left(X^*\right)&gt;U^{(s+1)}\)</span>, accept
+and set <span class="math inline">\(X^{(s+1)} \leftarrow
+X^*\)</span>.</li>
+<li>Otherwise, shrink the interval (by adjusting the widths):
+<ul>
+<li>If <span class="math inline">\(X^*&gt;X^{(s)}\)</span>, set <span class="math inline">\(R \leftarrow X^*-X^{(s)}\)</span>;</li>
+<li>If <span class="math inline">\(X^*&lt;X^{(s)}\)</span>, set <span class="math inline">\(L \leftarrow X^{(s)}-X^*\)</span>; then redraw
+from the reduced interval.</li>
+</ul></li>
+</ul></li>
+</ol>
+<p>This iterative “shrinkage” ensures that the accepted point always
+lies within the slice.</p>
+<p><strong>Remark 1</strong>: The above procedure generalizes to
+multivariate distributions, though defining and sampling from <span class="math inline">\(A^{(s+1)}\)</span> becomes more challenging.</p>
+<p><strong>Remark 2</strong>: The algorithm remains valid if we use
+<span class="math inline">\(\tilde{f}\)</span> the kernel of the p.d.f.
+in the algorithm.</p>
+</div>
 <div id="python-code-examples" class="section level3">
 <h3>Python Code Examples</h3>
 <p>Provided and discussed in lab.</p>
 <!------------->
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2025-11-03 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2025-11-05 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 </div>
 </div>
