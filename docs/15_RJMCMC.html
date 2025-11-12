@@ -11,7 +11,7 @@
 
 <meta name="author" content="Wei Li" />
 
-<meta name="date" content="2024-01-21" />
+<meta name="date" content="2025-11-12" />
 
 <title>Statistical Computation and Simulation</title>
 
@@ -1623,7 +1623,7 @@ display: none;
 
 <h1 class="title toc-ignore">Statistical Computation and Simulation</h1>
 <h4 class="author">Wei Li</h4>
-<h4 class="date">2024-01-21</h4>
+<h4 class="date">2025-11-12</h4>
 
 </div>
 
@@ -1648,7 +1648,7 @@ display: none;
   });
 </script>
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2024-01-21 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2025-11-12 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 <!------------->
 <div id="metropolis-hasting-algorithm-with-different-move-types" class="section level2">
@@ -1708,7 +1708,7 @@ space of <span class="math inline">\(X \in \mathbb{R}^d\)</span>.</li>
 <p>To address the above issue (3), we have a more general update rule
 for the acceptance probability. We need to assume two things for
 this.</p>
-<p>Assume for <em>each</em> move <span class="math inline">\(m\in
+<p>Assume for <em>each</em> move type <span class="math inline">\(m\in
 \mathcal{M}\)</span>, (1) there is a set <span class="math inline">\(C_m
 \subset \mathbb{R}^d \times \mathbb{R}^d\)</span> such that <span class="math display">\[
 (x, x&#39;) \in C_m \Longleftrightarrow  (x&#39;, x) \in C_m , \quad
@@ -1774,25 +1774,28 @@ the detailed balance condition using <span class="math display">\[\begin{align}
 \pi\left(x^{\prime}\right) \int_{A^{\prime}}  q\left(x^{\prime},
 x\right) \alpha\left(x^{\prime}, x\right) d x^{\prime} d x \tag{***}
 \end{align}\]</span></p>
+<p><strong>valid reversible mapping</strong>:</p>
 <p>Suppose we like to move between two spaces <span class="math inline">\(\mathcal{X}_1 \subset \mathbb{R}^{d_1}\)</span>
 and <span class="math inline">\(\mathcal{X}_2 \subset
 \mathbb{R}^{d_2}\)</span>, <span class="math inline">\(d_1 \neq
 d_2\)</span>, where the whole space is <span class="math inline">\(\mathcal{X}=\mathcal{X}_1 \cup
-\mathcal{X}_2.\)</span> Let <span class="math inline">\(M=\{1,
-2\}\)</span> denote the model type or space type.</p>
-<p>We first need to have some probability according to which to move
-from one space to another space, for example, <span class="math inline">\(j_{1\to 2} (x)\)</span> is the probability of
-moving from <span class="math inline">\(\mathcal{X}_1\)</span> to <span class="math inline">\(\mathcal{X}_2\)</span> when the current value is
+\mathcal{X}_2.\)</span> Let <span class="math inline">\(K=\{1,
+2\}\)</span> denote the type space (model space).</p>
+<p>Suppose we have some probability according to which to move from one
+space to another space, for example, <span class="math inline">\(j_{1\to
+2} (x)\)</span> is the probability of moving from <span class="math inline">\(\mathcal{X}_1\)</span> to <span class="math inline">\(\mathcal{X}_2\)</span> when the current value is
 <span class="math inline">\(x\in \mathcal{X}_1.\)</span> More generally,
 let <span class="math inline">\(j_{k \to k&#39;}\)</span> denote the
 probability of moving from space <span class="math inline">\(k\)</span>
 to space <span class="math inline">\(k&#39;\)</span>.</p>
-<p>After we determine the space type, we’ll have to determine the rule
-for (tentative) transition density and the acceptance probability. If we
+<p>For a MCMC algorithm, we’ll have to determine the rule for
+(tentative) transition density and the acceptance probability. If we
 remain in the same space, the classical proposal for transition and the
-acceptance probability would work. The key is when the move has been
-determined that it moves between spaces <span class="math inline">\(k\)</span> and <span class="math inline">\(k&#39;\)</span> where <span class="math inline">\(\mathcal{X}_k \neq
-\mathcal{X}_{k&#39;}.\)</span></p>
+acceptance probability would work.</p>
+<p>The key is when the move has been determined that it moves between
+spaces <span class="math inline">\(k\)</span> and <span class="math inline">\(k&#39;\)</span> where <span class="math inline">\(\mathcal{X}_k \neq \mathcal{X}_{k&#39;}.\)</span>
+The critical step is to establish a <strong>valid reversible
+mapping</strong> between <span class="math inline">\(\mathcal{X}_k\)</span> and <span class="math inline">\(\mathcal{X}_{k^{\prime}}\)</span>.</p>
 <p>So we’ll focus for example, on the transition and acceptance rule
 moving from <span class="math inline">\(1\)</span> to <span class="math inline">\(2\)</span>.</p>
 <ul>
@@ -1849,10 +1852,59 @@ h_{1\to2}: \mathbb{R}^{d_1+n_1} \longrightarrow \mathbb{R}^{d_2+n_2}
 \end{array}
 \end{align*}\]</span></li>
 </ol>
-<p><strong>Reversible Jump MCMC algorithm</strong>: Let the parameter
-space be <span class="math display">\[
+<p><strong>Example 1</strong>: Adding or Removing a Parameter (Linear
+Regression) Suppose we have two nested linear regression models:</p>
+<ul>
+<li><p>Model 1: <span class="math display">\[\begin{align*}
+y=\beta_0+\beta_1 x_1+\beta_2 x_2+\varepsilon, \quad x=\left(\beta_1,
+\beta_2\right) \in \mathbb{R}^2 .
+\end{align*}\]</span></p></li>
+<li><p>Model 2: The same model, but with an additional regressor <span class="math inline">\(x_3\)</span> : <span class="math display">\[\begin{align*}
+y=\beta_0+\beta_1 x_1+\beta_2 x_2+\beta_3 x_3+\varepsilon, \quad
+x^{\prime}=\left(\beta_1, \beta_2, \beta_3\right) \in \mathbb{R}^3 .
+\end{align*}\]</span></p></li>
+</ul>
+<p>Thus, <span class="math inline">\(d_1=2\)</span> and <span class="math inline">\(d_2=3\)</span>.</p>
+<p><strong>Example 2</strong>: Birth-Death Move in Mixture Models
+Suppose <span class="math inline">\(\mathcal{X}_K\)</span> represents
+the parameter space for a Gaussian mixture model with <span class="math inline">\(K\)</span> components. Model parameters can be
+written as</p>
+<p><span class="math display">\[\begin{align*}
+x=\left(\theta_1, \ldots, \theta_K\right)
+\end{align*}\]</span></p>
+<p>where each <span class="math inline">\(\theta_k=\left(\mu_k,
+\sigma_k, \pi_k\right)\)</span> denotes the mean, variance, and mixing
+proportion of component <span class="math inline">\(k\)</span>. We
+consider a birth-death pair of moves:</p>
+<ul>
+<li>Birth: <span class="math inline">\(K \rightarrow K+1\)</span></li>
+<li>Death: <span class="math inline">\(K+1 \rightarrow K\)</span></li>
+</ul>
+<div id="reversible-jump-mcmc-algorithm" class="section level4">
+<h4>Reversible Jump MCMC algorithm:</h4>
+<p>Let the parameter space be <span class="math display">\[
 \Theta:=\cup_{k}(\{k\} \times \mathcal{X}_k).
 \]</span></p>
+<p>We define the set of possible (admissible) <strong>move
+types</strong> as <span class="math inline">\(\mathcal{M}=\left\{\left(k, k^{\prime}\right): k,
+k^{\prime} \in K, k \neq k^{\prime}\right.\)</span>, and a valid
+reversible mapping exists between <span class="math inline">\(\mathcal{X}_k\)</span> and <span class="math inline">\(\left.\mathcal{X}_{k^{\prime}}\right\}\)</span>.</p>
+<p>Let <span class="math inline">\(j_{k \rightarrow
+k^{\prime}}(x)\)</span> denote the probability of proposing a move from
+space <span class="math inline">\(k\)</span> to space <span class="math inline">\(k^{\prime}\)</span>, when the current state is
+<span class="math inline">\(x \in \mathcal{X}_k\)</span>. (see remark
+for requirement for these these transition probabilities.)</p>
+<p>Speficially, each valid move type <span class="math inline">\(\left(k, k^{\prime}\right) \in
+\mathcal{M}\)</span> requires:</p>
+<ul>
+<li>an auxiliary variable generation rule <span class="math inline">\(g_{k \rightarrow k^{\prime}}(w \mid
+x)\)</span>,</li>
+<li>and a deterministic bijective transformation <span class="math display">\[\begin{align*}
+h_{k \rightarrow k^{\prime}}:(x, w) \mapsto\left(x^{\prime},
+w^{\prime}\right)
+\end{align*}\]</span> satisfying dimension matching and
+invertibility.</li>
+</ul>
 <p>With starting value <span class="math inline">\(k^{(0)} \in
 \mathcal{K}\)</span> some finite or countable set, <span class="math inline">\(X^{(0)} \in \mathcal{X}_{k^{(0)}}\)</span>. For
 <span class="math inline">\(s=0, 1, 2, \cdots\)</span>:</p>
@@ -1862,21 +1914,22 @@ space be <span class="math display">\[
 k^{*}}(k^{(s)},X^{(s)})\)</span>. If <span class="math inline">\(k^{*}=k^{(s)}\)</span>, perform the usual MH
 update, that is <span class="math inline">\(X^{*} \sim
 q_{k^{(s)}}(\cdot|k^{(s)}, X^{(s)})\)</span> (some usual proposal
-transition density in the space <span class="math inline">\(\mathcal{X}_{k^{(s)}}\)</span>), and compute <span class="math inline">\(\alpha\)</span> as <span class="math display">\[\alpha(X^*|X^{(s)}) = \min \left(1,
-\frac{j_{k^{*}\to k^{(s)}}(k^{*},
+transition density in the space <span class="math inline">\(\mathcal{X}_{k^{(s)}}\)</span>), and compute <span class="math inline">\(\alpha\)</span> as <span class="math display">\[\alpha_{k^{(s)} \to k^{*}}(X^*|X^{(s)}) = \min
+\left(1, \frac{j_{k^{*}\to k^{(s)}}(k^{*},
 X^*)q_{k^{(s)}}(X^{(s)}|k^{(*)},X^*)\pi(k^{*},X^*)}{j_{k^{(s)}\to
 k^{*}}(k^{(s)},
 X^{(s)})q_{k^{(s)}}(X^*|k^{(s)},X^{(s)})\pi(k^{(s)},X^{(s)})}
-\right);\]</span> then skip to the step 5.</li>
+\right);\]</span> then skip to the step 4.</li>
 <li>If <span class="math inline">\(k^{*} \neq k^{(s)}\)</span>, we
 continue by generating some <span class="math inline">\(W^{(s)} \sim
-g_{k^{(s)} \to k^{*}}(\cdot|k^{(s)}, X^{(s)})\)</span>; then set <span class="math inline">\((X^{*}, W^{*})= h_{k^{(s)}\to k^{*}}(X^{(s)},
-W^{(s)})\)</span></li>
+g_{k^{(s)} \to k^{*}}(\cdot|k^{(s)}, X^{(s)})\)</span>; then apply the
+deterministic rule <span class="math inline">\((X^{*}, W^{*})=
+h_{k^{(s)}\to k^{*}}(X^{(s)}, W^{(s)})\)</span></li>
 <li>Compute <span class="math inline">\(\alpha\)</span> as <span class="math display">\[\begin{align*}
-\alpha\left(k^{*}, X^*, W^* \mid k^{(s)}, {X}^{(s)}, W^{(s)}\right)=\min
-\left\{1, \frac{j_{k^{*}\to k^{(s)}}(k^{*}, X^*)  \pi\left(k^{*},
-{X}^{*}\right) g_{k^{*} \to k^{(s)}}\left(W^{(*)}|k^{*},
-X^{*}\right)}{j_{k^{(s)}\to k^{*}}(k^{(s)},
+\alpha_{k^{(s)} \to k^{*}}\left(k^{*}, X^*, W^* \mid k^{(s)}, {X}^{(s)},
+W^{(s)}\right)=\min \left\{1, \frac{j_{k^{*}\to k^{(s)}}(k^{*},
+X^*)  \pi\left(k^{*}, {X}^{*}\right) g_{k^{*} \to
+k^{(s)}}\left(W^{(*)}|k^{*}, X^{*}\right)}{j_{k^{(s)}\to k^{*}}(k^{(s)},
 {X}^{(s)})  \pi\left(k^{(s)}, X^{(s)}\right) g_{k^{(s)} \to
 k^{*}}\left(W^{(s)}|k^{(s)}, X^{(s)}\right)}\left|\frac{\partial
 {h}_{k^{(s)}\to k^{*}}\left(X^{(s)},
@@ -1896,16 +1949,16 @@ X^*\)</span>; otherwise set <span class="math inline">\(k^{(s+1)}
 <li>Here we allow the state space transition probability <span class="math inline">\(j_{k^{(s)} \to k^{*}}(k^{(s)},X^{(s)})\)</span>
 depends on <span class="math inline">\((k^{(s)},X^{(s)})\)</span>, for
 simpler design model, it could be pure deterministic rule.</li>
-<li>It requires that <span class="math inline">\(\sum_{m&#39;}j_{m \to
-m&#39;}=1\)</span>. It also requires that if <span class="math inline">\(j_{m \to m&#39;}=0\)</span>, then <span class="math inline">\(j_{m&#39; \to m}=0\)</span>–otherwise the
+<li>It requires that <span class="math inline">\(\sum_{k&#39;}j_{k \to
+k&#39;}=1\)</span>. It also requires that if <span class="math inline">\(j_{k \to k&#39;}=0\)</span>, then <span class="math inline">\(j_{k&#39; \to k}=0\)</span>–otherwise the
 acceptance probability is not well defined.</li>
-<li>For any <span class="math inline">\(m, m&#39;\)</span> such that
-<span class="math inline">\(j_{m \to m&#39;} \neq 0\)</span>, it
-requires that <span class="math inline">\(h_{m \to m&#39;}\)</span> to
+<li>For any <span class="math inline">\(k, k&#39;\)</span> such that
+<span class="math inline">\(j_{k \to k&#39;} \neq 0\)</span>, it
+requires that <span class="math inline">\(h_{k \to k&#39;}\)</span> to
 be a diffeomorphism.</li>
 <li>It is a common practice that the type transition probability is set
-so <span class="math inline">\(j_{m \to m&#39;}=0\)</span> if the
-corresponding <span class="math inline">\(m\)</span> and <span class="math inline">\(m&#39;\)</span> (or the models represented
+so <span class="math inline">\(j_{k \to k&#39;}=0\)</span> if the
+corresponding <span class="math inline">\(k\)</span> and <span class="math inline">\(k&#39;\)</span> (or the models represented
 thereof) are not “adjacent”.</li>
 <li>It is allowed that either <span class="math inline">\(W^*\)</span>
 or <span class="math inline">\(W^{(s)}\)</span> is zero dimensional
@@ -1917,17 +1970,14 @@ needs not be so. Also, for some transition <span class="math inline">\(k
 \to k&#39;\)</span>, we may not need to sample an auxiliary variable at
 all, that is, <span class="math inline">\(g_{k \to k&#39;}\)</span> can
 be set to <span class="math inline">\(1\)</span>.</li>
-<li>This is possible to extend the above algorithm by allowing drawing a
-different move type <span class="math inline">\(m\in
-\mathcal{M}\)</span> and all subsequent functions <span class="math inline">\(j, q, h\)</span> and <span class="math inline">\(g\)</span> then be made dependent on <span class="math inline">\(m\)</span>, with acceptance probability adjusted
-by a ratio of the type move probabilities.</li>
 </ol>
+</div>
 <div id="python-code-examples" class="section level3">
 <h3>Python Code Examples</h3>
 <p>Provided and discussed in lab.</p>
 <!------------->
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2024-01-21 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2025-11-12 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 </div>
 </div>
