@@ -11,7 +11,7 @@
 
 <meta name="author" content="Wei Li" />
 
-<meta name="date" content="2025-11-18" />
+<meta name="date" content="2025-11-20" />
 
 <title>Statistical Computation and Simulation</title>
 
@@ -1623,7 +1623,7 @@ display: none;
 
 <h1 class="title toc-ignore">Statistical Computation and Simulation</h1>
 <h4 class="author">Wei Li</h4>
-<h4 class="date">2025-11-18</h4>
+<h4 class="date">2025-11-20</h4>
 
 </div>
 
@@ -1648,13 +1648,13 @@ display: none;
   });
 </script>
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2025-11-18 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2025-11-20 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 <!------------->
 <div id="metropolis-hasting-algorithm-with-different-move-types" class="section level2">
 <h2>Metropolis-Hasting algorithm with different move types</h2>
-<p>We consider MH algorithms with different move types; which gives a
-more general framework for MH algorithms.</p>
+<p>We consider MH algorithms to sample from <span class="math inline">\(f\)</span> but with different move types; which
+gives a more general framework for MH algorithms.</p>
 <ul>
 <li><span class="math inline">\(X \in \mathbb{R}^{d}.\)</span></li>
 <li>Let <span class="math inline">\(\mathcal{M}\)</span> denote a finite
@@ -1729,8 +1729,8 @@ X^{(s)})}{\gamma_m(X^{(s)}) \psi_m(X^{(s)}, X^{*})}, 1 \right\}.
 from <span class="math inline">\(X^{(s)}\)</span> to <span class="math inline">\(X^*\)</span> exists (or well-defined density),
 then <span class="math inline">\(\psi_m(x,
 x&#39;)=f(x)q_m(x&#39;|x)\)</span>, giving the previous algorithm. More
-generally, however, in this modified algorithm, is that we allow <span class="math inline">\(C_m\)</span> to be a lower dimensional space of
-<span class="math inline">\(\mathbb{R}^d \times
+generally, however, in this modified algorithm, is that we allow <span class="math inline">\(C_m\)</span> to be a <strong>lower dimensional
+space</strong> of <span class="math inline">\(\mathbb{R}^d \times
 \mathbb{R}^d\)</span>.</li>
 <li>This modified algorithm generalizes the blockwise MH algorithm and
 the Gibbs sampling.</li>
@@ -1744,18 +1744,18 @@ allows moving across different dimensions of the parameters (models).
 The see how this algorithm work, we consider a general form of HM
 algorithm.</p>
 <p>Recall the detailed balance condition <span class="math display">\[\begin{align}
-\pi(x) p\left(x, x^{\prime}\right)=\pi\left(x^{\prime}\right)
+f(x) p\left(x, x^{\prime}\right)=f\left(x^{\prime}\right)
 p\left(x^{\prime}, x\right) \tag{*}
 \end{align}\]</span> where <span class="math inline">\(p\)</span> is the
 transition density moving from <span class="math inline">\(x\)</span> to
 <span class="math inline">\(x&#39;\)</span>. An equivalent form is <span class="math display">\[\begin{align*}
-\int_A \int_{A^{\prime}} \pi(x) p\left(x, x^{\prime}\right) d x^{\prime}
-d x=\int_A \int_{A^{\prime}} \pi\left(x^{\prime}\right)
-p\left(x^{\prime}, x\right) d x^{\prime} d x, \quad \forall  A, A&#39;
+\int_A \int_{A^{\prime}} f(x) p\left(x, x^{\prime}\right) d x^{\prime} d
+x=\int_A \int_{A^{\prime}} f\left(x^{\prime}\right) p\left(x^{\prime},
+x\right) d x^{\prime} d x, \quad \forall  A, A&#39;
 \end{align*}\]</span> or <span class="math display">\[\begin{align}
-\int_A \pi(x) P\left(x, A^{\prime}\right) d x=\int_{A^{\prime}}
-\pi\left(x^{\prime}\right) P\left(x^{\prime}, A\right) d x^{\prime},
-\quad \forall A, A^{\prime} \tag{**}
+\int_A f(x) P\left(x, A^{\prime}\right) d x=\int_{A^{\prime}}
+f\left(x^{\prime}\right) P\left(x^{\prime}, A\right) d x^{\prime}, \quad
+\forall A, A^{\prime} \tag{**}
 \end{align}\]</span> where <span class="math inline">\(P(x,
 A&#39;):=\int_{A&#39;} p(x, x&#39;)dx&#39;\)</span>. Recall also the
 classical HM (effective) transition probability using some tentative
@@ -1769,11 +1769,28 @@ r(x)\delta_A(x),
 probability.</p>
 <p>We then obtain a useful equation that characterizes the feature of
 the detailed balance condition using <span class="math display">\[\begin{align}
-\int_A \pi(x) \int_{A^{\prime}}  q\left(x, x^{\prime}\right)
+\int_A f(x) \int_{A^{\prime}}  q\left(x, x^{\prime}\right)
 \alpha\left(x, x^{\prime}\right) d x^{\prime} d x=\int_A
-\pi\left(x^{\prime}\right) \int_{A^{\prime}}  q\left(x^{\prime},
-x\right) \alpha\left(x^{\prime}, x\right) d x^{\prime} d x \tag{***}
+f\left(x^{\prime}\right) \int_{A^{\prime}}  q\left(x^{\prime}, x\right)
+\alpha\left(x^{\prime}, x\right) d x^{\prime} d x \tag{***}
 \end{align}\]</span></p>
+<p>This characterization remains true if we consider some transition
+between two different spaces <span class="math inline">\(\mathcal{X}_1\)</span> and <span class="math inline">\(\mathcal{X}_2\)</span>, where <span class="math inline">\(\mathcal{X}_1 \subset \mathbb{R}^{d_1}\)</span>
+and <span class="math inline">\(\mathcal{X}_2 \subset
+\mathbb{R}^{d_2}\)</span>, <span class="math inline">\(d_1 \neq
+d_2\)</span>.</p>
+<p>But the foremost issue is that how to make transition practically
+across spaces. Since they are in different spaces, obviously, <span class="math inline">\(q(\cdot, \cdot)\)</span> needs to be state-spaces
+dependent, that is, we need to have <span class="math inline">\(q_{1 \to
+2}(x, x&#39;)\)</span> and <span class="math inline">\(q_{2 \to
+1}(x&#39;, x)\)</span>. And if such transitions become available, then
+we can attempt to deduce the acceptance probabilities <span class="math inline">\(\alpha_{1 \to 2}(x, x&#39;)\)</span> and <span class="math inline">\(\alpha_{2 \to 1}(x&#39;, x)\)</span> that balance
+both sides of the equation (***): <span class="math display">\[
+\int_A f(x) \int_{A^{\prime}}  q_{1 \to 2}\left(x, x^{\prime}\right)
+\alpha_{1 \to 2}\left(x, x^{\prime}\right) d x^{\prime} d x=\int_A
+f\left(x^{\prime}\right) \int_{A^{\prime}}  q_{2 \to 1}\left(x^{\prime},
+x\right) \alpha_{2 \to 1 }\left(x^{\prime}, x\right) d x^{\prime} d x
+\]</span></p>
 <p><strong>valid reversible mapping</strong>:</p>
 <p>Suppose we like to move between two spaces <span class="math inline">\(\mathcal{X}_1 \subset \mathbb{R}^{d_1}\)</span>
 and <span class="math inline">\(\mathcal{X}_2 \subset
@@ -1801,7 +1818,7 @@ moving from <span class="math inline">\(1\)</span> to <span class="math inline">
 <ul>
 <li>generate some <span class="math inline">\(w\in
 \mathbb{R}^{n_1}\)</span> according to some density function <span class="math inline">\(g_{1\to2}(\cdot)\)</span></li>
-<li>use some deterministic bijective mapping: <span class="math display">\[
+<li>use some <em>deterministic bijective</em> mapping: <span class="math display">\[
 h_{1\to2}: (x, w) \mapsto (x&#39; ,w&#39;) \quad \mathbb{R}^{d_1+n_1}
 \to
 \mathbb{R}^{d_2+n_2}
@@ -1827,8 +1844,8 @@ h_{1\to2}: \mathbb{R}^{d_1+n_1} \longrightarrow \mathbb{R}^{d_2+n_2}
 \end{align*}\]</span></li>
 <li>The acceptance probability is given by <span class="math display">\[\begin{align*}
 \alpha_{1\to 2}\left((x&#39;, w&#39;) \mid (x, w) \right)=\min \left\{1,
-\frac{\pi\left(x&#39;\right) g_{2 \rightarrow
-1}\left(w&#39;\right)}{\pi\left(x\right) g_{1 \rightarrow 2}\left(w
+\frac{f\left(x&#39;\right) g_{2 \rightarrow
+1}\left(w&#39;\right)}{f\left(x\right) g_{1 \rightarrow 2}\left(w
 \right)}\left|\frac{\partial {h}_{1 \rightarrow 2}\left(x, w
 \right)}{\partial\left(x, w\right)}\right|\right\},
 \end{align*}\]</span> where the <span class="math inline">\(|\partial
@@ -1886,16 +1903,15 @@ consider a birth-death pair of moves:</p>
 \Theta:=\cup_{k}(\{k\} \times \mathcal{X}_k).
 \]</span></p>
 <p>We define the set of possible (admissible) <strong>move
-types</strong> as <span class="math inline">\(\mathcal{M}=\left\{\left(k, k^{\prime}\right): k,
-k^{\prime} \in K \right\}.\)</span>, and a valid reversible mapping
-exists between <span class="math inline">\(\mathcal{X}_k\)</span> and
-<span class="math inline">\(\left.\mathcal{X}_{k^{\prime}}\right\}\)</span>.</p>
+types</strong> as <span class="math inline">\(\mathcal{M}\)</span> the
+collection of <span class="math inline">\((k, k^{\prime}) \in K \times
+K\)</span> for which a valid reversible mapping exists between <span class="math inline">\(\mathcal{X}_k\)</span> and <span class="math inline">\(\mathcal{X}_{k^{\prime}}\)</span>.</p>
 <p>Let <span class="math inline">\(j_{k \rightarrow
 k^{\prime}}(x)\)</span> denote the probability of proposing a move from
 space <span class="math inline">\(k\)</span> to space <span class="math inline">\(k^{\prime}\)</span>, when the current state is
 <span class="math inline">\(x \in \mathcal{X}_k\)</span>. (see remark
 for requirement for these these transition probabilities.)</p>
-<p>Speficially, each valid move type <span class="math inline">\(\left(k, k^{\prime}\right) \in
+<p>Specifically, each valid move type <span class="math inline">\(\left(k, k^{\prime}\right) \in
 \mathcal{M}\)</span> requires:</p>
 <ul>
 <li>an auxiliary variable generation rule <span class="math inline">\(g_{k \rightarrow k^{\prime}}(w \mid
@@ -1917,9 +1933,9 @@ update, that is <span class="math inline">\(X^{*} \sim
 q_{k^{(s)}}(\cdot|k^{(s)}, X^{(s)})\)</span> (some usual proposal
 transition density in the space <span class="math inline">\(\mathcal{X}_{k^{(s)}}\)</span>), and compute <span class="math inline">\(\alpha\)</span> as <span class="math display">\[\alpha_{k^{(s)} \to k^{*}}(X^*|X^{(s)}) = \min
 \left(1, \frac{j_{k^{*}\to k^{(s)}}(k^{*},
-X^*)q_{k^{(s)}}(X^{(s)}|k^{(*)},X^*)\pi(k^{*},X^*)}{j_{k^{(s)}\to
+X^*)q_{k^{(s)}}(X^{(s)}|k^{(*)},X^*)f(k^{*},X^*)}{j_{k^{(s)}\to
 k^{*}}(k^{(s)},
-X^{(s)})q_{k^{(s)}}(X^*|k^{(s)},X^{(s)})\pi(k^{(s)},X^{(s)})}
+X^{(s)})q_{k^{(s)}}(X^*|k^{(s)},X^{(s)})f(k^{(s)},X^{(s)})}
 \right);\]</span> then skip to the step 4.</li>
 <li>If <span class="math inline">\(k^{*} \neq k^{(s)}\)</span>, we
 continue by generating some <span class="math inline">\(W^{(s)} \sim
@@ -1927,11 +1943,11 @@ g_{k^{(s)} \to k^{*}}(\cdot|k^{(s)}, X^{(s)})\)</span>; then apply the
 deterministic rule <span class="math inline">\((X^{*}, W^{*})=
 h_{k^{(s)}\to k^{*}}(X^{(s)}, W^{(s)})\)</span></li>
 <li>Compute <span class="math inline">\(\alpha\)</span> as <span class="math display">\[\begin{align*}
-\alpha_{k^{(s)} \to k^{*}}\left(k^{*}, X^*, W^* \mid k^{(s)}, {X}^{(s)},
-W^{(s)}\right)=\min \left\{1, \frac{j_{k^{*}\to k^{(s)}}(k^{*},
-X^*)  \pi\left(k^{*}, {X}^{*}\right) g_{k^{*} \to
+&amp;\alpha_{k^{(s)} \to k^{*}}\left(k^{*}, X^*, W^* \mid k^{(s)},
+{X}^{(s)}, W^{(s)}\right)\\=\min &amp; \left\{1, \frac{j_{k^{*}\to
+k^{(s)}}(k^{*}, X^*)  f\left(k^{*}, {X}^{*}\right) g_{k^{*} \to
 k^{(s)}}\left(W^{(*)}|k^{*}, X^{*}\right)}{j_{k^{(s)}\to k^{*}}(k^{(s)},
-{X}^{(s)})  \pi\left(k^{(s)}, X^{(s)}\right) g_{k^{(s)} \to
+{X}^{(s)})  f\left(k^{(s)}, X^{(s)}\right) g_{k^{(s)} \to
 k^{*}}\left(W^{(s)}|k^{(s)}, X^{(s)}\right)}\left|\frac{\partial
 {h}_{k^{(s)}\to k^{*}}\left(X^{(s)},
 W^{(s)}\right)}{\partial\left(X^{(s)}, W^{(s)}\right)}\right|\right\},
@@ -1990,7 +2006,7 @@ k^*}(X^{(s)})\)</span>.</li>
 <p>Provided and discussed in lab.</p>
 <!------------->
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2025-11-18 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2025-11-20 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 </div>
 </div>
