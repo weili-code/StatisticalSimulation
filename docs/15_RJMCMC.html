@@ -2004,6 +2004,98 @@ k^*}(X^*)/\gamma_{\underset{\sim}{m}, k^{(s)}=
 k^*}(X^{(s)})\)</span>.</li>
 </ol>
 </div>
+<div id="example-2-continued-birth-death-move-in-mixture-models" class="section level4">
+<h4>Example 2 (continued): Birth-Death Move in Mixture Models</h4>
+<p>Let the current model be a finite mixture with <span class="math inline">\(K\)</span> components. Let the parameter vector be
+<span class="math display">\[\begin{align*}
+\boldsymbol{\theta}=\left(\theta_1, \ldots, \theta_K\right),
+\end{align*}\]</span></p>
+<p>where each component parameter <span class="math inline">\(\theta_k
+\in \mathcal{\Theta} \subset \mathbb{R}^m\)</span> - recall <span class="math inline">\(\theta_k=\left(\mu_k, \sigma_k,
+\pi_k\right)\)</span>.</p>
+<p>The RJMCMC state is <span class="math inline">\((K,
+\boldsymbol{\theta})\)</span>, with target density (posterior) <span class="math display">\[\begin{align*}
+\pi(K, \boldsymbol{\theta}) \propto p(y \mid K, \boldsymbol{\theta})
+p(\boldsymbol{\theta} \mid K) p(K) .
+\end{align*}\]</span> We allow moves between models <span class="math inline">\(K\)</span> and <span class="math inline">\(K+1\)</span> by birth (add a component) and death
+(remove a component).</p>
+<p>Fix an index <span class="math inline">\(j \in\{1, \ldots,
+K+1\}\)</span>. We consider the bijection pair the mappings <span class="math inline">\(h_{K \rightarrow K+1}^{(j)}\)</span> and <span class="math inline">\(h_{K+1 \rightarrow K}^{(j)}\)</span>, where we
+proposed new component <span class="math inline">\(w \in
+\mathcal{\Theta}\)</span>, and use <span class="math inline">\(h_{K
+\rightarrow K+1}^{(j)}\)</span> to insert <span class="math inline">\(w\)</span> as the <span class="math inline">\(j\)</span>-th component. For the reverse move, we
+use <span class="math inline">\(h_{K+1 \rightarrow K}^{(j)}\)</span> to
+remove the <span class="math inline">\(j\)</span>-th component. (One can
+show that both functions have Jacobian whose determinant is equal to
+<span class="math inline">\(1\)</span> in absolute value).</p>
+<div id="rjmcmc-algorithm" class="section level5">
+<h5><strong>RJMCMC</strong> algorithm</h5>
+<p>Birth proposal: <span class="math inline">\((K, \boldsymbol{\theta})
+\rightarrow\left(K+1, \boldsymbol{\theta}^{\prime}\right)\)</span>.</p>
+<p>At iteration <span class="math inline">\(s\)</span>, current state
+<span class="math inline">\((K, \boldsymbol{\theta}^{(s)})\)</span>
+:</p>
+<p>(1). Decide to attempt birth with probability <span class="math inline">\(b_K:=j_{K \rightarrow
+K+1}(\boldsymbol{\theta}^{(s)})\)</span>, we attempt a birth move
+(otherwise, for simplicity, we might attempt a death move or some
+withinmodel move).</p>
+<p>(2). Choose insertion index <span class="math inline">\({j}\)</span>.
+Sample <span class="math inline">\(j \sim J_{K \rightarrow K+1}(\cdot
+\mid \boldsymbol{\theta}^{(s)})\)</span> typically <span class="math display">\[\begin{align*}
+J_{K \rightarrow K+1}(j \mid \boldsymbol{\theta}^{(s)})=\frac{1}{K+1},
+\quad j=1, \ldots, K+1 .
+\end{align*}\]</span> (3). Propose new component parameters. Sample
+<span class="math inline">\(W^{(s)} \sim g_{K \rightarrow K+1}(\cdot
+\mid \boldsymbol{\theta}^{(s)})\)</span>, e.g. from a prior or a
+data-informed proposal.</p>
+<p>(4). Apply deterministic mapping: set <span class="math inline">\(\boldsymbol{\theta}^*=h_{K \rightarrow
+K+1}^{(j)}(\boldsymbol{\theta}^{(s)}, W^{(s)}).\)</span></p>
+<p>The proposed state is <span class="math inline">\(\left(K+1,
+\boldsymbol{\theta}^*\right)\)</span>. The forward proposal density
+(conditioned on attempting a birth) is <span class="math display">\[\begin{align*}
+q_{\text {birth }}\left(\left(K+1, \boldsymbol{\theta}^*\right) \mid (K,
+\boldsymbol{\theta}^{(s)})\right)=b_K J_{K \rightarrow K+1}(j \mid
+\boldsymbol{\theta}^{(s)}) g_{K \rightarrow K+1}(W^{(s)} \mid
+\boldsymbol{\theta}^{(s)}),
+\end{align*}\]</span></p>
+<p>Death proposal: <span class="math inline">\(\left(K+1,
+\boldsymbol{\theta}^{\prime}\right) \rightarrow(K,
+\boldsymbol{\theta})\)</span></p>
+<p>Now suppose the current state is <span class="math inline">\((K+1,
+\boldsymbol{\theta}^{(s)})\)</span>.</p>
+<p>(1). Decide to attempt death with probability <span class="math inline">\(d_{K+1}:=j_{K+1 \rightarrow
+K}(\boldsymbol{\theta}^{(s)})\)</span>, we attempt a death move.</p>
+<p>(2). Choose deletion index <span class="math inline">\(j\)</span>.
+Sample <span class="math inline">\(j \sim J_{K+1 \rightarrow
+K}\left(\cdot \mid \boldsymbol{\theta}^{(s)}\right)\)</span>, typically
+<span class="math display">\[\begin{align*}
+J_{K+1 \rightarrow K}(j \mid \boldsymbol{\theta}^{(s)})=\frac{1}{K+1},
+\quad j=1, \ldots, K+1 .
+\end{align*}\]</span></p>
+<p>(3). Apply deterministic mapping: set <span class="math inline">\((\boldsymbol{\theta}^*, W^*)=h_{K+1 \rightarrow
+K}^{(j)}(\boldsymbol{\theta}^{(s)})\)</span>, where <span class="math inline">\(\boldsymbol{\theta}^*=\boldsymbol{\theta}_{-j}^{(s)},
+\quad W^*=\boldsymbol{\theta}_j^{(s)}\)</span>.</p>
+<p>The reverse proposal density is <span class="math display">\[\begin{align*}
+q_{\text {death }}\left(\left(K, \boldsymbol{\theta}^*\right) \mid (K+1,
+\boldsymbol{\theta}^{(s)})\right)=d_{K+1} J_{K+1 \rightarrow K}(j \mid
+\boldsymbol{\theta}^{(s)})
+\end{align*}\]</span></p>
+<p>If we use equal probabilities for selecting index <span class="math inline">\(j\)</span>, and assume <span class="math inline">\(K\)</span> is large enough (i.e., we do not need
+to worry about the boundary case), we can obtain the the acceptance
+probabilities: <span class="math display">\[\begin{align*}
+\begin{gathered}
+\alpha_{\text {birth }}=\min \left\{1, \frac{\pi\left(K+1,
+\boldsymbol{\theta}^*\right) d_{K+1}}{\pi\left(K,
+\boldsymbol{\theta}^{(s)}\right) b_K g_{K \rightarrow K+1}\left(W^{(s)}
+\mid \boldsymbol{\theta}^{(s)}\right)}\right\} \\
+\alpha_{\text {death }}=\min \left\{1, \frac{\pi\left(K,
+\boldsymbol{\theta}^*\right) b_K g_{K \rightarrow K+1}\left(W^* \mid
+\boldsymbol{\theta}^*\right)}{\pi\left(K+1,
+\boldsymbol{\theta}^{(s)}\right) d_{K+1}}\right\}.
+\end{gathered}
+\end{align*}\]</span></p>
+</div>
+</div>
 <div id="python-code-examples" class="section level3">
 <h3>Python Code Examples</h3>
 <p>Provided and discussed in lab.</p>
