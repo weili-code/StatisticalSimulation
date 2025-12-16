@@ -11,7 +11,7 @@
 
 <meta name="author" content="Wei Li" />
 
-<meta name="date" content="2025-09-04" />
+<meta name="date" content="2025-12-16" />
 
 <title>Statistical Computation and Simulation</title>
 
@@ -1623,7 +1623,7 @@ display: none;
 
 <h1 class="title toc-ignore">Statistical Computation and Simulation</h1>
 <h4 class="author">Wei Li</h4>
-<h4 class="date">2025-09-04</h4>
+<h4 class="date">2025-12-16</h4>
 
 </div>
 
@@ -1648,7 +1648,7 @@ display: none;
   });
 </script>
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2025-09-04 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2025-12-16 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 <!------------->
 <div id="pca" class="section level1">
@@ -1769,8 +1769,7 @@ columns of <span class="math inline">\(V\)</span>.</p>
 \lambda_j v_{sj} v_{tj}\)</span>. Similarity of the PC loadings for the
 first few components between different <span class="math inline">\(X_j\)</span>’s can be heuristically viewed as a
 degree of linear association. Note <span class="math inline">\(\operatorname{Cov}(X,
-Z)=V\operatorname{Var}(Z)=[\lambda_1 \mathbf{v}_1, \ldots, \lambda_p
-\mathbf{v}_p]\)</span>, variables <span class="math inline">\(X_j\)</span>’s that are correlated with the first
+Z)=\operatorname{Var}(X)\)</span>, variables <span class="math inline">\(X_j\)</span>’s that are correlated with the first
 few principal components are the most important in explaining the
 variability in the data set.</p>
 <p>Note <span class="math inline">\(\operatorname{Var}(X_i)=\sum_{j=1}^p\lambda_jv_{ij}^2\)</span>.
@@ -2009,12 +2008,15 @@ generation of <span class="math inline">\(\boldsymbol{x}_i\)</span>:
 given <span class="math inline">\(\boldsymbol{z}_i\)</span>, <span class="math inline">\(\boldsymbol{x}_i\)</span> can be generated
 according to some specified distribution.</p>
 </div>
+<div id="example-eigenfaces-apply-pca-to-face-images" class="section level3">
+<h3>Example (eigenfaces): Apply PCA to face images</h3>
+</div>
 <div id="python-code-examples" class="section level3">
 <h3>Python Code Examples</h3>
 <p>Provided and discussed in lab.</p>
 <!------------->
 <p><span style="background-color: #f5f5f5; padding: 5px; display: block;"> <span style="width: 25%; display: inline-block; text-align: left;"> <a href="javascript:window.history.back()">Back</a> </span> <span style="width: 30%; display: inline-block; text-align: center; color: grey;">
-<strong>Updated:</strong> 2025-09-04 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
+<strong>Updated:</strong> 2025-12-16 </span> <span style="width: 35%; display: inline-block; text-align: right; color: grey;">
 Statistical Simulation, Wei Li </span> </span></p>
 </div>
 </div>
