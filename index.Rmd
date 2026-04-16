@@ -1,7 +1,7 @@
 ---
 title: "Statistical Computation and Simulation"
 author: '<span class="author-name"> Wei Li</span> 
-<a href="https://wli169.expressions.syr.edu/">
+<a href="https://weili-code.github.io/">
   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M12 2L2 12H5V22H19V12H22L12 2Z" fill="black"/>
   </svg>
